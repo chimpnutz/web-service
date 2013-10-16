@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="EpinsUploadDAOService" targetNamespace="http://dao.ws.payexchange.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://dao.ws.payexchange.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+  <import namespace="http://dao.ws.payexchange.com/" schemaLocation="epinsuploaddao_schema1.xsd"/>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="reqUploadResponse">
+    <wsdl:part name="parameters" element="tns:reqUploadResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="reqUpload">
+    <wsdl:part name="parameters" element="tns:reqUpload">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="EpinsUploadDAOSEI">
+    <wsdl:operation name="reqUpload">
+      <wsdl:input name="reqUpload" message="tns:reqUpload">
+    </wsdl:input>
+      <wsdl:output name="reqUploadResponse" message="tns:reqUploadResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EpinsUploadDAOServiceSoapBinding" type="tns:EpinsUploadDAOSEI">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="reqUpload">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="reqUpload">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="reqUploadResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EpinsUploadDAOService">
+    <wsdl:port name="EpinsUploadDAOPort" binding="tns:EpinsUploadDAOServiceSoapBinding">
+      <soap:address location="http://localhost:8080/EpinsUploadWS/services/EpinsUploadDAOPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

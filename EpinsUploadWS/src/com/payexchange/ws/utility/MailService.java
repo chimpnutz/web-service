@@ -24,7 +24,7 @@ public class MailService {
 	        this.mailSender = mailSender;
 	}
 	
-	public void sendMail(String from, String to, String cc, String subject, String messageBody, String attachments){
+	public void sendMail(String from, String to, String cc, String subject, String messageBody, String[] filenames){
 		System.out.println("sendMail");
 		
 		MimeMessage message = mailSender.createMimeMessage();
@@ -36,7 +36,7 @@ public class MailService {
 			helper.setFrom(simpleMailMessage.getFrom());
 			helper.setTo(simpleMailMessage.getTo());
 			helper.setSubject(simpleMailMessage.getSubject());
-			helper.setText(String.format(simpleMailMessage.getText(), from,to,cc,subject,messageBody,attachments));
+			helper.setText(String.format(simpleMailMessage.getText(), from,to,cc,subject,messageBody,filenames));
 
 			   FileSystemResource file = new FileSystemResource("D:\\xtian10002010Aug24153856.zip");
 			   helper.addAttachment(file.getFilename(), file);

@@ -15,6 +15,8 @@ import com.payexchange.ws.utility.Utility;
 import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Request;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -44,7 +46,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.ServletContextAware;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.payexchange.ws.utility.SQL;
 import com.payexchange.ws.utility.Property;
+import com.payexchange.ws.utility.ValidatorService;
+
 import javax.mail.MessagingException;
 
 import org.springframework.context.ApplicationContext;
@@ -71,7 +76,9 @@ public class HandleEpins  {
 			response.setResultcode(0);
 			response.setTracenumber("12345678");
 			
-			if(checkDenom(bean) || checkTelco(bean)){
+			if(checkDenom(bean)){
+				
+				ExportService exportService = new ExportService();
 				
 			}
 			
@@ -101,6 +108,8 @@ public class HandleEpins  {
 			       ps.setString(3,bean.getTrantype());
 			            
 			       rs = ps.executeQuery();
+			       
+			       logger.info("Request topup from: "+bean.getIpaddress());
 			
 			       if(rs.next()){
 			            	
@@ -127,14 +136,14 @@ public class HandleEpins  {
 		
 		}
 	
-	public static void main(String[] args) throws MessagingException {
-	  System.out.println("--------Start---------");
-		  ApplicationContext context = new ClassPathXmlApplicationContext("springapp-servlet.xml");
-
-		  MailService mm = (MailService) context.getBean("mailservice");
-		  mm.sendMail("", "This is text content","","","","");
-
-		 }
+//	public static void main(String[] args) throws MessagingException {
+//	  System.out.println("--------Start---------");
+//		  ApplicationContext context = new ClassPathXmlApplicationContext("springapp-servlet.xml");
+//
+//		  MailService mm = (MailService) context.getBean("mailservice");
+//		  mm.sendMail("", "This is text content","","","","");
+//
+//		 }
 	
 	public boolean checkDenom(DetailsBean bean) {
 		
@@ -176,117 +185,45 @@ public class HandleEpins  {
 	        return false;
     }
 	
-	private boolean checkTelco(DetailsBean bean) {
-			 
-		PreparedStatement ps = null;
-		Connection conn = null;
-		ResultSet rs = null;
-		
-		String updateSQL = "SELECT TELCO_TYPE from epins where TELCO_TYPE =? ";
-        try{
-        	   conn = ConnectionManager2.getConnection();
-		       ps = conn.prepareStatement(updateSQL);
-		            
-		       ps.setString(1,bean.getProdCode());
-		      
-		            
-		       rs = ps.executeQuery();
-		        if(rs.next()){
-		        	
-			           logger.info(" telco is valid");		
-			           return true;
-			         
-		        }
-        	}
-        		catch(Exception ex){
-	            ex.printStackTrace();
-	            return false;
-	        }
-				finally{
-			 	
-			 	Utility.closeQuietly(rs);
-			 	Utility.closeQuietly(ps);
-			 	Utility.closeQuietly(conn);
-			
-			 		}
-	      
-	        
-	        logger.info("telco or invalid");		
-	        return false;
-	}
+//	private boolean checkTelco(DetailsBean bean) {
+//			 
+//		PreparedStatement ps = null;
+//		Connection conn = null;
+//		ResultSet rs = null;
+//		
+//		String updateSQL = "SELECT TELCO_TYPE from epins where TELCO_TYPE =? ";
+//        try{
+//        	   conn = ConnectionManager2.getConnection();
+//		       ps = conn.prepareStatement(updateSQL);
+//		            
+//		       ps.setString(1,bean.getProdCode());
+//		      
+//		            
+//		       rs = ps.executeQuery();
+//		        if(rs.next()){
+//		        	
+//			           logger.info(" telco is valid");		
+//			           return true;
+//			         
+//		        }
+//        	}
+//        		catch(Exception ex){
+//	            ex.printStackTrace();
+//	            return false;
+//	        }
+//				finally{
+//			 	
+//			 	Utility.closeQuietly(rs);
+//			 	Utility.closeQuietly(ps);
+//			 	Utility.closeQuietly(conn);
+//			
+//			 		}
+//	      
+//	        
+//	        logger.info("telco or invalid");		
+//	        return false;
+//	}
 	
-	//private boolean checkQty(DetailsBean bean) {
-		// TODO Auto-generated method stub
-		//return false;
-	//}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*	  public class getTransactions {
 
-		public void emailEPINS(HttpServletRequest request) {
-			DetailsBean detailsbean = new DetailsBean();
-			
-			String epinFile = "";
-	        String zipFile = "";
-	        String rptDate = "";
-	        Date date = new Date();
-	        SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMMddHHmmss");
-	        rptDate=sdf.format(date);
-      
-	       String checkSQL = "Select ipaddress, appname,txtype from permissions where ipaddress = ? and appname = ? and txtype = ?";
-	              
-	     try{   
-	        PreparedStatement ps2 = null;
-			ResultSet rs2 = null;
-			Connection conn2 = null;
-			
-			
-	        String denom = request.getParameter("denom");
-			String email = request.getParameter("email");
-			String qty = request.getParameter("qty");
-			String telco = request.getParameter("telco");
-			String password = request.getParameter("password");
-			
-			conn2 = ConnectionManager.getConnection();
-            ps2 = conn2.prepareStatement(checkSQL);
-			
-	        return;
-	     }  
-	     catch(Exception ex){
-	            ex.printStackTrace();
-	            
-	     }dummy values for now   
-		}
-	}*/
-		
+
 }

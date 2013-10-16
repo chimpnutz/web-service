@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:tns="http://dao.ws.payexchange.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://dao.ws.payexchange.com/" version="1.0">
+<?xml version="1.0" encoding="utf-8"?><xs:schema xmlns:tns="http://dao.ws.payexchange.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="http://dao.ws.payexchange.com/" version="1.0">
 <xs:element name="reqUpload" type="tns:reqUpload"/>
 <xs:element name="reqUploadResponse" type="tns:reqUploadResponse"/>
 <xs:complexType name="reqUpload">

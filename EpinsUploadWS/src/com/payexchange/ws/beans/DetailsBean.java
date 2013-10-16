@@ -14,6 +14,28 @@ public class DetailsBean {
 	String email;
 	String username;
 	String password;
+	private String nextView;
+	private String model;
+    private int status;
+    
+    public String getNextView() {
+		return nextView;
+	}
+	public void setNextView(String nextView) {
+		this.nextView = nextView;
+	}
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
 	
 	public String getDenom() {
 		return Denom;

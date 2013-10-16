@@ -39,10 +39,10 @@ public class EpinsUploadDAO implements EpinsUploadDAOSEI  {
 		   bean.setAppname(appname);
 		   bean.setIpaddress(ip);
 		   bean.setTrantype(trantype);
-		   bean.setTrantype(Denom);
-		   bean.setTrantype(email);
-		   bean.setTrantype(username);
-		   bean.setTrantype(password);
+		   bean.setDenom(Denom);
+		   bean.setEmail(email);
+		   bean.setUsername(username);
+		   bean.setPassword(password);
 
 		  
 		   try {

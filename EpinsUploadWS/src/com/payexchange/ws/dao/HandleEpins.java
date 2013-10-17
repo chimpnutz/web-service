@@ -1,7 +1,9 @@
 package com.payexchange.ws.dao;
 
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -14,6 +16,9 @@ import com.payexchange.ws.utility.Utility;
 
 import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.eclipse.jetty.server.Request;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -78,7 +83,55 @@ public class HandleEpins  {
 			
 			if(checkDenom(bean)){
 				
-				ExportService exportService = new ExportService();
+						String rptDate = "";
+						Date date = new Date();
+				        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+				        rptDate=sdf.format(date);
+				        String username ="Loadcentral";
+				        int denom = 500;
+				        String telco = "GLOBE";
+			        
+					try{
+						String filename="D:\\"+writePrefix(username,denom,telco,rptDate)+".xls";
+						HSSFWorkbook hwb=new HSSFWorkbook();
+						HSSFSheet sheet =  hwb.createSheet("new sheet");
+
+						HSSFRow rowhead=   sheet.createRow((short)0);
+						rowhead.createCell((short) 0).setCellValue("USERNAME");
+						rowhead.createCell((short) 1).setCellValue("DENOM");
+						rowhead.createCell((short) 2).setCellValue("TELCO_TYPE");
+						rowhead.createCell((short) 3).setCellValue("REPORT_DATE");
+						
+
+						Class.forName("com.mysql.jdbc.Driver");
+						Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/epinscard", "root", "");
+						java.sql.Statement st= con.createStatement();
+						ResultSet rs= st.executeQuery("Select * from epins");
+						int i=1;
+						while(rs.next()){
+						HSSFRow row=   sheet.createRow((short)i);
+						row.createCell((short) 0).setCellValue(rs.getString("ID"));
+						row.createCell((short) 1).setCellValue(Integer.toString(rs.getInt("DENOM")));
+						row.createCell((short) 2).setCellValue(rs.getString("TELCO_TYPE"));
+						row.createCell((short) 3).setCellValue(rptDate);
+						
+						i++;
+						}
+						sheet.autoSizeColumn(0);
+						sheet.autoSizeColumn(2);
+						sheet.autoSizeColumn(3);
+						FileOutputStream fileOut =  new FileOutputStream(filename);
+						hwb.write(fileOut);
+						fileOut.close();
+						System.out.println("Your excel file has been generated!");
+
+						} catch ( Exception ex ) {
+						    System.out.println(ex);
+
+						}
+				           
+				       					
+							
 				
 			}
 			
@@ -88,6 +141,9 @@ public class HandleEpins  {
 			  
 }
 		
+	   private String writePrefix(String username, int denom, String telco, String rptDate) {
+	       return username+""+denom+""+telco+""+rptDate;
+	   }
 
 
 	private boolean checkip(DetailsBean bean) {

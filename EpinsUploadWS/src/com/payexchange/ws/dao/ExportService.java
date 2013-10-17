@@ -22,7 +22,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.models.Epins;
+//import com.models.Epins;
 import com.payexchange.ws.utility.HibernateUtil;
 import com.payexchange.ws.utility.MessageModels;
 import com.payexchange.ws.utility.ViewModels;
@@ -36,7 +36,7 @@ public class ExportService {
 
 	
 	private ValidatorService validatorService;
-	
+	//for zip file
 	public DetailsBean emailEpins(HttpServletRequest request){
 		DetailsBean detailsbean = new DetailsBean();
 		String epinFile = "";
@@ -125,7 +125,7 @@ public class ExportService {
 		return detailsbean;
         
 	}
-	
+	//excel file
 	public ValidatorService getValidatorService() {
         return validatorService;
     }
@@ -138,7 +138,7 @@ public class ExportService {
         String fileName = "";
         try {
         fileName = writePrefix(username,denom,telco,rptDate)+".xls";
-        //fileName = "d:\\original_policy\\"+writePrefix(username,denom,telco,rptDate)+".xls";
+       
         FileOutputStream fileOut = new FileOutputStream(fileName);
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet worksheet = workbook.createSheet("sheet");
@@ -149,24 +149,24 @@ public class ExportService {
            Object[] row = (Object[]) it.next();
            String dec = goDecryption(row[1].toString());
            String[] decArray = validatorService.getDecrypted(dec);
-           //worksheet.createRow(i).createCell(0).setCellValue(row[1].toString());
+          
            HSSFRow rowExcel = worksheet.createRow(i);
            for(int j = 0;j<decArray.length;j++) {
                rowExcel.createCell(j).setCellValue(decArray[j]);
            }
            
-           //System.out.println("row[0]: "+row[0].toString()+" row[2]: "+row[2].toString()+" row[3]: "+row[3].toString());
-           Epins epinsNew = new Epins();
-           epinsNew.setId(Integer.parseInt(row[0].toString()));
-           epinsNew.setEpin(row[1].toString());
-           epinsNew.setDenom(Integer.parseInt(denom));
-           epinsNew.setTelco_type(telco);
-           epinsNew.setUploaded_by(row[2].toString());
-           epinsNew.setTo_whom(email);
-           epinsNew.setDate_uploaded(df.parse(row[3].toString()));
-           epinsNew.setDate_used(new Date());
-           epinsNew.setStatus("1");
-           session.update(epinsNew);
+           System.out.println("row[0]: "+row[0].toString()+" row[2]: "+row[2].toString()+" row[3]: "+row[3].toString());
+//           Epins epinsNew = new Epins();
+//           epinsNew.setId(Integer.parseInt(row[0].toString()));
+//           epinsNew.setEpin(row[1].toString());
+//           epinsNew.setDenom(Integer.parseInt(denom));
+//           epinsNew.setTelco_type(telco);
+//           epinsNew.setUploaded_by(row[2].toString());
+//           epinsNew.setTo_whom(email);
+//           epinsNew.setDate_uploaded(df.parse(row[3].toString()));
+//           epinsNew.setDate_used(new Date());
+//           epinsNew.setStatus("1");
+//           session.update(epinsNew);
            i++;
         }
         
@@ -179,14 +179,15 @@ public class ExportService {
                 e.printStackTrace();
         } catch (HibernateException he) {
                 he.printStackTrace();
-        } catch (ParseException pe) {
-                pe.getMessage();
-        }
+        } 
+//        catch (ParseException pe) {
+//                pe.getMessage();
+//        }
         return fileName;
     }
 
   
-   
+   //mail service
 
    private void sendMail(String to, String attach) {
     try {

@@ -1,7 +1,9 @@
 package com.payexchange.ws.dao;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,9 +13,11 @@ import com.payexchange.ws.beans.DetailsBean;
 import com.payexchange.ws.beans.EpinsUploadResponse;
 import com.payexchange.ws.connection.ConnectionManager;
 import com.payexchange.ws.connection.ConnectionManager2;
+import com.payexchange.ws.connection.EpinsConnectionManager;
 import com.payexchange.ws.utility.MailService;
 import com.payexchange.ws.utility.Utility;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -29,6 +33,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
@@ -54,6 +60,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.payexchange.ws.utility.SQL;
 import com.payexchange.ws.utility.Property;
 import com.payexchange.ws.utility.ValidatorService;
+import com.paysetter.security.Encrypter;
 
 import javax.mail.MessagingException;
 
@@ -81,67 +88,32 @@ public class HandleEpins  {
 			response.setResultcode(0);
 			response.setTracenumber("12345678");
 			
-			if(checkDenom(bean)){
+//			if(checkDenom(bean)){
+//				
+//				if(checkqty(bean)){
+					
+					
+					this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty());
+					
+
 				
-						String rptDate = "";
-						Date date = new Date();
-				        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
-				        rptDate=sdf.format(date);
-				        String username ="Loadcentral";
-				        int denom = 500;
-				        String telco = "GLOBE";
-			        
-					try{
-						String filename="D:\\"+writePrefix(username,denom,telco,rptDate)+".xls";
-						HSSFWorkbook hwb=new HSSFWorkbook();
-						HSSFSheet sheet =  hwb.createSheet("new sheet");
-
-						HSSFRow rowhead=   sheet.createRow((short)0);
-						rowhead.createCell((short) 0).setCellValue("USERNAME");
-						rowhead.createCell((short) 1).setCellValue("DENOM");
-						rowhead.createCell((short) 2).setCellValue("TELCO_TYPE");
-						rowhead.createCell((short) 3).setCellValue("REPORT_DATE");
-						
-
-						Class.forName("com.mysql.jdbc.Driver");
-						Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/epinscard", "root", "");
-						java.sql.Statement st= con.createStatement();
-						ResultSet rs= st.executeQuery("Select * from epins");
-						int i=1;
-						while(rs.next()){
-						HSSFRow row=   sheet.createRow((short)i);
-						row.createCell((short) 0).setCellValue(rs.getString("ID"));
-						row.createCell((short) 1).setCellValue(Integer.toString(rs.getInt("DENOM")));
-						row.createCell((short) 2).setCellValue(rs.getString("TELCO_TYPE"));
-						row.createCell((short) 3).setCellValue(rptDate);
-						
-						i++;
-						}
-						sheet.autoSizeColumn(0);
-						sheet.autoSizeColumn(2);
-						sheet.autoSizeColumn(3);
-						FileOutputStream fileOut =  new FileOutputStream(filename);
-						hwb.write(fileOut);
-						fileOut.close();
-						System.out.println("Your excel file has been generated!");
-
-						} catch ( Exception ex ) {
-						    System.out.println(ex);
-
-						}
-				           
-				       					
-							
-				
-			}
+//				}
+//				
+//			           
+//				       					
+//							
+//				
+//			}
 			
 		}	  
-	  logger.info("Ip Address: "+bean.getIpaddress()+" don't have permission to do transaction.");
+	
 	  return response;
 			  
 }
 		
-	   private String writePrefix(String username, int denom, String telco, String rptDate) {
+	   
+
+	private String writePrefix(String username, int denom, String telco, String rptDate) {
 	       return username+""+denom+""+telco+""+rptDate;
 	   }
 
@@ -241,45 +213,147 @@ public class HandleEpins  {
 	        return false;
     }
 	
-//	private boolean checkTelco(DetailsBean bean) {
-//			 
-//		PreparedStatement ps = null;
-//		Connection conn = null;
-//		ResultSet rs = null;
-//		
-//		String updateSQL = "SELECT TELCO_TYPE from epins where TELCO_TYPE =? ";
-//        try{
-//        	   conn = ConnectionManager2.getConnection();
-//		       ps = conn.prepareStatement(updateSQL);
-//		            
-//		       ps.setString(1,bean.getProdCode());
-//		      
-//		            
-//		       rs = ps.executeQuery();
-//		        if(rs.next()){
-//		        	
-//			           logger.info(" telco is valid");		
-//			           return true;
-//			         
-//		        }
-//        	}
-//        		catch(Exception ex){
-//	            ex.printStackTrace();
-//	            return false;
-//	        }
-//				finally{
-//			 	
-//			 	Utility.closeQuietly(rs);
-//			 	Utility.closeQuietly(ps);
-//			 	Utility.closeQuietly(conn);
-//			
-//			 		}
-//	      
-//	        
-//	        logger.info("telco or invalid");		
-//	        return false;
-//	}
-	
+	private boolean checkqty(DetailsBean bean) {
+		
+		if(bean.getQty() != null){
+			
+			 logger.info("Quantity is Valid");		
+           return true;
+		}
+		
+		logger.info("invalid quantity");
+		return false;
+			
+	}
+	private void writeExcel(String username, int denom, String telco, String Qty) {
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conn = null;
+					
+		String updateSQL = "Select id,epin,uploaded_by,date_uploaded from Epins epins where status=? and telco_type=? and denom=?";
+		
+		String rptDate = "";
+		Date date = new Date();
+	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MMM-dd");
+	    rptDate=sdf.format(date);	
+		String filename="D:\\"+this.writePrefix(username, denom, telco, rptDate)+".xls";
+		HSSFWorkbook hwb=new HSSFWorkbook();
+		HSSFSheet sheet =  hwb.createSheet("new sheet");
 
+		HSSFRow rowhead =   sheet.createRow((short)0);
+			try{
+			       conn = EpinsConnectionManager.getConnection();
+			       ps = conn.prepareStatement(updateSQL);
+			            
+			       ps.setInt(1,0);
+			       ps.setString(2,telco);
+			       ps.setInt(3,denom);
+			            
+			       rs = ps.executeQuery();
+			       
+			      
+					int i=1;
+			       while(rs.next())
+			       {
+			            	
+			    	System.out.println(rs.getString("epin"));
+				        
+			        
+					try{
+				
+//						while(rs.next())
+//						{
+					    String dec = goDecryption(rs.getString("epin"));
+//						String dec = rs.getString("epin");
+//					    String[] decArray = validatorService.getDecrypted(dec);
+						String[] decArray = this.getDecrypted(dec);
+						HSSFRow row=   sheet.createRow((short)i);
+//						
+						
+
+				           //worksheet.createRow(i).createCell(0).setCellValue(row[1].toString());
+//				           
+				           for(int j = 0;j<decArray.length;j++) {
+				               row.createCell(j).setCellValue(decArray[j]);
+				           }
+						
+//						
+						
+
+						} catch ( Exception ex ) {
+						    System.out.println(ex);
+
+						}
+							i++;
+			         }
+					        sheet.autoSizeColumn(1);
+							sheet.autoSizeColumn(2);
+							sheet.autoSizeColumn(3);
+							FileOutputStream fileOut =  new FileOutputStream(filename);
+							hwb.write(fileOut);
+							fileOut.close();
+							System.out.println("Your excel file has been generated!");
+							this.ZipFile(username, denom, telco, rptDate, filename);
+			     }
+			catch(Exception ex){
+			            ex.printStackTrace();
+			        
+			        }
+			finally{
+	        	
+	        	Utility.closeQuietly(rs);
+	        	Utility.closeQuietly(ps);
+	        	Utility.closeQuietly(conn);
+	   	
+	        		}
+			      
+			        
+			       	
+		
+		}
+
+    public String[] getDecrypted(String dec) {
+
+        String[] xx = StringUtils.split(dec, " ");
+        return xx;
+    }
+    
+    private String goDecryption(String var) {
+        Encrypter enc = new Encrypter();
+        String xD = enc.decryptBase64String(var);
+        return xD;
+    }
+    public boolean ZipFile(String username, int denom, String telco, String rptDate, String filename){
+    	byte[] buffer = new byte[1024];
+   	 
+    	try{
+
+    		FileOutputStream fos = new FileOutputStream("D:\\Epins.zip");
+    		ZipOutputStream zos = new ZipOutputStream(fos);
+    		ZipEntry ze= new ZipEntry(this.writePrefix(username, denom, telco, rptDate)+".xls");
+    		zos.putNextEntry(ze);
+    		FileInputStream in = new FileInputStream(filename);
+
+    		int len;
+    		while ((len = in.read(buffer)) > 0) {
+    			zos.write(buffer, 0, len);
+    		}
+
+    		in.close();
+    		zos.closeEntry();
+
+    		//remember close it
+    		zos.close();
+
+    		System.out.println("done zipping file");
+    		
+    		return true;
+    	}catch(IOException ex){
+    	   ex.printStackTrace();
+    	}
+		return false;
+    	
+    }
 
 }

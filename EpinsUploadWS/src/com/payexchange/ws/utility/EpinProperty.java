@@ -6,11 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Property {
+public class EpinProperty {
 
     //private String propertyFile;
     
-    public Property() {
+    public EpinProperty() {
         
     }
     
@@ -21,7 +21,7 @@ public class Property {
         try {
         	
 			//prop.load(new FileInputStream("iamaxws.properties"));
-        	prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("iamaxws.properties"));
+        	prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("epins.properties"));
         	//prop.load(new FileInputStream("gmax.properties"));
         	
         	

@@ -8,8 +8,8 @@ import com.payexchange.ws.beans.EpinsUploadResponse;
 public interface EpinsUploadDAOSEI {
 
 	public EpinsUploadResponse reqUpload(String Trace, String ProdCode,
-			String Qty, String type, String target, String appname,
+			int Qty, String type, String target, String appname,
 			String ipaddress, String trantype, String Denom, String email,
-			String username, String password);
+			String username, String password, String transid);
 
 }

@@ -1,5 +1,6 @@
 package com.payexchange.ws.dao;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -12,9 +13,9 @@ import java.sql.ResultSet;
 import com.payexchange.ws.beans.DetailsBean;
 import com.payexchange.ws.beans.EpinsUploadResponse;
 import com.payexchange.ws.connection.ConnectionManager;
-import com.payexchange.ws.connection.ConnectionManager2;
 import com.payexchange.ws.connection.EpinsConnectionManager;
 import com.payexchange.ws.utility.MailService;
+import com.payexchange.ws.utility.MessageModels;
 import com.payexchange.ws.utility.Utility;
 
 import org.apache.commons.lang.StringUtils;
@@ -57,9 +58,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.context.ServletContextAware;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.payexchange.ws.utility.SQL;
 import com.payexchange.ws.utility.Property;
-import com.payexchange.ws.utility.ValidatorService;
+import com.payexchange.ws.utility.MessageModels;
 import com.paysetter.security.Encrypter;
 
 import javax.mail.MessagingException;
@@ -83,35 +83,43 @@ public class HandleEpins  {
 		
 		if(checkip(bean))
 		{
-			
 			response.setPassword("123456");
 			response.setResultcode(0);
-			response.setTracenumber("12345678");
+			response.setTracenumber("8357235");
 			
-//			if(checkDenom(bean)){
-//				
-//				if(checkqty(bean)){
+			long tranid = this.insertTxLogs(bean);
+			this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
+			
+			int qty = bean.getQty();
+			
+			if(qty >= 1){
 					
-					
-					this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty());
-					
+				this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty());
+			
+					if(checkEpins(bean)){
+						
+			
+					}
 
 				
-//				}
-//				
-//			           
-//				       					
-//							
+			}
+			if(qty == 0){
+				//mobile 
+				System.out.println("oyeah");
+			}
+			           
+				       					
+//			if(updateEpins(bean)){
 //				
 //			}
+				
+
 			
 		}	  
 	
 	  return response;
 			  
 }
-		
-	   
 
 	private String writePrefix(String username, int denom, String telco, String rptDate) {
 	       return username+""+denom+""+telco+""+rptDate;
@@ -119,6 +127,8 @@ public class HandleEpins  {
 
 
 	private boolean checkip(DetailsBean bean) {
+		
+		
 					
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -164,68 +174,223 @@ public class HandleEpins  {
 		
 		}
 	
-//	public static void main(String[] args) throws MessagingException {
-//	  System.out.println("--------Start---------");
-//		  ApplicationContext context = new ClassPathXmlApplicationContext("springapp-servlet.xml");
-//
-//		  MailService mm = (MailService) context.getBean("mailservice");
-//		  mm.sendMail("", "This is text content","","","","");
-//
-//		 }
+public long insertTxLogs(DetailsBean bean) {
 	
-	public boolean checkDenom(DetailsBean bean) {
-		
-		
-		PreparedStatement ps = null;
-		Connection conn = null;
-		ResultSet rs = null;
-		
-		String updateSQL = "SELECT DENOM from epins where DENOM =? ";
-        try{
-        	   conn = ConnectionManager2.getConnection();
-		       ps = conn.prepareStatement(updateSQL);
-		            
-		       ps.setString(1,bean.getDenom());
-		      
-		            
-		       rs = ps.executeQuery();
-		        if(rs.next()){
-		        	
-			           logger.info("Denom is valid");		
-			           return true;
-			         
-		        }
-        	}
-        		catch(Exception ex){
+			PreparedStatement ps = null;
+			Connection conn = null;
+			long key = -1;
+			
+			int i = 0;
+			
+			String addSQL = "insert into transactions (transactionid,transactiondate,targetmsisdn,amount,transactiontype,ipaddress,appname)" +
+	        		"values (now(),?,?,?,?,?,?)";
+	        try{
+	        	conn = ConnectionManager.getConnection();
+	            ps = conn.prepareStatement(addSQL,PreparedStatement.RETURN_GENERATED_KEYS);
+	            
+	            
+	            
+	    		String target = bean.getTarget();
+	    		int amount = Integer.parseInt(bean.getAmount());
+	    		String trantype = bean.getTrantype();
+	    		String ipaddress = bean.getIpaddress();
+	    		String appname = bean.getAppname();
+	    		String transid = bean.getTransid();
+	    		
+	            ps.setString(1,target);
+	            ps.setInt(2, amount);
+	            ps.setString(3, trantype);
+	            ps.setString(4, ipaddress);
+	            ps.setString(5, appname);
+	            ps.setString(6, transid);     
+	            if(ps.executeUpdate()>0){
+	            	ResultSet rs =  ps.getGeneratedKeys();
+	            	if (rs.next()) {
+	            		 ResultSetMetaData rsmd = rs.getMetaData();
+	            		    int colCount = rsmd.getColumnCount();
+	            		    do {
+	            		        for (int t = 1; t <= colCount; t++) {
+	            		            key = rs.getLong(t);
+
+	            		        }
+	            		    }
+	            		    while (rs.next());
+	            	}
+	            	return key;
+	            }
+
+	        }catch(Exception ex){
 	            ex.printStackTrace();
-	            return false;
+	            key = -1;
+	            return key;
 	        }
-				finally{
-			 	
-			 	Utility.closeQuietly(rs);
-			 	Utility.closeQuietly(ps);
-			 	Utility.closeQuietly(conn);
-			
-			 		}
-	      
-	        
-	        logger.info("Denom or invalid");		
-	        return false;
-    }
-	
-	private boolean checkqty(DetailsBean bean) {
-		
-		if(bean.getQty() != null){
-			
-			 logger.info("Quantity is Valid");		
-           return true;
-		}
-		
-		logger.info("invalid quantity");
-		return false;
-			
+	        finally{
+	        	
+	        	Utility.closeQuietly(ps);
+	        	Utility.closeQuietly(conn);
+	        	
+	        }
+			return key;
 	}
-	private void writeExcel(String username, int denom, String telco, String Qty) {
+
+public boolean updateEpins(DetailsBean bean){
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	Connection conn = null;
+
+//	String transid = bean.getTransid();
+//	String telco = bean.getTrantype();
+//	String denom = bean.getDenom();
+//	int qty = bean.getQty();
+				
+	String sql = "UPDATE epins set staus='6', transactionid =? WHERE status = '0' AND transactionid is null AND denom =? AND telco_type =? LIMIT"+bean.getQty()+"";
+		
+		       
+		try{
+		       conn = EpinsConnectionManager.getConnection();
+		       ps = conn.prepareStatement(sql);
+		            
+		       ps.setString(1, bean.getTransid());
+		       ps.setString(2, bean.getTrantype());
+		       ps.setString(3, bean.getDenom());
+		            
+		       if(ps.executeUpdate()>0){
+		    	   logger.info("Epins Updated");
+	            	return true;
+	            }
+		       
+//		       logger.info("Updating Epins:");
+//		
+//		       if(rs.next()){
+//		            	
+//		           		
+//		           return true;
+//		         }
+		
+		        }
+		catch(Exception ex){
+		            ex.printStackTrace();
+		            return false;
+		        }
+		finally{
+        	
+        	Utility.closeQuietly(rs);
+        	Utility.closeQuietly(ps);
+        	Utility.closeQuietly(conn);
+   	
+        		}
+		      
+		        
+		        logger.info("Epins failed to update");		
+		        return false;
+	
+	
+}
+//public boolean updateEpins(DetailsBean bean,long tranid,String errorState,String trace){
+//	
+//	PreparedStatement ps = null;
+//	ResultSet rs = null;
+//	Connection conn = null;
+//	
+//	int i = 0;
+//	long id = 0;
+//	String transid = bean.getTransid();
+//	String telco = bean.getTrantype();
+//	String denom = bean.getDenom();
+//	int qty = bean.getQty();
+//
+//	String sql = "UPDATE epins set staus='6', transactionid ='"+transid+"'WHERE status = '0' AND transactionid is null AND denom ='"+denom+"'AND telco_type ='"+telco+"' LIMIT'"+qty+"'";
+//	
+//		try{
+//			conn = EpinsConnectionManager.getConnection();
+//			
+//			id = tranid;
+//			ps = conn.prepareStatement(sql);
+//			
+//			ps.setString(1, errorState);
+//			ps.setString(2, trace);
+//			ps.setLong(3, id);
+//			
+//			if(ps.executeUpdate()>0){
+//				return true;
+//			}
+//			
+//		  }catch(Exception ex){
+//	            ex.printStackTrace();
+//	            
+//	            return false;
+//		  }
+//		finally{
+//        	
+//        	Utility.closeQuietly(rs);
+//        	Utility.closeQuietly(ps);
+//        	Utility.closeQuietly(conn);
+//        	
+//        }
+//        return false;
+//	
+//}
+
+public boolean updateTX(long tranid,String errorState)
+{
+	 PreparedStatement ps = null;
+	 PreparedStatement ps2 = null;
+	 ResultSet rs = null;
+	 Connection conn = null;
+
+	 int i = 0;
+	long id = 0;
+
+        String updateSQL = "UPDATE transactions set status = ? where transactionid = ?";
+     
+        
+        try{
+        	
+        	conn = ConnectionManager.getConnection();    	
+        
+        	id = tranid;
+            ps2 = conn.prepareStatement(updateSQL);
+            ps2.setString(1, errorState);
+            ps2.setLong(2, id);
+
+                 
+            if(ps2.executeUpdate()>0){
+            	return true;
+            }
+
+        }catch(Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+        finally{
+        	
+        	Utility.closeQuietly(rs);
+        	Utility.closeQuietly(ps);
+        	Utility.closeQuietly(conn);
+        	
+        }
+        return false;
+}
+
+	
+	
+	
+//	private String checkqty(DetailsBean bean) {
+//		
+//		
+//		if(bean.getQty() != null){
+//			
+//			 logger.info("Quantity is Valid "+bean.getQty());
+//			 return null;
+//		}
+//		
+//		logger.info("invalid quantity");
+//		return null;
+//		
+//		
+//			
+//	}
+	private void writeExcel(String username, int denom, String telco, int Qty) {
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -240,7 +405,7 @@ public class HandleEpins  {
 		String filename="D:\\"+this.writePrefix(username, denom, telco, rptDate)+".xls";
 		HSSFWorkbook hwb=new HSSFWorkbook();
 		HSSFSheet sheet =  hwb.createSheet("new sheet");
-
+		
 		HSSFRow rowhead =   sheet.createRow((short)0);
 			try{
 			       conn = EpinsConnectionManager.getConnection();
@@ -268,17 +433,13 @@ public class HandleEpins  {
 //						String dec = rs.getString("epin");
 //					    String[] decArray = validatorService.getDecrypted(dec);
 						String[] decArray = this.getDecrypted(dec);
-						HSSFRow row=   sheet.createRow((short)i);
-//						
-						
+						HSSFRow row=   sheet.createRow((short)i);					
 
-				           //worksheet.createRow(i).createCell(0).setCellValue(row[1].toString());
-//				           
 				           for(int j = 0;j<decArray.length;j++) {
 				               row.createCell(j).setCellValue(decArray[j]);
 				           }
 						
-//						
+					
 						
 
 						} catch ( Exception ex ) {
@@ -294,7 +455,8 @@ public class HandleEpins  {
 							hwb.write(fileOut);
 							fileOut.close();
 							System.out.println("Your excel file has been generated!");
-							this.ZipFile(username, denom, telco, rptDate, filename);
+							String password = "l0adcentral";
+							this.ZipFile(username, denom, telco, rptDate, filename, password);
 			     }
 			catch(Exception ex){
 			            ex.printStackTrace();
@@ -324,7 +486,7 @@ public class HandleEpins  {
         String xD = enc.decryptBase64String(var);
         return xD;
     }
-    public boolean ZipFile(String username, int denom, String telco, String rptDate, String filename){
+    public boolean ZipFile(String username, int denom, String telco, String rptDate, String filename, String password){
     	byte[] buffer = new byte[1024];
    	 
     	try{
@@ -334,7 +496,7 @@ public class HandleEpins  {
     		ZipEntry ze= new ZipEntry(this.writePrefix(username, denom, telco, rptDate)+".xls");
     		zos.putNextEntry(ze);
     		FileInputStream in = new FileInputStream(filename);
-
+    		
     		int len;
     		while ((len = in.read(buffer)) > 0) {
     			zos.write(buffer, 0, len);
@@ -355,5 +517,53 @@ public class HandleEpins  {
 		return false;
     	
     }
+    
+    public boolean checkEpins(DetailsBean bean){
+    	
+    	PreparedStatement ps = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		
+//		String transid = bean.getTransid();
+//		String telco = bean.getTrantype();
+//		String denom = bean.getDenom();
+		
+		String checkSQL = "Select id,epin,uploaded_by,date_uploaded from epins where transactionid =? and status=6 and telco_type=? and denom=?";
+        try{
+        	   conn = EpinsConnectionManager.getConnection();
+		       ps = conn.prepareStatement(checkSQL);
+		       
+		       ps.setString(1,bean.getTransid());
+		       ps.setString(2,bean.getDenom());
+		       ps.setString(3,bean.getTrantype());
+		            
+		       rs = ps.executeQuery();
+		        if(rs.next()){
+		        	
+			           logger.info("epin is valid");		
+			           return true;
+			         
+		        }
+        	}
+        		catch(Exception ex){
+	            ex.printStackTrace();
+	            
+	        }
+				finally{
+			 	
+			 	Utility.closeQuietly(rs);
+			 	Utility.closeQuietly(ps);
+			 	Utility.closeQuietly(conn);
+			
+			 		}
+	      
+	        
+	        logger.info("epin is invalid");
+			return false;		
+	        
+	        
+    
+    }
+    
 
 }

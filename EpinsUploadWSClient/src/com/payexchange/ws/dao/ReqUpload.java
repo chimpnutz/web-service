@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg5" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg9" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg10" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg11" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="arg12" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -49,13 +50,14 @@ import javax.xml.bind.annotation.XmlType;
     "arg8",
     "arg9",
     "arg10",
-    "arg11"
+    "arg11",
+    "arg12"
 })
 public class ReqUpload {
 
     protected String arg0;
     protected String arg1;
-    protected String arg2;
+    protected int arg2;
     protected String arg3;
     protected String arg4;
     protected String arg5;
@@ -65,6 +67,7 @@ public class ReqUpload {
     protected String arg9;
     protected String arg10;
     protected String arg11;
+    protected String arg12;
 
     /**
      * Gets the value of the arg0 property.
@@ -117,24 +120,16 @@ public class ReqUpload {
     /**
      * Gets the value of the arg2 property.
      * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
      */
-    public String getArg2() {
+    public int getArg2() {
         return arg2;
     }
 
     /**
      * Sets the value of the arg2 property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
      */
-    public void setArg2(String value) {
+    public void setArg2(int value) {
         this.arg2 = value;
     }
 
@@ -352,6 +347,30 @@ public class ReqUpload {
      */
     public void setArg11(String value) {
         this.arg11 = value;
+    }
+
+    /**
+     * Gets the value of the arg12 property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getArg12() {
+        return arg12;
+    }
+
+    /**
+     * Sets the value of the arg12 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setArg12(String value) {
+        this.arg12 = value;
     }
 
 }

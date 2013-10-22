@@ -11,13 +11,13 @@ import com.payexchange.ws.beans.EpinsUploadResponse;
 
 
 @WebService(targetNamespace = "http://dao.ws.payexchange.com/", endpointInterface = "com.payexchange.ws.dao.EpinsUploadDAOSEI", portName = "EpinsUploadDAOPort", serviceName = "EpinsUploadDAOService")
-public class EpinsUploadDAO implements EpinsUploadDAOSEI  {
+public class EpinsUploadDAO   {
 
 	@Resource
 	WebServiceContext wsContext; 
 	
-	public EpinsUploadResponse reqUpload(String Trace, String ProdCode, String Qty,
-			   String type,String target,String appname, String ipaddress, String trantype, String Denom, String email, String username, String password){
+	public EpinsUploadResponse reqUpload(String Trace, String ProdCode, int Qty,
+			   String type,String target,String appname, String ipaddress, String trantype, String Denom, String email, String username, String password, String transid){
 			
 		  EpinsUploadResponse responseCode = null;
 		 		  
@@ -43,7 +43,7 @@ public class EpinsUploadDAO implements EpinsUploadDAOSEI  {
 		   bean.setEmail(email);
 		   bean.setUsername(username);
 		   bean.setPassword(password);
-
+		   bean.setTransid(transid);
 		  
 		   try {
 			responseCode = Upload.reqUpload(bean);

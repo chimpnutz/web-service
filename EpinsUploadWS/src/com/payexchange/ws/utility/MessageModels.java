@@ -20,4 +20,6 @@ public class MessageModels {
     public static final String SESSION_NOT_OK = "Please login first.";
     public static final String CHANGE_PASS_NOTOK = "Password update not successful.";
     public static final String CHANGE_PASS_OK = "Update Successful.";
+    public static final String NETWORK_ERROR_SESSION_MSG = "network error";
+    public static final String INVALID_EPINS = "invalid epins";
 }

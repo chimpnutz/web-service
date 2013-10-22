@@ -4,9 +4,9 @@ public class DetailsBean {
 	
 	String Trace;
 	String ProdCode;
-	String Qty;
+	int Qty;
 	String type;
-	String Target;
+	String Target; //mobile
 	String appname;
 	String ipaddress;
 	String trantype;
@@ -17,8 +17,22 @@ public class DetailsBean {
 	private String nextView;
 	private String model;
     private int status;
+    String transid;
+    String amount;
     
-    public String getNextView() {
+    public String getAmount() {
+		return amount;
+	}
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+	public String getTransid() {
+		return transid;
+	}
+	public void setTransid(String transid) {
+		this.transid = transid;
+	}
+	public String getNextView() {
 		return nextView;
 	}
 	public void setNextView(String nextView) {
@@ -80,10 +94,10 @@ public class DetailsBean {
 	public void setProdCode(String prodCode) {
 		ProdCode = prodCode;
 	}
-	public String getQty() {
+	public int getQty() {
 		return Qty;
 	}
-	public void setQty(String qty) {
+	public void setQty(int qty) {
 		Qty = qty;
 	}
 	public String getType() {

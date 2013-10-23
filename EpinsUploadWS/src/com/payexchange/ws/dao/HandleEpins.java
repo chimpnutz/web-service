@@ -77,7 +77,7 @@ public class HandleEpins  {
 		
 		
 		EpinsUploadResponse response = new EpinsUploadResponse();
-		
+		DetailsBean details = new DetailsBean();
 		
 		
 		
@@ -87,19 +87,26 @@ public class HandleEpins  {
 			response.setResultcode(0);
 			response.setTracenumber("8357235");
 			
-			long tranid = this.insertTxLogs(bean);
-			this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
+//			long tranid = this.insertTxLogs(bean);
+//			this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
 			
 			int qty = bean.getQty();
 			
 			if(qty >= 1){
-					
+				
+				
 				this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty());
-			
+				
+				
+				if(updateEpins(bean)){
+					
 					if(checkEpins(bean)){
 						
-			
+						
+						
 					}
+			
+				}
 
 				
 			}
@@ -109,9 +116,7 @@ public class HandleEpins  {
 			}
 			           
 				       					
-//			if(updateEpins(bean)){
-//				
-//			}
+
 				
 
 			
@@ -173,6 +178,16 @@ public class HandleEpins  {
 			        return false;
 		
 		}
+
+//public static void main( String[] args )
+//    {
+//    	ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+// 
+//    	MailService mm = (MailService) context.getBean("mailService");
+//        mm.sendMail("", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
+// 
+//    }
+
 	
 public long insertTxLogs(DetailsBean bean) {
 	
@@ -183,7 +198,7 @@ public long insertTxLogs(DetailsBean bean) {
 			int i = 0;
 			
 			String addSQL = "insert into transactions (transactionid,transactiondate,targetmsisdn,amount,transactiontype,ipaddress,appname)" +
-	        		"values (now(),?,?,?,?,?,?)";
+	        		"values (?,now(),?,?,?,?,?)";
 	        try{
 	        	conn = ConnectionManager.getConnection();
 	            ps = conn.prepareStatement(addSQL,PreparedStatement.RETURN_GENERATED_KEYS);
@@ -238,36 +253,29 @@ public boolean updateEpins(DetailsBean bean){
 	ResultSet rs = null;
 	Connection conn = null;
 
-//	String transid = bean.getTransid();
-//	String telco = bean.getTrantype();
-//	String denom = bean.getDenom();
-//	int qty = bean.getQty();
-				
-	String sql = "UPDATE epins set staus='6', transactionid =? WHERE status = '0' AND transactionid is null AND denom =? AND telco_type =? LIMIT"+bean.getQty()+"";
-		
+			
+	String sql = "update epins set status = 6, transactionid = ? where status = ? and transactionid is null and denom = ? and telco_type = ? limit "+bean.getQty()+"";
+
 		       
 		try{
 		       conn = EpinsConnectionManager.getConnection();
 		       ps = conn.prepareStatement(sql);
-		            
+		       
 		       ps.setString(1, bean.getTransid());
-		       ps.setString(2, bean.getTrantype());
+		       ps.setInt(2, 0);
 		       ps.setString(3, bean.getDenom());
+		       ps.setString(4, bean.getProdCode());
+		       
+		       
+		     
 		            
 		       if(ps.executeUpdate()>0){
 		    	   logger.info("Epins Updated");
 	            	return true;
 	            }
 		       
-//		       logger.info("Updating Epins:");
-//		
-//		       if(rs.next()){
-//		            	
-//		           		
-//		           return true;
-//		         }
 		
-		        }
+		   }
 		catch(Exception ex){
 		            ex.printStackTrace();
 		            return false;
@@ -286,50 +294,6 @@ public boolean updateEpins(DetailsBean bean){
 	
 	
 }
-//public boolean updateEpins(DetailsBean bean,long tranid,String errorState,String trace){
-//	
-//	PreparedStatement ps = null;
-//	ResultSet rs = null;
-//	Connection conn = null;
-//	
-//	int i = 0;
-//	long id = 0;
-//	String transid = bean.getTransid();
-//	String telco = bean.getTrantype();
-//	String denom = bean.getDenom();
-//	int qty = bean.getQty();
-//
-//	String sql = "UPDATE epins set staus='6', transactionid ='"+transid+"'WHERE status = '0' AND transactionid is null AND denom ='"+denom+"'AND telco_type ='"+telco+"' LIMIT'"+qty+"'";
-//	
-//		try{
-//			conn = EpinsConnectionManager.getConnection();
-//			
-//			id = tranid;
-//			ps = conn.prepareStatement(sql);
-//			
-//			ps.setString(1, errorState);
-//			ps.setString(2, trace);
-//			ps.setLong(3, id);
-//			
-//			if(ps.executeUpdate()>0){
-//				return true;
-//			}
-//			
-//		  }catch(Exception ex){
-//	            ex.printStackTrace();
-//	            
-//	            return false;
-//		  }
-//		finally{
-//        	
-//        	Utility.closeQuietly(rs);
-//        	Utility.closeQuietly(ps);
-//        	Utility.closeQuietly(conn);
-//        	
-//        }
-//        return false;
-//	
-//}
 
 public boolean updateTX(long tranid,String errorState)
 {
@@ -371,25 +335,7 @@ public boolean updateTX(long tranid,String errorState)
         }
         return false;
 }
-
 	
-	
-	
-//	private String checkqty(DetailsBean bean) {
-//		
-//		
-//		if(bean.getQty() != null){
-//			
-//			 logger.info("Quantity is Valid "+bean.getQty());
-//			 return null;
-//		}
-//		
-//		logger.info("invalid quantity");
-//		return null;
-//		
-//		
-//			
-//	}
 	private void writeExcel(String username, int denom, String telco, int Qty) {
 		
 		PreparedStatement ps = null;
@@ -510,6 +456,11 @@ public boolean updateTX(long tranid,String errorState)
 
     		System.out.println("done zipping file");
     		
+    		ApplicationContext context = new ClassPathXmlApplicationContext("/Spring-Mail.xml");
+    		 
+        	MailService mm = (MailService) context.getBean("mailService");
+            mm.sendMail("", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
+    		
     		return true;
     	}catch(IOException ex){
     	   ex.printStackTrace();
@@ -524,22 +475,24 @@ public boolean updateTX(long tranid,String errorState)
 		Connection conn = null;
 		ResultSet rs = null;
 		
-//		String transid = bean.getTransid();
-//		String telco = bean.getTrantype();
-//		String denom = bean.getDenom();
+		String transid = bean.getTransid();
+		String telco = bean.getProdCode();
+		String denom = bean.getDenom();
 		
-		String checkSQL = "Select id,epin,uploaded_by,date_uploaded from epins where transactionid =? and status=6 and telco_type=? and denom=?";
+		String checkSQL = "Select id, epin, uploaded_by, date_uploaded from epins where transactionid =? and status=? and telco_type=? and denom=?";
         try{
         	   conn = EpinsConnectionManager.getConnection();
 		       ps = conn.prepareStatement(checkSQL);
 		       
-		       ps.setString(1,bean.getTransid());
-		       ps.setString(2,bean.getDenom());
-		       ps.setString(3,bean.getTrantype());
+		       ps.setString(1,transid);
+		       ps.setInt(2, 6);
+		       ps.setString(3,telco);
+		       ps.setString(4,denom);
+		       
 		            
 		       rs = ps.executeQuery();
 		        if(rs.next()){
-		        	
+		        	   
 			           logger.info("epin is valid");		
 			           return true;
 			         

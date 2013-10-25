@@ -6,8 +6,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	<property name="host" value="smtp.gmail.com" />
 	<property name="port" value="587" />
-	<property name="username" value="username" />
-	<property name="password" value="password" />
+	<property name="username" value="voteforpedropenduko@gmail.com" />
+	<property name="password" value="voteforme" />
  
 	<property name="javaMailProperties">
 		<props>
@@ -18,8 +18,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 </bean>
 
 <bean id="smtpAuthenticator" class="com.payexchange.ws.utility.GMailAuthenticator">
-		<constructor-arg value="your@username.com" />
-		<constructor-arg value="your.passwd" />
+		<constructor-arg value="voteforpedropenduko@gmail.com" />
+		<constructor-arg value="voteforme" />
 </bean>
 
  

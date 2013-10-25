@@ -14,6 +14,7 @@ import com.payexchange.ws.beans.DetailsBean;
 import com.payexchange.ws.beans.EpinsUploadResponse;
 import com.payexchange.ws.connection.ConnectionManager;
 import com.payexchange.ws.connection.EpinsConnectionManager;
+import com.payexchange.ws.connection.SMSConnectionManager;
 import com.payexchange.ws.utility.MailService;
 import com.payexchange.ws.utility.MessageModels;
 import com.payexchange.ws.utility.Utility;
@@ -21,6 +22,7 @@ import com.payexchange.ws.utility.Utility;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
+import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -62,10 +64,13 @@ import com.payexchange.ws.utility.Property;
 import com.payexchange.ws.utility.MessageModels;
 import com.paysetter.security.Encrypter;
 
+import com.payexchange.ws.utility.OutgoingSMSModel;
+
 import javax.mail.MessagingException;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataAccessException;
 
 
 
@@ -77,7 +82,7 @@ public class HandleEpins  {
 		
 		
 		EpinsUploadResponse response = new EpinsUploadResponse();
-		DetailsBean details = new DetailsBean();
+		
 		
 		
 		
@@ -87,8 +92,8 @@ public class HandleEpins  {
 			response.setResultcode(0);
 			response.setTracenumber("8357235");
 			
-//			long tranid = this.insertTxLogs(bean);
-//			this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
+			long tranid = this.insertTxLogs(bean);
+			this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
 			
 			int qty = bean.getQty();
 			
@@ -112,8 +117,76 @@ public class HandleEpins  {
 			}
 			if(qty == 0){
 				//mobile 
-				System.out.println("oyeah");
+				if(getDenom(bean)){
+					
+					if(checkEpins(bean)){
+						
+						PreparedStatement ps = null;
+						ResultSet rs = null;
+						Connection conn = null;
+						
+						String telco = bean.getProdCode();
+						int denom = Integer.parseInt(bean.getDenom());
+						
+						String sql = "Select id,epin,uploaded_by,date_uploaded from Epins epins where status=? and telco_type=? and denom=?";
+						
+						try{
+						       conn = EpinsConnectionManager.getConnection();
+						       ps = conn.prepareStatement(sql);
+						            
+						       ps.setInt(1,0);
+						       ps.setString(2,telco);
+						       ps.setInt(3,denom);
+						            
+						       rs = ps.executeQuery();
+						       
+						      
+								int i=1;
+						       while(rs.next())
+						       {
+						            	
+						    	System.out.println(rs.getString("epin"));
+							        
+						        
+								try{
+							
+									
+								    String dec = goDecryption(rs.getString("epin"));
+									String[] decArray = this.getDecrypted(dec);
+														
+
+							           for(int j = 0;j<decArray.length;j++) {
+							               System.out.println(decArray[j]);
+							           }
+									
+								
+									
+
+									} catch ( Exception ex ) {
+									    System.out.println(ex);
+
+									}
+										i++;
+						         }
+						}
+						catch(Exception ex){
+				            ex.printStackTrace();
+				        
+				        }
+				finally{
+		        	
+		        	Utility.closeQuietly(rs);
+		        	Utility.closeQuietly(ps);
+		        	Utility.closeQuietly(conn);
+		   	
+		        }
 			}
+					
+					
+		}
+				
+				
+	}
 			           
 				       					
 
@@ -125,6 +198,51 @@ public class HandleEpins  {
 	  return response;
 			  
 }
+
+	private boolean getDenom(DetailsBean bean) {
+		
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Connection conn = null;
+		
+		String selectSQL = "Select denom from epins where denom =?";
+		
+		try{
+			conn = EpinsConnectionManager.getConnection();
+			ps = conn.prepareStatement(selectSQL);
+			
+			ps.setString(1, bean.getDenom());
+			
+			rs = ps.executeQuery();
+			
+			logger.info("checking denom "+bean.getDenom());
+			
+			if(rs.next()){
+            	
+		           logger.info("Denom is Valid");		
+		           return true;
+		         }
+		
+		        }
+		catch(Exception ex){
+		            ex.printStackTrace();
+		            return false;
+		        }
+		finally{
+     	
+     	Utility.closeQuietly(rs);
+     	Utility.closeQuietly(ps);
+     	Utility.closeQuietly(conn);
+	
+     		}
+		      
+		        
+		        logger.info("Invalid Denom");		
+		        return false;
+	
+	}
+	
+	
 
 	private String writePrefix(String username, int denom, String telco, String rptDate) {
 	       return username+""+denom+""+telco+""+rptDate;
@@ -335,7 +453,7 @@ public boolean updateTX(long tranid,String errorState)
         }
         return false;
 }
-	
+//creating excel file	
 	private void writeExcel(String username, int denom, String telco, int Qty) {
 		
 		PreparedStatement ps = null;
@@ -349,8 +467,11 @@ public boolean updateTX(long tranid,String errorState)
 	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MMM-dd");
 	    rptDate=sdf.format(date);	
 		String filename="D:\\"+this.writePrefix(username, denom, telco, rptDate)+".xls";
+		
 		HSSFWorkbook hwb=new HSSFWorkbook();
 		HSSFSheet sheet =  hwb.createSheet("new sheet");
+		
+		
 		
 		HSSFRow rowhead =   sheet.createRow((short)0);
 			try{
@@ -363,7 +484,6 @@ public boolean updateTX(long tranid,String errorState)
 			            
 			       rs = ps.executeQuery();
 			       
-			      
 					int i=1;
 			       while(rs.next())
 			       {
@@ -398,11 +518,12 @@ public boolean updateTX(long tranid,String errorState)
 							sheet.autoSizeColumn(2);
 							sheet.autoSizeColumn(3);
 							FileOutputStream fileOut =  new FileOutputStream(filename);
+							
 							hwb.write(fileOut);
 							fileOut.close();
 							System.out.println("Your excel file has been generated!");
-							String password = "l0adcentral";
-							this.ZipFile(username, denom, telco, rptDate, filename, password);
+							
+							this.ZipFile(username, denom, telco, rptDate, filename);
 			     }
 			catch(Exception ex){
 			            ex.printStackTrace();
@@ -420,7 +541,7 @@ public boolean updateTX(long tranid,String errorState)
 			       	
 		
 		}
-
+//decrypt encrypted epins
     public String[] getDecrypted(String dec) {
 
         String[] xx = StringUtils.split(dec, " ");
@@ -432,7 +553,8 @@ public boolean updateTX(long tranid,String errorState)
         String xD = enc.decryptBase64String(var);
         return xD;
     }
-    public boolean ZipFile(String username, int denom, String telco, String rptDate, String filename, String password){
+//zipping file
+    public boolean ZipFile(String username, int denom, String telco, String rptDate, String filename){
     	byte[] buffer = new byte[1024];
    	 
     	try{
@@ -459,8 +581,9 @@ public boolean updateTX(long tranid,String errorState)
     		ApplicationContext context = new ClassPathXmlApplicationContext("/Spring-Mail.xml");
     		 
         	MailService mm = (MailService) context.getBean("mailService");
-            mm.sendMail("", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
-    		
+            mm.sendMail("hello", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
+ 		
+            System.out.println("email sent!");
     		return true;
     	}catch(IOException ex){
     	   ex.printStackTrace();
@@ -468,6 +591,8 @@ public boolean updateTX(long tranid,String errorState)
 		return false;
     	
     }
+    
+    //checking epins
     
     public boolean checkEpins(DetailsBean bean){
     	
@@ -513,10 +638,84 @@ public boolean updateTX(long tranid,String errorState)
 	        
 	        logger.info("epin is invalid");
 			return false;		
-	        
-	        
-    
+   
     }
+    //sending sms
+	
+	public int insertSmsSent(Connection conn, OutgoingSMSModel sms) throws SQLException {
+		if (sms == null) return 0;
+		String sql = "Insert into SmsSent (SmsId, SmsDate, SmsGID, Sender, Recipient, SmsData, Tariff_Class, Service_Type, Status) Values (SmsId_Snt.nextVal, SysDate,?,?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement stmt = null;
+		int rs = 0;
+		try {
+			conn = SMSConnectionManager.getConnection();
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, sms.getGatewayID() == null ? "" : sms.getGatewayID());
+			stmt.setString(2, sms.getSender());
+			stmt.setString(3, sms.getRecipient());
+			stmt.setString(4, sms.getSmsData());
+			stmt.setString(5, sms.getTariffClass());
+			stmt.setString(6, sms.getServiceType());
+			stmt.setInt(7, 0);
+			
+			if(stmt.executeUpdate()>0){
+		    	   logger.info("SMS Sent has been inserted");
+	            	return rs;
+	            }
+		}
+		catch (SQLException sqle) {
+			logger.info(sqle.getMessage());
+			throw sqle;
+		}
+		finally {
+			try {
+				stmt.close();
+			}
+			catch (Exception e) {
+			}
+		}
+		return rs;
+	}
+	
+	public int insertSmsSent(OutgoingSMSModel sms) throws SQLException {
+		
+		logger.info("here");
+		String sql = "Insert into SmsSent (SmsId, SmsDate, SmsGID, Sender, Recipient, SmsData, Tariff_Class, Service_Type, Status) Values (SmsId_Snt.nextVal, SysDate,?,?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement stmt = null;
+		Connection conn = null;
+		int row = 0;
+		   
+		   try{
+					     conn = SMSConnectionManager.getConnection();
+						 stmt = conn.prepareStatement(sql);
+				 	 	 stmt.setString(1, sms.getGatewayID() == null ? "" : sms.getGatewayID());
+						 stmt.setString(2, sms.getSender() );
+						 stmt.setString(3, sms.getRecipient());
+						 stmt.setString(4, sms.getSmsData());
+						 stmt.setString(5, sms.getTariffClass());
+						 stmt.setString(6, sms.getServiceType());
+						 stmt.setInt(7, 0);
+				
+				
+						 if(stmt.executeUpdate()>0){
+					    	   logger.info("SMS Sent has been inserted");
+				            	return row;
+				            }
+					
+		
+		   }catch(DataAccessException ex){
+	            ex.printStackTrace();
+	            logger.info(ex.getMessage());
+	            return row;
+	        }
+		   
+		logger.info("row: "+row);   
+		return row;
+		   
+
+	}
     
 
 }

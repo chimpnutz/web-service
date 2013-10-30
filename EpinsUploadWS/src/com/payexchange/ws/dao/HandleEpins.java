@@ -78,7 +78,7 @@ public class HandleEpins  {
 	
 	private static final Logger logger = Logger.getLogger(HandleEpins.class);
 
-	public EpinsUploadResponse reqUpload(DetailsBean bean) {
+	public EpinsUploadResponse reqUpload(DetailsBean bean) throws SQLException {
 		
 		
 		EpinsUploadResponse response = new EpinsUploadResponse();
@@ -88,20 +88,19 @@ public class HandleEpins  {
 		
 		if(checkip(bean))
 		{
+			
 			response.setPassword("123456");
 			response.setResultcode(0);
 			response.setTracenumber("8357235");
-			
-			long tranid = this.insertTxLogs(bean);
-			this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
-			
+						
 			int qty = bean.getQty();
 			
 			if(qty >= 1){
-				
+				//email
+				long tranid = this.insertTxLogs2(bean);	
+				this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
 				
 				this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty());
-				
 				
 				if(updateEpins(bean)){
 					
@@ -117,6 +116,12 @@ public class HandleEpins  {
 			}
 			if(qty == 0){
 				//mobile 
+				long tranid = this.insertTxLogs(bean);				
+				this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
+				
+//				OutgoingSMSModel sms = null;
+//				this.insertSmsSent(sms);
+				
 				if(getDenom(bean)){
 					
 					if(checkEpins(bean)){
@@ -297,45 +302,33 @@ public class HandleEpins  {
 		
 		}
 
-//public static void main( String[] args )
-//    {
-//    	ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
-// 
-//    	MailService mm = (MailService) context.getBean("mailService");
-//        mm.sendMail("", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
-// 
-//    }
-
 	
 public long insertTxLogs(DetailsBean bean) {
-	
 			PreparedStatement ps = null;
 			Connection conn = null;
 			long key = -1;
 			
 			int i = 0;
 			
-			String addSQL = "insert into transactions (transactionid,transactiondate,targetmsisdn,amount,transactiontype,ipaddress,appname)" +
-	        		"values (?,now(),?,?,?,?,?)";
+			
+			String addSQL = "insert into transactions (transactiondate,targetmsisdn,amount,transactiontype,ipaddress,appname)" +
+	        		"values (now(),?,?,?,?,?)";
 	        try{
 	        	conn = ConnectionManager.getConnection();
 	            ps = conn.prepareStatement(addSQL,PreparedStatement.RETURN_GENERATED_KEYS);
-	            
-	            
-	            
+	            	    		
 	    		String target = bean.getTarget();
-	    		int amount = Integer.parseInt(bean.getAmount());
+	    		String denom = bean.getDenom();
 	    		String trantype = bean.getTrantype();
 	    		String ipaddress = bean.getIpaddress();
 	    		String appname = bean.getAppname();
-	    		String transid = bean.getTransid();
 	    		
-	            ps.setString(1,target);
-	            ps.setInt(2, amount);
+	    		ps.setString(1, target);
+	            ps.setString(2, denom);          
 	            ps.setString(3, trantype);
 	            ps.setString(4, ipaddress);
 	            ps.setString(5, appname);
-	            ps.setString(6, transid);     
+	           
 	            if(ps.executeUpdate()>0){
 	            	ResultSet rs =  ps.getGeneratedKeys();
 	            	if (rs.next()) {
@@ -365,6 +358,62 @@ public long insertTxLogs(DetailsBean bean) {
 	        }
 			return key;
 	}
+
+public long insertTxLogs2(DetailsBean bean) {
+	PreparedStatement ps = null;
+	Connection conn = null;
+	long key = -1;
+	
+	int i = 0;
+	
+	
+	String addSQL = "insert into transactions (transactiondate,targetmsisdn,amount,transactiontype,ipaddress,appname)" +
+    		"values (now(),?,?,?,?,?)";
+    try{
+    	conn = ConnectionManager.getConnection();
+        ps = conn.prepareStatement(addSQL,PreparedStatement.RETURN_GENERATED_KEYS);
+        	    		
+		String target = bean.getTarget();
+		int amount = 0;
+		String trantype = bean.getTrantype();
+		String ipaddress = bean.getIpaddress();
+		String appname = bean.getAppname();
+		
+		ps.setString(1, target);
+        ps.setInt(2, amount);          
+        ps.setString(3, trantype);
+        ps.setString(4, ipaddress);
+        ps.setString(5, appname);
+       
+        if(ps.executeUpdate()>0){
+        	ResultSet rs =  ps.getGeneratedKeys();
+        	if (rs.next()) {
+        		 ResultSetMetaData rsmd = rs.getMetaData();
+        		    int colCount = rsmd.getColumnCount();
+        		    do {
+        		        for (int t = 1; t <= colCount; t++) {
+        		            key = rs.getLong(t);
+
+        		        }
+        		    }
+        		    while (rs.next());
+        	}
+        	return key;
+        }
+
+    }catch(Exception ex){
+        ex.printStackTrace();
+        key = -1;
+        return key;
+    }
+    finally{
+    	
+    	Utility.closeQuietly(ps);
+    	Utility.closeQuietly(conn);
+    	
+    }
+	return key;
+}
 
 public boolean updateEpins(DetailsBean bean){
 	PreparedStatement ps = null;
@@ -578,6 +627,7 @@ public boolean updateTX(long tranid,String errorState)
 
     		System.out.println("done zipping file");
     		
+    		//mail service
     		ApplicationContext context = new ClassPathXmlApplicationContext("/Spring-Mail.xml");
     		 
         	MailService mm = (MailService) context.getBean("mailService");

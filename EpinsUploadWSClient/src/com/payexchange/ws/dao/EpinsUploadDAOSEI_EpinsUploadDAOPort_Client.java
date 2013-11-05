@@ -53,7 +53,7 @@ public final class EpinsUploadDAOSEI_EpinsUploadDAOPort_Client {
         System.out.println("Invoking reqUpload...");
         java.lang.String _reqUpload_arg0 = "";
         java.lang.String _reqUpload_arg1 = "GT";
-        int _reqUpload_arg2 = 1;
+        int _reqUpload_arg2 = 0;
         java.lang.String _reqUpload_arg3 = "";
         java.lang.String _reqUpload_arg4 = "20";
         java.lang.String _reqUpload_arg5 = "PC2MWEB";

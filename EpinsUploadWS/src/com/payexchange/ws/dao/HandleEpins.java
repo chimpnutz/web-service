@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.payexchange.ws.enc.AesZipFileEncrypter;
+
 import com.payexchange.ws.beans.DetailsBean;
 import com.payexchange.ws.beans.EpinsUploadResponse;
 import com.payexchange.ws.connection.ConnectionManager;
@@ -119,8 +121,9 @@ public class HandleEpins  {
 				long tranid = this.insertTxLogs(bean);				
 				this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
 				
-//				OutgoingSMSModel sms = null;
-//				this.insertSmsSent(sms);
+				OutgoingSMSModel sms = null;
+				this.insertSmsSent(sms);
+				
 				
 				if(getDenom(bean)){
 					
@@ -139,7 +142,7 @@ public class HandleEpins  {
 						       conn = EpinsConnectionManager.getConnection();
 						       ps = conn.prepareStatement(sql);
 						            
-						       ps.setInt(1,0);
+						       ps.setInt(1,6);
 						       ps.setString(2,telco);
 						       ps.setInt(3,denom);
 						            
@@ -374,7 +377,7 @@ public long insertTxLogs2(DetailsBean bean) {
         ps = conn.prepareStatement(addSQL,PreparedStatement.RETURN_GENERATED_KEYS);
         	    		
 		String target = bean.getTarget();
-		int amount = 0;
+		int amount = 15;
 		String trantype = bean.getTrantype();
 		String ipaddress = bean.getIpaddress();
 		String appname = bean.getAppname();
@@ -515,19 +518,19 @@ public boolean updateTX(long tranid,String errorState)
 		Date date = new Date();
 	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MMM-dd");
 	    rptDate=sdf.format(date);	
-		String filename="D:\\"+this.writePrefix(username, denom, telco, rptDate)+".xls";
+		File filename= new File("D:\\"+this.writePrefix(username, denom, telco, rptDate)+".xls");
 		
 		HSSFWorkbook hwb=new HSSFWorkbook();
 		HSSFSheet sheet =  hwb.createSheet("new sheet");
 		
 		
 		
-		HSSFRow rowhead =   sheet.createRow((short)0);
+		HSSFRow rowhead = sheet.createRow((short)0);
 			try{
 			       conn = EpinsConnectionManager.getConnection();
 			       ps = conn.prepareStatement(updateSQL);
 			            
-			       ps.setInt(1,0);
+			       ps.setInt(1,6);
 			       ps.setString(2,telco);
 			       ps.setInt(3,denom);
 			            
@@ -602,44 +605,30 @@ public boolean updateTX(long tranid,String errorState)
         String xD = enc.decryptBase64String(var);
         return xD;
     }
-//zipping file
-    public boolean ZipFile(String username, int denom, String telco, String rptDate, String filename){
-    	byte[] buffer = new byte[1024];
-   	 
-    	try{
-
-    		FileOutputStream fos = new FileOutputStream("D:\\Epins.zip");
-    		ZipOutputStream zos = new ZipOutputStream(fos);
-    		ZipEntry ze= new ZipEntry(this.writePrefix(username, denom, telco, rptDate)+".xls");
-    		zos.putNextEntry(ze);
-    		FileInputStream in = new FileInputStream(filename);
-    		
-    		int len;
-    		while ((len = in.read(buffer)) > 0) {
-    			zos.write(buffer, 0, len);
-    		}
-
-    		in.close();
-    		zos.closeEntry();
-
-    		//remember close it
-    		zos.close();
-
-    		System.out.println("done zipping file");
-    		
-    		//mail service
-    		ApplicationContext context = new ClassPathXmlApplicationContext("/Spring-Mail.xml");
-    		 
-        	MailService mm = (MailService) context.getBean("mailService");
-            mm.sendMail("hello", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
- 		
-            System.out.println("email sent!");
-    		return true;
-    	}catch(IOException ex){
-    	   ex.printStackTrace();
-    	}
-		return false;
+//zipping and encrypting file
+    public boolean ZipFile(String username, int denom, String telco, String rptDate, File filename){
     	
+    	String password = "l0adcentral";
+    	File outFile = new File("D:\\Epins.zip");
+    try{
+    	AesZipFileEncrypter.zipAndEncrypt(filename, outFile, password) ;	
+        AesZipFileEncrypter enc = new AesZipFileEncrypter(outFile);
+        enc.add(filename, password);
+        enc.close();
+        System.out.println("Done!");
+        
+        ApplicationContext context = new ClassPathXmlApplicationContext("/Spring-Mail.xml");
+		 
+    	MailService mm = (MailService) context.getBean("mailService");
+        mm.sendMail("hello", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
+		
+        System.out.println("email sent!");
+        return true;
+        
+       } catch(IOException ex){
+    	   ex.printStackTrace();
+       }
+    	return false; 	
     }
     
     //checking epins
@@ -740,14 +729,14 @@ public boolean updateTX(long tranid,String errorState)
 		   try{
 					     conn = SMSConnectionManager.getConnection();
 						 stmt = conn.prepareStatement(sql);
-				 	 	 stmt.setString(1, sms.getGatewayID() == null ? "" : sms.getGatewayID());
-						 stmt.setString(2, sms.getSender() );
-						 stmt.setString(3, sms.getRecipient());
-						 stmt.setString(4, sms.getSmsData());
-						 stmt.setString(5, sms.getTariffClass());
-						 stmt.setString(6, sms.getServiceType());
+				 	 	 stmt.setString(1, "1");
+						 stmt.setString(2, "haha");
+						 stmt.setString(3, "haha");
+						 stmt.setString(4, "haha");
+						 stmt.setString(5, "haha");
+						 stmt.setString(6, "haha");
 						 stmt.setInt(7, 0);
-				
+						
 				
 						 if(stmt.executeUpdate()>0){
 					    	   logger.info("SMS Sent has been inserted");

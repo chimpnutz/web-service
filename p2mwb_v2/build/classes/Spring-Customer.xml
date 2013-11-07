@@ -1,0 +1,121 @@
+	<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/subwayapi" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+
+	<!--
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@//192.168.2.24:1521/ubpmbs" />
+		<property name="username" value="pcdom" />
+		<property name="password" value="pcdom" />
+	</bean>
+	
+
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/ubpmbstx?zeroDateTimeBehavior=convertToNull" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+	-->	
+	
+	<bean id="loginDAO" class="com.pc2mweb.dao.transactions.LoginDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="topupDAO" class="com.pc2mweb.dao.transactions.TopupDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="usermanagementDAO" class="com.pc2mweb.dao.transactions.UserManagementDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="wallettransferDAO" class="com.pc2mweb.dao.transactions.WalletTransferDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="transactionreportsDAO" class="com.pc2mweb.dao.transactions.TransactionReportsDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="transactioninquiryDAO" class="com.pc2mweb.dao.transactions.TransactionInquiryDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="wallettransferhistoryDAO" class="com.pc2mweb.dao.transactions.WalletTransferHistoryDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="transfertobranchDAO" class="com.pc2mweb.dao.transactions.TransfertoBranchDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="transfertomotherDAO" class="com.pc2mweb.dao.transactions.TransfertoMotherDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="viewaccountDAO" class="com.pc2mweb.dao.transactions.ViewAccountDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="changepasswordDAO" class="com.pc2mweb.dao.transactions.ChangePasswordDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="transactionhistoryDAO" class="com.pc2mweb.dao.transactions.TransactionHistoryDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="transfertoretailerDAO" class="com.pc2mweb.dao.transactions.TransfertoRetailerDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="emergencyDAO" class="com.pc2mweb.dao.transactions.EmergencyLoadDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	
+	<bean id="profileDAO" class="com.pc2mweb.dao.transactions.ProfileManagerDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="purchaseorderDAO" class="com.pc2mweb.dao.transactions.PurchaseOrderDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="billspaymentDAO" class="com.pc2mweb.dao.transactions.BillsPaymentDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+		
+	<bean id="managebranchesDAO" class="com.pc2mweb.dao.transactions.ManageBranchesDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="lopDAO" class="com.pc2mweb.dao.transactions.LopDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="epinDAO" class="com.pc2mweb.dao.transactions.EpinDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+		
+		
+		
+		
+
+
+
+
+</beans>

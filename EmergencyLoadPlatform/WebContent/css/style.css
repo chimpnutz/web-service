@@ -1,0 +1,121 @@
+@charset "utf-8";
+/* CSS Document */
+
+html {
+	overflow-y:scroll;	
+	height:100%;
+}
+
+body {
+	background:#ffffff top center;
+	margin:0;
+	padding:0;
+	font:"Lucida Sans Unicode", "Lucida Grande", sans-serif 1em #333;	
+	line-height:22px;	
+}
+
+#page {
+	width:1024px;
+	height:100%;	
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#container {
+	width:1024px;
+	height:100%;
+	overflow:auto;
+	background:#f9f9f9 top center;
+	border:1px;
+	border-style:solid;
+	border-color:#ccc;
+	margin:0 auto;	
+}
+
+#left-sidebar  {
+	float:left;
+	background:#eee top center;
+	width:240px;
+	min-height:500px;
+	border-right:1px;
+	border-style:solid;
+	border-color:#ccc;
+	
+	border-left:0;
+	border-top:0;
+	border-bottom:1px;
+	border-style:solid;
+	border-color:#ccc;
+	
+	
+	
+}
+#right-sidebar {
+	float:left;
+	background:#ececec top center;
+	width:783px;
+	height:40px;
+	border-bottom:1px;
+	border-style:solid;
+	border-color:#ccc;
+	
+	border-left:0;
+	border-top:0;
+	border-right:0;
+	
+	
+	
+}
+hr { 
+	display: block; 
+	height: 1px;
+    border: 0; 
+	border-top: 1px solid #ccc;
+    margin: 1em 10px; 
+	padding: 0; 
+	}
+
+#content {
+	float:right;
+	width:770px;
+	height:auto;
+	margin-top:20px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+#sidebar-content {
+	float:left;
+	width:220px;
+	height:auto;
+	margin-top:20px;
+	margin-left:auto;
+	margin-right:auto;
+}
+	
+	
+#footer {
+	clear:both;
+	background:url(../css/images/footer.gif);
+	width: 674px;
+	height:48px;
+	margin-top:20px;
+	margin-left:auto;
+	margin-right:auto;
+	background-position:bottom;	
+	
+}
+
+
+/************************************** Login****************************************************/
+
+#login-box {
+	width:400px;
+	height:300px;
+	margin-top:0;
+	margin-left:30px;
+		
+}
+
+/**************************************LIst****************************************************/
+

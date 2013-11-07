@@ -1,0 +1,371 @@
+@charset "utf-8";
+/* CSS Document */
+
+.text18_tungsten_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	font-weight:bold;
+	color:#333333;	
+	text-decoration:none;
+}
+.text18_tungsten {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	color:#333333;	
+	text-decoration:none;
+}
+
+.text15_tungsten_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	color:#333333;	
+	text-decoration:none;
+}
+.text15_tungsten {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	color:#333333;	
+	text-decoration:none;
+}
+
+.text12_tungsten_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	color:#333333;	
+	text-decoration:none;
+}
+
+.text12_tungsten {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	color:#333333;
+	text-decoration:none;
+	font-weight: normal;
+	
+}
+
+.text10_tungsten_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+	color:#333333;	
+	text-decoration:none;
+}
+
+.text10_tungsten {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	color:#333333;	
+	text-decoration:none;
+}
+
+
+
+
+
+.text15_steel_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	color:#666666;	
+	text-decoration:none;
+}
+.text15_steel {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	color:#666666;	
+	text-decoration:none;
+}
+
+.text12_steel_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	color:#666666;	
+	text-decoration:none;
+}
+
+.text12_steel {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	color:#666666;	
+	text-decoration:none;
+}
+
+.text10_steel_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+	color:#666666;	
+	text-decoration:none;
+}
+
+.text10_steel {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	color:#666666;	
+	text-decoration:none;
+}
+
+.text18_iron_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	font-weight:bold;
+	color:#4c4c4c;	
+	text-decoration:none;
+}
+.text18_iron {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	color:#4c4c4c;	
+	text-decoration:none;
+}
+.text15_iron_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	color:#4c4c4c;
+	text-decoration:none;	
+}
+.text15_iron {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	color:#4c4c4c;	
+	text-decoration:none;
+}
+
+.text12_iron_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	color:#4c4c4c;	
+	text-decoration:none;
+}
+
+.text12_iron {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	color:#4c4c4c;
+	text-decoration:none;
+}
+
+.text10_iron_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+	color:#4c4c4c;	
+	text-decoration:none;
+}
+
+.text10_iron {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	color:#4c4c4c;	
+	text-decoration:none;
+}
+
+
+
+
+.text18_lightblue_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	font-weight:bold;
+	color:#92c6da;	
+	text-decoration:none;
+}
+.text18_lightblue {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	color:#92c6da;	
+	text-decoration:none;
+}
+.text15_lightblue_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	color:#92c6da;	
+	text-decoration:none;
+}
+.text15_lightblue {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	color:#92c6da;	
+	text-decoration:none;
+}
+
+.text12_lightblue_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	color:#92c6da;	
+	text-decoration:none;
+}
+
+.text12_lightblue {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	color:#92c6da;
+	text-decoration:none;
+}
+
+.text10_lightblue_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+	color:#92c6da;	
+	text-decoration:none;
+}
+
+.text10_lightblue {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	color:#92c6da;	
+	text-decoration:none;
+}
+
+
+
+.text18_blue_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	font-weight:bold;
+	color:#0088cc;	
+	text-decoration:none;
+}
+.text18_blue {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	color:#0088cc;	
+	text-decoration:none;
+}
+.text15_blue_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	color:#0088cc;	
+	text-decoration:none;
+}
+.text15_blue {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	color:#0088cc;	
+	text-decoration:none;
+}
+
+.text12_blue_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	color:#0088cc;	
+	text-decoration:none;
+}
+
+.text12_blue {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	color:#0088cc;
+	text-decoration:none;
+}
+
+.text10_blue_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+	color:#0088cc;	
+	text-decoration:none;
+}
+
+.text10_blue {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	color:#0088cc;	
+	text-decoration:none;
+}
+
+
+
+.text18_red_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	font-weight:bold;
+	color:#ff0000;	
+	text-decoration:none;
+}
+.text18_red {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:18px;
+	color:#ff0000;	
+	text-decoration:none;
+}
+.text15_red_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	font-weight:bold;
+	color:#ff0000;	
+	text-decoration:none;
+}
+.text15_red {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:15px;
+	color:#ff0000;	
+	text-decoration:none;
+}
+
+.text12_red_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	color:#ff0000;	
+	text-decoration:none;
+}
+
+.text12_red {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	color:#ff0000;	
+	text-decoration:none;
+}
+
+.text10_red_bold {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	font-weight:bold;
+	color:#ff0000;	
+	text-decoration:none;	
+}
+
+.text10_red {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	color:#ff0000;
+	text-decoration:none;
+	font-weight: normal;
+}
+
+.text10_red {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	color:#ff0000;
+	text-decoration:none;
+	font-weight: normal;
+}
+
+
+#error {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	color:#ff0000;
+	text-decoration:none;
+	font-weight: normal;
+}
+
+.error {
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:10px;
+	color:#ff0000;
+	text-decoration:none;
+	font-weight: normal;
+}

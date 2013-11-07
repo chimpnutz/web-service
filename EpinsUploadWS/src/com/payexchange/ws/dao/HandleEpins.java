@@ -71,6 +71,7 @@ import com.paysetter.security.Encrypter;
 
 import com.payexchange.ws.utility.OutgoingSMSModel;
 import com.payexchange.ws.dao.OutgoingSMSWriterDAO;
+import com.payexchange.ws.utility.Props;
 
 
 import javax.mail.MessagingException;
@@ -613,6 +614,7 @@ public boolean updateTX(long tranid,String errorState)
 //					        mm.sendMail("hello", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
 							ApplicationContext mailcontext = new ClassPathXmlApplicationContext("Spring-Mail.xml");
 							
+							Props props = new Props();
 							
 							MailModel mm = (MailModel) mailcontext.getBean("mail");
 							
@@ -621,9 +623,9 @@ public boolean updateTX(long tranid,String errorState)
 //							String sender = props.getSender();
 							
 							mm.sendMail("tristan.lapidez@payexchangeinc.com",
-									    "tristan.lapidez@payexchangeinc.com",
-						    		   "test", 
-						    		   "test");
+									    "jc.rolluqui@payexchangeinc.com",
+						    		   "Hello!", 
+						    		   "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
 						    
 						
 							

@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.orgt/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css" media="all">
+
+body{
+background-color:#e6e6cc;
+margin-left:auto;
+margin-right:auto;
+width:900px;
+font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+font-size:12px;
+}
+.shadow1 {
+	margin: 40px;
+	background-color: rgb(68,68,68); /* Needed for IEs */
+
+	-moz-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	-webkit-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
+	zoom: 1;
+}
+.shadow1 .content {
+	position: relative; /* This protects the inner element from being blurred */
+	padding: 10px;
+	background-color: #ff9900;
+	height:90px;
+}
+
+
+.menu {
+	margin-left: -30px;
+	background-color: rgb(68,68,68); /* Needed for IEs */
+
+	-moz-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	-webkit-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
+	zoom: 1;
+	  -moz-border-radius-bottomright: 15px;
+border-radius-bottomright: 15px;
+-moz-border-radius-topright: 15px;
+border-radius-topright: 15px;
+width:700px;
+margin-bottom:10px;
+}
+.menu .box {
+	position: relative; /* This protects the inner element from being blurred */
+	padding: 10px;
+	padding-left:60px;
+	background-color: white;
+	
+	 -moz-border-radius-bottomright: 15px;
+border-radius-bottomright: 15px;
+-moz-border-radius-topright: 15px;
+border-radius-topright: 15px;
+}
+
+ .label{
+	position:absolute;
+	
+	margin-top:-100px;
+	margin-left:150px;}
+
+
+#border{
+	position:absolute;
+	margin-left:-10px;
+	margin-top:14px;
+	width:820px;
+	height:21px;
+	background-color: #444444;
+}
+
+.blackbox {
+	margin: 40px;
+	background-color: rgb(68,68,68); /* Needed for IEs */
+
+	position: relative; /* This protects the inner element from being blurred */
+	-moz-box-shadow: inset 0 0 5px skyblue;
+-webkit-box-shadow: inset 0 0 5px skyblue;
+box-shadow: inner 0 0 5px skyblue;
+	padding: 30px;
+	background-color: #6699cc;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size:20px;
+	text-shadow: 0 1px 0 gray;
+	color:#cccc99;
+	}
+	
+#rightcol{
+	width:400px;
+	float:right;
+	text-shadow: 0 1px 0 gray;
+	font-style : italic;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:22px;
+	color: #99cc33;
+	margin-right:10px;
+	margin-bottom:10px;
+}
+
+#createAcc{
+	padding-top:5px;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+font-size:15px;
+color:#333333;
+	}
+
+
+#headtitle{
+	text-shadow: 0 1px 0 #e6e6cc;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:22px;
+	color: #e6e6cc;
+	margin-bottom:10px;
+	}
+	
+	#headtitle{
+	text-shadow: 0 1px 0 gray;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:18px;
+	color: #e6e6cc;
+	margin-bottom:10px;
+	}
+
+    .bul {
+    list-style-image: url('bullet.png');
+    font-size:20px;
+    text-shadow: 0 1px 0 gray;
+	font-style : italic;
+	font-family:Verdana, Geneva, sans-serif;
+	
+	color: #e6e6cc;
+   
+    }
+
+#error{
+	padding-top:5px;
+	font-family:Verdana, Geneva, sans-serif;
+font-size:12px;
+color:#ffcc00;
+	
+}
+.error{
+
+	font-family:Verdana, Geneva, sans-serif;
+font-size:12px;
+color:#ffcc00;
+	
+}
+
+
+ input[type="submit"], input[type="reset"]{
+font-weight: bold;
+margin-left: 5px;
+border: 1px solid #AAA;
+padding: 3px 7px;
+color: #111;
+text-decoration: none;
+background: #DDD;
+border-radius: 12px;
+-webkit-border-radius: 12px;
+-moz-border-radius: 12px;
+text-shadow: 0px 1px 0px white;
+background-size: 100% 100%;
+background: -webkit-gradient(linear, left top, left bottom, from(white), to(#CCC));
+background: -moz-linear-gradient(top, white, #CCC);
+background: -o-linear-gradient(top, white, #CCC);
+border-image: initial;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover{
+position: relative;
+background: -o-linear-gradient(top, #CCC, #DDD);
+background-size: 100% 100%;
+background: -webkit-gradient(linear, left top, left bottom, from(#CCC), to(#DDD));
+background: -moz-linear-gradient(top, #CCC, #DDD);
+background: -o-linear-gradient(top, #CCC, #DDD);
+cursor: pointer;
+}
+
+input[type="text"], input[type="password"]{
+border-radius: 2px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+box-shadow: 0 1px 2px #ddd;
+-moz-box-shadow: 0 1px 2px #ddd;
+-webkit-box-shadow: 0 1px 2px #ddd;
+background: url(../images/input_bg.gif);
+border: 1px solid #AAA;
+color: #555;
+padding: 4px;
+margin: 6px;
+margin-bottom:20px;
+border-image: initial;
+}
+
+ #bread{
+text-align:right;
+margin-right:10px;
+margin-top:-35px;
+margin-bottom:-38px;
+text-shadow: 0 1px 0 gray;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+		color: #999999;
+	 font-size:20px;
+	 }
+	 
+	 #bread a{
+	 text-decoration:none;
+text-align:right;
+margin-right:40px;
+
+margin-top:-35px;
+margin-bottom:-38px;
+text-shadow: 0 1px 0 gray;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+		color: #999999;
+	 font-size:20px;
+	 }
+	.box A:link, .box A:visited,.box A:active {text-decoration: none;
+	 text-shadow: 0 1px 0 gray;
+	font-style : italic;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:25px;
+	color:#ffcc00;
+	width:auto;
+	}
+
+.box A:hover {text-decoration: None; color: #99cc33;}
+
+.box1 A:link, .box1 A:visited,.box1 A:active {text-decoration: none;
+	 text-shadow: 0 1px 0 gray;
+	font-style : italic;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:20px;
+	color:#ffcc00;
+	width:auto;
+	}
+
+.box1 A:hover {text-decoration: None; color: #99cc33;}
+#result{
+	text-align:center;	
+	text-shadow: 0 1px 0 gray ;
+	font-family:Verdana, Geneva, sans-serif;
+		color: #e6e6cc;
+	 font-size:10px;
+}
+
+#result a{
+	text-align:center;	
+	text-shadow: 0 1px 0 gray ;
+	font-family:Verdana, Geneva, sans-serif;
+		color: #000066;
+	 font-size:11px;
+}
+
+.menu1 {
+	margin-left: 90px;
+	background-color: rgb(68,68,68); /* Needed for IEs */
+
+	-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;
+
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
+	zoom: 1;
+	 -moz-border-radius-bottomleft: 15px;
+border-radius-bottomleft: 15px;
+-moz-border-radius-topleft: 15px;
+border-radius-topleft: 15px;
+width:700px;
+margin-bottom:10px;
+}
+.menu1 .box {
+	position: relative; /* This protects the inner element from being blurred */
+	padding: 1px;
+	padding-left:30px;
+	background-color: white;
+	
+	 -moz-border-radius-bottomleft: 15px;
+border-radius-bottomleft: 15px;
+-moz-border-radius-topleft: 15px;
+border-radius-topleft: 15px;
+}
+.centermenu{
+	margin-top:30px;
+			margin-left:80px;
+	}
+
+
+</style>
+<title>Untitled Document</title>
+</head>
+
+<body>
+<div class="shadow1">
+	<div class="content">
+      <img src="logophil.png" width="350" />
+       "A leading distributors of telecommunications products and services."
+  </div>
+  
+</div>
+
+<div class="blackbox">
+<div id="headtitle"><center><font size="20" face="trebuchet">Tasks</font></center></div>
+<div class="menu">
+	<div class="box">
+<img src="cell.png">
+    <div class="label"><a href="topup.html">Top Up</a>
+    <div>Write something about Top Up.</div></div>
+</div>
+</div>
+
+<div class="menu">
+	<div class="box">
+<img src="user.png" width="128">
+    <div class="label"><a href="usermanagement.html">User Management</a>
+    <div>What is User Management</div></div>
+</div>
+</div>
+
+<div class="menu1">
+<div class="box">
+<div class="centermenu">
+<div class="box1">
+<img src="wallet.png" width="110px">
+    <div class="label"><a href="wallettransfer.html">Wallet Transfers</a>
+    <div>The Wallet Transfers is about</div></div><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p>&nbsp;</p>
+      <div class="label"><a href="wallettransferhistory.html">Wallet Transfer History</a>
+    <div>About the Wallet Transfers History</div></div>
+</div></div>
+</div></div>
+
+<div class="menu1">
+<div class="box">
+<div class="centermenu">
+<div class="box1">
+<img src="report.png" width="110px">
+    <div class="label"><a href="transactioninquiry.html">Transaction Inquiry</a>
+    <div>Some inquiry about something </div></div><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p>&nbsp;</p>
+      <div class="label"><a href="transactionreports.html">Transaction Reports</a>
+    <div>What is Transaction reports</div></div>
+    <p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p></p><p>&nbsp;</p>
+      <div class="label"><a href="transactionhistory.html">Transaction History</a>
+    <div>What is Transaction history</div></div>
+</div>
+</div></div>
+</div>
+
+<div class="menu">
+	<div class="box">
+    <a href="changepassword.html">Change Password</a>
+    <div>You can change your password</div>
+</div>
+</div>
+</div>
+
+ 
+</div>
+</div>
+</body>
+</html>

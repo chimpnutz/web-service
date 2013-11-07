@@ -1,0 +1,495 @@
+@CHARSET "ISO-8859-1";
+
+body{
+background-color:#e6e6cc;
+margin-left:auto;
+margin-right:auto;
+width:900px;
+font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+font-size:12px;
+}
+.shadow1 {
+	margin: 40px;
+	background-color: rgb(68,68,68); /* Needed for IEs */
+
+}
+.shadow1 .content {
+	position: relative; /* This protects the inner element from being blurred */
+	padding: 10px;
+	background-color: #f8490c;
+	height:90px;
+}
+
+
+.menu {
+	margin-left: -30px;
+	background-color: rgb(68,68,68); /* Needed for IEs */
+
+	-moz-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	-webkit-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
+	zoom: 1;
+	  -moz-border-radius-bottomright: 15px;
+border-radius-bottomright: 15px;
+-moz-border-radius-topright: 15px;
+border-radius-topright: 15px;
+width:700px;
+margin-bottom:10px;
+}
+.menu .box {
+	position: relative; /* This protects the inner element from being blurred */
+	padding: 10px;
+	padding-left:60px;
+	background-color: white;
+	
+	 -moz-border-radius-bottomright: 15px;
+border-radius-bottomright: 15px;
+-moz-border-radius-topright: 15px;
+border-radius-topright: 15px;
+}
+
+ .label{
+	position:absolute;
+	
+	margin-top:-100px;
+	margin-left:150px;}
+
+
+#border{
+	position:absolute;
+	margin-left:-10px;
+	margin-top:3px;
+	width:816px;
+	height:20px;
+	padding:2px;
+	background-color: #444444;
+}
+
+.blackbox {
+	margin: 40px;
+	background-color: rgb(68,68,68); /* Needed for IEs */
+
+	position: relative; /* This protects the inner element from being blurred */
+	-moz-box-shadow: inset 0 0 5px skyblue;
+-webkit-box-shadow: inset 0 0 5px skyblue;
+box-shadow: inner 0 0 5px skyblue;
+	padding: 30px;
+	background-color: #6699cc;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size:20px;
+	text-shadow: 0 1px 0 gray;
+	color:#cccc99;
+	}
+	
+#rightcol{
+	width:400px;
+	float:right;
+	text-shadow: 0 1px 0 gray;
+	font-style : italic;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:22px;
+	color: #99cc33;
+	margin-right:10px;
+	margin-bottom:10px;
+}
+
+#createAcc{
+	padding-top:5px;
+	font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+font-size:15px;
+color:#333333;
+	}
+
+
+#headtitle{
+	text-shadow: 0 1px 0 #e6e6cc;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:22px;
+	color: #e6e6cc;
+	margin-bottom:10px;
+	}
+	
+	#headtitle{
+	text-shadow: 0 1px 0 gray;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:18px;
+	color: #e6e6cc;
+	margin-bottom:10px;
+	}
+
+    .bul {
+    list-style-image: url('bullet.png');
+    font-size:20px;
+    text-shadow: 0 1px 0 gray;
+	font-style : italic;
+	font-family:Verdana, Geneva, sans-serif;
+	
+	color: #e6e6cc;
+   
+    }
+
+#error{
+	padding-top:5px;
+	font-family:Verdana, Geneva, sans-serif;
+font-size:12px;
+color:#ffcc00;
+	
+}
+.error{
+
+	font-family:Verdana, Geneva, sans-serif;
+font-size:12px;
+color:#ffcc00;
+	
+}
+
+
+ input[type="submit"], input[type="reset"]{
+font-weight: bold;
+margin-left: 5px;
+border: 1px solid #AAA;
+padding: 3px 7px;
+color: #111;
+text-decoration: none;
+background: #DDD;
+border-radius: 12px;
+-webkit-border-radius: 12px;
+-moz-border-radius: 12px;
+text-shadow: 0px 1px 0px white;
+background-size: 100% 100%;
+background: -webkit-gradient(linear, left top, left bottom, from(white), to(#CCC));
+background: -moz-linear-gradient(top, white, #CCC);
+background: -o-linear-gradient(top, white, #CCC);
+border-image: initial;
+}
+
+input[type="submit"]:hover, input[type="reset"]:hover{
+position: relative;
+background: -o-linear-gradient(top, #CCC, #DDD);
+background-size: 100% 100%;
+background: -webkit-gradient(linear, left top, left bottom, from(#CCC), to(#DDD));
+background: -moz-linear-gradient(top, #CCC, #DDD);
+background: -o-linear-gradient(top, #CCC, #DDD);
+cursor: pointer;
+}
+
+input[type="text"], input[type="password"]{
+border-radius: 2px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+box-shadow: 0 1px 2px #ddd;
+-moz-box-shadow: 0 1px 2px #ddd;
+-webkit-box-shadow: 0 1px 2px #ddd;
+background: url(../images/input_bg.gif);
+border: 1px solid #AAA;
+color: #555;
+padding: 4px;
+margin: 6px;
+margin-bottom:20px;
+border-image: initial;
+}
+
+ #bread{
+text-align: right;
+margin-top:-55px;
+margin-bottom:-30px;
+margin-right: 10px; 
+text-shadow: 0 1px 0 gray;
+	font-family:"Verdana";
+		color: #fff;
+	 font-size:12px;
+position: relative;
+z-index: 1000;
+
+	 }
+	 
+	  #bread1{
+margin-bottom:-30px;
+margin-top:-55px;
+margin-right:0px;
+margin-left:60px;
+text-align: right;
+text-shadow: 0 1px 0 gray;
+font-family:"Verdana";
+color: #fff;
+font-size:12px;
+position: relative;
+z-index: 1000;
+	 }
+
+	 #bread1 a{
+text-decoration:none;
+text-align:right;
+text-shadow: 0 1px 0 gray;
+font-family:"Verdana";
+color: #fff;
+font-size:12px;
+	 }	
+	 
+ #backbutt{
+text-align: left;
+margin-top:15px;
+margin-bottom:-38px;
+margin-left: 50px;
+text-shadow: 0 1px 0 gray;
+font-family:"Verdana";
+		color: #fff;
+	 font-size:12px;
+	 position: relative;
+z-index: 1000;
+         width: 50%;
+	 }
+
+	 #backbutt a{
+	 text-decoration:none;
+text-align:right;
+margin-right:40px;
+margin-top:-35px;
+margin-bottom:-38px;
+text-shadow: 0 1px 0 gray;
+	font-family:"Verdana";
+		color: #fff;
+	 font-size:12px;
+	 }	 
+	 
+	 
+	 #bread a{
+	 text-decoration:none;
+text-align:right;
+margin-right:40px;
+margin-top:-35px;
+margin-bottom:-38px;
+text-shadow: 0 1px 0 gray;
+	font-family:"Verdana";
+		color: #fff;
+	 font-size:12px;
+	 }
+	 
+	.box A:link, .box A:visited,.box A:active {text-decoration: none;
+	 text-shadow: 0 1px 0 gray;
+	font-style : italic;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:25px;
+	color:#ffcc00;
+	width:auto;
+	}
+
+.box A:hover {text-decoration: None; color: #99cc33;}
+
+.box1 A:link, .box1 A:visited,.box1 A:active {text-decoration: none;
+	 text-shadow: 0 1px 0 gray;
+	font-style : italic;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:20px;
+	color:#ffcc00;
+	width:auto;
+	}
+
+.box1 A:hover {text-decoration: None; color: #99cc33;}
+
+
+ul A:link, ul A:visited,ul A:active {text-decoration: none;
+	 text-shadow: 0 1px 0 gray;
+	font-style : italic;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:20px;
+	color:#ffcc00;
+	width:auto;
+	}
+ul A:hover {text-decoration: None; color: #99cc33;}
+
+#result{
+	text-align:center;	
+	text-shadow: 0 1px 0 gray ;
+	font-family:Verdana, Geneva, sans-serif;
+		color: #e6e6cc;
+	 font-size:15px;
+}
+
+#result a{
+	text-align:center;	
+	text-shadow: 0 1px 0 gray ;
+	font-family:Verdana, Geneva, sans-serif;
+		color: #000066;
+	 font-size:11px;
+}
+
+.menu1 {
+	margin-left: 90px;
+	background-color: rgb(68,68,68); /* Needed for IEs */
+
+	-webkit-box-shadow: 0 8px 6px -6px black;
+	   -moz-box-shadow: 0 8px 6px -6px black;
+	        box-shadow: 0 8px 6px -6px black;
+
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
+	zoom: 1;
+	 -moz-border-radius-bottomleft: 15px;
+border-radius-bottomleft: 15px;
+-moz-border-radius-topleft: 15px;
+border-radius-topleft: 15px;
+width:700px;
+margin-bottom:10px;
+}
+.menu1 .box {
+	position: relative; /* This protects the inner element from being blurred */
+	padding: 1px;
+	padding-left:30px;
+	background-color: white;
+	
+	 -moz-border-radius-bottomleft: 15px;
+border-radius-bottomleft: 15px;
+-moz-border-radius-topleft: 15px;
+border-radius-topleft: 15px;
+}
+.centermenu{
+	margin-top:30px;
+			margin-left:80px;
+	}
+
+.invert {
+	margin-left: 30px;
+	margin-top:-30px;
+	background-color: rgb(68,68,68); /* Needed for IEs */
+
+	-moz-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	-webkit-box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+	box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=3,MakeShadow=true,ShadowOpacity=0.30)";
+	zoom: 1;
+	  -moz-border-radius-bottomright: 15px;
+border-radius-bottomright: 15px;
+-moz-border-radius-bottomleft: 15px;
+border-radius-bottomleft: 15px;
+width:400px;
+margin-bottom:10px;
+}
+.invert .box {
+	position: relative; /* This protects the inner element from being blurred */
+	padding: 10px;
+	padding-left:60px;
+	background-color: white;
+	
+	 -moz-border-radius-bottomright: 15px;
+border-radius-bottomright: 15px;
+-moz-border-radius-bottomleft: 15px;
+border-radius-bottomleft: 15px;
+}
+    .bul {list-style-image: url(../css/images/bullet.png);}
+    
+    
+    
+    
+.curve {
+	float:left;
+  -moz-border-radius: 15px; /* Firefox */
+  -webkit-border-radius: 15px; /* Safari and Chrome */
+  border-radius: 15px; /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+
+  -moz-box-shadow: 0px 10px 10px #444444; /* Firefox */
+  -webkit-box-shadow: 0px 10px 10px #444444; /* Safari and Chrome */
+  box-shadow: 0px 10px 10px #444444; /* Opera 10.5+, future browsers and IE6+ using IE-CSS3 */
+
+  behavior: url(ie-css3.htc); /* This lets IE know to call the script on all elements which get the 'box' class */
+  background-color:white;
+  width:200px;
+  height:150px;
+  margin-right:10px;
+  margin-bottom:10px;
+
+}
+.clearBoth { clear:both; }
+
+.curve .inner {
+	position:relative;
+	padding-top:10px;
+}
+
+.curve .inner .label{
+	 font-size:12px;
+	position:relative;
+	font-style : italic;
+		margin-left:110px;
+		margin-top:-110px;
+}
+
+
+
+
+.curve .inner A:link, .curve .inner A:visited,.curve .inner A:active {text-decoration: none;
+ font-size:20px;
+	 text-shadow: 0 1px 0 gray;
+	
+	font-family:Verdana, Geneva, sans-serif;
+		color:#ffcc00;
+	width:auto;
+	}
+
+.curve .inner A:hover {text-decoration: None; color: #99cc33;}
+#gitna{
+		
+		margin-left:70px;}
+		
+
+.curve1 {
+margin-bottom: 10px;
+
+  -moz-border-radius: 15px; /* Firefox */
+  -webkit-border-radius: 15px; /* Safari and Chrome */
+  border-radius: 15px; /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+
+  -moz-box-shadow: 0px 10px 10px #444444; /* Firefox */
+  -webkit-box-shadow: 0px 10px 10px #444444; /* Safari and Chrome */
+  box-shadow: 0px 10px 10px #444444; /* Opera 10.5+, future browsers and IE6+ using IE-CSS3 */
+
+  behavior: url(ie-css3.htc); /* This lets IE know to call the script on all elements which get the 'box' class */
+  background-color:white;
+  width:150px;
+  height:100px;
+  margin-right:5px;
+  margin-left:700px;
+}
+
+.curve1 .inner1 {
+	position:relative;
+	padding-top:10px;
+}
+
+.curve1 .inner1 .label1{
+	 font-size:10px;
+	position:relative;
+	font-style : italic;
+		margin-left:75px;
+		margin-top:-80px;
+}
+
+
+
+
+.curve1 .inner1 A:link, .curve1 .inner1 A:visited,.curve1 .inner1 A:active {text-decoration: none;
+ font-size:18px;
+	 text-shadow: 0 1px 0 gray;
+	
+	font-family:Verdana, Geneva, sans-serif;
+		color:#ffcc00;
+	width:auto;
+	}
+
+.curve1 .inner1 A:hover {text-decoration: None; color: #99cc33;}	
+		
+		.footer{
+	margin-left:40px;
+	width:820px;
+	}
+.foot{
+	margin:10px;
+	display: inline-block;
+
+	}
+		

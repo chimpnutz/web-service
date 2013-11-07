@@ -1,0 +1,70 @@
+	<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/emergencyloadplatform" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+	
+	<!--	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/ubpmbstx?zeroDateTimeBehavior=convertToNull" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+	-->	
+
+	
+	<bean id="loginDAO" class="com.elp.dao.transactions.LoginDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="creditDAO" class="com.elp.dao.transactions.CreditDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="creditextendedDAO" class="com.elp.dao.transactions.CreditExtendedDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="creditlimitDAO" class="com.elp.dao.transactions.CreditLimitDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+
+	
+	<bean id="usermanagementDAO" class="com.elp.dao.transactions.UserManagementDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="rolemanagementDAO" class="com.elp.dao.transactions.RolesManagementDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="privilegemanagementDAO" class="com.elp.dao.transactions.PrivilegesManagementDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="networkmanagementDAO" class="com.elp.dao.transactions.NetworkManagementDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="creditlimitmanagementDAO" class="com.elp.dao.transactions.CreditLimitManagementDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="emergencyloadmanagementDAO" class="com.elp.dao.transactions.EmergencyLoadManagementDAO"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="OpensimDAO" class="com.elp.dao.transactions.OpensimDao"  >
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+</beans>

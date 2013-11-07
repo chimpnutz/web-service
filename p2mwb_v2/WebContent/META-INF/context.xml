@@ -1,0 +1,39 @@
+<Context className="org.apache.catalina.core.StandardContext"
+	cachingAllowed="false"
+	charsetMapperClass="org.apache.catalina.util.CharsetMapper"
+	cookies="true"
+	crossContext="true"
+	debug="0"
+	displayName="PC2Mobile"
+	docBase="/home/mayamaya/jakarta-tomcat-5.5.9/webapps/epin_demo" 
+	mapperClass="org.apache.catalina.core.StandardContextMapper"
+	path="/epin_demo" 
+	privileged="false"
+	reloadable="true"
+	swallowOutput="false"
+	useNaming="true"
+	wrapperClass="org.apache.catalina.core.StandardWrapper">
+	
+  <Logger className="org.apache.catalina.logger.FileLogger" debug="0" directory="logs" prefix="localhost_psportal_log."
+	 suffix=".txt" timestamp="true" verbosity="1"/>
+
+  <Resource name="jdbc/pspdb" auth="Container"
+            type="javax.sql.DataSource" username="root" password=""
+            driverClassName="org.gjt.mm.mysql.Driver" url="jdbc:mysql://127.0.0.1:3306/portal?autoReconnect=true"
+            maxActive="25" maxIdle="5"/>
+            
+  <Resource name="jdbc/p2m" auth="Container"
+            type="javax.sql.DataSource" username="pctomobile" password="pct0m0bile"
+            driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@202.164.183.87:1521:piidev"
+            maxActive="10" maxIdle="2"/>
+
+  <Resource name="jdbc/psdb" auth="Container"
+            type="javax.sql.DataSource" username="psdb" password="psdb"
+            driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@202.164.183.87:1521:piidev"
+            maxActive="10" maxIdle="5"/>
+            
+   <Resource name="jdbc/epin" auth="Container"
+            type="javax.sql.DataSource" username="epins" password="epins"
+            driverClassName="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@202.164.183.87:1521:piidev"
+            maxActive="10" maxIdle="2"/>    
+</Context>

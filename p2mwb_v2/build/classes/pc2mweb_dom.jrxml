@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PC2MWEB_Domestic Transaction Report" pageWidth="968" pageHeight="552" orientation="Landscape" columnWidth="968" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="5dcf17f2-cf3e-445b-a756-273e51bb9e36">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.create.custom.palette" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.one.page.per.sheet" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.columns" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.white.page.background" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.size.fix.enabled" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.graphics" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.collapse.row.span" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.cell.border" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.cell.background" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.wrap.text" value="true"/>
+	<queryString>
+		<![CDATA[SELECT a.transactiondate ,b.targetmsisdn,a.amount,a.status,a.agentid,c.username,e.partnerid,e.partnername
+FROM 	transactions a
+INNER JOIN mobile_transaction b
+ON a.transactionid = b.transactionid
+INNER JOIN agents c
+ON a.agentid = c.agentid
+INNER JOIN agents_partners d
+ON c.agentid = d.agentid
+INNER JOIN partners e
+ON  d.partnerid = e.partner
+LEFT  JOIN retailer_sim_transfer_logs f
+ON a.transactionid = f.transactionid
+LEFT  JOIN user_transactions_logs g
+ON a.transactionid = g.transactionid]]>
+	</queryString>
+	<field name="transactiondate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="targetmsisdn" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="agentid" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="username" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="partnerid" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="partnername" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="11"/>
+	</title>
+	<pageHeader>
+		<band height="15">
+			<staticText>
+				<reportElement uuid="1269ca7f-613f-43b3-8c0f-e1e1d5357c2c" x="14" y="0" width="74" height="15"/>
+				<textElement/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="29ab8f3a-b160-4f24-a217-82bf718800f1" x="116" y="0" width="76" height="15"/>
+				<textElement/>
+				<text><![CDATA[Partner Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a9e25eb3-42bd-4a8a-afdc-c4a12015ae7e" x="204" y="0" width="104" height="15"/>
+				<textElement/>
+				<text><![CDATA[Partner Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="090f7c0e-fc1e-40b1-83ac-26f086a062f2" x="333" y="0" width="81" height="15"/>
+				<textElement/>
+				<text><![CDATA[Username]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e4f135de-e489-472e-a312-1acbd93f3460" x="437" y="0" width="47" height="15"/>
+				<textElement/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="80dc3db2-37b1-4fb9-8944-06e334a441d1" x="528" y="0" width="71" height="15"/>
+				<textElement/>
+				<text><![CDATA[Mobile Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da223434-8f56-45a5-a828-4343f6b3d5e4" x="760" y="0" width="49" height="15"/>
+				<textElement/>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="13" splitType="Prevent">
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement uuid="d0564a90-3cf0-4c52-a77e-6a0a36549ab1" x="2" y="0" width="114" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy hh:mm").format($F{transactiondate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="eff62c02-0954-4369-8310-66e5eea26b49" x="599" y="0" width="369" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6169421c-f98c-4e07-b6c8-7df35d4548d5" x="308" y="0" width="116" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bd55fbc5-bfb5-430c-8dcf-7d1c97354772" x="528" y="0" width="71" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{targetmsisdn}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bf30df57-a9a7-4136-8fcd-2088b4258870" x="204" y="0" width="104" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{partnername}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b781ee0e-c025-4b4f-b520-61bff755aa41" x="116" y="0" width="76" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{partnerid}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3e8a5369-80ce-458f-9b3b-5a6a5f3635c1" x="437" y="0" width="62" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

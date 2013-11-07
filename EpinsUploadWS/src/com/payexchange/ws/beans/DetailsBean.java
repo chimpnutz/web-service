@@ -11,7 +11,7 @@ public class DetailsBean {
 	String ipaddress;
 	String trantype;
 	String Denom;
-	String email;
+	String message;
 	String username;
 	String password;
 	private String nextView;
@@ -57,11 +57,11 @@ public class DetailsBean {
 	public void setDenom(String denom) {
 		Denom = denom;
 	}
-	public String getEmail() {
-		return email;
+	public String getMessage() {
+		return message;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	public String getUsername() {
 		return username;
@@ -124,6 +124,7 @@ public class DetailsBean {
 	public void setIpaddress(String ipaddress) {
 		this.ipaddress = ipaddress;
 	}
+	
 	
 	
 }

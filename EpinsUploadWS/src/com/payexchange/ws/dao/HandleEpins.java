@@ -14,6 +14,7 @@ import com.payexchange.ws.enc.AesZipFileEncrypter;
 
 import com.payexchange.ws.beans.DetailsBean;
 import com.payexchange.ws.beans.EpinsUploadResponse;
+import com.payexchange.ws.beans.MailModel;
 import com.payexchange.ws.connection.ConnectionManager;
 import com.payexchange.ws.connection.EpinsConnectionManager;
 import com.payexchange.ws.connection.SMSConnectionManager;
@@ -21,6 +22,7 @@ import com.payexchange.ws.utility.MailService;
 import com.payexchange.ws.utility.MessageModels;
 import com.payexchange.ws.utility.Utility;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
@@ -28,6 +30,7 @@ import org.apache.poi.hssf.record.crypto.Biff8EncryptionKey;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.soap.util.Bean;
 import org.eclipse.jetty.server.Request;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -67,6 +70,8 @@ import com.payexchange.ws.utility.MessageModels;
 import com.paysetter.security.Encrypter;
 
 import com.payexchange.ws.utility.OutgoingSMSModel;
+import com.payexchange.ws.dao.OutgoingSMSWriterDAO;
+
 
 import javax.mail.MessagingException;
 
@@ -84,7 +89,7 @@ public class HandleEpins  {
 		
 		
 		EpinsUploadResponse response = new EpinsUploadResponse();
-		
+		OutgoingSMSWriterDAO smsdao = new  OutgoingSMSWriterDAO();
 		
 		
 		
@@ -97,12 +102,12 @@ public class HandleEpins  {
 						
 			int qty = bean.getQty();
 			
-			if(qty >= 1){
+			if(qty >= 2){
 				//email
 				long tranid = this.insertTxLogs2(bean);	
 				this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
 				
-				this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty());
+				this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty(), bean.getPassword());
 				
 				if(updateEpins(bean)){
 					
@@ -116,13 +121,12 @@ public class HandleEpins  {
 
 				
 			}
-			if(qty == 0){
+			if(qty == 1){
 				//mobile 
 				long tranid = this.insertTxLogs(bean);				
 				this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
 				
-				OutgoingSMSModel sms = null;
-				this.insertSmsSent(sms);
+				String message = "";
 				
 				
 				if(getDenom(bean)){
@@ -136,7 +140,7 @@ public class HandleEpins  {
 						String telco = bean.getProdCode();
 						int denom = Integer.parseInt(bean.getDenom());
 						
-						String sql = "Select id,epin,uploaded_by,date_uploaded from Epins epins where status=? and telco_type=? and denom=?";
+						String sql = "Select id,epin,uploaded_by,date_uploaded from Epins epins where status=? and telco_type=? and denom=? limit ?";
 						
 						try{
 						       conn = EpinsConnectionManager.getConnection();
@@ -145,33 +149,30 @@ public class HandleEpins  {
 						       ps.setInt(1,6);
 						       ps.setString(2,telco);
 						       ps.setInt(3,denom);
-						            
+						       ps.setInt(4,1);     
 						       rs = ps.executeQuery();
 						       
 						      
 								int i=1;
 						       while(rs.next())
 						       {
-						            	
-						    	System.out.println(rs.getString("epin"));
-							        
-						        
+						            							        
 								try{
-							
-									
+								
 								    String dec = goDecryption(rs.getString("epin"));
 									String[] decArray = this.getDecrypted(dec);
-														
+										int j = 0;				
 
-							           for(int j = 0;j<decArray.length;j++) {
-							               System.out.println(decArray[j]);
+							           for( j = 0;j<decArray.length;j++) {
+							               
+							               logger.info(decArray[j]);
+							               message = message+"     "+decArray[j];					               
 							           }
-									
-								
-									
+							    
+
 
 									} catch ( Exception ex ) {
-									    System.out.println(ex);
+										logger.info(ex);
 
 									}
 										i++;
@@ -192,7 +193,28 @@ public class HandleEpins  {
 					
 					
 		}
+				OutgoingSMSModel SMSout = new OutgoingSMSModel();										
+				String target = bean.getTarget();
+				String topup = null;
 				
+				SMSout.setSender("2808");
+				SMSout.setRecipient(target);
+				SMSout.setSmsData(message);
+				SMSout.setTariffClass("");
+				SMSout.setServiceType("");
+				
+				try {
+
+					smsdao.insertSmsSent(SMSout);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					logger.info("***** Failed to insert SMS *****");
+					
+				} finally {
+					SMSout = null;
+	
+				}		
 				
 	}
 			           
@@ -344,6 +366,7 @@ public long insertTxLogs(DetailsBean bean) {
 	            		        }
 	            		    }
 	            		    while (rs.next());
+	            		    
 	            	}
 	            	return key;
 	            }
@@ -506,7 +529,7 @@ public boolean updateTX(long tranid,String errorState)
         return false;
 }
 //creating excel file	
-	private void writeExcel(String username, int denom, String telco, int Qty) {
+	private void writeExcel(String username, int denom, String telco, int Qty, String password) {
 		
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -519,6 +542,7 @@ public boolean updateTX(long tranid,String errorState)
 	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MMM-dd");
 	    rptDate=sdf.format(date);	
 		File filename= new File("D:\\"+this.writePrefix(username, denom, telco, rptDate)+".xls");
+		
 		
 		HSSFWorkbook hwb=new HSSFWorkbook();
 		HSSFSheet sheet =  hwb.createSheet("new sheet");
@@ -540,16 +564,12 @@ public boolean updateTX(long tranid,String errorState)
 			       while(rs.next())
 			       {
 			            	
-			    	System.out.println(rs.getString("epin"));
+			    	  
 				        
 			        
 					try{
-				
-//						while(rs.next())
-//						{
+
 					    String dec = goDecryption(rs.getString("epin"));
-//						String dec = rs.getString("epin");
-//					    String[] decArray = validatorService.getDecrypted(dec);
 						String[] decArray = this.getDecrypted(dec);
 						HSSFRow row=   sheet.createRow((short)i);					
 
@@ -561,7 +581,7 @@ public boolean updateTX(long tranid,String errorState)
 						
 
 						} catch ( Exception ex ) {
-						    System.out.println(ex);
+							logger.info(ex);
 
 						}
 							i++;
@@ -573,9 +593,48 @@ public boolean updateTX(long tranid,String errorState)
 							
 							hwb.write(fileOut);
 							fileOut.close();
-							System.out.println("Your excel file has been generated!");
+							logger.info("Your Excel file has been generated");
 							
-							this.ZipFile(username, denom, telco, rptDate, filename);
+//							zipping and encrypting file
+					    	File outFile = new File("D:\\Epins.zip");
+					    	ObjectUtils.equals(password, null);
+					    try{
+					    	
+					    	AesZipFileEncrypter.zipAndEncrypt(filename, outFile, password) ;	
+					        AesZipFileEncrypter enc = new AesZipFileEncrypter(outFile);
+					        enc.add(filename, password);
+					        enc.close();
+					        logger.info("done zipping and encrypting file");
+					        
+//					        email
+//					        ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+//							 
+//					    	MailService mm = (MailService) context.getBean("mailService");
+//					        mm.sendMail("hello", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
+							ApplicationContext mailcontext = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+							
+							
+							MailModel mm = (MailModel) mailcontext.getBean("mail");
+							
+//							String [] recipient =  props.getRecipients().split(",");
+							
+//							String sender = props.getSender();
+							
+							mm.sendMail("tristan.lapidez@payexchangeinc.com",
+									    "tristan.lapidez@payexchangeinc.com",
+						    		   "test", 
+						    		   "test");
+						    
+						
+							
+					        logger.info("mail sent!");
+					        
+					        
+					       } catch(IOException ex){
+					    	   ex.printStackTrace();
+					       }
+							
+
 			     }
 			catch(Exception ex){
 			            ex.printStackTrace();
@@ -605,31 +664,6 @@ public boolean updateTX(long tranid,String errorState)
         String xD = enc.decryptBase64String(var);
         return xD;
     }
-//zipping and encrypting file
-    public boolean ZipFile(String username, int denom, String telco, String rptDate, File filename){
-    	
-    	String password = "l0adcentral";
-    	File outFile = new File("D:\\Epins.zip");
-    try{
-    	AesZipFileEncrypter.zipAndEncrypt(filename, outFile, password) ;	
-        AesZipFileEncrypter enc = new AesZipFileEncrypter(outFile);
-        enc.add(filename, password);
-        enc.close();
-        System.out.println("Done!");
-        
-        ApplicationContext context = new ClassPathXmlApplicationContext("/Spring-Mail.xml");
-		 
-    	MailService mm = (MailService) context.getBean("mailService");
-        mm.sendMail("hello", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
-		
-        System.out.println("email sent!");
-        return true;
-        
-       } catch(IOException ex){
-    	   ex.printStackTrace();
-       }
-    	return false; 	
-    }
     
     //checking epins
     
@@ -642,7 +676,7 @@ public boolean updateTX(long tranid,String errorState)
 		String transid = bean.getTransid();
 		String telco = bean.getProdCode();
 		String denom = bean.getDenom();
-		
+	
 		String checkSQL = "Select id, epin, uploaded_by, date_uploaded from epins where transactionid =? and status=? and telco_type=? and denom=?";
         try{
         	   conn = EpinsConnectionManager.getConnection();
@@ -679,82 +713,5 @@ public boolean updateTX(long tranid,String errorState)
 			return false;		
    
     }
-    //sending sms
-	
-	public int insertSmsSent(Connection conn, OutgoingSMSModel sms) throws SQLException {
-		if (sms == null) return 0;
-		String sql = "Insert into SmsSent (SmsId, SmsDate, SmsGID, Sender, Recipient, SmsData, Tariff_Class, Service_Type, Status) Values (SmsId_Snt.nextVal, SysDate,?,?, ?, ?, ?, ?, ?)";
-		
-		PreparedStatement stmt = null;
-		int rs = 0;
-		try {
-			conn = SMSConnectionManager.getConnection();
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, sms.getGatewayID() == null ? "" : sms.getGatewayID());
-			stmt.setString(2, sms.getSender());
-			stmt.setString(3, sms.getRecipient());
-			stmt.setString(4, sms.getSmsData());
-			stmt.setString(5, sms.getTariffClass());
-			stmt.setString(6, sms.getServiceType());
-			stmt.setInt(7, 0);
-			
-			if(stmt.executeUpdate()>0){
-		    	   logger.info("SMS Sent has been inserted");
-	            	return rs;
-	            }
-		}
-		catch (SQLException sqle) {
-			logger.info(sqle.getMessage());
-			throw sqle;
-		}
-		finally {
-			try {
-				stmt.close();
-			}
-			catch (Exception e) {
-			}
-		}
-		return rs;
-	}
-	
-	public int insertSmsSent(OutgoingSMSModel sms) throws SQLException {
-		
-		logger.info("here");
-		String sql = "Insert into SmsSent (SmsId, SmsDate, SmsGID, Sender, Recipient, SmsData, Tariff_Class, Service_Type, Status) Values (SmsId_Snt.nextVal, SysDate,?,?, ?, ?, ?, ?, ?)";
-		
-		PreparedStatement stmt = null;
-		Connection conn = null;
-		int row = 0;
-		   
-		   try{
-					     conn = SMSConnectionManager.getConnection();
-						 stmt = conn.prepareStatement(sql);
-				 	 	 stmt.setString(1, "1");
-						 stmt.setString(2, "haha");
-						 stmt.setString(3, "haha");
-						 stmt.setString(4, "haha");
-						 stmt.setString(5, "haha");
-						 stmt.setString(6, "haha");
-						 stmt.setInt(7, 0);
-						
-				
-						 if(stmt.executeUpdate()>0){
-					    	   logger.info("SMS Sent has been inserted");
-				            	return row;
-				            }
-					
-		
-		   }catch(DataAccessException ex){
-	            ex.printStackTrace();
-	            logger.info(ex.getMessage());
-	            return row;
-	        }
-		   
-		logger.info("row: "+row);   
-		return row;
-		   
-
-	}
-    
 
 }

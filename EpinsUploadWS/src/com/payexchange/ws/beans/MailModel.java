@@ -19,7 +19,7 @@ public class MailModel
 		this.mailSender = mailSender;
 	}
  
-	public void sendMail(String from, String  to, String subject, String msg) {
+	public void sendMail(String from, String to, String subject, String msg) {
 		
 		MimeMessage mime = mailSender.createMimeMessage();
 	try{	

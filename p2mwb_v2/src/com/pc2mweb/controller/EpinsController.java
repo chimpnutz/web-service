@@ -1,4 +1,4 @@
-	package com.pc2mweb.controller;
+package com.pc2mweb.controller;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -153,7 +153,7 @@ public class EpinsController implements ServletContextAware   {
 
 	@RequestMapping(method = RequestMethod.GET,params={"individual"})
 	 public ModelAndView cancelCheckout(ModelMap model,HttpServletRequest request, HttpSession session) {
-	//	
+	
 		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
 		
 		EpinDAO dao = (EpinDAO)context.getBean("epinDAO");
@@ -190,7 +190,6 @@ public class EpinsController implements ServletContextAware   {
 
 	@RequestMapping(method = RequestMethod.POST)
 	  public ModelAndView getBillerfield(@ModelAttribute("epinForm") EpinModel epins, HttpSession usersession) throws NamingException, ParseException {
-		
 		
 		EpinsUploadServices services = new EpinsUploadServices();
 		

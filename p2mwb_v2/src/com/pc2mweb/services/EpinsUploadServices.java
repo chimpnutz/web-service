@@ -174,13 +174,14 @@ public class EpinsUploadServices {
 				
 				else		
 				{
-		//not sure			
+				
 					EpinsUpload upload = new EpinsUpload();
 					EpinsUploadResponse resp1 = new EpinsUploadResponse();
+					String type = epins.getTxtype();
 					String prodcode = epins.getProdtype();
 					int qty = Integer.parseInt(epins.getQuantity());
 					String target = epins.getTarget();
-					String appname = "";
+					String appname = "PC2MWEB";
 					String trantype = "topup";
 					String denom = epins.getDenom();
 					String message = epins.getMessage();
@@ -190,7 +191,7 @@ public class EpinsUploadServices {
 					long tranid = epins.getTransid();
 					String transid =""+tranid;
 					
-					resp1=upload.epinsupload("",prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid);
+					resp1=upload.epinsupload(type,prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid);
 					
 					if(resp1.getResultcode()==0){
 						modelAndView.addObject("msg", "success");
@@ -210,8 +211,14 @@ public class EpinsUploadServices {
 //				}
 			}
 			try {				
-
 				
+				if(epins.getTxtype()== "individual"){
+					epins.setTarget(epins.getPrefix()+ epins.getMobnum());
+				}
+				if(epins.getTxtype()== "bulk"){
+					
+					
+				}
 
 			}catch (Exception e) {
 				e.printStackTrace();

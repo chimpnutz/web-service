@@ -18,7 +18,6 @@ import com.payexchange.ws.beans.MailModel;
 import com.payexchange.ws.connection.ConnectionManager;
 import com.payexchange.ws.connection.EpinsConnectionManager;
 import com.payexchange.ws.connection.SMSConnectionManager;
-import com.payexchange.ws.utility.MailService;
 import com.payexchange.ws.utility.MessageModels;
 import com.payexchange.ws.utility.Utility;
 
@@ -107,19 +106,72 @@ public class HandleEpins  {
 				//email
 				long tranid = this.insertTxLogs2(bean);	
 				this.updateTX(tranid,MessageModels.NETWORK_ERROR_SESSION_MSG);
+				String message = "";				
+				if(checkEpins(bean)){
 				
-				this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty(), bean.getPassword());
-				
-				if(updateEpins(bean)){
+					PreparedStatement ps = null;
+					ResultSet rs = null;
+					Connection conn = null;
 					
-					if(checkEpins(bean)){
-						
-						
-						
+					int denom = Integer.parseInt(bean.getDenom());
+					String telco = bean.getProdCode();
+					String sql = "Select id,epin,uploaded_by,date_uploaded from Epins epins where status=? and telco_type=? and denom=? limit ?";
+									
+					try{
+					       conn = EpinsConnectionManager.getConnection();
+					       ps = conn.prepareStatement(sql);
+					            
+					       ps.setInt(1,6);
+					       ps.setString(2,telco);
+					       ps.setInt(3,denom);
+					       ps.setInt(4,qty);     
+					       rs = ps.executeQuery();
+					       
+					      
+							int i=1;
+					       while(rs.next())
+					       {
+					            							        
+							try{
+							
+							    String dec = goDecryption(rs.getString("epin"));
+								String[] decArray = this.getDecrypted(dec);
+									int j = 0;				
+
+						           for( j = 0;j<decArray.length;j++) {
+						               
+						               logger.info(decArray[j]);
+						               message = message+"     "+decArray[j];					               
+						           }
+						    
+
+
+								} catch ( Exception ex ) {
+									logger.info(ex);
+
+								}
+									i++;
+					         }
 					}
+					catch(Exception ex){
+			            ex.printStackTrace();
+			        
+			        }
+			finally{
+	        	
+	        	Utility.closeQuietly(rs);
+	        	Utility.closeQuietly(ps);
+	        	Utility.closeQuietly(conn);
+	   	
+	        }
+					
+					
+						if(updateEpins(bean)){
+					
+						}
 			
 				}
-
+				this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty(), bean.getPassword());
 				
 			}
 			if(qty == 1){
@@ -448,7 +500,7 @@ public boolean updateEpins(DetailsBean bean){
 	Connection conn = null;
 
 			
-	String sql = "update epins set status = 6, transactionid = ? where status = ? and transactionid is null and denom = ? and telco_type = ? limit "+bean.getQty()+"";
+	String sql = "update epins set status = 6, transactionid = ? where status = ? and transactionid is null and denom = ? and telco_type = ? limit ?" ;
 
 		       
 		try{
@@ -459,7 +511,7 @@ public boolean updateEpins(DetailsBean bean){
 		       ps.setInt(2, 0);
 		       ps.setString(3, bean.getDenom());
 		       ps.setString(4, bean.getProdCode());
-		       
+		       ps.setInt(5, bean.getQty());
 		       
 		     
 		            
@@ -545,6 +597,7 @@ public boolean updateTX(long tranid,String errorState)
 		File filename= new File("D:\\"+this.writePrefix(username, denom, telco, rptDate)+".xls");
 		
 		
+		
 		HSSFWorkbook hwb=new HSSFWorkbook();
 		HSSFSheet sheet =  hwb.createSheet("new sheet");
 		
@@ -608,10 +661,7 @@ public boolean updateTX(long tranid,String errorState)
 					        logger.info("done zipping and encrypting file");
 					        
 //					        email
-//					        ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Mail.xml");
-//							 
-//					    	MailService mm = (MailService) context.getBean("mailService");
-//					        mm.sendMail("hello", "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
+//					 
 							ApplicationContext mailcontext = new ClassPathXmlApplicationContext("Spring-Mail.xml");
 							
 							Props props = new Props();
@@ -619,11 +669,11 @@ public boolean updateTX(long tranid,String errorState)
 							MailModel mm = (MailModel) mailcontext.getBean("mail");
 							
 //							String [] recipient =  props.getRecipients().split(",");
-							
+//							
 //							String sender = props.getSender();
 							
 							mm.sendMail("tristan.lapidez@payexchangeinc.com",
-									    "jc.rolluqui@payexchangeinc.com",
+									"tristan.lapidez@payexchangeinc.com",
 						    		   "Hello!", 
 						    		   "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
 						    

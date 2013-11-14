@@ -24,10 +24,15 @@ public class EpinsUploadServices {
 	
 	public ModelAndView epinsUpload(EpinModel epins, HttpSession usersession,ServletContext servletContext)
 	{
-		if(epins.getPassword() == epins.getPassword2())
-		{
-			return null;
+		if(epins.getType().equals("bulk")){
+			
+			if(epins.getPassword() == epins.getPassword2())
+				{
+					return null;
+				}
+			
 		}
+	
 		
 		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
 		
@@ -81,7 +86,7 @@ public class EpinsUploadServices {
 		
 		
 
-		if ((partner.wallet <= 0) || (Float.parseFloat(epins.getAmount()) <= 0) || ( partner.wallet < Float.parseFloat(epins.getAmount()) )) {
+		if ((partner.wallet <= 0) || (Float.parseFloat(epins.getDenom()) <= 0) || ( partner.wallet < Float.parseFloat(epins.getDenom()) )) {
 			errorState = P2MConstants.INSUFFICIENT_BALANCE_CODE;
 			logger.info(P2MConstants.getMessage(errorState));
 		}
@@ -103,31 +108,6 @@ public class EpinsUploadServices {
 			if(partner.runmode.equalsIgnoreCase("TEST"))
 			
 			{
-				
-//				String paymenttype = (String) usersession.getAttribute("paymenttype");
-//				
-//				if(paymenttype.equalsIgnoreCase("PREPAID"))
-//				{
-//					
-//					dao.deductWallet(usersession, epins.txid, Float.parseFloat(epins.getAmount()));
-//
-//					
-//					logger.info("deducting prepaid wallet done");
-//				}
-//				else if(paymenttype.equalsIgnoreCase("SETTLEMENT")){
-//					
-//					dao.creditWallet(usersession, epins.txid, Float.parseFloat(epins.getAmount()));
-//					
-//					logger.info("deducting settlement done");
-//					
-//				}
-//				else if(paymenttype.equalsIgnoreCase("FEES")){
-//					
-//					dao.creditWallet(usersession, epins.txid, Float.parseFloat(epins.getAmount()));
-//					
-//					logger.info("deducting fees wallet done");
-//				}
-				
 
 			}
 			
@@ -135,90 +115,82 @@ public class EpinsUploadServices {
 			else
 			
 			{
-				
-
-				
-				
+						
 				try {
 				
-
-//					String paymenttype = (String) usersession.getAttribute("paymenttype");
-//					
-//					if(paymenttype.equalsIgnoreCase("PREPAID"))
-//					{
-//						
-//						debit = dao.updatetxid(usersession, epins.txid, Float.parseFloat(epins.getAmount()) * -1);
-//						logger.info("deducting prepaid wallet done");
-//						
-//					}
-//					else if(paymenttype.equalsIgnoreCase("SETTLEMENT")){
-//						
-//						debit = dao.creditWallet(usersession, epins.txid, Float.parseFloat(epins.getAmount()));
-//						logger.info("deducting settlement done");
-//						
-//					}
-//					else if(paymenttype.equalsIgnoreCase("FEES")){
-//						
-//						debit = dao.creditWallet(usersession, epins.txid, Float.parseFloat(epins.getAmount()));					
-//						logger.info("deducting fees wallet done");
-//						
-//					}
-					
-				logger.info("Debit result: " + debit);
-				logger.info("+++++++++++++++++++Epin Upload++++++++++++++++");
-				
-				if (debit != 1) {
-					logger.info("Unable to deduct from wallet from  " + partner.partnerid + "; Amount: " + epins.getAmount());	
-					errorState = P2MConstants.DEBIT_FAILED_CODE;				
-				}
-				
-				else		
-				{
-				
-					EpinsUpload upload = new EpinsUpload();
-					EpinsUploadResponse resp1 = new EpinsUploadResponse();
-					String type = epins.getTxtype();
-					String prodcode = epins.getProdtype();
-					int qty = Integer.parseInt(epins.getQuantity());
-					String target = epins.getTarget();
-					String appname = "PC2MWEB";
-					String trantype = "topup";
-					String denom = epins.getDenom();
-					String message = epins.getMessage();
-					String username = epins.getUsername();
-					String password = epins.getPassword();
-					String password2 = epins.getPassword2();
-					long tranid = epins.getTransid();
-					String transid =""+tranid;
-					
-					resp1=upload.epinsupload(type,prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid);
-					
-					if(resp1.getResultcode()==0){
+					logger.info("+++++++++++++++++++Epin Upload++++++++++++++++");
+							
+					if(epins.getType().equals("individual")){
+						epins.setTarget(epins.getPrefix()+ epins.getMobnum());
+						
+						EpinsUpload upload = new EpinsUpload();
+						EpinsUploadResponse respo = new EpinsUploadResponse();
+						String type = epins.getTxtype();
+						String prodcode = epins.getProdcode();
+						int qty = 1;
+						String target = epins.getTarget();
+						String appname = "PC2MWEB";
+	//ip dito			
+						String trantype = "epins";
+						String denom = epins.getDenom();
+						String message = epins.getMessage();
+						String username = epins.getUsername();
+						String password = epins.getPassword();
+						
+						String transid = Long.toString(epins.txid);
+						
+						System.out.println(transid);
+						respo=upload.epinsupload("",prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid);
+						
+					if(respo.getResultcode()==0){
 						modelAndView.addObject("msg", "success");
 					}
+					
+				}
 				
+				if(epins.getTxtype().equals("bulk")){
+					
+						if(Integer.parseInt(epins.getQuantity())==1){
+							logger.info("+++++++++++++++++++ERROR+++++++++++++++++++");
+							
+						}
+						else{
+							
+								EpinsUpload upload = new EpinsUpload();
+								EpinsUploadResponse respo = new EpinsUploadResponse();
+								String type = epins.getTxtype();
+								String prodcode = epins.getProdcode();
+								int qty = Integer.parseInt(epins.getQuantity());
+								String target = epins.getTarget();
+								String appname = "PC2MWEB";
+								String trantype = "epins";
+								String denom = epins.getDenom();
+								String message = epins.getMessage();
+								String username = (String) usersession.getAttribute("USER");
+								String password = epins.getPassword();
+								String password2 = epins.getPassword2();
+								String transid = Long.toString(epins.txid);
+								
+								respo=upload.epinsupload(type,prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid);
+								
+								if(respo.getResultcode()==0){
+									modelAndView.addObject("msg", "success");				
+								}
+							
+								}
+						}
 				}
 
-			} catch (Exception e) {
+			 catch (Exception e) {
 				e.printStackTrace();
 				logger.info("exception : " + e.getMessage());
 				errorState = P2MConstants.GENERAL_ERROR_CODE;
-				
-//				// Refund wallet
-//				if ( debit == 1 ) {
-//
-//					dao.updatetxid(usersession, epins.txid, Float.parseFloat(epins.getAmount()));
-//				}
+			
 			}
 			try {				
 				
-				if(epins.getTxtype()== "individual"){
-					epins.setTarget(epins.getPrefix()+ epins.getMobnum());
-				}
-				if(epins.getTxtype()== "bulk"){
-					
-					
-				}
+				
+				
 
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -231,8 +203,8 @@ public class EpinsUploadServices {
 				
 				
 			}
-		
-
+			
+			
 		logger.info("+++++++++++++++++++EPINS UPLOAD Status! "+resp+" ++++++++++++++++");
 		return modelAndView;
 		

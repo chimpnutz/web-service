@@ -23,9 +23,7 @@
 
 <script src="../js/jquery-latest.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.js"></script>
-<script src="../js/bulkoffers.js"></script>
 <script type="text/javascript" src="../js/header.js"></script>
-<script type="text/javascript" src="../js/dropdown.js"></script>
 
 
 
@@ -121,10 +119,20 @@ cssdropdown.startchrome("payphilexchange")
   <tr>
     <td class="text12_tungsten" style="text-align: left; width:100px;">Denomination</td>
     <td style="float:left;">
+   
     <form:select path="denom" id="denom" class="denom" style="width: 130px; text-align:left;"> 
     <form:option value="100" label="100" />
 	<form:option value="300" label="300" />
 	<form:option value="500" label="500" />			 
+	</form:select> &nbsp; &nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td class="text12_tungsten" style="text-align: left; width:100px;">Telco Type.</td>
+  	<td style="float:left;">
+    <form:select path="prodcode" id="prodcode" class="prodcode" style="width: 206px; text-align:left;"> 
+    <form:option value="GHT" label="Globe" />
+	<form:option value="TM" label="Touch Mobile" />		 
 	</form:select> &nbsp; &nbsp;</td>
   </tr>
   
@@ -193,7 +201,14 @@ cssdropdown.startchrome("payphilexchange")
 	<form:option value="500" label="500" />			 
 	</form:select> &nbsp; &nbsp;</td>
   </tr>
-
+  <tr>
+  	<td class="text12_tungsten" style="text-align: left; width:100px;">Telco Type.</td>
+  	<td style="float:left;">
+    <form:select path="prodcode" id="prodcode" class="prodcode" style="width: 206px; text-align:left;"> 
+    <form:option value="GHT" label="Globe" />
+	<form:option value="TM" label="Touch Mobile" />		 
+	</form:select> &nbsp; &nbsp;</td>
+  </tr>
   <tr>
     <td>&nbsp;</td>
     <td style="float:left;"><input type="image" value="Submit" src="../css/images/submit2_button.png" style="margin-left:140px;"/></td>

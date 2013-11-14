@@ -146,11 +146,11 @@ public class EpinDAO extends JdbcDaoSupport
 						   ps.setString(4, epin.getRequestype());
 						   ps.setString(5, epin.getTxtype());
 						   ps.setString(6, epin.getProdtype());
-						   ps.setFloat(7, Float.parseFloat(epin.getAmount()));
+						   ps.setString(7, epin.getDenom());
 						   ps.setInt(8, walletid);
 						   ps.setString(9, "PENDING");
-						   ps.setFloat(10, Float.parseFloat(epin.getAmount()));
-						   ps.setFloat(11, Float.parseFloat(epin.getAmount()));
+						   ps.setString(10, epin.getDenom());
+						   ps.setString(11, epin.getDenom());
 						   ps.setFloat(12, 0);
 						  
 						 
@@ -171,20 +171,19 @@ public class EpinDAO extends JdbcDaoSupport
 				
 				{
 					
-
+//
 					
 					   StringBuilder insertMobileTx = new StringBuilder();
 					   
-					   insertMobileTx.append("INSERT INTO epins_transaction  ");
-					   insertMobileTx.append("(transactionid) ");
-					   insertMobileTx.append(" VALUES (?)");
+					   insertMobileTx.append("INSERT INTO epins_transaction (transactionid) VALUES (?) ");
+					   
 					   
 					   
 					   try{
 						   
 
 							int mobileRow = getJdbcTemplate().update(insertMobileTx.toString(), new Object[] { 
-								txid,epin.getTarget()
+								txid,
 							
 							});
 

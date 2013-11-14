@@ -48,7 +48,7 @@ public class UserDAO
       bean.setWalletid(rs.getInt("walletid"));
       bean.setRunmode(rs.getString("runmode"));
       bean.setPartnername(rs.getString("partnername"));
-
+      
     }
 
     return bean;

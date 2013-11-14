@@ -24,6 +24,6 @@ public class MessageModels {
     public static final String INVALID_EPINS = "invalid epins";
     public static final String INVALID_QTY = "invalid qty";
     public static final String INVALID_IP = "invalid ip address";
-    public static final String EPIN_SUCCESS = "epin successfully updated";
+    public static final String EPIN_SUCCESS = "EPINS_SUCCESS";
     public static final String EMAIL_SENDING_FAILED = "email sending failed";
 }

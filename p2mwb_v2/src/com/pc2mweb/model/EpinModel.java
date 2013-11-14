@@ -25,7 +25,13 @@ public class EpinModel {
 	String target;
 	String password;
 	String password2;
-	
+	String prodcode;
+	public String getProdcode() {
+		return prodcode;
+	}
+	public void setProdcode(String prodcode) {
+		this.prodcode = prodcode;
+	}
 	public long getTransid() {
 		return transid;
 	}

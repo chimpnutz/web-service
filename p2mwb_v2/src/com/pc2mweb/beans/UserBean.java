@@ -26,11 +26,21 @@ public class UserBean implements Serializable{
 	public String runmode;
 	public String paymenttype;
 	public String partnername;
-	
+	public String email;
 
 
 
-    public UserBean(int   userBean,String userName,String password,String userlevel,String lastName,String firstName,String middleName){
+    public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public UserBean(int   userBean,String userName,String password,String userlevel,String lastName,String firstName,String middleName){
 
         this.UserID = userBean;
         this.UserName = userName;

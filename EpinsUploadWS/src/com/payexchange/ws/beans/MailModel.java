@@ -3,6 +3,7 @@ package com.payexchange.ws.beans;
 import java.io.File;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.core.io.FileSystemResource;
@@ -38,4 +39,11 @@ public class MailModel
 	  }
 		mailSender.send(mime);	
 	}
+
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 }

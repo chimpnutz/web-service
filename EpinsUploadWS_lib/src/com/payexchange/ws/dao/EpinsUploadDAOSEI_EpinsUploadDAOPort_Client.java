@@ -52,19 +52,20 @@ public final class EpinsUploadDAOSEI_EpinsUploadDAOPort_Client {
         {
         System.out.println("Invoking reqUpload...");
         java.lang.String _reqUpload_arg0 = "";
-        java.lang.String _reqUpload_arg1 = "GT";
+        java.lang.String _reqUpload_arg1 = "GHT";
         int _reqUpload_arg2 = 0;
         java.lang.String _reqUpload_arg3 = "";
         java.lang.String _reqUpload_arg4 = "09276598742";
         java.lang.String _reqUpload_arg5 = "PC2MWEB";
-        java.lang.String _reqUpload_arg6 = "_reqUpload_arg6394100643";
+        java.lang.String _reqUpload_arg6 = "_reqUpload_arg6-2039421192";
         java.lang.String _reqUpload_arg7 = "topup";
         java.lang.String _reqUpload_arg8 = "100";
         java.lang.String _reqUpload_arg9 = "this is a message";
         java.lang.String _reqUpload_arg10 = "Loadcentral";
         java.lang.String _reqUpload_arg11 = "admin";
         java.lang.String _reqUpload_arg12 = "1";
-        com.payexchange.ws.dao.EpinsUploadResponse _reqUpload__return = port.reqUpload(_reqUpload_arg0, _reqUpload_arg1, _reqUpload_arg2, _reqUpload_arg3, _reqUpload_arg4, _reqUpload_arg5, _reqUpload_arg6, _reqUpload_arg7, _reqUpload_arg8, _reqUpload_arg9, _reqUpload_arg10, _reqUpload_arg11, _reqUpload_arg12);
+        java.lang.String _reqUpload_arg13 = "example@yahoo.com";
+        com.payexchange.ws.dao.EpinsUploadResponse _reqUpload__return = port.reqUpload(_reqUpload_arg0, _reqUpload_arg1, _reqUpload_arg2, _reqUpload_arg3, _reqUpload_arg4, _reqUpload_arg5, _reqUpload_arg6, _reqUpload_arg7, _reqUpload_arg8, _reqUpload_arg9, _reqUpload_arg10, _reqUpload_arg11, _reqUpload_arg12,_reqUpload_arg13);
         System.out.println("reqUpload.result=" + _reqUpload__return.getPassword());
         System.out.println("reqUpload.result=" + _reqUpload__return.getResultcode());
         System.out.println("reqUpload.result=" + _reqUpload__return.getTracenumber());

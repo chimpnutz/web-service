@@ -18,6 +18,7 @@ public class EpinModel {
 	long transid;
 	
 	
+	
 	int walletid;
 	public int    agentid= -1;
 	public Long    txid   = (long) 0;
@@ -26,6 +27,13 @@ public class EpinModel {
 	String password;
 	String password2;
 	String prodcode;
+	String email;
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	public String getProdcode() {
 		return prodcode;
 	}

@@ -22,8 +22,8 @@ public class sim {
 		String username = "Loadcentral";
 		String password = "l0adcentral";
 		String tranid = "1";
-		
-		upload.epinsupload("",prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,tranid);
+		String email = "example@yahoo.com";
+		upload.epinsupload("",prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,tranid,email);
 		
 		
 		

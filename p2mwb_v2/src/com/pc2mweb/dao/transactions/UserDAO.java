@@ -21,7 +21,7 @@ public class UserDAO
 
     UserBean bean = new UserBean();
 
-    strSQL.append("SELECT a.agentid, a.username,a.password,b.roleid,c.partnerid,c.partnername,c.runmode,d.rolename,e.paymenttype,e.walletid ");
+    strSQL.append("SELECT a.agentid, a.username,a.password,b.roleid,c.partnerid,c.partnername,c.email,c.runmode,d.rolename,e.paymenttype,e.walletid ");
     strSQL.append("FROM agents a  ");
     strSQL.append("INNER JOIN agents_partners b ");
     strSQL.append("ON a.agentid = b.agentid ");
@@ -39,6 +39,7 @@ public class UserDAO
 
     if (rs.next())
     {
+      bean.setEmail(rs.getString("email"));
       bean.setUserName(rs.getString("username"));
       bean.setUserLevel(rs.getString("rolename"));
       bean.setPassword(rs.getString("password"));

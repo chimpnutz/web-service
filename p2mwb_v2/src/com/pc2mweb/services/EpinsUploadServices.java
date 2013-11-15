@@ -45,7 +45,8 @@ public class EpinsUploadServices {
 		epins.setPid(pid);	
 		String bid = (String) usersession.getAttribute("BID");
 		epins.setBid(bid);
-
+		String email = (String) usersession.getAttribute("EMAIL");
+		epins.setEmail(email);
 		
 		epins.setRequestype("epin");
 		epins.setTxtype(epins.getType());
@@ -72,7 +73,7 @@ public class EpinsUploadServices {
 			epins.agentid = partner.agentid;
 			epins.txid = dao.insertTransaction(epins,usersession);
 			logger.info("topup tx id is: "+epins.txid);
-						
+				
 
 			
 			
@@ -119,7 +120,8 @@ public class EpinsUploadServices {
 				try {
 				
 					logger.info("+++++++++++++++++++Epin Upload++++++++++++++++");
-							
+					
+					
 					if(epins.getType().equals("individual")){
 						epins.setTarget(epins.getPrefix()+ epins.getMobnum());
 						
@@ -140,7 +142,7 @@ public class EpinsUploadServices {
 						String transid = Long.toString(epins.txid);
 						
 						System.out.println(transid);
-						respo=upload.epinsupload("",prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid);
+						respo=upload.epinsupload("",prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid, "");
 						
 					if(respo.getResultcode()==0){
 						modelAndView.addObject("msg", "success");
@@ -170,8 +172,8 @@ public class EpinsUploadServices {
 								String password = epins.getPassword();
 								String password2 = epins.getPassword2();
 								String transid = Long.toString(epins.txid);
-								
-								respo=upload.epinsupload(type,prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid);
+								String emails = partner.email;
+								respo=upload.epinsupload(type,prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid,emails);
 								
 								if(respo.getResultcode()==0){
 									modelAndView.addObject("msg", "success");				

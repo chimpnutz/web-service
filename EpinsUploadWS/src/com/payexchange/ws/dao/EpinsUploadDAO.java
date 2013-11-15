@@ -17,7 +17,7 @@ public class EpinsUploadDAO   {
 	WebServiceContext wsContext; 
 	
 	public EpinsUploadResponse reqUpload(String Trace, String ProdCode, int Qty,
-			   String type,String target,String appname, String ipaddress, String trantype, String Denom, String message, String username, String password, String transid){
+			   String type,String target,String appname, String ipaddress, String trantype, String Denom, String message, String username, String password, String transid, String email){
 			
 		  EpinsUploadResponse responseCode = null;
 		 		  
@@ -44,7 +44,8 @@ public class EpinsUploadDAO   {
 		   bean.setUsername(username);
 		   bean.setPassword(password);
 		   bean.setTransid(transid);
-		  
+		   bean.setEmail(email);
+		   
 		   try {
 			responseCode = Upload.reqUpload(bean);
 			return responseCode;	

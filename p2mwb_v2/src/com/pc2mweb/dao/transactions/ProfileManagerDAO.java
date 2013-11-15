@@ -19,7 +19,7 @@ public class ProfileManagerDAO extends JdbcDaoSupport
 		
 		StringBuilder strSQL = new StringBuilder();
 		
-		strSQL.append("select a.agentid,a.username,b.roleid,c.partnerid,c.partnername,c.appname,c.parent_partnerid,c.runmode,  d.paymenttype, d.isdefault,d.wallet ");
+		strSQL.append("select a.agentid,a.username,b.roleid,c.partnerid,c.partnername,c.appname,c.parent_partnerid,c.email,c.runmode,  d.paymenttype, d.isdefault,d.wallet ");
 		strSQL.append("from agents a inner join agents_partners b on a.agentid = b.agentid ");
 		strSQL.append("inner join partners c on b.partnerid = c.partner  ");
 		strSQL.append("INNER JOIN wallets d ON c.partnerid = d.partnerid ");
@@ -38,6 +38,7 @@ public class ProfileManagerDAO extends JdbcDaoSupport
 			profile.agentid = rs.getInt("agentid");
 			profile.username = rs.getString("username");
 			profile.roleid = rs.getInt("roleid");
+			profile.email = rs.getString("email");
 			profile.paymenttype = rs.getString("paymenttype");
 			profile.partnerid = rs.getString("partnerid");
 			profile.partnername = rs.getString("partnername");

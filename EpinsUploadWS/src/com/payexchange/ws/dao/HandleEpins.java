@@ -109,7 +109,7 @@ public class HandleEpins  {
 				
 				if(getDenom(bean)){
 					
-					System.out.println(this.getEmail());
+					System.out.println(bean.getEmail());
 					
 					if(updateEpins(bean)){
 						
@@ -171,7 +171,7 @@ public class HandleEpins  {
 				   	
 										}
 							
-									this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty(), bean.getPassword(), bean.getTarget());
+									this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty(), bean.getPassword(), bean.getTarget(), bean.getEmail());
 									this.updateTX(tranid,MessageModels.EPIN_SUCCESS);
 								}
 							}
@@ -587,7 +587,7 @@ public boolean updateTX(long tranid,String errorState)
         return false;
 }
 //creating excel file	
-	private void writeExcel(String username, int denom, String telco, int Qty, String password, String recipient) {
+	private void writeExcel(String username, int denom, String telco, int Qty, String password, String recipient, String sender) {
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -600,14 +600,10 @@ public boolean updateTX(long tranid,String errorState)
 	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MMM-dd");
 	    rptDate=sdf.format(date);	
 		File filename= new File("D:\\"+this.writePrefix(username, denom, telco, rptDate)+".xls");
-		
-		
-		
+				
 		HSSFWorkbook hwb=new HSSFWorkbook();
 		HSSFSheet sheet =  hwb.createSheet("new sheet");
-		
-		
-		
+	
 		HSSFRow rowhead = sheet.createRow((short)0);
 			try{
 			       conn = EpinsConnectionManager.getConnection();
@@ -671,7 +667,7 @@ public boolean updateTX(long tranid,String errorState)
 							
 							MailModel mm = (MailModel) mailcontext.getBean("mail");
 							
-							mm.sendMail("tristan.lapidez@payexchangeinc.com",
+							mm.sendMail(sender,
 										recipient,
 						    		   "Hello!", 
 						    		   "Attached here is encrypted file. Use winzip or winrar for the attached file. ");
@@ -765,53 +761,5 @@ public boolean updateTX(long tranid,String errorState)
    
     }
     
-public boolean getEmail(){
-		
-    	PreparedStatement ps = null;	
-		ResultSet rs = null;
-		Connection conn = null;
-		
-	String pid = "677DS5MIJ7YT";
-//	String pid = (String) session.getAttribute("PID");
-	System.out.println(pid);	
-
-		String checkSQL = "Select email from partners where partnerid = ?";
-        try{
-        	   conn = SubwayConnection.getConnection();
-		       ps = conn.prepareStatement(checkSQL);
-		       
-		       ps.setString(1,pid);
-		      
-		       
-		            
-		       rs = ps.executeQuery();
-		        if(rs.next()){
-		        	   
-			           logger.info("email is valid");		
-			           return true;
-			         
-		        }
-        	}
-        		catch(Exception ex){
-	            ex.printStackTrace();
-	            
-	        }
-				finally{
-			 	
-			 	Utility.closeQuietly(rs);
-			 	Utility.closeQuietly(ps);
-			 	Utility.closeQuietly(conn);
-			
-			 		}
-	      
-	        
-	        logger.info("email is invalid");
-			return false;
-			
-					
-		
-		
-		
-    }
     
 }

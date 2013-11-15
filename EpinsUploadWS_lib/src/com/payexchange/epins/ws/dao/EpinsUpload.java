@@ -18,7 +18,7 @@ public class EpinsUpload {
     
     private static Property property;
     
-    public EpinsUploadResponse epinsupload(String Trace, String ProdCode, int Qty, String type, String target, String appname, String ipaddress, String trantype, String Denom, String message, String username, String password, String transid){
+    public EpinsUploadResponse epinsupload(String Trace, String ProdCode, int Qty, String type, String target, String appname, String ipaddress, String trantype, String Denom, String message, String username, String password, String transid, String email){
     
     
 
@@ -44,7 +44,7 @@ public class EpinsUpload {
 	       System.out.println("Invoking EpinsUpload...");
 	       
 
-	        com.payexchange.ws.dao.EpinsUploadResponse _reqUpload__return = port.reqUpload(Trace, ProdCode, Qty, type, target, appname, ipaddress, trantype, Denom, message, username, password, transid);
+	        com.payexchange.ws.dao.EpinsUploadResponse _reqUpload__return = port.reqUpload(Trace, ProdCode, Qty, type, target, appname, ipaddress, trantype, Denom, message, username, password, transid, email);
 	        
 	        response.setPassword(_reqUpload__return.getPassword());
 	        response.setResultcode(_reqUpload__return.getResultcode());

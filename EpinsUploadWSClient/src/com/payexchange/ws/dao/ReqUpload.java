@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="arg10" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg11" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="arg12" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="arg13" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -51,7 +52,8 @@ import javax.xml.bind.annotation.XmlType;
     "arg9",
     "arg10",
     "arg11",
-    "arg12"
+    "arg12",
+    "arg13"
 })
 public class ReqUpload {
 
@@ -68,6 +70,7 @@ public class ReqUpload {
     protected String arg10;
     protected String arg11;
     protected String arg12;
+    protected String arg13;
 
     /**
      * Gets the value of the arg0 property.
@@ -371,6 +374,30 @@ public class ReqUpload {
      */
     public void setArg12(String value) {
         this.arg12 = value;
+    }
+
+    /**
+     * Gets the value of the arg13 property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getArg13() {
+        return arg13;
+    }
+
+    /**
+     * Sets the value of the arg13 property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setArg13(String value) {
+        this.arg13 = value;
     }
 
 }

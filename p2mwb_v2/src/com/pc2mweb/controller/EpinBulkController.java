@@ -98,22 +98,23 @@ import com.pc2mweb.model.EpinModel;
 import com.pc2mweb.model.LopModel;
 import com.pc2mweb.model.OutgoingSMSModel;
 import com.pc2mweb.model.TopupModel;
+import com.pc2mweb.services.EpinsUploadBulkServices;
 import com.pc2mweb.services.EpinsUploadServices;
 import com.pc2mweb.services.LoadCustomerServices;
 import com.pc2mweb.utility.function.PaypalProps;
 import com.pc2mweb.utility.function.pc2mwebFunc;
 
 @Controller
-@RequestMapping("epins")
-public class EpinsController implements ServletContextAware   {
+@RequestMapping("epinsbulk")
+public class EpinBulkController implements ServletContextAware   {
 	
 	@Autowired
 	private ServletContext servletContext;
 	
 
-	private static final Logger logger = Logger.getLogger(EpinsController.class);
+	private static final Logger logger = Logger.getLogger(EpinBulkController.class);
 
-	@RequestMapping(method = RequestMethod.GET,params={"bulk"})
+	@RequestMapping(method = RequestMethod.GET)
 	 public ModelAndView topupView(ModelMap model,HttpServletRequest request, HttpSession session) {
 		
 		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
@@ -121,7 +122,7 @@ public class EpinsController implements ServletContextAware   {
 		EpinDAO dao = (EpinDAO)context.getBean("epinDAO");
 		BillsPaymentDAO billdao = (BillsPaymentDAO)context.getBean("billspaymentDAO");
 		
-		ModelAndView modelAndView = new ModelAndView("epins");
+		ModelAndView modelAndView = new ModelAndView("epinsbulk");
 		ModelAndView redirect = new ModelAndView("redirect:main.html");
 			
 		HttpSession isSession = request.getSession();
@@ -142,64 +143,22 @@ public class EpinsController implements ServletContextAware   {
 				modelAndView.addObject("fillbox", fillbox);
 				modelAndView.addObject("fillprodtype", fillprodtype);
 				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));	
-				modelAndView.addObject("type", "bulk");
 				return modelAndView;
 				
 				}
 			
 		}		
 	
-
-
-	@RequestMapping(method = RequestMethod.GET,params={"individual"})
-	 public ModelAndView cancelCheckout(ModelMap model,HttpServletRequest request, HttpSession session) {
-	
-		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
-		
-		EpinDAO dao = (EpinDAO)context.getBean("epinDAO");
-
-		
-		ModelAndView modelAndView = new ModelAndView("epins");
-		ModelAndView redirect = new ModelAndView("redirect:main.html");
-			
-		HttpSession isSession = request.getSession();
-
-		if (null == isSession.getAttribute("USER")) {			
-				redirect.addObject("login", "no");
-				return redirect;	
-			
-		} else
-				 {
-
-			
-				Float wallet = dao.getWallet(session);
-				Map fillbox = dao.fillBox();
-				Map fillprodtype = dao.fillprodtype();
-				
-				
-				modelAndView.addObject("epinForm", new EpinModel());
-				modelAndView.addObject("fillbox", fillbox);
-				modelAndView.addObject("type", "individual");
-				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));	
-				return modelAndView;
-				
-				}
-			
-		}
 	
 
 	@RequestMapping(method = RequestMethod.POST)
 	  public ModelAndView getBillerfield(@ModelAttribute("epinForm") EpinModel epins, HttpSession usersession) throws NamingException, ParseException {
 		
-		EpinsUploadServices services = new EpinsUploadServices();
+		EpinsUploadBulkServices services = new EpinsUploadBulkServices();
 			
 		return services.epinsUpload(epins, usersession, servletContext);
 					
 	}
-	
-	
-	
-	
 	
 	
 

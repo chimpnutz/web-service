@@ -1,5 +1,7 @@
 package com.pc2mweb.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 public class EpinModel {
 
@@ -23,8 +25,11 @@ public class EpinModel {
 	public int    agentid= -1;
 	public Long    txid   = (long) 0;
 	String denom;
+	@NotEmpty
 	String target;
+	@NotEmpty
 	String password;
+	@NotEmpty
 	String password2;
 	String prodcode;
 	String email;

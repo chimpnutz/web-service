@@ -20,9 +20,9 @@ import com.pc2mweb.dao.transactions.ProfileManagerDAO;
 import com.pc2mweb.model.EpinModel;
 import com.pc2mweb.model.TopupModel;
 
-public class EpinsUploadServices {
+public class EpinsUploadBulkServices {
 
-	private static final Logger logger = Logger.getLogger(EpinsUploadServices.class);
+	private static final Logger logger = Logger.getLogger(EpinsUploadBulkServices.class);
 	
 
 	public ModelAndView epinsUpload(EpinModel epins, HttpSession usersession,ServletContext servletContext)
@@ -45,9 +45,11 @@ public class EpinsUploadServices {
 		epins.setTxtype(epins.getType());
 		epins.setProdtype("EpinsUpload");
 
+		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+		
 		Float wallet = dao.getWallet(usersession);
 		
-		ModelAndView modelAndView = new ModelAndView("epins");
+		ModelAndView modelAndView = new ModelAndView("epinsbulk");
 		ModelAndView redirect = new ModelAndView("redirect:main.html");
 		
 		modelAndView.addObject("epinForm", new EpinModel());
@@ -61,55 +63,46 @@ public class EpinsUploadServices {
 	
 			if(epins.getType().equals("bulk")){
 				
-//				if(epins.getPassword() == epins.getPassword2())
-//					{
-//						return null;
-//					}
-				
-				System.out.println(epins.getType());
-				
-			}
-		
-			if(epins.getType().equals("individual")){
-				
-				if(!this.isNumber(epins.getMobnum())||Integer.parseInt(epins.getMobnum())<11) {
-					
-					modelAndView.addObject("status", "fail");
-					modelAndView.addObject("msg", "Please input valid mobile number.");
-					modelAndView.addObject("fillbox", fillbox);
-					logger.info("+++++++++++++++++++ERROR: Please input valid mobile number+++++++++++++++++++");
+				if(epins.getTarget().equals("")){
+					modelAndView.addObject("blankemail", "yes");
+					modelAndView.addObject("msg", "*Please input your email");
+					logger.info("+++++++++++++++++++ERROR: Please input your email+++++++++++++++++++");
 					return modelAndView;
-					
 				}
-				System.out.println(epins.getType());
+				if(epins.getTarget().matches(EMAIL_REGEX)){
+					modelAndView.addObject("status", "fail");
+					modelAndView.addObject("msg", "*Please provide a proper email address");
+					logger.info("+++++++++++++++++++ERROR: Please provide a proper email address+++++++++++++++++++");
+					return modelAndView;
+				}				
+				if(Integer.parseInt(epins.getQuantity())<=1){
+					modelAndView.addObject("status", "fail");
+					modelAndView.addObject("msg", "*quantity must be 2 or more");
+					logger.info("+++++++++++++++++++ERROR: quantity must be 2 or more +++++++++++++++++++");
+					return modelAndView;
+				}
+				
+				if(epins.getPassword().equals("")){
+					modelAndView.addObject("blankpass", "yes");
+					modelAndView.addObject("msg", "*Please input your password");
+					logger.info("+++++++++++++++++++ERROR: Please input your password+++++++++++++++++++");
+					return modelAndView;
+				}
+				if(epins.getPassword2().equals("")){
+					modelAndView.addObject("blankpass2", "yes");
+					modelAndView.addObject("msg", "*Please input same password as above");
+					logger.info("+++++++++++++++++++ERROR: Please input your password+++++++++++++++++++");
+					return modelAndView;
+				}
+				if(!epins.getPassword().equals(epins.getPassword2())){
+					modelAndView.addObject("confirm", "yes");
+					modelAndView.addObject("msg", "*Password must be the same");
+					logger.info("+++++++++++++++++++ERROR: Password must be the same+++++++++++++++++++");
+					return modelAndView;
+				}
+		
 			}
 		
-
-		if(epins.getTarget().equals("")){
-			modelAndView.addObject("blankemail", "yes");
-			modelAndView.addObject("msg", "*Please input your password");
-			logger.info("+++++++++++++++++++ERROR: Please input your email+++++++++++++++++++");
-			return modelAndView;
-		}
-		
-		if(epins.getPassword()==null){
-			modelAndView.addObject("blankpass", "yes");
-			modelAndView.addObject("msg", "*Please input your password");
-			logger.info("+++++++++++++++++++ERROR: Please input your password+++++++++++++++++++");
-			return modelAndView;
-		}
-		if(epins.getPassword2()==null){
-			modelAndView.addObject("blankpass2", "yes");
-			modelAndView.addObject("msg", "*Please input same password as above");
-			logger.info("+++++++++++++++++++ERROR: Please input your password+++++++++++++++++++");
-			return modelAndView;
-		}
-		if(epins.getPassword()!=epins.getPassword2()){
-			modelAndView.addObject("confirm", "yes");
-			modelAndView.addObject("msg", "*Password must be the same");
-			logger.info("+++++++++++++++++++ERROR: Password must be the same+++++++++++++++++++");
-			return modelAndView;
-		}
 		
 		try {
 			logger.info("get profile: " + usersession.getAttribute("USER"));
@@ -165,51 +158,9 @@ public class EpinsUploadServices {
 				try {
 				
 					logger.info("+++++++++++++++++++Epin Upload++++++++++++++++");
-					
-					
-					if(epins.getType().equals("individual")){						
-						epins.setTarget(epins.getPrefix()+ epins.getMobnum());
-						
-						if(epins.getTarget().length()<11){
-						logger.info("+++++++++++++++++++ERROR: mobile number should atleast 11 digits+++++++++++++++++++");
-						
-						}
-						else{
-						EpinsUpload upload = new EpinsUpload();
-						EpinsUploadResponse respo = new EpinsUploadResponse();
-						String type = epins.getTxtype();
-						String prodcode = epins.getProdcode();
-						int qty = 1;
-						String target = epins.getTarget();
-						String appname = "PC2MWEB";
-	//ip dito			
-						String trantype = "epins";
-						String denom = epins.getDenom();
-						String message = epins.getMessage();
-						String username = epins.getUsername();
-						String password = epins.getPassword();
-						
-						String transid = Long.toString(epins.txid);
-						
-						System.out.println(transid);
-						respo=upload.epinsupload("",prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid, "");
-						
-						if(respo.getResultcode()==0){
-							modelAndView.addObject("msg", "success");
-						}
-						return modelAndView;
-						}
-				}
-				
+			
 				if(epins.getTxtype().equals("bulk")){
-					
-						if(Integer.parseInt(epins.getQuantity())==1){
-							logger.info("+++++++++++++++++++ERROR: quantity must be 2 or more +++++++++++++++++++");
-							
-						}
 						
-						else{
-							
 								EpinsUpload upload = new EpinsUpload();
 								EpinsUploadResponse respo = new EpinsUploadResponse();
 								String type = epins.getTxtype();
@@ -226,13 +177,14 @@ public class EpinsUploadServices {
 								String transid = Long.toString(epins.txid);
 								String emails = partner.email;
 								respo=upload.epinsupload(type,prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid,emails);
+									
 								
 								if(respo.getResultcode()==0){
 									modelAndView.addObject("msg", "success");				
 								}
 								return modelAndView;
 								}
-						}
+						
 				}
 
 			 catch (Exception e) {
@@ -254,13 +206,13 @@ public class EpinsUploadServices {
 			}
 				
 				
-				
+			logger.info("+++++++++++++++++++EPINS UPLOAD Status! "+resp+" ++++++++++++++++");
 				
 			}
 			
+			return modelAndView;
 			
-		logger.info("+++++++++++++++++++EPINS UPLOAD Status! "+resp+" ++++++++++++++++");
-		return modelAndView;
+		
 		
 		
 		

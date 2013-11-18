@@ -20,9 +20,9 @@ import com.pc2mweb.dao.transactions.ProfileManagerDAO;
 import com.pc2mweb.model.EpinModel;
 import com.pc2mweb.model.TopupModel;
 
-public class EpinsUploadServices {
+public class EpinsUploadIndividualServices {
 
-	private static final Logger logger = Logger.getLogger(EpinsUploadServices.class);
+	private static final Logger logger = Logger.getLogger(EpinsUploadIndividualServices.class);
 	
 
 	public ModelAndView epinsUpload(EpinModel epins, HttpSession usersession,ServletContext servletContext)
@@ -47,7 +47,7 @@ public class EpinsUploadServices {
 
 		Float wallet = dao.getWallet(usersession);
 		
-		ModelAndView modelAndView = new ModelAndView("epins");
+		ModelAndView modelAndView = new ModelAndView("epinsindividual");
 		ModelAndView redirect = new ModelAndView("redirect:main.html");
 		
 		modelAndView.addObject("epinForm", new EpinModel());
@@ -61,12 +61,6 @@ public class EpinsUploadServices {
 	
 			if(epins.getType().equals("bulk")){
 				
-//				if(epins.getPassword() == epins.getPassword2())
-//					{
-//						return null;
-//					}
-				
-				System.out.println(epins.getType());
 				
 			}
 		
@@ -81,35 +75,8 @@ public class EpinsUploadServices {
 					return modelAndView;
 					
 				}
-				System.out.println(epins.getType());
+				
 			}
-		
-
-		if(epins.getTarget().equals("")){
-			modelAndView.addObject("blankemail", "yes");
-			modelAndView.addObject("msg", "*Please input your password");
-			logger.info("+++++++++++++++++++ERROR: Please input your email+++++++++++++++++++");
-			return modelAndView;
-		}
-		
-		if(epins.getPassword()==null){
-			modelAndView.addObject("blankpass", "yes");
-			modelAndView.addObject("msg", "*Please input your password");
-			logger.info("+++++++++++++++++++ERROR: Please input your password+++++++++++++++++++");
-			return modelAndView;
-		}
-		if(epins.getPassword2()==null){
-			modelAndView.addObject("blankpass2", "yes");
-			modelAndView.addObject("msg", "*Please input same password as above");
-			logger.info("+++++++++++++++++++ERROR: Please input your password+++++++++++++++++++");
-			return modelAndView;
-		}
-		if(epins.getPassword()!=epins.getPassword2()){
-			modelAndView.addObject("confirm", "yes");
-			modelAndView.addObject("msg", "*Password must be the same");
-			logger.info("+++++++++++++++++++ERROR: Password must be the same+++++++++++++++++++");
-			return modelAndView;
-		}
 		
 		try {
 			logger.info("get profile: " + usersession.getAttribute("USER"));
@@ -199,40 +166,8 @@ public class EpinsUploadServices {
 						}
 						return modelAndView;
 						}
-				}
+					}
 				
-				if(epins.getTxtype().equals("bulk")){
-					
-						if(Integer.parseInt(epins.getQuantity())==1){
-							logger.info("+++++++++++++++++++ERROR: quantity must be 2 or more +++++++++++++++++++");
-							
-						}
-						
-						else{
-							
-								EpinsUpload upload = new EpinsUpload();
-								EpinsUploadResponse respo = new EpinsUploadResponse();
-								String type = epins.getTxtype();
-								String prodcode = epins.getProdcode();
-								int qty = Integer.parseInt(epins.getQuantity());
-								String target = epins.getTarget();
-								String appname = "PC2MWEB";
-								String trantype = "epins";
-								String denom = epins.getDenom();
-								String message = epins.getMessage();
-								String username = (String) usersession.getAttribute("USER");
-								String password = epins.getPassword();
-								String password2 = epins.getPassword2();
-								String transid = Long.toString(epins.txid);
-								String emails = partner.email;
-								respo=upload.epinsupload(type,prodcode,qty,"",target,appname,"",trantype,denom,message,username,password,transid,emails);
-								
-								if(respo.getResultcode()==0){
-									modelAndView.addObject("msg", "success");				
-								}
-								return modelAndView;
-								}
-						}
 				}
 
 			 catch (Exception e) {

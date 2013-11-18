@@ -24,7 +24,7 @@
 <script src="../js/jquery-latest.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.js"></script>
 <script type="text/javascript" src="../js/header.js"></script>
-
+<script type="text/javascript" src="../js/epinvalidation.js"></script>
 
 
 </head>
@@ -83,7 +83,7 @@ cssdropdown.startchrome("payphilexchange")
 
 
 </core:if>
-
+${msg}
 
 <core:if test="${user == 'manager'}">
 
@@ -106,6 +106,8 @@ cssdropdown.startchrome("payphilexchange")
 
 <div id="tabcontentcontainer">
 <div id="sc2" class="tabcontent">
+
+
 
 <table width="70%" border="0" cellspacing="3" cellpadding="3">
   <tr>
@@ -148,7 +150,7 @@ cssdropdown.startchrome("payphilexchange")
 
   <tr>
     <td>&nbsp;</td>
-    <td style="float:left;"><input type="image" value="Submit" src="../css/images/submit2_button.png" style="margin-left:140px;"/></td>
+    <td style="float:left;"><input type="image" value="Submit" name="submit" src="../css/images/submit2_button.png" style="margin-left:140px;"/></td>
     </tr>
 </table>
 
@@ -211,7 +213,7 @@ cssdropdown.startchrome("payphilexchange")
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td style="float:left;"><input type="image" value="Submit" src="../css/images/submit2_button.png" style="margin-left:140px;"/></td>
+    <td style="float:left;"><input type="image" value="Submit" name="submit" src="../css/images/submit2_button.png" style="margin-left:140px;"/></td>
     </tr>
 </table>
 
@@ -227,8 +229,8 @@ cssdropdown.startchrome("payphilexchange")
 <br><br /><br />
 	
 	</div>
-	
-	
+
+
 	</core:if>
 
 

@@ -146,7 +146,7 @@ cssdropdown.startchrome("payphilexchange")
     
      <td><a href="billspaymenthistory.html"><img title="Gcash "onmouseover="this.src='../css/images/icons_on_15.png';" onmouseout="this.src='../css/images/icons_off_15.png';" src="../css/images/icons_on_15.png" alt="" width="200" height="140" border="0" /></a></td>
      <td><a href="lop.html"><img title="Gcash "onmouseover="this.src='../css/images/icons_on_16.png';" onmouseout="this.src='../css/images/icons_off_16.png';" src="../css/images/icons_on_16.png" alt="" width="200" height="140" border="0" /></a></td>
-     <td><a href="epins.html?individual"><img title="Epins "onmouseover="this.src='../css/images/tab-on_01.png';" onmouseout="this.src='../css/images/tab-off_01.png';" src="../css/images/tab-on_01.png" alt="" width="200" height="140" border="0" /></a></td>
+     <td><a href="epinsindividual.html"><img title="Epins "onmouseover="this.src='../css/images/tab-on_01.png';" onmouseout="this.src='../css/images/tab-off_01.png';" src="../css/images/tab-on_01.png" alt="" width="200" height="140" border="0" /></a></td>
     
     </tr>
 

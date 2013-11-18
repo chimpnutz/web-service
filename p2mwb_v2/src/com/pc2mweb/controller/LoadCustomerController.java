@@ -164,7 +164,7 @@ public class LoadCustomerController implements ServletContextAware  {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView viewResult(@ModelAttribute("topupForm") TopupModel topup, HttpSession usersession) throws NamingException {
 		
-		//ggyahin
+		
 		LoadCustomerServices services = new LoadCustomerServices ();
 		
 		return services.loadCustomer(topup, usersession, servletContext);

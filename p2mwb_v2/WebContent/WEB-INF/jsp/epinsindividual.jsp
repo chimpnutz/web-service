@@ -87,93 +87,9 @@ ${msg}
 
 <core:if test="${user == 'manager'}">
 
-
-	<core:if test="${type == 'bulk'}">
-	
 	    <ol id="toc">
-	    <li ><a href="epins.html?individual">Individual Upload</a></li>
-		<li class="current" ><a href="epins.html?bulk">Bulk Upload</a></li>
-		</ol>
-		
-			
-		<div class="content">
-	
-	<form:form action=""  commandName="epinForm" id="epinForm">
-
-
-<div class="text10_red">${msg}</div>
-
-
-<div id="tabcontentcontainer">
-<div id="sc2" class="tabcontent">
-
-
-
-<table width="70%" border="0" cellspacing="3" cellpadding="3">
-  <tr>
-    <td class="text12_tungsten" style="text-align: left; width:100px;">Email</td>
-    <td style="float:left;"><form:input path="target" size="18" style="background-color:white;" id="target" class="target	" /> &nbsp; &nbsp;</td>
-  </tr>
-  <tr>
-    <td class="text12_tungsten" style="text-align: left; width:100px;">Quantity</td>
-    <td style="float:left;"><form:input path="quantity" size="18" style="background-color:white;" id="quantity" class="quantity	" /> &nbsp; &nbsp;</td>
-  </tr>
-  <tr>
-    <td class="text12_tungsten" style="text-align: left; width:100px;">Denomination</td>
-    <td style="float:left;">
-   
-    <form:select path="denom" id="denom" class="denom" style="width: 130px; text-align:left;"> 
-    <form:option value="100" label="100" />
-	<form:option value="300" label="300" />
-	<form:option value="500" label="500" />			 
-	</form:select> &nbsp; &nbsp;</td>
-  </tr>
-  
-  <tr>
-    <td class="text12_tungsten" style="text-align: left; width:100px;">Telco Type.</td>
-  	<td style="float:left;">
-    <form:select path="prodcode" id="prodcode" class="prodcode" style="width: 206px; text-align:left;"> 
-    <form:option value="GHT" label="Globe" />
-	<form:option value="TM" label="Touch Mobile" />		 
-	</form:select> &nbsp; &nbsp;</td>
-  </tr>
-  
-   <tr>
-    <td class="text12_tungsten" style="text-align: left; width:100px;">Password</td>
-    <td style="float:left;"><form:password path="password" size="18" style="background-color:white;" id="password" class="password	" /> &nbsp; &nbsp;</td>
-  </tr>
-  
-   <tr>
-    <td class="text12_tungsten" style="text-align: left; width:100px;">Confirm Password</td>
-    <td style="float:left;"><form:password path="password2" size="18" style="background-color:white;" id="password2" class="password2	" /> &nbsp; &nbsp;</td>
-  </tr>
-
-  <tr>
-    <td>&nbsp;</td>
-    <td style="float:left;"><input type="image" value="Submit" name="submit" src="../css/images/submit2_button.png" style="margin-left:140px;"/></td>
-    </tr>
-</table>
-
-
-
-</div><!--sc2-->
-</div>
-
-		<form:hidden path="type" value="bulk"  />
-
-</form:form>
-
-<br><br /><br />
-	
-	</div>
-	
-	</core:if>
-	
-		<core:if test="${type == 'individual'}">
-	
-	    <ol id="toc">
-	    <li class="current"><a href="epins.html?individual">Individual Upload</a></li>
-		<li><a href="epins.html?bulk">Bulk Upload</a></li>
+	    <li class="current"><a href="epinsindividual.html">Individual Upload</a></li>
+		<li><a href="epinsbulk.html">Bulk Upload</a></li>
 
 		</ol>
 	
@@ -181,11 +97,8 @@ ${msg}
 	
 	<form:form action=""  commandName="epinForm" id="epinForm">
 
-
-<div class="text10_red">${msg}</div>
-
-
 <div id="tabcontentcontainer">
+
 <div id="sc2" class="tabcontent">
 
 <table width="70%" border="0" cellspacing="3" cellpadding="3">
@@ -231,7 +144,6 @@ ${msg}
 	</div>
 
 
-	</core:if>
 
 
 

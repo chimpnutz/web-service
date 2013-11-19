@@ -1,5 +1,3 @@
-
-
 $(function() {
   
     // Setup form validation on the #register-form element
@@ -41,7 +39,7 @@ $(function() {
         
         // Specify the validation error messages
         messages: {
-        	mobnum: "Please provide a mobile number",
+        	mobnum: "Please provide a mobile no.",
             target: {
             	required:"Please enter a valid email address",
             	email:"Please provide a proper email address"

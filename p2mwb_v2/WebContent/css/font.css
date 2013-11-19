@@ -50,7 +50,11 @@
 	color:#333333;	
 }
 
-
+#epinForm label.error{
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+}
 
 
 

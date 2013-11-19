@@ -110,10 +110,11 @@ ${msg}
 </core:if>
 <table width="70%" border="0" cellspacing="3" cellpadding="3">
   <tr>
-  <form:label path="target" for="email">
+  
     <td class="text12_tungsten" style="text-align: left; width:100px;">Email</td>
-  </form:label>
+  
     <td style="float:left;"><form:input path="target" size="18" style="background-color:white;" id="target" class="target	" /> &nbsp; &nbsp;</td>
+   
   </tr>
   <tr>
     <td class="text12_tungsten" style="text-align: left; width:100px;">Quantity</td>

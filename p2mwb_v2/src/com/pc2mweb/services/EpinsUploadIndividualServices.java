@@ -59,11 +59,6 @@ public class EpinsUploadIndividualServices {
 		int errorState = 0;
 		
 	
-			if(epins.getType().equals("bulk")){
-				
-				
-			}
-		
 			if(epins.getType().equals("individual")){
 				
 				if(!this.isNumber(epins.getMobnum())||Integer.parseInt(epins.getMobnum())<11) {
@@ -116,6 +111,9 @@ public class EpinsUploadIndividualServices {
 		int debit = 0;
 		String session = null;
 		String resp = null;
+		
+		EpinsUpload upload = new EpinsUpload();
+		EpinsUploadResponse respo = new EpinsUploadResponse();
 			
 			if(partner.runmode.equalsIgnoreCase("TEST"))
 			
@@ -136,26 +134,17 @@ public class EpinsUploadIndividualServices {
 					
 					if(epins.getType().equals("individual")){						
 						epins.setTarget(epins.getPrefix()+ epins.getMobnum());
-						
-						if(epins.getTarget().length()<11){
-						logger.info("+++++++++++++++++++ERROR: mobile number should atleast 11 digits+++++++++++++++++++");
-						
-						}
-						else{
-						EpinsUpload upload = new EpinsUpload();
-						EpinsUploadResponse respo = new EpinsUploadResponse();
+								
 						String type = epins.getTxtype();
 						String prodcode = epins.getProdcode();
 						int qty = 1;
 						String target = epins.getTarget();
 						String appname = "PC2MWEB";
-	//ip dito			
 						String trantype = "epins";
 						String denom = epins.getDenom();
 						String message = epins.getMessage();
 						String username = epins.getUsername();
-						String password = epins.getPassword();
-						
+						String password = epins.getPassword();					
 						String transid = Long.toString(epins.txid);
 						
 						System.out.println(transid);
@@ -163,12 +152,17 @@ public class EpinsUploadIndividualServices {
 						
 						if(respo.getResultcode()==0){
 							modelAndView.addObject("msg", "success");
+							modelAndView.addObject("fillbox", fillbox);
 						}
-						return modelAndView;
+						if(respo.getResultcode()==1){
+							modelAndView.addObject("msg", "failed");
+							modelAndView.addObject("fillbox", fillbox);
+						}
+			
 						}
 					}
 				
-				}
+				
 
 			 catch (Exception e) {
 				e.printStackTrace();
@@ -194,26 +188,10 @@ public class EpinsUploadIndividualServices {
 			}
 			
 			
-		logger.info("+++++++++++++++++++EPINS UPLOAD Status! "+resp+" ++++++++++++++++");
+		logger.info("+++++++++++++++++++EPINS UPLOAD Status! "+respo.getResultcode()+" ++++++++++++++++");
 		return modelAndView;
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+				
 	}
 			public boolean isNumber( String tx )  
 		    {  

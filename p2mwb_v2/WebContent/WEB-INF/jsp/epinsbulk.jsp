@@ -83,8 +83,9 @@ cssdropdown.startchrome("payphilexchange")
 
 
 </core:if>
+<div class="text12_tungsten">
 ${msg}
-
+</div>
 <core:if test="${user == 'manager'}">
 
 	
@@ -105,7 +106,7 @@ ${msg}
 
 <div id="sc2" class="tabcontent">
 
-<core:if test = "${blankemail == 'yes' }">
+<core:if test = "${status == 'fail'}">
 <div class="text12_tungsten">$msg</div>
 </core:if>
 <table width="70%" border="0" cellspacing="3" cellpadding="3">

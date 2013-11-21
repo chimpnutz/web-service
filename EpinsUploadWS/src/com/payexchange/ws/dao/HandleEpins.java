@@ -92,94 +92,116 @@ public class HandleEpins  {
 		EpinsUploadResponse response = new EpinsUploadResponse();
 		OutgoingSMSWriterDAO smsdao = new  OutgoingSMSWriterDAO();
 		
+		
+		String Date = "";
+		Date date = new Date();
+	    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+	    Date=sdf.format(date);	
+		
 		if(checkip(bean))
 		{
-			
-			response.setPassword("123456");
-			response.setResultcode(0);
-			response.setTracenumber("8357235");
-						
+							
 			int qty = bean.getQty();
-			
-			if(qty >= 2){
-				//email
-				long tranid = this.insertTxLogs2(bean);	
-				
-				String message = "";
-				
-				if(getDenom(bean)){
+	
+				if(qty >= 2){
+					//email
+					long tranid = this.insertTxLogs2(bean);	
 					
-					System.out.println(bean.getEmail());
+					String message = "";					
 					
-					if(updateEpins(bean)){
+					if(getDenom(bean)){
 						
-						if(checkEpins(bean)){
+						if(count(bean)){	
+								
+							if(updateEpins(bean)){
 							
-							PreparedStatement ps = null;
-							ResultSet rs = null;
-							Connection conn = null;
-							
-							int denom = Integer.parseInt(bean.getDenom());
-							String telco = bean.getProdCode();
-							String sql = "Select id,epin,uploaded_by,date_uploaded from Epins epins where status=? and telco_type=? and denom=? limit ?";
-											
-							try{
-							       conn = EpinsConnectionManager.getConnection();
-							       ps = conn.prepareStatement(sql);
-							            
-							       ps.setInt(1,6);
-							       ps.setString(2,telco);
-							       ps.setInt(3,denom);
-							       ps.setInt(4,qty);     
-							       rs = ps.executeQuery();
-							       
-							      
-									int i=1;
-							       while(rs.next())
-							       {
-							            							        
-									try{
+								if(checkEpins(bean)){
 									
-									    String dec = goDecryption(rs.getString("epin"));
-										String[] decArray = this.getDecrypted(dec);
-											int j = 0;				
-	
-								           for( j = 0;j<decArray.length;j++) {
-								               
-								               logger.info(decArray[j]);
-								               message = message+"     "+decArray[j];					               
-								           }
-								    
-	
-	
-										} catch ( Exception ex ) {
-											logger.info(ex);
-	
+									PreparedStatement ps = null;
+									ResultSet rs = null;
+									Connection conn = null;
+									
+									int denom = Integer.parseInt(bean.getDenom());
+									String telco = bean.getProdCode();
+									String sql = "Select id,epin,uploaded_by,date_uploaded from Epins epins where status=? and telco_type=? and denom=? limit ?";
+													
+									try{
+									       conn = EpinsConnectionManager.getConnection();
+									       ps = conn.prepareStatement(sql);
+									            
+									       ps.setInt(1,6);
+									       ps.setString(2,telco);
+									       ps.setInt(3,denom);
+									       ps.setInt(4,qty);     
+									       rs = ps.executeQuery();
+									       
+									      
+											int i=1;
+									       while(rs.next())
+									       {
+									            							        
+											try{
+											
+											    String dec = goDecryption(rs.getString("epin"));
+												String[] decArray = this.getDecrypted(dec);
+													int j = 0;				
+			
+										           for( j = 0;j<decArray.length;j++) {
+										               
+										               logger.info(decArray[j]);
+										               message = message+"     "+decArray[j];					               
+										           }
+										    
+			
+			
+												} catch ( Exception ex ) {
+													logger.info(ex);
+			
+												}
+													i++;
+													
+									         }
+									   }	
+											catch(Exception ex){
+											ex.printStackTrace();
+							        
+											}
+												finally{
+								        	
+									        	Utility.closeQuietly(rs);
+									        	Utility.closeQuietly(ps);
+									        	Utility.closeQuietly(conn);
+						   	
+												}
+									
+											this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty(), bean.getPassword(), bean.getTarget(), bean.getEmail());
+											this.updateTX(tranid,MessageModels.EPIN_SUCCESS);
+											
+											logger.info("***** Epin Success *****");
+											response.setResultcode(0);
+											response.setPassword(bean.getPassword());
+											response.setTracenumber(Date+" transaction id: "+bean.getTransid());
+											return response;
 										}
-											i++;
-							         }
-							   }
-									catch(Exception ex){
-									ex.printStackTrace();
-					        
+										
 									}
-										finally{
-						        	
-							        	Utility.closeQuietly(rs);
-							        	Utility.closeQuietly(ps);
-							        	Utility.closeQuietly(conn);
-				   	
-										}
-							
-									this.writeExcel(bean.getUsername(), Integer.parseInt(bean.getDenom()), bean.getProdCode(), bean.getQty(), bean.getPassword(), bean.getTarget(), bean.getEmail());
-									this.updateTX(tranid,MessageModels.EPIN_SUCCESS);
+									logger.info("***** Epin is already used *****");
+									response.setResultcode(1);
+									response.setPassword(bean.getPassword());
+									response.setTracenumber(Date+" transaction id: "+bean.getTransid());
+									return response;
+		
 								}
-							}
-
+								logger.info("***** Epin is already used *****");
+								response.setResultcode(1);
+								response.setPassword(bean.getPassword());
+								response.setTracenumber(Date+" transaction id: "+bean.getTransid());
+								return response;
+					
 						}
-				
-				
-			}
+
+				}
+	
 			if(qty == 1){
 				//mobile 
 				long tranid = this.insertTxLogs(bean);				
@@ -237,6 +259,7 @@ public class HandleEpins  {
 
 											}
 												i++;
+												
 								         }
 								}
 								catch(Exception ex){
@@ -272,18 +295,29 @@ public class HandleEpins  {
 													SMSout = null;
 										}
 								this.updateTX(tranid,MessageModels.EPIN_SUCCESS);
+								logger.info("***** Epin Success *****");
+								response.setResultcode(0);
+								response.setTracenumber(Date+" transaction id: "+bean.getTransid());
+								return response;
 								}
+							
+
 						}
-					
-										
+						logger.info("***** Epin is already used *****");
+						response.setResultcode(1);
+						response.setTracenumber(Date+" transaction id: "+bean.getTransid());
+						return response;
+							
 				}
 				
 							
+			
 			}
-			           				       												
-	}	  
-	
-	  return response;
+									
+	}
+		return response;	  
+		
+	 
 			  
 }
 
@@ -518,7 +552,7 @@ public boolean updateEpins(DetailsBean bean){
 		       ps.setString(4, bean.getProdCode());
 		       ps.setInt(5, bean.getQty());
 		       
-		     
+		       
 		            
 		       if(ps.executeUpdate()>0){
 		    	   logger.info("Epins Updated");
@@ -761,5 +795,53 @@ public boolean updateTX(long tranid,String errorState)
    
     }
     
+    public boolean count(DetailsBean bean){
+    	
+    	
+    	
+    	Connection conn = null;
+    	PreparedStatement ps = null;
+    	ResultSet rs = null;
+    	int qty = bean.getQty();
+    	
+    	String sql ="Select count(denom) AS denom from epins where status =?";
+    	
+    	 try{
+      	   conn = EpinsConnectionManager.getConnection();
+		       ps = conn.prepareStatement(sql);
+		       
+		       ps.setString(1,"0");
+		            
+		       rs = ps.executeQuery();
+		       if(rs.next()){
+			      
+			        if(Integer.parseInt(rs.getString("denom"))==qty ||Integer.parseInt(rs.getString("denom"))>qty)
+			        {
+			           logger.info("******epins available******");		
+					   return true;
+			        }
+			        	      	   
+				         
+			   }
+		       	
+	      	} 	catch(Exception ex){
+	      		ex.printStackTrace();
+	            
+	      		}
+				finally{			 	
+			 	Utility.closeQuietly(rs);
+			 	Utility.closeQuietly(ps);
+			 	Utility.closeQuietly(conn);		
+			 	}
+    	 
+    	    
+	     return false;
+	        
+			
+    	
+    	
+		
+    	
+    }
     
 }

@@ -45,6 +45,7 @@ import com.pc2mweb.utility.function.pc2mwebFunc;
 public class EpinDAO extends JdbcDaoSupport 
 {
 	
+	
 	public Float getWallet(HttpSession session){
 		
 		   StringBuilder strSQL = new StringBuilder();
@@ -163,58 +164,91 @@ public class EpinDAO extends JdbcDaoSupport
 			long txid = keyHolder.getKey().longValue();
 			
 			System.out.println("txid "+txid);
-				
+			System.out.println(epin.getTarget());
 
 				
 				if(row>0)
 				
 				
 				{
-					
-//
-					
+									
 					   StringBuilder insertMobileTx = new StringBuilder();
 					   
-					   insertMobileTx.append("INSERT INTO epins_transaction (transactionid) VALUES (?) ");
+					   insertMobileTx.append("INSERT INTO epins_transaction (transactionid, target, denom, qty, type, telco_type) VALUES (?,?,?,?,?,?) ");
 					   
-					   
-					   
+					   				   
 					   try{
 						   
-
-							int mobileRow = getJdbcTemplate().update(insertMobileTx.toString(), new Object[] { 
-								txid,
+						   
+						   if(epin.getType().equals("individual")){
+							   epin.setTarget(epin.getPrefix()+epin.getMobnum());
+								int mobileRow = getJdbcTemplate().update(insertMobileTx.toString(), new Object[] { 
+									txid,epin.getTarget(),epin.getDenom(),1,epin.getType(),epin.getProdcode(),
+								
+								});
+						   
 							
-							});
-
+									if(mobileRow>0)
+									{
+										
+										
+									    SimpleDateFormat  datetodayFormat = new SimpleDateFormat("yyyyMMdd");
+								        
+								        String datetoday = datetodayFormat.format(new Date())+txid; 
+								        
+								        Long partnertxid = Long.parseLong(datetoday);
+								        
+								        int updaterow = 0;
+		
+												String updatetx = "update transactions set PartnerTXID = ? where transactionid=?";
+		
+										    	
+												 updaterow = getJdbcTemplate().update(updatetx, new Object[] { 
+														datetoday,txid
+													});
+						
+		
+											return txid;
+											
+										
+										
+										
+									}
+						   }
+						   if(epin.getType().equals("bulk")){
+								int mobileRow = getJdbcTemplate().update(insertMobileTx.toString(), new Object[] { 
+									txid,epin.getTarget(),epin.getDenom(),epin.getQuantity(),epin.getType(),epin.getProdcode(),
+								
+								});
+						   
 							
-							if(mobileRow>0)
-							{
-								
-								
-							    SimpleDateFormat  datetodayFormat = new SimpleDateFormat("yyyyMMdd");
-						        
-						        String datetoday = datetodayFormat.format(new Date())+txid; 
-						        
-						        Long partnertxid = Long.parseLong(datetoday);
-						        
-						        int updaterow = 0;
-
-										String updatetx = "update transactions set PartnerTXID = ? where transactionid=?";
-
-								    	
-										 updaterow = getJdbcTemplate().update(updatetx, new Object[] { 
-												datetoday,txid
-											});
-				
-
-									return txid;
-									
-								
-								
-								
-							}
-								
+									if(mobileRow>0)
+									{
+										
+										
+									    SimpleDateFormat  datetodayFormat = new SimpleDateFormat("yyyyMMdd");
+								        
+								        String datetoday = datetodayFormat.format(new Date())+txid; 
+								        
+								        Long partnertxid = Long.parseLong(datetoday);
+								        
+								        int updaterow = 0;
+		
+												String updatetx = "update transactions set PartnerTXID = ? where transactionid=?";
+		
+										    	
+												 updaterow = getJdbcTemplate().update(updatetx, new Object[] { 
+														datetoday,txid
+													});
+						
+		
+											return txid;
+											
+										
+										
+										
+									}
+						   }	
 					
 					   }catch(DataAccessException ex){
 				            ex.printStackTrace();
@@ -481,6 +515,11 @@ public void updateTransaction(Long txid, int errorstate, String trace,String typ
 			
 
 	   }
+	 
+//	 public int count(HttpSession session){
+//		return 0;
+//		 
+//	 }
 	
 	
 }

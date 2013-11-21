@@ -19,13 +19,13 @@
 <link href="../css/tabs.css" rel="stylesheet" type="text/css" />
 <link type='../text/css' href='../tabcss/tabcontent.css' rel='stylesheet' media='screen' />
 <link type='text/css' href='../tabcss/basic.css' rel='stylesheet' media='screen' />
- 
+<link href="../css/popup.css" rel="stylesheet" type="text/css" />
 
 <script src="../js/jquery-latest.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.js"></script>
 <script type="text/javascript" src="../js/header.js"></script>
 <script type="text/javascript" src="../js/epinvalidation.js"></script>
-
+<script type="text/javascript" src="../js/epinpopup.js"></script>
 
 </head>
 
@@ -78,12 +78,14 @@ cssdropdown.startchrome("payphilexchange")
 
 <center>Cannot Access Page</center>
 
-<br>
+<br>S
 <br>
 
 
 </core:if>
-${msg}
+
+		${msg} 
+
 
 <core:if test="${user == 'manager'}">
 
@@ -100,6 +102,12 @@ ${msg}
 <div id="tabcontentcontainer">
 
 <div id="sc2" class="tabcontent">
+
+<core:if test = "${status == 'fail'}">
+
+<div class="text12_tungsten">$msg</div>
+
+</core:if>
 
 <table width="70%" border="0" cellspacing="3" cellpadding="3">
   <tr>

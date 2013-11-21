@@ -45,7 +45,7 @@ public class EpinsUploadBulkServices {
 		epins.setTxtype(epins.getType());
 		epins.setProdtype("EpinsUpload");
 
-		String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+		String EMAIL_REGEX = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 		
 		Float wallet = dao.getWallet(usersession);
 		
@@ -55,21 +55,21 @@ public class EpinsUploadBulkServices {
 		modelAndView.addObject("epinForm", new EpinModel());
 		modelAndView.addObject("user",usersession.getAttribute("USERLEVEL"));	
 		
-
+		
 		PartnerProfile partner = null;
 
 		int errorState = 0;
-		
+			
 	
 			if(epins.getType().equals("bulk")){
 				
 				if(epins.getTarget().equals("")){
-					modelAndView.addObject("blankemail", "yes");
+					modelAndView.addObject("status", "fail");
 					modelAndView.addObject("msg", "*Please input your email");
 					logger.info("+++++++++++++++++++ERROR: Please input your email+++++++++++++++++++");
 					return modelAndView;
 				}
-				if(epins.getTarget().matches(EMAIL_REGEX)){
+				if(!epins.getTarget().matches(EMAIL_REGEX)){
 					modelAndView.addObject("status", "fail");
 					modelAndView.addObject("msg", "*Please provide a proper email address");
 					logger.info("+++++++++++++++++++ERROR: Please provide a proper email address+++++++++++++++++++");
@@ -83,19 +83,19 @@ public class EpinsUploadBulkServices {
 				}
 				
 				if(epins.getPassword().equals("")){
-					modelAndView.addObject("blankpass", "yes");
+					modelAndView.addObject("status", "fail");
 					modelAndView.addObject("msg", "*Please input your password");
 					logger.info("+++++++++++++++++++ERROR: Please input your password+++++++++++++++++++");
 					return modelAndView;
 				}
 				if(epins.getPassword2().equals("")){
-					modelAndView.addObject("blankpass2", "yes");
+					modelAndView.addObject("status", "fail");
 					modelAndView.addObject("msg", "*Please input same password as above");
 					logger.info("+++++++++++++++++++ERROR: Please input your password+++++++++++++++++++");
 					return modelAndView;
 				}
 				if(!epins.getPassword().equals(epins.getPassword2())){
-					modelAndView.addObject("confirm", "yes");
+					modelAndView.addObject("status", "fail");
 					modelAndView.addObject("msg", "*Password must be the same");
 					logger.info("+++++++++++++++++++ERROR: Password must be the same+++++++++++++++++++");
 					return modelAndView;
@@ -142,7 +142,9 @@ public class EpinsUploadBulkServices {
 		int debit = 0;
 		String session = null;
 		String resp = null;
-			
+		EpinsUpload upload = new EpinsUpload();
+		EpinsUploadResponse respo = new EpinsUploadResponse();
+		
 			if(partner.runmode.equalsIgnoreCase("TEST"))
 			
 			{
@@ -161,8 +163,7 @@ public class EpinsUploadBulkServices {
 			
 				if(epins.getTxtype().equals("bulk")){
 						
-								EpinsUpload upload = new EpinsUpload();
-								EpinsUploadResponse respo = new EpinsUploadResponse();
+								
 								String type = epins.getTxtype();
 								String prodcode = epins.getProdcode();
 								int qty = Integer.parseInt(epins.getQuantity());
@@ -182,10 +183,14 @@ public class EpinsUploadBulkServices {
 								if(respo.getResultcode()==0){
 									modelAndView.addObject("msg", "success");				
 								}
-								return modelAndView;
+								if(respo.getResultcode()==1){
+									modelAndView.addObject("msg", "failed");
+									;
 								}
-						
+								
 				}
+						
+			}
 
 			 catch (Exception e) {
 				e.printStackTrace();
@@ -206,7 +211,7 @@ public class EpinsUploadBulkServices {
 			}
 				
 				
-			logger.info("+++++++++++++++++++EPINS UPLOAD Status! "+resp+" ++++++++++++++++");
+			logger.info("+++++++++++++++++++EPINS UPLOAD Status! "+respo.getResultcode()+" ++++++++++++++++");
 				
 			}
 			

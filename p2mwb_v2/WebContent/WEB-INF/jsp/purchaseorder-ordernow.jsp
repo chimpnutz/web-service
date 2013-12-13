@@ -12,6 +12,7 @@
 <LINK href="../css/font.css" rel="stylesheet" type="text/css">
 <LINK href="../css/tabs.css" rel="stylesheet" type="text/css">
 <link href="../css/unibar.css" rel="stylesheet" type="text/css" />
+<link href="../css/updatepo.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/header.js"></script>
 <script type="text/javascript" src="../js/dropdown.js"></script>
 <script src="../js/jquery-latest.js"></script>
@@ -50,6 +51,8 @@
 	      }   
       }
 	});
+	    
+
 	    $('#amount').val('');
 	    $('#bank').val('');
 	    $('#branch').val('');
@@ -57,6 +60,91 @@
 	});
   
   </script>
+  
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+
+
+  var count1=0;
+  var count2 = 1;
+  
+  //$('#wallet').empty();
+
+  
+  $('a#addorder').click(function() {
+    count1 +=1;
+    count2 +=1;
+
+    $('<p><div style="float:left;width: 100%;"><hr/><div id="ordernew"><p class="text12_tungsten"> &nbsp;Item Code:<select id="ordernew2" name="PO['+count1+'].item" class="selectItem"> <option value="none">Please Choose Item</option><core:forEach var="data" items="${item}">	<option value="${data.itemname}">${data.itemname}</option></core:forEach></select style></p></div>	<input type="hidden" id="PO['+count1+'].amount" /><div id="qantity"><p class="text12_tungsten"> &nbsp;Quantity:<input type="text" name="PO['+count1+'].quantity" id="qty" /></p></div><div id="wallet"><p class="text12_tungsten"> &nbsp;Wallet types:<select disabled id="wallet2" name="PO['+count1+'].wallet"><core:forEach var="data" items="${wallet}"><option value="${data.wallet}">${data.wallet}</option></core:forEach></select style><br/><span class="inline"></span></p></div></p></div><a href="#" class="remove" id="remove" ><img src="../images/cross.png"><div id="adj"></div></a></div></p>').fadeIn("slow").appendTo('#wallet');     
+
+  });
+  
+  
+  $('.remove').live('click', function() {
+      $(this).parent().fadeOut(300, function(){ 
+        $(this).remove();
+        return false;
+    });
+  });
+  
+  
+
+  $(".selectItem").live('change', function() {
+	  
+ 		  var name = $(this).attr('name');
+ 		  
+ 		  var x = name.indexOf("["); 
+		  var y = name.indexOf("]");
+		  var pos = name.substring(x+1,y); 
+		  
+   	      var input = $("select[name='"+name+"']").val();
+   	      
+   	      if(input == "LOP"){
+   	    	  
+   	    	$("select[name='PO["+pos+"].wallet']").removeAttr("disabled");
+   	      }
+   	     else
+         {
+   	    	$("select[name='PO["+pos+"].wallet']").attr("disabled", "disabled");
+         }
+           
+   
+
+  });
+  
+  $(".selectItem2").change(function() {
+	  
+ 		  var name = $(this).attr('name');
+ 		  
+ 		  var x = name.indexOf("["); 
+		  var y = name.indexOf("]");
+		  var pos = name.substring(x+1,y); 
+		  
+   	      var input = $("select[name='"+name+"']").val();
+   	      
+   	      if(input == "LOP"){
+   	    	  
+   	    	$("select[name='PO["+pos+"].wallet']").removeAttr("disabled");
+   	      }
+   	     else
+         {
+   	    	$("select[name='PO["+pos+"].wallet']").attr("disabled", "disabled");
+         }
+   	     
+	
+  });
+  
+  
+
+
+  
+  
+
+
+
+});
+</script>
   
 <title>Pay PhilExchange</title>
 </head>
@@ -99,6 +187,9 @@ cssdropdown.startchrome("payphilexchange")
 <div id="content">
 
 <p class="text18_tungsten">Purchase Order</p>
+
+
+
 
 <core:if test="${user == 'viewer'}">
 
@@ -150,25 +241,61 @@ cssdropdown.startchrome("payphilexchange")
 <div align="center">
  		<ol id="toc">
             <li class="current"><a href="purchaseorder-ordernow.html">Order Now</a></li>   
-            <li><a href="purchaseorder-history.html?mypohistory">My PO History</a></li>   
+            <li><a href="purchaseorder-history.html">Purchase Order</a></li>   
       	</ol>
 </div>
 <p>&nbsp;</p>
 
+
 <form:form action=""  commandName="purchaseorderForm" id="purchaseorderForm">
 
-<p class="text12_tungsten">Amount &nbsp; <form:input path="amount" size="30" style="background-color:white; margin-left:60px;" id="amount"/></p>
-<p class="text12_tungsten">Bank &nbsp; <form:input path="bank" size="30" style="background-color:white; margin-left:78px;" id="bank"/></p>
-<p class="text12_tungsten">Branch &nbsp; <form:input path="branch" size="30" style="background-color:white; margin-left:67px;" id="branch"/></p>
- <form:hidden path="attachment" size="30" style="background-color:white; margin-left:39px; vertical-align:top;" id="attachment"/>
-<p class="text12_tungsten">Remarks &nbsp; <form:textarea path="remarks" rows="5" cols="30" style="background-color:white; margin-left:57px; vertical-align:top;" id="remarks"/></p>
 
-<p><input type="image" value="Submit" class="button" style="margin-left:280px;"/></p>
+              <div id="ordernew">
+	        <p class="text12_tungsten"> &nbsp;Item Code:
+	       <select id="ordernew2" name="PO[0].item" class="selectItem2">
+	       <option value="none">Please Choose Item</option>
+		   <core:forEach var="data" items="${item}">
+																				 
+			<option value="${data.itemname}">${data.itemname}</option>
+						
+			</core:forEach>
+	      </select style>
+	      </p>
+	      </div>
+	
+		<input type="hidden" name="PO[0].amount" value="" />
+	
+        <div id="qantity">
+        <p class="text12_tungsten"> &nbsp;Quantity:
+        <input type="text" name="PO[0].quantity" id="qty"/><br/> <span class="inline"></p>
+        </div>
 
 
-</form:form>
 
 
+
+        <div id="wallet" > 
+        <p class="text12_tungsten"> &nbsp;Wallet types:
+        <select id="wallet2" name="PO[0].wallet" disabled >
+	   <core:forEach var="data" items="${wallet}">
+																			 
+		<option value="${data.wallet}">${data.wallet}</option>
+				
+					         
+						
+		</core:forEach>
+        </select style>
+          <br/>
+           <span class="inline"></p>
+        </div>
+      
+  <p><a href="#" id="addorder" ><input type="button" value="Add New Order" style="margin-left:30px;" class="button2"/></a>
+  <input type="image" value="Submit" style="margin-left:45px;" class="button" id="btnprocess"/></p>
+
+  	
+  </form:form>
+      
+     
 
 </core:if>
 
@@ -192,27 +319,61 @@ cssdropdown.startchrome("payphilexchange")
 <div align="center">
  		<ol id="toc">
             <li class="current"><a href="purchaseorder-ordernow.html">Order Now</a></li>  
-            <li><a href="purchaseorder-retailer.html">Retailer PO Request</a></li>    
-            <li><a href="purchaseorder-history.html?mypohistory">My PO History</a></li>  
-            <li><a href="purchaseorder-history.html?retailerhistory">Retailer Request History</a></li>    
+            <li><a href="purchaseorder-retailer.html">Retailer</a></li>    
+            <li><a href="purchaseorder-history.html">Purchase Order</a></li>  
       	</ol>
 </div>
 <p>&nbsp;</p>
 
-<form:form action=""  commandName="purchaseorderForm" id="purchaseorderForm"  enctype="multipart/form-data">
 
-<p class="text12_tungsten">Amount &nbsp; <form:input path="amount" size="30" style="background-color:white; margin-left:60px;" id="amount"/></p>
-<p class="text12_tungsten">Bank &nbsp; <form:input path="bank" size="30" style="background-color:white; margin-left:78px;" id="bank"/></p>
-<p class="text12_tungsten">Branch &nbsp; <form:input path="branch" size="30" style="background-color:white; margin-left:67px;" id="branch"/></p>
-<p class="text12_tungsten">Attachment &nbsp; <form:input type="file" path="file" size="30" style="background-color:white; margin-left:39px; vertical-align:top;" id="attachment"/><span class="text10_red">*use jpeg only</span></p>
-<p class="text12_tungsten">Remarks &nbsp; <form:textarea path="remarks" rows="5" cols="30" style="background-color:white; margin-left:57px; vertical-align:top;" id="remarks"/></p>
-
-<p><input type="image" value="Submit" class="button" style="margin-left:280px;"/></p>
+<form:form action=""  commandName="purchaseorderForm" id="purchaseorderForm">
 
 
-</form:form>
+              <div id="ordernew">
+	        <p class="text12_tungsten"> &nbsp;Item Code:
+	       <select id="ordernew2" name="PO[0].item" class="selectItem2">
+	       <option value="none">Please Choose Item</option>
+		   <core:forEach var="data" items="${item}">
+																				 
+			<option value="${data.itemname}">${data.itemname}</option>
+						
+			</core:forEach>
+	      </select style>
+	      </p>
+	      </div>
+	
+		<input type="hidden" name="PO[0].amount" value="" />
+	
+        <div id="qantity">
+        <p class="text12_tungsten"> &nbsp;Quantity:
+        <input type="text" name="PO[0].quantity" id="qty"/><br/> <span class="inline"></p>
+        </div>
 
 
+
+
+
+        <div id="wallet" > 
+        <p class="text12_tungsten"> &nbsp;Wallet types:
+        <select id="wallet2" name="PO[0].wallet" disabled >
+	   <core:forEach var="data" items="${wallet}">
+																			 
+		<option value="${data.wallet}">${data.wallet}</option>
+				
+					         
+						
+		</core:forEach>
+        </select style>
+          <br/>
+           <span class="inline"></p>
+        </div>
+      
+  <p><a href="#" id="addorder" ><input type="button" value="Add New Order" style="margin-left:30px;" class="button2"/></a>
+  <input type="image" value="Submit" style="margin-left:45px;" class="button" id="btnprocess"/></p>
+
+  	
+  </form:form>
+  
 
 </core:if>
 

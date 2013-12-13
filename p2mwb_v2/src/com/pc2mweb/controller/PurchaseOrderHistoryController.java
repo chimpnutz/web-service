@@ -32,7 +32,7 @@ public class PurchaseOrderHistoryController {
 	private static final Logger logger = Logger.getLogger(PurchaseOrderHistoryController.class);
 	
 
-	@RequestMapping(method = RequestMethod.GET,params={"mypohistory"})
+	@RequestMapping(method = RequestMethod.GET)
 	 public ModelAndView WalletView(ModelMap model,HttpServletRequest request,HttpSession usersession) {
 		
 		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
@@ -51,8 +51,7 @@ public class PurchaseOrderHistoryController {
 			
 		} else {
 
-				List<PurchaseOrderModel> poList = dao.getPurchaseOrdersRequestListHistory(usersession,"mypohistory");
-				modelAndView.addObject("type", "mypohistory");
+				List<PurchaseOrderModel> poList = dao.getPurchaseOrdersRequestListHistory(usersession);
 				modelAndView.addObject("polist", poList);
 				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
 
@@ -63,67 +62,67 @@ public class PurchaseOrderHistoryController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET,params={"retailerhistory"})
-	 public ModelAndView WalletViewRetailer(ModelMap model,HttpServletRequest request,HttpSession usersession) {
-		
-		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
-		
-		ModelAndView modelAndView = new ModelAndView("purchaseorder-history");
-		ModelAndView redirect = new ModelAndView("redirect:main.html");
-		
-		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
-
-		HttpSession isSession = request.getSession();
-
-		if (null == isSession.getAttribute("USER")) {	
-			
-				redirect.addObject("login", "no");
-				return redirect;	
-			
-		} else {
-
-				List<PurchaseOrderModel> poList = dao.getPurchaseOrdersRequestListHistory(usersession,"retailerhistory");
-				modelAndView.addObject("polist", poList);
-				modelAndView.addObject("type", "retailerhistory");
-				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
-
-				return modelAndView;
-					
-		}
-		
-		
-	}
-	
-	@RequestMapping(method = RequestMethod.GET,params={"subdealerhistory"})
-	 public ModelAndView WalletViewSubDealer(ModelMap model,HttpServletRequest request,HttpSession usersession) {
-		
-		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
-		
-		ModelAndView modelAndView = new ModelAndView("purchaseorder-history");
-		ModelAndView redirect = new ModelAndView("redirect:main.html");
-		
-		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
-
-		HttpSession isSession = request.getSession();
-
-		if (null == isSession.getAttribute("USER")) {	
-			
-				redirect.addObject("login", "no");
-				return redirect;	
-			
-		} else {
-
-				List<PurchaseOrderModel> poList = dao.getPurchaseOrdersRequestListHistory(usersession,"subdealerhistory");
-				modelAndView.addObject("type", "subdealerhistory");
-				modelAndView.addObject("polist", poList);
-				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
-
-				return modelAndView;
-					
-		}
-		
-		
-	}
+//	@RequestMapping(method = RequestMethod.GET,params={"retailerhistory"})
+//	 public ModelAndView WalletViewRetailer(ModelMap model,HttpServletRequest request,HttpSession usersession) {
+//		
+//		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
+//		
+//		ModelAndView modelAndView = new ModelAndView("purchaseorder-history");
+//		ModelAndView redirect = new ModelAndView("redirect:main.html");
+//		
+//		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
+//
+//		HttpSession isSession = request.getSession();
+//
+//		if (null == isSession.getAttribute("USER")) {	
+//			
+//				redirect.addObject("login", "no");
+//				return redirect;	
+//			
+//		} else {
+//
+//				//List<PurchaseOrderModel> poList = dao.getPurchaseOrdersRequestListHistory(usersession,"retailerhistory");
+//				//modelAndView.addObject("polist", poList);
+//				modelAndView.addObject("type", "retailerhistory");
+//				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+//
+//				return modelAndView;
+//					
+//		}
+//		
+//		
+//	}
+//	
+//	@RequestMapping(method = RequestMethod.GET,params={"subdealerhistory"})
+//	 public ModelAndView WalletViewSubDealer(ModelMap model,HttpServletRequest request,HttpSession usersession) {
+//		
+//		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
+//		
+//		ModelAndView modelAndView = new ModelAndView("purchaseorder-history");
+//		ModelAndView redirect = new ModelAndView("redirect:main.html");
+//		
+//		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
+//
+//		HttpSession isSession = request.getSession();
+//
+//		if (null == isSession.getAttribute("USER")) {	
+//			
+//				redirect.addObject("login", "no");
+//				return redirect;	
+//			
+//		} else {
+//
+//				//List<PurchaseOrderModel> poList = dao.getPurchaseOrdersRequestListHistory(usersession,"subdealerhistory");
+//				modelAndView.addObject("type", "subdealerhistory");
+//				//modelAndView.addObject("polist", poList);
+//				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+//
+//				return modelAndView;
+//					
+//		}
+//		
+//		
+//	}
 	
 	@ExceptionHandler()
     public ModelAndView iHandleExceptions(Exception e) {

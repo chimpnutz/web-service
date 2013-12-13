@@ -83,9 +83,8 @@ cssdropdown.startchrome("payphilexchange")
 
 
 </core:if>
-<div class="text12_tungsten">
 ${msg}
-</div>
+
 <core:if test="${user == 'manager'}">
 
 	

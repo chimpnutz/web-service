@@ -14,8 +14,8 @@ public class TopupModel {
 	String txtype;
 	int walletid;
 	public int    agentid= -1;
-	public Long    txid   = (long) 0;
-	
+	public Long    ptxid   = (long) 0;
+	public int txid = 0;
 
 	public String getPrefix() {
 		return prefix;

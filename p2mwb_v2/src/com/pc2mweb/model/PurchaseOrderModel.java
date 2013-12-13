@@ -1,91 +1,115 @@
 package com.pc2mweb.model;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class PurchaseOrderModel {
 	
+	String item;
+	String quantity;
+	String face_value_amount;
+	String discount_amount;
+	String wallet;
 	String amount;
-	String bank;
-	String branch;
-	String attachment;
-	CommonsMultipartFile  file;
-	String remarks;
+	String total_amount;
+	
+	int poid;
+	String podate;
+	String order_amount;
+	String payment_status;
+	String delivery_status;
+	String po_status;
 	
 	
-	String  date;
-	String username;
-	String partnername;
 	
-	String status;
+	String retailer;
 	
-	int id;
-	
+	public String getItem() {
+		return item;
+	}
+	public String getQuantity() {
+		return quantity;
+	}
+	public String getWallet() {
+		return wallet;
+	}
+	public void setItem(String item) {
+		this.item = item;
+	}
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+	public void setWallet(String wallet) {
+		this.wallet = wallet;
+	}
+
 	public String getAmount() {
 		return amount;
 	}
 	public void setAmount(String amount) {
 		this.amount = amount;
 	}
-	public String getBank() {
-		return bank;
+	public int getPoid() {
+		return poid;
 	}
-	public void setBank(String bank) {
-		this.bank = bank;
+	public String getPodate() {
+		return podate;
 	}
-	public String getBranch() {
-		return branch;
+	public String getOrder_amount() {
+		return order_amount;
 	}
-	public void setBranch(String branch) {
-		this.branch = branch;
+	public String getPayment_status() {
+		return payment_status;
 	}
-	public String getAttachment() {
-		return attachment;
+	public String getDelivery_status() {
+		return delivery_status;
 	}
-	public void setAttachment(String attachment) {
-		this.attachment = attachment;
+	public String getPo_status() {
+		return po_status;
 	}
-	public String getRemarks() {
-		return remarks;
+	public void setPoid(int poid) {
+		this.poid = poid;
 	}
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
+	public void setPodate(String podate) {
+		this.podate = podate;
 	}
-	public String getDate() {
-		return date;
+	public void setOrder_amount(String order_amount) {
+		this.order_amount = order_amount;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setPayment_status(String payment_status) {
+		this.payment_status = payment_status;
 	}
-	public String getUsername() {
-		return username;
+	public void setDelivery_status(String delivery_status) {
+		this.delivery_status = delivery_status;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setPo_status(String po_status) {
+		this.po_status = po_status;
 	}
-	public String getPartnername() {
-		return partnername;
+	public String getRetailer() {
+		return retailer;
 	}
-	public void setPartnername(String partnername) {
-		this.partnername = partnername;
+	public void setRetailer(String retailer) {
+		this.retailer = retailer;
 	}
-	public String getStatus() {
-		return status;
+	public String getFace_value_amount() {
+		return face_value_amount;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public String getDiscount_amount() {
+		return discount_amount;
 	}
-	public int getId() {
-		return id;
+	public void setFace_value_amount(String face_value_amount) {
+		this.face_value_amount = face_value_amount;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setDiscount_amount(String discount_amount) {
+		this.discount_amount = discount_amount;
 	}
-	public CommonsMultipartFile  getFile() {
-		return file;
+	public String getTotal_amount() {
+		return total_amount;
 	}
-	public void setFile(CommonsMultipartFile  file) {
-		this.file = file;
+	public void setTotal_amount(String total_amount) {
+		this.total_amount = total_amount;
 	}
 
 

@@ -180,7 +180,7 @@ public class TopupDAO extends JdbcDaoSupport {
 		
 	}
 	
-	public Long insertTransaction(TopupModel r,HttpSession session) {
+	public int insertTransaction(TopupModel r,HttpSession session) {
 
 			  
 				
@@ -229,7 +229,7 @@ public class TopupDAO extends JdbcDaoSupport {
 				}, keyHolder);
 			
 				int txid = keyHolder.getKey().intValue();
-					
+				//r.ptxid = txid;
 
 					
 					if(row>0)
@@ -276,7 +276,8 @@ public class TopupDAO extends JdbcDaoSupport {
 									
 									if(row>0 && mobileRow>0 && updaterow>0){
 										
-										return partnertxid;
+										r.ptxid = partnertxid;
+										return txid;
 										
 									}
 									
@@ -329,12 +330,12 @@ public class TopupDAO extends JdbcDaoSupport {
 					}
 
 		
-		return id;
+		return txid;
 	}
 	
 
 	
-	public Long insertTransaction(TransfertoRetailerModel r,HttpSession session) {
+	public int insertTransaction(TransfertoRetailerModel r,HttpSession session) {
 		P2MAmaxRequest p2mreq;
 		int txid = -1;
 		
@@ -377,6 +378,7 @@ public class TopupDAO extends JdbcDaoSupport {
 				}, keyHolder);
 			
 					txid = keyHolder.getKey().intValue();
+					
 				
 					if(row>0){
 						
@@ -418,8 +420,8 @@ public class TopupDAO extends JdbcDaoSupport {
 
 									
 									if(row>0 && mobileRow>0 && updaterow>0){
-										
-										return partnertxid;
+										r.ptxid = partnertxid;
+										return txid;
 										
 									}
 									
@@ -431,11 +433,11 @@ public class TopupDAO extends JdbcDaoSupport {
 					            ex.printStackTrace();
 					
 					        }
-						return id;
+						   return txid;
 					}
 
 		
-		return id;
+					return txid;
 	}
 	
 	
@@ -485,7 +487,7 @@ public class TopupDAO extends JdbcDaoSupport {
 		return txid;
 	}
 	
-	public void updateTransaction(Long txid, int errorstate, String trace) 
+	public void updateTransaction(int txid,Long ptxid, int errorstate, String trace,HttpSession session) 
 	{
 
 		
@@ -496,17 +498,17 @@ public class TopupDAO extends JdbcDaoSupport {
 			if ( trace.equals("0") ) {
 				//p2mReq.updateTransaction(txid, errorstate);
 				
-				String updatetx = "update transactions set responsemsg = ?, status=? where partnertxid=?";
+				String updatetx = "update transactions set responsemsg = ?, status=? where partnertxid=? and partnerid = ? and transactionid = ?";
 				
 		    	
 				int row = getJdbcTemplate().update(updatetx, new Object[] { 
-						pc2mwebFunc.P2MConstantsgetMessage(errorstate),errorstate+"",txid+""
+						pc2mwebFunc.P2MConstantsgetMessage(errorstate),errorstate+"",ptxid+"",session.getAttribute("PID"),txid
 					});
 				
 			} else {
 				//p2mReq.updateTransaction(txid, trace, errorstate);
 				
-				String updatetx = "update transactions set responsemsg = ?,status=?, topuptrace=? where partnertxid=?";
+				String updatetx = "update transactions set responsemsg = ?,status=?, topuptrace=? where partnertxid=? and partnerid = ? and transactionid = ?";
 				
 				  String status = null;
 				
@@ -517,7 +519,7 @@ public class TopupDAO extends JdbcDaoSupport {
 			     
 		    	
 				int row = getJdbcTemplate().update(updatetx, new Object[] { 
-								status,errorstate+"",trace,txid+""
+								status,errorstate+"",trace,ptxid+"",session.getAttribute("PID"),txid
 					});
 				
 			}
@@ -530,7 +532,7 @@ public class TopupDAO extends JdbcDaoSupport {
 	}
 	
 	
-	public void updateTransactionTest(Long txid, int errorstate, String trace) 
+	public void updateTransactionTest(int txid,Long ptxid, int errorstate, String trace,HttpSession session) 
 	{
 
 		
@@ -541,17 +543,17 @@ public class TopupDAO extends JdbcDaoSupport {
 			if ( trace.equals("0") ) {
 				//p2mReq.updateTransaction(txid, errorstate);
 				
-				String updatetx = "update transactions set responsemsg = ?, status=? where partnertxid=?";
+				String updatetx = "update transactions set responsemsg = ?, status=? where partnertxid=? and partnerid = ? and transactionid = ?";
 				
 		    	
 				int row = getJdbcTemplate().update(updatetx, new Object[] { 
-						pc2mwebFunc.P2MConstantsgetMessage(errorstate),errorstate+"",txid+""
+						pc2mwebFunc.P2MConstantsgetMessage(errorstate),errorstate+"",ptxid+"",session.getAttribute("PID"),txid
 					});
 				
 			} else {
 				//p2mReq.updateTransaction(txid, trace, errorstate);
 				
-				String updatetx = "update transactions set responsemsg = ?,status=?, topuptrace=? where partnertxid=?";
+				String updatetx = "update transactions set responsemsg = ?,status=?, topuptrace=? where partnertxid=? and partnerid = ? and transactionid = ?";
 				
 				  String status = null;
 				
@@ -562,7 +564,7 @@ public class TopupDAO extends JdbcDaoSupport {
 			     
 		    	
 				int row = getJdbcTemplate().update(updatetx, new Object[] { 
-								status,errorstate+" [TEST]",trace,txid+""
+								status,errorstate+" [TEST]",trace,ptxid+"",session.getAttribute("PID"),txid
 					});
 				
 			}
@@ -575,7 +577,7 @@ public class TopupDAO extends JdbcDaoSupport {
 	}
 	
 	
-	public void updateTransaction(Long txid, int errorstate, String trace,String type) {
+	public void updateTransaction(int txid, long ptxid, int errorstate, String trace,String type,HttpSession session) {
 
 		
 		try {
@@ -585,17 +587,17 @@ public class TopupDAO extends JdbcDaoSupport {
 			if ( trace.equals("0") ) {
 				//p2mReq.updateTransaction(txid, errorstate);
 				
-				String updatetx = "update transactions set responsemsg = ?,status=? where partnertxid=?";
+				String updatetx = "update transactions set responsemsg = ?,status=? where partnertxid=? and partnerid = ? and transactionid = ?";
 				
 		    	
 				int row = getJdbcTemplate().update(updatetx, new Object[] { 
-						pc2mwebFunc.P2MConstantsgetMessage(errorstate),errorstate+"",txid+""
+						pc2mwebFunc.P2MConstantsgetMessage(errorstate),errorstate+"",ptxid+"",session.getAttribute("PID"),txid
 					});
 				
 			} else {
 				//p2mReq.updateTransaction(txid, trace, errorstate);
 				
-				String updatetx = "update transactions set responsemsg = ?,status=?, topuptrace=? where partnertxid=?";
+				String updatetx = "update transactions set responsemsg = ?,status=?, topuptrace=? where partnertxid=? and partnerid = ? and transactionid = ?";
 				
 				  String status = null;
 				  
@@ -621,7 +623,7 @@ public class TopupDAO extends JdbcDaoSupport {
 			     
 		    	
 				int row = getJdbcTemplate().update(updatetx, new Object[] { 
-								status,errorstate+"",trace,txid+""
+								status,errorstate+"",trace,ptxid+"",session.getAttribute("PID"),txid
 					});
 				
 			}
@@ -635,17 +637,17 @@ public class TopupDAO extends JdbcDaoSupport {
 	
 	
 	
-	public void updateTransaction(Long txid, String errormsg, String trace) {
+	public void updateTransaction(int txid, long ptxid, String errormsg, String trace,HttpSession session) {
 
 		
 		try {
 			
 
-				String updatetx = "update transactions set status=? where partnertxid=?";
+				String updatetx = "update transactions set status=? where partnertxid = ?,partnerid = ?,transactionid=?";
 				
 		    	
 				int row = getJdbcTemplate().update(updatetx, new Object[] { 
-						errormsg,txid+""
+						errormsg,ptxid+"",session.getAttribute("PID"),txid
 					});
 				
 
@@ -661,16 +663,16 @@ public class TopupDAO extends JdbcDaoSupport {
 	
 
 	
-	public int updateTransactionDecre(Long txid, float amount) throws SQLException {
+	public int updateTransactionDecre(int txid, long ptxid,float amount,HttpSession session) throws SQLException {
 		
 			int rows = 0;
 			
-			String sql = "update transactions set discount_amount = ? where partnertxid = ?";
+			String sql = "update transactions set discount_amount = ? where partnertxid = ?,partnerid = ?,transactionid=?";
 	 		
 			try{
 		 		 
 				int row = getJdbcTemplate().update(sql, new Object[] { 
-						amount,txid+""
+						amount,ptxid+"",session.getAttribute("PID"),txid
 				});
 				
 				

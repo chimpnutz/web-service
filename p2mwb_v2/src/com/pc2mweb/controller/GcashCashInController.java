@@ -323,6 +323,7 @@ public class GcashCashInController implements ServletContextAware  {
 			topup.agentid = partner.agentid;
 			topup.txid = dao.insertTransaction(topup,usersession);
 			logger.info("topup tx id is: "+topup.txid);
+			logger.info("partner topup tx id is: "+topup.ptxid);
 		} catch (Exception e) {
 			e.printStackTrace();	
 			errorState = P2MConstants.PROFILE_NOT_FOUND_CODE;
@@ -507,7 +508,7 @@ public class GcashCashInController implements ServletContextAware  {
 	       if (agent.getAllows().charAt(AMAXGCASHConstants.ALLOW_GCASH) != '1'){
 		
 					try {
-						dao.updateTransaction(topup.txid,AMAXGCASHConstants.GCASH_SERVICE_NOT_ALLOW_MSG,"");
+						dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.GCASH_SERVICE_NOT_ALLOW_MSG,"",usersession);
 					} catch (Exception e) {
 						logger.info("***** Update failed for TXID " + topup.txid + "- Mobile not Allowed to GCash*****");
 					} 	
@@ -518,7 +519,7 @@ public class GcashCashInController implements ServletContextAware  {
 		    	// transactionFee = -1 if invalid denom
 	
 				try {
-					dao.updateTransaction(topup.txid,AMAXGCASHConstants.INVALID_DENOM_MSG,"");
+					dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.INVALID_DENOM_MSG,"",usersession);
 				} catch (Exception e) {
 					logger.info("***** Update failed for TXID " + topup.txid + "- Invalid Denomination *****");
 				}
@@ -530,7 +531,7 @@ public class GcashCashInController implements ServletContextAware  {
 
 				try {
 					
-					dao.updateTransaction(topup.txid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"");
+					dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"",usersession);
 				} catch (Exception e) {
 					logger.info("***** Update failed for TXID " + topup.txid + "- Insufficient wallet balance *****");
 				}
@@ -541,7 +542,7 @@ public class GcashCashInController implements ServletContextAware  {
 		    	logger.info("wallet balance error ");
 				try {
 					
-					dao.updateTransaction(topup.txid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"");
+					dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"",usersession);
 				} catch (Exception e) {
 					logger.info("***** Update failed for TXID " + topup.txid  + "- Insufficient wallet balance *****");
 				}
@@ -554,7 +555,7 @@ public class GcashCashInController implements ServletContextAware  {
 
 				try {
 					
-					dao.updateTransaction(topup.txid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"");
+					dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"",usersession);
 				} catch (Exception e) {
 					logger.info("***** Update failed for TXID " + topup.txid + "- FEES paymenttype  *****");
 				}
@@ -566,7 +567,7 @@ public class GcashCashInController implements ServletContextAware  {
 		
 				try {
 					
-					dao.updateTransaction(topup.txid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"");
+					dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"",usersession);
 				} catch (Exception e) {
 					logger.info("***** Update failed for TXID " + topup.txid + "- Insufficient wallet balance *****");
 				}
@@ -577,7 +578,7 @@ public class GcashCashInController implements ServletContextAware  {
 		    	logger.info("PREPAID but not enough balance for amount + transaction fee" );
 				try {
 					
-					dao.updateTransaction(topup.txid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"");
+					dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"",usersession);
 				} catch (Exception e) {
 					logger.info("***** Update failed for TXID " + topup.txid + "- Insufficient wallet balance *****");
 				}
@@ -589,7 +590,7 @@ public class GcashCashInController implements ServletContextAware  {
 
 			
 				try {
-					dao.updateTransaction(topup.txid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"");
+					dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.INSUFFICIENT_BALANCE_MSG,"",usersession);
 				} catch (Exception e) {
 					logger.info("***** Update failed for TXID " + topup.txid + "- Insufficient wallet balance *****");
 				}
@@ -598,7 +599,7 @@ public class GcashCashInController implements ServletContextAware  {
 	       
 		if ( errorState != 0 ) {
 			
-			dao.updateTransaction(topup.txid,errorState,"0");
+			dao.updateTransaction(topup.txid,topup.ptxid,errorState,"0",usersession);
 			mobile = null;
 			topup = null;
 			Float currwallet = dao.getWallet(usersession);
@@ -661,7 +662,7 @@ public class GcashCashInController implements ServletContextAware  {
 						try {
 							int iupfee = dao.updateTransactionwithFee("00(TEST)","RC_GCASH_SUCCESS","123456",  transactionFee, isfeesettlement,px_transactionfeetype,pid,topup.txid);
 							errorState = 0;
-							dao.updateTransaction(topup.txid,AMAXGCASHConstants.TOPUP_SUCCESSFUL_MSG,"");
+							dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.TOPUP_SUCCESSFUL_MSG,"",usersession);
 						} catch (Exception e) {
 							logger.info("***** (TEST) Update failed for TXID " + topup.txid + "- Test success update *****");
 						}
@@ -676,10 +677,10 @@ public class GcashCashInController implements ServletContextAware  {
 				
 						
 						
-						dao.updateTransaction(topup.txid,errorState,"1234567");
+						dao.updateTransaction(topup.txid,topup.ptxid,errorState,"1234567",usersession);
 			
 						if(errorState == 0){
-							dao.insertusertxLog(usersession,topup.txid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.getMessage(0), "1234567");
+							dao.insertusertxLog(usersession,topup.ptxid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.getMessage(0), "1234567");
 						}
 
 					
@@ -702,11 +703,11 @@ public class GcashCashInController implements ServletContextAware  {
 						
 						logger.info("Decremented Value is:"+decreamount);
 						
-						int returnCommission = dao.updatetxid(usersession, topup.txid, decreamount.floatValue());
+						int returnCommission = dao.updatetxid(usersession, topup.ptxid, decreamount.floatValue());
 						
 						if(returnCommission>0){
 							
-							dao.updateTransactionDecre(topup.txid, decreamount.floatValue());
+							dao.updateTransactionDecre(topup.txid, topup.ptxid, decreamount.floatValue(),usersession);
 							
 						}
 					}
@@ -858,10 +859,10 @@ public class GcashCashInController implements ServletContextAware  {
 				logger.info("ErrorState on update for txn " + topup.txid + " = " + errorState);
 				
 				if ( resp != null ) {
-					dao.updateTransaction(topup.txid,errorState,resp.getGCashTraceNo());
+					dao.updateTransaction(topup.txid,topup.ptxid,errorState,resp.getGCashTraceNo(),usersession);
 	
 					if(errorState == 0){
-						dao.insertusertxLog(usersession,topup.txid,Integer.parseInt(topup.getAmount()),mobile,"GCASH_CASHIN_SUCCESS", resp.getGCashTraceNo());
+						dao.insertusertxLog(usersession,topup.ptxid,Integer.parseInt(topup.getAmount()),mobile,"GCASH_CASHIN_SUCCESS", resp.getGCashTraceNo());
 					}
 				}    	
 

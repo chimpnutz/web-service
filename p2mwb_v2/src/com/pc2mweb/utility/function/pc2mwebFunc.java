@@ -106,6 +106,10 @@ public class pc2mwebFunc extends JdbcDaoSupport {
 		        case 63: // '?'
 		            retval = "Amax login error";
 		            break;
+		            
+		        case 64: // '?'
+		            retval = "Session Result Invalid";
+		            break;
 
 		        case 90: // 'Z'
 		            retval = "Agent permission error";

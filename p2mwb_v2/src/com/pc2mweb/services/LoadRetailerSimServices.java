@@ -138,6 +138,7 @@ public class LoadRetailerSimServices {
 			topup.agentid = partner.agentid;
 			topup.txid = dao.insertTransaction(topup,usersession);
 			logger.info("topup tx id is: "+topup.txid + ",User agent id: " + partner.agentid + ",User pid: " + partner.partnerid);
+			logger.info("partner topup tx id is: "+topup.ptxid);
 		} catch (Exception e) {
 			e.printStackTrace();
 			errorState = P2MConstants.PROFILE_NOT_FOUND_CODE;
@@ -165,7 +166,7 @@ public class LoadRetailerSimServices {
 		
 		
 		if ( errorState != 0 ) {
-			dao.updateTransaction(topup.txid,errorState,"0");
+			dao.updateTransaction(topup.txid,topup.ptxid,errorState,"0",usersession);
 			logger.info(P2MConstants.getMessage(errorState));
 			mobile = null;
 			topup = null;
@@ -184,7 +185,7 @@ public class LoadRetailerSimServices {
 		
 		{
 			
-			debit = retailerDao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()) * -1, bean);	
+			debit = retailerDao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()) * -1, bean);	
 			
 			
 			resp = new StockTransferResponse();
@@ -207,7 +208,7 @@ public class LoadRetailerSimServices {
 				
 				if ( resp != null ) {
 						
-					dao.updateTransactionTest(topup.txid,errorState,resp.getTransferTransactionID()+"");
+					dao.updateTransactionTest(topup.txid,topup.ptxid,errorState,resp.getTransferTransactionID()+"",usersession);
 					
 					if(errorState == 0)
 					{
@@ -241,7 +242,7 @@ public class LoadRetailerSimServices {
 
 				logger.info("debiting wallet : " + topup.txid + " " + topup.getAmount() );
 				
-				debit = retailerDao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()) * -1, bean);	
+				debit = retailerDao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()) * -1, bean);	
 				
 				logger.info("Debit result: " + debit);
 				logger.info("+++++++++++++++++++AMAX TEST++++++++++++++++" + mobile);
@@ -256,7 +257,7 @@ public class LoadRetailerSimServices {
 				else		
 				{
 					logger.info("tx id: " + topup.txid);
-					dao.updateTransaction(topup.txid,63,"0");
+					dao.updateTransaction(topup.txid,topup.ptxid,63,"0",usersession);
 					logger.info("+++++++++++++++++++AMAX IS ON, try to connect to AMAX++++++++++++++++");
 					AutoloadMax amax = new AutoloadMax(AMAX_HOST, AMAX_URI);
 					
@@ -292,7 +293,7 @@ public class LoadRetailerSimServices {
 							if(loginsuccess){
 						
 								try {
-									dao.updateTransaction(topup.txid,62,session);
+									dao.updateTransaction(topup.txid,topup.ptxid,62,session,usersession);
 									 if (!AMAX_DEBUG.equals("TOPUP"))
 
 									 	 resp = amax.requestStockTransfer(session, mobile, Integer.parseInt(topup.getAmount()), "","PC2MWEB");
@@ -354,7 +355,7 @@ public class LoadRetailerSimServices {
 											if ( debit == 1 ) 
 											{
 												 //walletManager.AddWallet(partner.partnerid, partner.branchid, Integer.parseInt(topup.getAmount()));
-												retailerDao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()), bean);	
+												retailerDao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()), bean);	
 											}
 										break;													
 									}						
@@ -375,7 +376,7 @@ public class LoadRetailerSimServices {
 								if ( debit == 1 ) 
 								{
 									//walletManager.AddWallet(partner.partnerid, partner.branchid, Integer.parseInt(topup.getAmount()));
-									retailerDao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()), bean);	
+									retailerDao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()), bean);	
 								}
 								
 							}
@@ -389,7 +390,7 @@ public class LoadRetailerSimServices {
 								if ( debit == 1 ) 
 								{
 									//walletManager.AddWallet(partner.partnerid, partner.branchid, Integer.parseInt(topup.getAmount()));
-									retailerDao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()), bean);	
+									retailerDao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()), bean);	
 								}
 												
 							}	
@@ -403,7 +404,7 @@ public class LoadRetailerSimServices {
 				// Refund wallet
 				if ( debit == 1 ) {
 					//walletManager.AddWallet(partner.partnerid, partner.branchid, Integer.parseInt(topup.getAmount()));
-					retailerDao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()), bean);	
+					retailerDao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()), bean);	
 				}
 			}
 			try {
@@ -411,7 +412,7 @@ public class LoadRetailerSimServices {
 				
 				if ( resp != null ) {
 						
-					dao.updateTransaction(topup.txid,errorState,resp.getTransferTransactionID()+"");
+					dao.updateTransaction(topup.txid,topup.ptxid,errorState,resp.getTransferTransactionID()+"",usersession);
 					
 					if(errorState == 0)
 					{
@@ -423,11 +424,11 @@ public class LoadRetailerSimServices {
 					
 					
 				}  else  if (session == null){
-					dao.updateTransaction(topup.txid,errorState,"17");
+					dao.updateTransaction(topup.txid,topup.ptxid,errorState,"17",usersession);
 				}
 				else 
 				{
-					dao.updateTransaction(topup.txid,errorState,session);
+					dao.updateTransaction(topup.txid,topup.ptxid,errorState,session,usersession);
 				}
 				
 				

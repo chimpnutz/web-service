@@ -1,0 +1,19 @@
+
+.addheight
+{
+	margin-top:20px;
+}
+
+.addextraheight
+{
+	margin-top:30px;
+}
+
+a {
+	text-decoration: none;
+	color:#333333;	
+}
+
+a:hover{
+color:red;	
+}

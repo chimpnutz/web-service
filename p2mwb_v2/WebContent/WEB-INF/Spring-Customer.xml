@@ -110,7 +110,8 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<bean id="epinDAO" class="com.pc2mweb.dao.transactions.EpinDAO"  >
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-		
+	
+	
 		
 		
 		

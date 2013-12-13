@@ -61,7 +61,7 @@ cssdropdown.startchrome("payphilexchange")
 <div align="center">
  		<ol id="toc">
             <li><a href="purchaseorder-ordernow.html">Order Now</a></li>  
-            <li class="current"><a href="purchaseorder-history.html?mypohistory"> My PO History</a></li>
+            <li class="current"><a href="purchaseorder-history.html"> My PO History</a></li>
           </ol>
  		<p>&nbsp;</p>
 </div>
@@ -106,57 +106,38 @@ cssdropdown.startchrome("payphilexchange")
 <p class="text18_tungsten">Purchase Order</p>
 
 <div align="center">
-<core:if test="${type == 'mypohistory'}">
+
  		<ol id="toc">
- 		    <li><a href="purchaseorder-ordernow.html">Order Now</a></li>  
-            <li><a href="purchaseorder-retailer.html">Retailer PO Request</a></li>   
-            <li class="current"><a href="purchaseorder-history.html?mypohistory">My PO History</a></li>
-             <li><a href="purchaseorder-history.html?retailerhistory">Retailer Request History</a></li>
-          </ol>
- 		<p>&nbsp;</p>
-</core:if>
-
-<core:if test="${type == 'retailerhistory'}">
- 		<ol id="toc">
- 		    <li><a href="purchaseorder-ordernow.html">Order Now</a></li>  
-            <li><a href="purchaseorder-retailer.html">Retailer PO Request</a></li>   
-            <li><a href="purchaseorder-history.html?mypohistory">My PO History</a></li>
-             <li class="current"><a href="purchaseorder-history.html?retailerhistory">Retailer Request History</a></li>
-          </ol>
- 		<p>&nbsp;</p>
-</core:if>
-
-
+            <li class="current"><a href="purchaseorder-ordernow.html">Order Now</a></li>  
+            <li><a href="purchaseorder-retailer.html">Retailer</a></li>    
+            <li><a href="purchaseorder-history.html">Purchase Order</a></li>  
+      	</ol>
 
 </div>
 
+<p>&nbsp;</p>
 				<table width="100%" align="center">		
 				
 						<tr class ="text12_tungsten_bold">	
 							 <td >PO ID</td>			
-					         <td >Requested Date</td>
-					         <td>Agent</td>
-					         <td>Partner ID</td>
-					         <td>Amount</td>	
-					         <td>Bank</td>	
-					         <td>Branch</td>		
-					         <td>Status</td>	
+					         <td >Purchase Order Date</td>
+					         <td>Total Amount</td>
+					         <td>Payment Status</td>
+					         <td>Delivery Status</td>	
+					         <td>PO Status</td>	
+
 						     
 					   
 						</tr>	
 						<core:forEach var="data" items="${polist}">
 						<tr class="text10_steel">	
-							 <td>${data.id}</td>												 
-				 	  		 <td>${data.date}</td>
-					         <td>${data.username}</td>
-					         <td>${data.partnername}</td>
-					     	 <td>${data.amount}</td>
-					         <td>${data.bank}</td>
-					         <td>${data.branch}</td>
-					         <td>${data.status}</td>
-					
-					         
-					         
+							  <td><a href="purchaseorder-view.html?poid=${data.poid}">${data.poid}</a></td>										 
+				 	  		 <td>${data.podate}</td>
+					         <td>${data.order_amount}</td>
+					         <td>${data.payment_status}</td>
+					     	 <td>${data.delivery_status}</td>
+					         <td>${data.po_status}</td>
+ 
 						</tr>
 						</core:forEach>	
 													
@@ -170,15 +151,15 @@ cssdropdown.startchrome("payphilexchange")
 
 <div align="center">
  		<ol id="toc">
-            <li><a href="purchaseorder-retailer.html">Sub Dealer PO Request</a></li>   
-            <li class="current"><a href="purchaseorder-history.html?subdealerhistory">Sub Dealer Request History</a></li>
+            <li><a href="purchaseorder-retailer.html">Retailer</a></li>    
+            <li><a href="purchaseorder-history.html">Purchase Order</a></li>  
           </ol>
  		<p>&nbsp;</p>
 </div>
 
 				<table width="100%" align="center">		
 				
-						<tr class ="text12_tungsten_bold">	
+												<tr class ="text12_tungsten_bold">	
 							 <td >PO ID</td>			
 					         <td >Requested Date</td>
 					         <td>Agent</td>

@@ -35,50 +35,21 @@ import com.pc2mweb.model.PurchaseOrderModel;
 import com.pc2mweb.model.UserManagementModel;
 
 @Controller
-@RequestMapping("purchaseorder-retailer")
-public class PurchaseOrderRetailerController {
+@RequestMapping("purchaseorder-view")
+public class PurchaseOrderViewController {
 	
-	private static final Logger logger = Logger.getLogger(PurchaseOrderRetailerController.class);
+	private static final Logger logger = Logger.getLogger(PurchaseOrderViewController.class);
 	
 
-	@RequestMapping(method = RequestMethod.GET)
-	 public ModelAndView WalletView(ModelMap model,HttpServletRequest request,HttpSession usersession) {
-		
-		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
-		
 
-		ModelAndView modelAndView = new ModelAndView("purchaseorder-retailer");
-		ModelAndView redirect = new ModelAndView("redirect:main.html");
-		
-		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
-
-		HttpSession isSession = request.getSession();
-
-		if (null == isSession.getAttribute("USER")) {	
-			
-				redirect.addObject("login", "no");
-				return redirect;	
-			
-		} else {
-
-				List<PurchaseOrderModel> poList = dao.getPurchaseOrdersRetailersList(usersession);
-				modelAndView.addObject("polist", poList);
-				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
-
-				return modelAndView;
-					
-		}
-		
-		
-	}
 	
-	@RequestMapping(method = RequestMethod.GET,params={"view"})
+	@RequestMapping(method = RequestMethod.GET,params={"poid"})
 	 public ModelAndView payCredit(@RequestParam("poid") int id,HttpServletRequest request,HttpSession session) throws NamingException {
 		
 		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
 		
 
-		ModelAndView modelAndView = new ModelAndView("purchaseorder-retailer");
+		ModelAndView modelAndView = new ModelAndView("purchaseorder-view");
 		ModelAndView redirect = new ModelAndView("redirect:main.html");
 		
 		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
@@ -92,15 +63,8 @@ public class PurchaseOrderRetailerController {
 			
 		} else {
 
-			//	List<PurchaseOrderModel> poList = dao.getSinglePurchaseOrder(session,id);
-//				List<MessageBean> partnerdetails = dao.getPartnerDetails(usersession);
-//				modelAndView.addObject("partners", partnerlist);
-				Map<String,String> status = new LinkedHashMap<String,String>();
-				status.put("Approved", "Approved");
-				status.put("Decline", "Decline");
-				modelAndView.addObject("statuslist",status);
-				modelAndView.addObject("purchaseorderForm", new PurchaseOrderModel());
-			//	modelAndView.addObject("polist", poList);
+				List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+				modelAndView.addObject("polist", poList);
 				modelAndView.addObject("type", "poid");
 				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
 
@@ -122,7 +86,7 @@ public class PurchaseOrderRetailerController {
 //		
 //		ModelAndView modelAndView = new ModelAndView("purchaseorder-retailer");
 //		
-//		//int status = dao.updatePurchaseOrder(session, purchaseForm);
+//		int status = dao.updatePurchaseOrder(session, purchaseForm);
 //		
 //		if(status == 1)
 //		
@@ -160,7 +124,7 @@ public class PurchaseOrderRetailerController {
 //			modelAndView.addObject("msg", "Purchase Order Request Failed!");
 //			return modelAndView;
 //			
-//		}
+//		}w
 //
 //		
 //   

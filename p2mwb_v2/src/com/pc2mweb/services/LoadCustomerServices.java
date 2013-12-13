@@ -247,6 +247,7 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 			topup.agentid = partner.agentid;
 			topup.txid = dao.insertTransaction(topup,usersession);
 			logger.info("topup tx id is: "+topup.txid);
+			logger.info("partner topup tx id is: "+topup.ptxid);
 		} catch (Exception e) {
 			e.printStackTrace();	
 			errorState = P2MConstants.PROFILE_NOT_FOUND_CODE;
@@ -287,7 +288,7 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 
 		if ( errorState != 0 ) {
 			
-			dao.updateTransaction(topup.txid,errorState,"0");
+			dao.updateTransaction(topup.txid,topup.ptxid,errorState,"0",usersession);
 			mobile = null;
 			topup = null;
 			Float currwallet = dao.getWallet(usersession);
@@ -317,21 +318,21 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 				if(paymenttype.equalsIgnoreCase("PREPAID"))
 				{
 					
-					dao.deductWallet(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
+					dao.deductWallet(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()));
 
 					
 					logger.info("deducting prepaid wallet done");
 				}
 				else if(paymenttype.equalsIgnoreCase("SETTLEMENT")){
 					
-					dao.creditWallet(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
+					dao.creditWallet(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()));
 					
 					logger.info("deducting settlement done");
 					
 				}
 				else if(paymenttype.equalsIgnoreCase("FEES")){
 					
-					dao.creditWallet(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
+					dao.creditWallet(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()));
 					
 					logger.info("deducting fees wallet done");
 				}
@@ -356,12 +357,12 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 					if ( resp != null ) {
 						
 						
-						dao.updateTransactionTest(topup.txid,errorState,resp.getTransactionID());
+						dao.updateTransactionTest(topup.txid,topup.ptxid,errorState,resp.getTransactionID(),usersession);
 			
 						if(errorState == 0){
-							dao.insertusertxLog(usersession,topup.txid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.getMessage(0), resp.getTransactionID());
+							dao.insertusertxLog(usersession,topup.ptxid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.getMessage(0), resp.getTransactionID());
 						}else if(errorState == EPIN_SUCCESS_CODE){
-							dao.insertusertxLog(usersession,topup.txid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.getMessage(0), resp.getTransactionID());
+							dao.insertusertxLog(usersession,topup.ptxid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.getMessage(0), resp.getTransactionID());
 						}
 					
 					}    	
@@ -387,11 +388,11 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 						
 						logger.info("Decremented Value is:"+decreamount);
 						
-						int returnCommission = dao.updatetxid(usersession, topup.txid, decreamount.floatValue());
+						int returnCommission = dao.updatetxid(usersession, topup.ptxid, decreamount.floatValue());
 						
 						if(returnCommission>0){
 							
-							dao.updateTransactionDecre(topup.txid, decreamount.floatValue());
+							dao.updateTransactionDecre(topup.txid,topup.ptxid, decreamount.floatValue(),usersession);
 							
 						}
 					}
@@ -424,14 +425,14 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 					{
 						
 						//debit = dao.deductWallet(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
-						debit = dao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()) * -1);
+						debit = dao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()) * -1);
 						
 						
 						logger.info("deducting prepaid wallet done");
 					}
 					else if(paymenttype.equalsIgnoreCase("SETTLEMENT")){
 						
-						debit = dao.creditWallet(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
+						debit = dao.creditWallet(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()));
 					
 						
 						logger.info("deducting settlement done");
@@ -439,7 +440,7 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 					}
 					else if(paymenttype.equalsIgnoreCase("FEES")){
 						
-						debit = dao.creditWallet(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
+						debit = dao.creditWallet(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()));
 						
 						
 						logger.info("deducting fees wallet done");
@@ -455,7 +456,8 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 				
 				else		
 				{
-					dao.updateTransaction(topup.txid,63,"0");
+					dao.updateTransaction(topup.txid,topup.ptxid,63,"0",usersession);
+
 					logger.info("tx id: " + topup.txid);
 					logger.info("+++++++++++++++++++AMAX IS ON, try to connect to AMAX++++++++++++++++");
 
@@ -495,7 +497,8 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 						
 								try {
 									
-								dao.updateTransaction(topup.txid,62,session);
+								//dao.updateTransaction(topup.txid,62,session);
+								dao.updateTransaction(topup.txid,topup.ptxid,62,session,usersession);
 								logger.info("++++Request Topup++++mobile:"+mobile+", amount:"+topup.getAmount());
 								
 									
@@ -590,13 +593,13 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 												logger.info("Decremented Value is:"+decreamount);
 												
 											//	int returnCommission = dao.creditWallet(usersession, topup.txid, topupamount);
-												int returnCommission = dao.updatetxid(usersession, topup.txid, decreamount.floatValue());
+												int returnCommission = dao.updatetxid(usersession, topup.ptxid, decreamount.floatValue());
 										
 												logger.info("Returning Comission status: "+returnCommission);
 												
 												if(returnCommission>0){
 													
-													int decre = dao.updateTransactionDecre(topup.txid, decreamount.floatValue());
+													int decre = dao.updateTransactionDecre(topup.txid, topup.ptxid, decreamount.floatValue(),usersession);
 													logger.info("Updating Transaction status: "+decre);
 													
 												}
@@ -614,7 +617,7 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 											if ( debit == 1 ) 
 											{
 												 //walletManager.AddWallet(partner.partnerid, partner.branchid, Integer.parseInt(topup.getAmount()));
-												dao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
+												dao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()));
 											}
 											
 										break;													
@@ -637,7 +640,7 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 								if ( debit == 1 ) 
 								{
 									//walletManager.AddWallet(partner.partnerid, partner.branchid, Integer.parseInt(topup.getAmount()));
-									dao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
+									dao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()));
 								}
 								
 							}
@@ -651,7 +654,7 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 								if ( debit == 1 ) 
 								{
 									//walletManager.AddWallet(partner.partnerid, partner.branchid, Integer.parseInt(topup.getAmount()));
-									dao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
+									dao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()));
 								}
 												
 							}	
@@ -671,30 +674,30 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 				// Refund wallet
 				if ( debit == 1 ) {
 				//	walletManager.AddWallet(partner.partnerid, partner.branchid, Integer.parseInt(topup.getAmount()));
-					dao.updatetxid(usersession, topup.txid, Float.parseFloat(topup.getAmount()));
+					dao.updatetxid(usersession, topup.ptxid, Float.parseFloat(topup.getAmount()));
 				}
 			}
 			try {
 				logger.info("ErrorState on update for txn " + topup.txid + " = " + errorState);
 				
 				if ( resp != null ) {
-					dao.updateTransaction(topup.txid,errorState,resp.getTransactionID());
+					dao.updateTransaction(topup.txid,topup.ptxid,errorState,resp.getTransactionID(),usersession);
 				//	dao.updatetxid(usersession, topup.txid, Integer.parseInt(topup.getAmount()),partner.paymenttype);
 					
 					if(errorState == 0){
-						dao.insertusertxLog(usersession,topup.txid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.TOPUP_SUCCESSFUL_MSG, resp.getTransactionID());
+						dao.insertusertxLog(usersession,topup.ptxid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.TOPUP_SUCCESSFUL_MSG, resp.getTransactionID());
 					}else if(errorState == EPIN_SUCCESS_CODE){
-						dao.insertusertxLog(usersession,topup.txid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.TOPUP_SUCCESSFUL_MSG, resp.getTransactionID());
+						dao.insertusertxLog(usersession,topup.ptxid,Integer.parseInt(topup.getAmount()),mobile,AMAXConstants.TOPUP_SUCCESSFUL_MSG, resp.getTransactionID());
 					}
 				
 				}    	
 				
 				else  if (session == null){
-					dao.updateTransaction(topup.txid,errorState,"17");
+					dao.updateTransaction(topup.txid,topup.ptxid,errorState,"17",usersession);
 				}
 				else 
 				{
-					dao.updateTransaction(topup.txid,errorState,session);
+					dao.updateTransaction(topup.txid,topup.ptxid,errorState,session,usersession);
 				}
 				
 

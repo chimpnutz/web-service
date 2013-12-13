@@ -16,6 +16,7 @@
 <script type="text/javascript" src="../js/jquery.validate.js"></script>
 <script>
  $(document).ready(function(){
+
 	 $("#loginForm").validate({  				  
 		});
 	});

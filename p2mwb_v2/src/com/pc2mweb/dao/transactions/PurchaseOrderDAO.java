@@ -142,9 +142,12 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 					            	   this.getPartnerDiscount(session, model.getItem());
 					            	   this.getWalletid(session, model.getWallet());
 					            	   this.getfaceValue(model.getItem());
-				            		   
+					            	   
+					            	   
+					            	   
 				             		   qty = Integer.parseInt(model.getQuantity());
-				          
+					            	  
+					            		   
 				            		   discount_amt = facevalue.subtract(discount);
 				            		   
 				            		   BigDecimal totaldcamount = discount_amt.multiply(new BigDecimal(qty));
@@ -543,7 +546,7 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 		   if(role.equals("manager"))
 		   {
 			   
-			   strSQL.append("SELECT a.poid, a.po_date, a.order_amount, a.payment_status,a.delivery_status, a.po_status, ");
+			   strSQL.append("SELECT a.poid, a.po_date, a.order_amount, a.payment_status,a.delivery_status, a.po_status, a.paid_amount, a.partnerid, a.cancelled_date, a.delivered_date, ");
 			   strSQL.append("c.itemcode, c.qty, c.price, c.discount_amount, f.wallet_name ");
 			   strSQL.append("FROM po_orders a  ");
 			   strSQL.append("INNER JOIN  partners b ON a.partnerid = b.partnerid ");
@@ -561,13 +564,30 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 				for (Map row : rows) {
 					
 					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa");
-					//String dateAsString = simpleDateFormat.format(row.get("requesteddate"));
-					
+					String dateAsString = simpleDateFormat.format(row.get("po_date"));
+					String cancelAsString = "";
+					String deliverAsString = "";
+					if(row.get("cancelled_date")!= null)
+					{
+						cancelAsString = simpleDateFormat.format(row.get("cancelled_date"));
+						
+					}
+					else{
+						cancelAsString="N/A";	
+					}
+					if(row.get("delivered_date")!=null){
+						
+						deliverAsString = simpleDateFormat.format(row.get("delivered_date"));
+					}
+					else{
+						
+						deliverAsString="N/A";
+					}
 					
 					PurchaseOrderModel PO = new PurchaseOrderModel();
 					
 					PO.setPoid((int)(row.get("poid")));
-					//PO.setPodate((String)(dateAsString));
+					PO.setPodate((String)(dateAsString));
 					PO.setOrder_amount((String)(row.get("order_amount")+""));
 					PO.setPayment_status((String)(row.get("payment_status")));
 					PO.setDelivery_status((String)(row.get("delivery_status")));
@@ -578,7 +598,10 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 					PO.setFace_value_amount((String)(row.get("price")+""));
 					PO.setDiscount_amount((String)(row.get("discount_amount")+""));
 					PO.setWallet((String)(row.get("wallet_name")));
-					
+					PO.setAmount_paid((String)(row.get("paid_amount")+""));
+					PO.setCancel_date((String)(cancelAsString));
+					PO.setDeliver_date((String)(row.get("delivered_date")+""));
+					PO.setPartner_name((String)(row.get("partnerid")));
 					
 					
 					BigDecimal dcamount = (BigDecimal)(row.get("discount_amount"));
@@ -590,7 +613,8 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 				}
 			   
 			   
-		   }else if (role.equals("superadmin")){
+		   }
+		   else if (role.equals("superadmin")){
 			   
 			   strSQL.append("SELECT a.poid, a.po_date, a.order_amount, a.payment_status,a.delivery_status, a.po_status ");
 			   strSQL.append("FROM po_orders a  ");

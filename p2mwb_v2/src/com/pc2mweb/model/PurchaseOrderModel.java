@@ -21,10 +21,33 @@ public class PurchaseOrderModel {
 	String payment_status;
 	String delivery_status;
 	String po_status;
-	
-	
-	
+	String cancel_date;
+	String deliver_date;
 	String retailer;
+	String amount_paid;
+	
+	public String getAmount_paid() {
+		return amount_paid;
+	}
+	public void setAmount_paid(String amount_paid) {
+		this.amount_paid = amount_paid;
+	}
+	public String getCancel_date() {
+		return cancel_date;
+	}
+	public void setCancel_date(String cancel_date) {
+		this.cancel_date = cancel_date;
+	}
+	public String getPartner_name() {
+		return partner_name;
+	}
+	public void setPartner_name(String partner_name) {
+		this.partner_name = partner_name;
+	}
+	String partner_name;
+	
+	
+	
 	
 	public String getItem() {
 		return item;
@@ -110,6 +133,12 @@ public class PurchaseOrderModel {
 	}
 	public void setTotal_amount(String total_amount) {
 		this.total_amount = total_amount;
+	}
+	public String getDeliver_date() {
+		return deliver_date;
+	}
+	public void setDeliver_date(String deliver_date) {
+		this.deliver_date = deliver_date;
 	}
 
 

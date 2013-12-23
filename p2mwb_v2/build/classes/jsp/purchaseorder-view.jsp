@@ -19,6 +19,13 @@
 <script src="../js/jquery-latest.js"></script>
 <script type="text/javascript" src="../js/header.js"></script>
 <script type="text/javascript" src="../js/dropdown.js"></script>
+<script type="text/javascript" src="../js/jtip.js"></script>
+
+<style type="text/css" media="all">
+@import "../css/global.css";
+</style>
+<script src="../js/jtip.js" type="text/javascript"></script>
+
 <title>Pay PhilExchange</title>
 </head>
 
@@ -120,65 +127,65 @@ cssdropdown.startchrome("payphilexchange")
 
 
 <div align="center">
-    <form action="purchasehistory.html">
+    <form action="purchaseorder-history.html">
  		<input type="submit" value="Back" style="margin-left:45px;" class="button"/>
     </form>
 </div>
 
   <div class="addextraheight"></div>
   
-  <form action="" method="post">
+
 
     
-        
-         <div id="pod" >
-        <label class ="text12_tungsten_bold">PO Date</label>
         <core:forEach var="data" items="${polist}">
-       <input type="text" class ="text12_tungsten" id="pod1" value="${data.poid}"readonly/><br/> <span class="inline"> 
-       </core:forEach>
+       <div id="pod" >
+       <label class ="text12_tungsten_bold">PO Date:</label>
+       
+       <label class = "text12_tungsten">${data.podate}</label>
+      
         </div>
-
         <div id="pn" >
-        <label class ="text12_tungsten_bold">Partner Name</label>
-        <input type="text" class ="text12_tungsten" id="pn1" readonly/><br/> <span class="inline">
+        <label class ="text12_tungsten_bold">Partner Name:</label>
+      	<label class = "text12_tungsten">${data.partner_name}</label>
         </div>
 
 
 
 
         <div id="ps">
-        <label class ="text12_tungsten_bold">Payment Status</label>
-        <input type="text" class ="text12_tungsten" id="ps1" readonly/><br/> <span class="inline">
+        <label class ="text12_tungsten_bold">Payment Status:</label>
+        <label class = "text12_tungsten">${data.payment_status}</label>
         </div>
 
         <div id="ds">
-        <label class ="text12_tungsten_bold">Delivery Status</label>
-        <input type="text" class ="text12_tungsten" id="ds1" readonly/><br/> <span class="inline">
+        <label class ="text12_tungsten_bold">Delivery Status:</label>
+        <label class = "text12_tungsten">${data.delivery_status}</label>
         </div>
     
 
            <div id="pos">
-        <label class ="text12_tungsten_bold">PO Status</label>
-        <input type="text" class ="text12_tungsten" id="pos1" readonly/><br/> <span class="inline">
+        <label class ="text12_tungsten_bold">PO Status:</label>
+        <label class = "text12_tungsten">${data.po_status }</label>
         </div>
 
 
               <div id="toa">
-        <label class ="text12_tungsten_bold">Total Order Amount</label>
-        <input type="text" class ="text12_tungsten" readonly/><br/> <span class="inline">
+        <label class ="text12_tungsten_bold">Total Order Amount:</label>
+        <label class ="text12_tungsten">${data.total_amount }</label>
         </div>
 
 
             <div id="ap">
-        <label class ="text12_tungsten_bold">Amount Paid</label>
-        <input type="text" class ="text12_tungsten" id="ap1" readonly/><br/> <span class="inline">
+        <label class ="text12_tungsten_bold">Amount Paid:</label>
+       <label class ="text12_tungsten">${data.amount_paid}</label>
         </div>
 
         <div id="c">
-        <label class ="text12_tungsten_bold">Cancelled Date</label>
-        <input type="text" class ="text12_tungsten" value="asdsadsd" id="c1"readonly/><br/> <span class="inline">
+        <label class ="text12_tungsten_bold">Cancelled Date:</label>
+        <label class ="text12_tungsten">${data.cancel_date }</label>
         </div>
-  </form>
+         </core:forEach>
+
   
   
   
@@ -229,10 +236,17 @@ cssdropdown.startchrome("payphilexchange")
 
 <div id="container">
 <div id="content">
-<header><h2 class="text18_tungsten">Payment Section</h2></header>
+
+
+
+
+<header><h2 class="text18_tungsten">Payment Section <a href="#modal">  <input type="button" id="button1" class="button" value="Add"></input></a></h2></header>
 <div style="margin-left:50px;"> 
-<a href="#modal">  <input type="button" id="button1" class="button" value="Add"></input></a>
+
 </div>
+<core:forEach var="data" items="${polist}">
+<core:if test="${data.payment_status != 'initial'}">
+
 <div class="adjustspace">
 
 </div>
@@ -266,11 +280,11 @@ cssdropdown.startchrome("payphilexchange")
   
 
  
-    <td><a href="entry.htm?width=375" class="jTip" id="one" name="item code">insert here</a></td>
-      <td><a href="entry.htm?width=375" class="jTip" id="two" name="item code">insert here</a></td>
-    <td><a href="entry.htm?width=375" class="jTip" id="three" name="item code">insert here</a></td>
-       <td><a href="entry.htm?width=375" class="jTip" id="four" name="item code">insert here</a></td>
-      <td><a href="entry.htm?width=375" class="jTip" id="five" name="item code">insert here</a></td>
+    <td><a href="entry.html?poid=${data.poid}"  class="jTip"  id="one" name="item code">${data.podate}</a></td>
+      <td><a href="entry.html?poid=${data.poid}" class="jTip" id="two" name="item code">${data.payment_status }</a></td>
+    <td><a href="entry.html?poid=${data.poid}" class="jTip" id="three" name="item code">${data.amount_paid}</a></td>
+       <td><a href="entry.html?poid=${data.poid}" class="jTip" id="four" name="item code">${data.total_amount }</a></td>
+      <td><a href="entry.html?poid=${data.poid}" class="jTip" id="five" name="item code">insert here</a></td>
       <td><input type="button" value="Confirm" title="confirm" class="button"></input> <input type="button" class="button" value="Cancel" title="cancel"></input></td>
    
      <td></td>
@@ -288,8 +302,8 @@ cssdropdown.startchrome("payphilexchange")
    <div>
 
      <div >
-  
-
+  </core:if>
+</core:forEach>
 
 
 

@@ -130,17 +130,17 @@ public class PurchaseOrderViewController {
 //   
 //	}
 	
-	@ExceptionHandler()
-    public ModelAndView iHandleExceptions(Exception e) {
-        //do loads of interesting stuff to deal with the exception
-		
-		ModelAndView modelAndView = new ModelAndView("error");
-		
-		modelAndView.addObject("error","yes");
-		
-		logger.info(e.getMessage());
-		
-        return modelAndView;
-    }
+//	@ExceptionHandler()
+//    public ModelAndView iHandleExceptions(Exception e) {
+//        //do loads of interesting stuff to deal with the exception
+//		
+//		ModelAndView modelAndView = new ModelAndView("error");
+//		
+//		modelAndView.addObject("error","yes");
+//		
+//		logger.info(e.getMessage());
+//		
+//        return modelAndView;
+//    }
 
 }

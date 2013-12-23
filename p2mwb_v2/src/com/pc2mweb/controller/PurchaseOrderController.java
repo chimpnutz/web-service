@@ -15,6 +15,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -98,32 +99,69 @@ public class PurchaseOrderController {
     {
 		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
 		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
-		
+
 		ModelAndView modelAndView = new ModelAndView("purchaseorder-ordernow");
 		
 		List<PurchaseOrderModel> po = purchaseForm.getPO();
 		
 		PurchaseModelList poList = new PurchaseModelList();
 		poList.setPO(po);
+	
+	      for (PurchaseOrderModel model : po) 
+          {
+	    	   
+	       	   if(model.getQuantity().equals(""))
+	       	   {
+	       		List<PurchaseOrderBean> item = dao.fillItemCodeList();
+	    		List<PurchaseOrderBean> wallet = dao.fillWalletlist(session);
+	    		modelAndView.addObject("purchaseorderForm", poList);
+	    		modelAndView.addObject("item", item);
+	    		modelAndView.addObject("wallet", wallet);
+	    		modelAndView.addObject("user",session.getAttribute("USERLEVEL"));
+	   			modelAndView.addObject("valid","fail");
+				modelAndView.addObject("message", "Please input quantity.");
+				return modelAndView;
+	       		   
+	       	   }
+	       	   if(model.getItem().equals("none"))
+	       	   {
+	       		List<PurchaseOrderBean> item = dao.fillItemCodeList();
+	    		List<PurchaseOrderBean> wallet = dao.fillWalletlist(session);
+	    		modelAndView.addObject("purchaseorderForm", poList);
+	    		modelAndView.addObject("item", item);
+	    		modelAndView.addObject("wallet", wallet);
+	    		modelAndView.addObject("user",session.getAttribute("USERLEVEL"));
+	   			modelAndView.addObject("valid","fails");
+				modelAndView.addObject("message", "Please select an item.");
+				return modelAndView;
+	       	   }
+	    	  
+	    	  
+          }
+          	
+
+	
+		
+		dao.insertPurchaseOrder(session, po);
 		
 		
-		
-		  dao.insertPurchaseOrder(session, po);
-
-
-
-
-		
+	
 		List<PurchaseOrderBean> item = dao.fillItemCodeList();
 		List<PurchaseOrderBean> wallet = dao.fillWalletlist(session);
 		modelAndView.addObject("purchaseorderForm", poList);
 		modelAndView.addObject("item", item);
 		modelAndView.addObject("wallet", wallet);
 		modelAndView.addObject("user",session.getAttribute("USERLEVEL"));
+		
+	
+		
 		return modelAndView;
-
+		
+		
 		
     }
+	
+	
 	
 //	@RequestMapping(method = RequestMethod.POST)
 //	public ModelAndView Order(@ModelAttribute("purchaseorderForm") PurchaseOrderModel purchaseForm,  

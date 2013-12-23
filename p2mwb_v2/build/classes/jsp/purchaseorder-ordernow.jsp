@@ -16,6 +16,7 @@
 <script type="text/javascript" src="../js/header.js"></script>
 <script type="text/javascript" src="../js/dropdown.js"></script>
 <script src="../js/jquery-latest.js"></script>
+<script type="text/javascript" src="../js/POvalidation.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.js"></script>
   <script>
   $(document).ready(function(){
@@ -76,7 +77,7 @@
     count1 +=1;
     count2 +=1;
 
-    $('<p><div style="float:left;width: 100%;"><hr/><div id="ordernew"><p class="text12_tungsten"> &nbsp;Item Code:<select id="ordernew2" name="PO['+count1+'].item" class="selectItem"> <option value="none">Please Choose Item</option><core:forEach var="data" items="${item}">	<option value="${data.itemname}">${data.itemname}</option></core:forEach></select style></p></div>	<input type="hidden" id="PO['+count1+'].amount" /><div id="qantity"><p class="text12_tungsten"> &nbsp;Quantity:<input type="text" name="PO['+count1+'].quantity" id="qty" /></p></div><div id="wallet"><p class="text12_tungsten"> &nbsp;Wallet types:<select disabled id="wallet2" name="PO['+count1+'].wallet"><core:forEach var="data" items="${wallet}"><option value="${data.wallet}">${data.wallet}</option></core:forEach></select style><br/><span class="inline"></span></p></div></p></div><a href="#" class="remove" id="remove" ><img src="../images/cross.png"><div id="adj"></div></a></div></p>').fadeIn("slow").appendTo('#wallet');     
+    $('<p><div style="float:left;width: 100%;"><hr/><div id="ordernew"><p class="text12_tungsten"> &nbsp;Item Code:<select id="ordernew2" name="PO['+count1+'].item" class="selectItem"> <option value="none">Please Choose Item</option><core:forEach var="data" items="${item}">	<option value="${data.itemname}">${data.itemname}</option></core:forEach></select style></p></div>	<input type="hidden" id="PO['+count1+'].amount" /><div id="qantity"><p class="text12_tungsten"> &nbsp;Quantity:<input type="text" name="PO['+count1+'].quantity" id="qty" /></p></div><div id="wallet"><p class="text12_tungsten"> &nbsp; Wallet types:<select id="wallet2" name"PO[0].wallet"><core:forEach var="data" items="${wallet}"><option value="${data.wallet}">${data.wallet}</core:forEach></select style></br><span class="inline"></p></div></option><a href="#" class="remove" id="remove" ><img src="../css/images/cross.png"><div id="adj"></div></a></div></p>').fadeIn("slow").appendTo('#wallet');     
 
   });
   
@@ -246,54 +247,6 @@ cssdropdown.startchrome("payphilexchange")
 </div>
 <p>&nbsp;</p>
 
-
-<form:form action=""  commandName="purchaseorderForm" id="purchaseorderForm">
-
-
-              <div id="ordernew">
-	        <p class="text12_tungsten"> &nbsp;Item Code:
-	       <select id="ordernew2" name="PO[0].item" class="selectItem2">
-	       <option value="none">Please Choose Item</option>
-		   <core:forEach var="data" items="${item}">
-																				 
-			<option value="${data.itemname}">${data.itemname}</option>
-						
-			</core:forEach>
-	      </select style>
-	      </p>
-	      </div>
-	
-		<input type="hidden" name="PO[0].amount" value="" />
-	
-        <div id="qantity">
-        <p class="text12_tungsten"> &nbsp;Quantity:
-        <input type="text" name="PO[0].quantity" id="qty"/><br/> <span class="inline"></p>
-        </div>
-
-
-
-
-
-        <div id="wallet" > 
-        <p class="text12_tungsten"> &nbsp;Wallet types:
-        <select id="wallet2" name="PO[0].wallet" disabled >
-	   <core:forEach var="data" items="${wallet}">
-																			 
-		<option value="${data.wallet}">${data.wallet}</option>
-				
-					         
-						
-		</core:forEach>
-        </select style>
-          <br/>
-           <span class="inline"></p>
-        </div>
-      
-  <p><a href="#" id="addorder" ><input type="button" value="Add New Order" style="margin-left:30px;" class="button2"/></a>
-  <input type="image" value="Submit" style="margin-left:45px;" class="button" id="btnprocess"/></p>
-
-  	
-  </form:form>
       
      
 
@@ -323,8 +276,10 @@ cssdropdown.startchrome("payphilexchange")
             <li><a href="purchaseorder-history.html">Purchase Order</a></li>  
       	</ol>
 </div>
-<p>&nbsp;</p>
+<div>
 
+</div>
+<p>&nbsp;</p>
 
 <form:form action=""  commandName="purchaseorderForm" id="purchaseorderForm">
 
@@ -332,6 +287,7 @@ cssdropdown.startchrome("payphilexchange")
               <div id="ordernew">
 	        <p class="text12_tungsten"> &nbsp;Item Code:
 	       <select id="ordernew2" name="PO[0].item" class="selectItem2">
+	       
 	       <option value="none">Please Choose Item</option>
 		   <core:forEach var="data" items="${item}">
 																				 
@@ -339,6 +295,9 @@ cssdropdown.startchrome("payphilexchange")
 						
 			</core:forEach>
 	      </select style>
+	      <core:if test="${valid=='fails'}">
+			${message}
+			</core:if>
 	      </p>
 	      </div>
 	
@@ -346,7 +305,11 @@ cssdropdown.startchrome("payphilexchange")
 	
         <div id="qantity">
         <p class="text12_tungsten"> &nbsp;Quantity:
-        <input type="text" name="PO[0].quantity" id="qty"/><br/> <span class="inline"></p>
+        <input type="text" name="PO[0].quantity" id="qty"/>
+        <core:if test="${valid=='fail'}">
+		${message}
+		</core:if>
+        <br/> <span class="inline"></p>       
         </div>
 
 
@@ -355,7 +318,7 @@ cssdropdown.startchrome("payphilexchange")
 
         <div id="wallet" > 
         <p class="text12_tungsten"> &nbsp;Wallet types:
-        <select id="wallet2" name="PO[0].wallet" disabled >
+        <select id="wallet2" name="PO[0].wallet" disabled>
 	   <core:forEach var="data" items="${wallet}">
 																			 
 		<option value="${data.wallet}">${data.wallet}</option>
@@ -368,7 +331,7 @@ cssdropdown.startchrome("payphilexchange")
            <span class="inline"></p>
         </div>
       
-  <p><a href="#" id="addorder" ><input type="button" value="Add New Order" style="margin-left:30px;" class="button2"/></a>
+  <p><a href="#" id="addorder" ><input type="button" value="Add New Order" style="margin-left:30px;" class="addnewbtn addnewbtn-primary"/></a>
   <input type="image" value="Submit" style="margin-left:45px;" class="button" id="btnprocess"/></p>
 
   	

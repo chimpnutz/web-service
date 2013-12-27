@@ -99,7 +99,9 @@ public class PurchaseOrderController {
     {
 		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
 		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
-
+		
+		String NUMB_REGEX = "\\d+";
+		
 		ModelAndView modelAndView = new ModelAndView("purchaseorder-ordernow");
 		
 		List<PurchaseOrderModel> po = purchaseForm.getPO();
@@ -121,8 +123,21 @@ public class PurchaseOrderController {
 	   			modelAndView.addObject("valid","fail");
 				modelAndView.addObject("message", "Please input quantity.");
 				return modelAndView;
-	       		   
 	       	   }
+	       	   
+	       	   if(!model.getQuantity().matches(NUMB_REGEX))
+	       	   {
+	       		List<PurchaseOrderBean> item = dao.fillItemCodeList();
+	    		List<PurchaseOrderBean> wallet = dao.fillWalletlist(session);
+	    		modelAndView.addObject("purchaseorderForm", poList);
+	    		modelAndView.addObject("item", item);
+	    		modelAndView.addObject("wallet", wallet);
+	    		modelAndView.addObject("user",session.getAttribute("USERLEVEL"));
+	   			modelAndView.addObject("valid","fail");
+				modelAndView.addObject("message", "Please input numbers only.");
+				return modelAndView;  
+	       	   }
+	       	   
 	       	   if(model.getItem().equals("none"))
 	       	   {
 	       		List<PurchaseOrderBean> item = dao.fillItemCodeList();
@@ -152,7 +167,8 @@ public class PurchaseOrderController {
 		modelAndView.addObject("item", item);
 		modelAndView.addObject("wallet", wallet);
 		modelAndView.addObject("user",session.getAttribute("USERLEVEL"));
-		
+		modelAndView.addObject("msg","success");
+		modelAndView.addObject("message", "Success.");
 	
 		
 		return modelAndView;

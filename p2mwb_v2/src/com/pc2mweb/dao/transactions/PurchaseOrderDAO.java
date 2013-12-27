@@ -112,25 +112,28 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 				            		   
 									   StringBuilder insertPOItems = new StringBuilder();
 									   
+									  
+									   
 									   insertPOItems.append("INSERT INTO po_orders_items  ");
 									   insertPOItems.append("(POId,itemcode,qty,price,discount_amount,walletid) ");
 									   insertPOItems.append(" VALUES (?,?,?,(select face_value_amount from purchase_items where item_name = ?),?,?) ");
 									   
 									   try{
-										   
+										 
 										   poRow = getJdbcTemplate().update(insertPOItems.toString(), new Object[] { 
 												poid,model.getItem(),model.getQuantity(),model.getItem(),discount_amt,walletid
 											});
 
 											
+									   
 									
-												
+										  
 									
 									   }catch(DataAccessException ex){
 								            ex.printStackTrace();
 								
 								        }
-				            		   
+									   
 				            	   }
 				            	   
 				            	   

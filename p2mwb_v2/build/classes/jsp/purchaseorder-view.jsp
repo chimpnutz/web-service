@@ -184,6 +184,8 @@ cssdropdown.startchrome("payphilexchange")
         <label class ="text12_tungsten_bold">Cancelled Date:</label>
         <label class ="text12_tungsten">${data.cancel_date }</label>
         </div>
+        
+         </br>
          </core:forEach>
 
   

@@ -282,8 +282,13 @@ cssdropdown.startchrome("payphilexchange")
 <p>&nbsp;</p>
 
 <form:form action=""  commandName="purchaseorderForm" id="purchaseorderForm">
-
-
+		
+		   <label class="text12_tungsten_bold">
+		   	<core:if test="${msg=='success' }">
+		   		${message}
+		   	</core:if>
+		   </label>
+		
               <div id="ordernew">
 	        <p class="text12_tungsten"> &nbsp;Item Code:
 	       <select id="ordernew2" name="PO[0].item" class="selectItem2">
@@ -318,7 +323,7 @@ cssdropdown.startchrome("payphilexchange")
 
         <div id="wallet" > 
         <p class="text12_tungsten"> &nbsp;Wallet types:
-        <select id="wallet2" name="PO[0].wallet" disabled>
+        <select id="wallet2" name="PO[0].wallet">
 	   <core:forEach var="data" items="${wallet}">
 																			 
 		<option value="${data.wallet}">${data.wallet}</option>

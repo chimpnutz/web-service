@@ -106,26 +106,28 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 				            		   BigDecimal div = new BigDecimal (100);
 				            		   BigDecimal amt =  discount.divide(div);
 				            		   
+				            		   
 				            		   System.out.println(discount);
 
 				            		   discount_amt = discount_amt.subtract(amt);
 				            		   
 									   StringBuilder insertPOItems = new StringBuilder();
 									   
-									  
+									   BigDecimal total = discount_amt.add(discount_amt);
 									   
 									   insertPOItems.append("INSERT INTO po_orders_items  ");
 									   insertPOItems.append("(POId,itemcode,qty,price,discount_amount,walletid) ");
 									   insertPOItems.append(" VALUES (?,?,?,(select face_value_amount from purchase_items where item_name = ?),?,?) ");
-									   
+									   insertPOItems.append("ON DUPLICATE KEY UPDATE POId=POId+?, itemcode=?");
+//									   System.out.println(total);
 									   try{
 										 
 										   poRow = getJdbcTemplate().update(insertPOItems.toString(), new Object[] { 
-												poid,model.getItem(),model.getQuantity(),model.getItem(),discount_amt,walletid
+												poid,model.getItem(),model.getQuantity(),model.getItem(),total,walletid,poid,model.getItem()
 											});
 
-											
-									   
+										   System.out.println(poRow);
+										  
 									
 										  
 									

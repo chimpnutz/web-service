@@ -107,8 +107,11 @@ public class PurchaseOrderController {
 		List<PurchaseOrderModel> po = purchaseForm.getPO();
 		
 		PurchaseModelList poList = new PurchaseModelList();
-		poList.setPO(po);
-	
+//		PurchaseOrderModel poModel = new PurchaseOrderModel();
+//		Iterator<PurchaseOrderModel> poIterator = purchaseForm.getPO().iterator();
+//		System.out.println(poIterator);
+//		int testDupe = 0;
+		
 	      for (PurchaseOrderModel model : po) 
           {
 	    	   
@@ -150,6 +153,7 @@ public class PurchaseOrderController {
 				modelAndView.addObject("message", "Please select an item.");
 				return modelAndView;
 	       	   }
+	    	  
 	    	  
 	    	  
           }

@@ -289,3 +289,18 @@ table, tr, td	 {
 	text-align:left;	
 }
 
+.note{
+	background:FFF6BF;
+	border-color:FFD324;
+}
+
+.one 
+{
+border-style:solid;
+border-width:1px;
+border-color:#d3d3d3;
+padding-left: 10px;
+padding-top: 10px;
+padding-bottom: 10px;
+padding-right: 10px;
+}

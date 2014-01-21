@@ -2,6 +2,7 @@ package com.pc2mweb.controller;
 
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -31,6 +32,9 @@ import com.pc2mweb.beans.MessageBean;
 import com.pc2mweb.dao.transactions.PurchaseOrderDAO;
 import com.pc2mweb.dao.transactions.UserManagementDAO;
 import com.pc2mweb.dao.transactions.WalletTransferDAO;
+import com.pc2mweb.model.PaymentModelList;
+import com.pc2mweb.model.PaymentOrderModel;
+import com.pc2mweb.model.PurchaseModelList;
 import com.pc2mweb.model.PurchaseOrderModel;
 import com.pc2mweb.model.UserManagementModel;
 
@@ -53,7 +57,10 @@ public class PurchaseOrderViewController {
 		ModelAndView redirect = new ModelAndView("redirect:main.html");
 		
 		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
-
+		
+		List<PurchaseOrderModel> po = new ArrayList<PurchaseOrderModel>();
+		List<PaymentOrderModel> pom = new ArrayList<PaymentOrderModel>();
+		
 		HttpSession isSession = request.getSession();
 
 		if (null == isSession.getAttribute("USER")) {	
@@ -64,7 +71,14 @@ public class PurchaseOrderViewController {
 		} else {
 
 				List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+				List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
+				List<PurchaseOrderModel> List = dao.getPurchaseList(isSession, id);
+				List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
+				
+				modelAndView.addObject("pomlist",pomList);
+				modelAndView.addObject("list", List);
 				modelAndView.addObject("polist", poList);
+				modelAndView.addObject("pototal", poTotal);
 				modelAndView.addObject("type", "poid");
 				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
 
@@ -74,7 +88,86 @@ public class PurchaseOrderViewController {
 		
 	}
 	
+	@RequestMapping(method = RequestMethod.POST,params={"poid"})
+	public ModelAndView processOrder(@RequestParam("poid") int id,HttpServletRequest request,HttpSession session,PurchaseModelList purchaseForm, PaymentModelList paymentorderForm) {
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
+		
+		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
+		
+		ModelAndView modelAndView = new ModelAndView("purchaseorder-view");
+		
+		List<PurchaseOrderModel> po = purchaseForm.getPO();
+		List<PaymentOrderModel> pom = paymentorderForm.getPOMS();
+		
+		HttpSession isSession = request.getSession();
+		
+		String NUMB_REGEX = "\\d+";
+		
+		if(request.getParameter("processOrder")!= null){
+		
+			dao.insertProcessOrder(session, id);
+			
+			List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+			List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
+			List<PurchaseOrderModel> List = dao.getPurchaseList(isSession, id);
+			List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
+			modelAndView.addObject("pomlist",pomList);
+			modelAndView.addObject("list", List);
+			modelAndView.addObject("polist", poList);
+			modelAndView.addObject("pototal", poTotal);
+			modelAndView.addObject("type", "poid");
+			modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+			modelAndView.addObject("valid","ok");
+			modelAndView.addObject("message", "success.");
+			
+			return modelAndView;
+			
+		}
+		
+		if(request.getParameter("deliveredOrder")!= null){
+			
+			dao.insertDeliveredOrder(session, id );
+			
+			
+			List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+			List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
+			List<PurchaseOrderModel> List = dao.getPurchaseList(isSession, id);
+			List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
+			modelAndView.addObject("pomlist",pomList);
+			modelAndView.addObject("list", List);
+			modelAndView.addObject("polist", poList);
+			modelAndView.addObject("pototal", poTotal);
+			modelAndView.addObject("type", "poid");
+			modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+			modelAndView.addObject("valid","ok");
+			modelAndView.addObject("message", "success.");
+			
+			return modelAndView;
+			}
+		if(request.getParameter("submit")!= null){
+					
+			dao.insertPaymentOrder(session, id, request);
+			
+			List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+			List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
+			List<PurchaseOrderModel> List = dao.getPurchaseList(isSession, id);
+			List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
+			modelAndView.addObject("pomlist",pomList);
+			modelAndView.addObject("list", List);
+			modelAndView.addObject("polist", poList);
+			modelAndView.addObject("pototal", poTotal);
+			modelAndView.addObject("type", "poid");
+			modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+			
+			return modelAndView;
+		}
+			
+		return modelAndView;
+	}
+
 	
+
 //	@RequestMapping(method = RequestMethod.POST)
 //	public ModelAndView Order(@ModelAttribute("purchaseorderForm") PurchaseOrderModel purchaseForm,  
 //            BindingResult result,HttpSession session,HttpServletRequest request) throws AutoloadMaxException 
@@ -124,7 +217,7 @@ public class PurchaseOrderViewController {
 //			modelAndView.addObject("msg", "Purchase Order Request Failed!");
 //			return modelAndView;
 //			
-//		}w
+//		}
 //
 //		
 //   

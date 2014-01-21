@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
@@ -26,6 +27,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import com.pc2mweb.beans.PurchaseOrderBean;
+import com.pc2mweb.model.PaymentOrderModel;
+import com.pc2mweb.model.PurchaseModelList;
 import com.pc2mweb.model.PurchaseOrderModel;
 import com.pc2mweb.model.RetailerTransactionHistoryModel;
 import com.pc2mweb.model.TopupModel;
@@ -38,7 +41,10 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 	public String partner_type;
 	public int walletid;
 	public BigDecimal facevalue;
-	
+	public BigDecimal total_amount;
+	public BigDecimal total_order;
+	public String status;
+
 	public boolean insertPurchaseOrder(HttpSession session,List<PurchaseOrderModel> po ){
 		
 		
@@ -46,13 +52,21 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 		   final String pid = session.getAttribute("PID").toString();
 		   
 		   BigDecimal discount_amt = new BigDecimal(0);
+		   BigDecimal discount_amt1 = new BigDecimal(0);
 		   int qty = 0;
 		      
+		   int totalqty = 0;
+		   int totalqty1 =0;
+		   BigDecimal total_dsct = new BigDecimal(0);
+		   BigDecimal totalface = new BigDecimal(0);
+		   BigDecimal totalface2 = new BigDecimal(0);
+		   
+		   
 		   
 		   if(role.equals("manager"))
 		   {
 			   
-			   //final PurchaseOrderModel PO = purchaseForm;
+			   
 				
 			   final  StringBuilder strSQL = new StringBuilder();
 			  
@@ -90,103 +104,225 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 				      if(null != po && po.size() > 0) {
 				    	  
 				    		int poRow = 0;
-				    		
+				    		int i = 0;
 				            for (PurchaseOrderModel model : po) 
 				            {
 				            	
-				         
+				            	
 				            	   
 				            	   if(model.getItem().equalsIgnoreCase("LOP"))
 				            	   {
-				            		   	
-					            	   this.getPartnerDiscount(session, model.getItem());
+				            		   
+				            	
+				            		   int qty2 = Integer.parseInt(model.getQuantity());
+				            		   
+				            		   totalqty = totalqty + qty2;
+				            		   			            		  
+				            		   
+				            		   this.getPartnerDiscount(session, model.getItem());
 					            	   this.getWalletid(session, model.getWallet());
+					            	   this.getfaceValue(model.getItem());
 					            	   
+					            	  
 				            		   discount_amt = new BigDecimal(Integer.parseInt(model.getQuantity()));
+				            		   
 				            		   BigDecimal div = new BigDecimal (100);
+				            		   
 				            		   BigDecimal amt =  discount.divide(div);
 				            		   
+				            		   BigDecimal totalfaceqty2 = new BigDecimal(totalqty);
 				            		   
-				            		   System.out.println(discount);
-
+					            	   totalface2 = facevalue.multiply(totalfaceqty2); 
+					            	   
 				            		   discount_amt = discount_amt.subtract(amt);
 				            		   
-									   StringBuilder insertPOItems = new StringBuilder();
-									   
-									   BigDecimal total = discount_amt.add(discount_amt);
-									   
-									   insertPOItems.append("INSERT INTO po_orders_items  ");
-									   insertPOItems.append("(POId,itemcode,qty,price,discount_amount,walletid) ");
-									   insertPOItems.append(" VALUES (?,?,?,(select face_value_amount from purchase_items where item_name = ?),?,?) ");
-									   insertPOItems.append("ON DUPLICATE KEY UPDATE POId=POId+?, itemcode=?");
-//									   System.out.println(total);
-									   try{
-										 
-										   poRow = getJdbcTemplate().update(insertPOItems.toString(), new Object[] { 
-												poid,model.getItem(),model.getQuantity(),model.getItem(),total,walletid,poid,model.getItem()
-											});
+				            		   total_dsct = total_dsct.add(discount_amt);				            		            
+				            		   
+			            			   StringBuilder checkPOItems = new StringBuilder();  
+			            			   checkPOItems.append("SELECT POId, itemcode FROM po_orders_items ");
+			            			   checkPOItems.append("WHERE poid = ? AND itemcode=? ");
+			            			   
+			            			   try{
+			            				   SqlRowSet rs   = getJdbcTemplate().queryForRowSet(checkPOItems.toString(),new Object[]{
+			            				   					poid,model.getItem()
+			            				   	});
+			            				   
+			            				   if(!rs.next()) 
+			            				   {
+			            											            			   
 
-										   System.out.println(poRow);
-										  
-									
-										  
-									
-									   }catch(DataAccessException ex){
+				            			   		   
+						            			   StringBuilder insertPOItems = new StringBuilder();
+												   
+						            			   
+												  
+												   insertPOItems.append("INSERT INTO po_orders_items  ");
+												   insertPOItems.append("(POId,itemcode,qty,price,discount_amount,walletid) ");
+												   insertPOItems.append(" VALUES (?,?,?,?,?,?) ");
+												   
+												  
+												   try{
+														   
+													   poRow = getJdbcTemplate().update(insertPOItems.toString(), new Object[] { 
+															poid,model.getItem(),totalqty,totalface2,discount_amt,walletid
+														});
+													   		
+													  
+													  
+													   System.out.println(poRow);
+													  
+													 
+												
+												   }catch(DataAccessException ex){
+											            ex.printStackTrace();
+											
+											        }
+			            						
+			            					}
+			            				   else{
+			            					   
+			            					   StringBuilder updatePOItems = new StringBuilder();
+			    							   
+			    							   updatePOItems.append("update po_orders_items  ");
+			    							   updatePOItems.append("set qty = ?, price =?, discount_amount = ?, walletid=?");
+			    							   updatePOItems.append(" where  poid = ? and itemcode = ? ");
+			    							   
+			    							   try{
+			    								   
+			    								   poRow = getJdbcTemplate().update(updatePOItems.toString(), new Object[] { 
+			    									   totalqty,totalface2,discount_amt,walletid,poid,model.getItem()
+			    									});
+
+			    								   
+			    										
+			    							
+			    							   }catch(DataAccessException ex){
+			    						            ex.printStackTrace();
+			    						
+			    						        }
+			            					   
+			            					   
+			            				   }
+			            				   
+			            				  
+			            				   
+			            			   }catch(DataAccessException ex){
 								            ex.printStackTrace();
-								
+											
 								        }
-									   
-				            	   }
+			            		
+										   
+			            		   }
+				            	 
+				            		   
+
 				            	   
 				            	   
 				            	   
-				            	   else
+				            	   if(model.getItem().equalsIgnoreCase("GHP 300"))
 				            	   {
 				            		   
+
+				             		   qty = Integer.parseInt(model.getQuantity());
+					            	  
+				             		   totalqty1 = totalqty1 + qty;
+				            		   
 				            		   	
-					            	   this.getPartnerDiscount(session, model.getItem());
+				             		  this.getPartnerDiscount(session, model.getItem());
 					            	   this.getWalletid(session, model.getWallet());
 					            	   this.getfaceValue(model.getItem());
 					            	   
 					            	   
 					            	   
-				             		   qty = Integer.parseInt(model.getQuantity());
-					            	  
-					            		   
+				             		   BigDecimal totalfaceqty = new BigDecimal(totalqty1);
+				             		   
+					            	   totalface = facevalue.multiply(totalfaceqty);   
 				            		   discount_amt = facevalue.subtract(discount);
 				            		   
-				            		   BigDecimal totaldcamount = discount_amt.multiply(new BigDecimal(qty));
-				            				   
-									   StringBuilder insertPOItems = new StringBuilder();
+				            		   BigDecimal totaldcamount = discount_amt.multiply(new BigDecimal(totalqty1));
+			            			   
 									   
-									   insertPOItems.append("INSERT INTO po_orders_items  ");
-									   insertPOItems.append("(POId,itemcode,qty,price,discount_amount,walletid) ");
-									   insertPOItems.append(" VALUES (?,?,?,?,?,?) ");
-									   
-									   try{
-										   
-										   poRow = getJdbcTemplate().update(insertPOItems.toString(), new Object[] { 
-												poid,model.getItem(),model.getQuantity(),facevalue,totaldcamount,walletid
-											});
+				            		   StringBuilder checkPOItems = new StringBuilder();  
+			            			   checkPOItems.append("SELECT POId, itemcode FROM po_orders_items ");
+			            			   checkPOItems.append("WHERE poid = ? AND itemcode=? ");
+			            			   
+			            			   try{
+			            				   SqlRowSet rs   = getJdbcTemplate().queryForRowSet(checkPOItems.toString(),new Object[]{
+			            				   					poid,model.getItem()
+			            				   	});
+			            				   
+			            				   if(!rs.next()) 
+			            				   {
+			            					   			            			   
 
-											
-									
+				            			   		   
+						            			   StringBuilder insertPOItems = new StringBuilder();
+												   
+						            			  
+												  
+												   insertPOItems.append("INSERT INTO po_orders_items  ");
+												   insertPOItems.append("(POId,itemcode,qty,price,discount_amount,walletid) ");
+												   insertPOItems.append(" VALUES (?,?,?,(select face_value_amount from purchase_items where item_name = ?),?,?) ");
+												   
+												  
+												   try{
+														   
+													   poRow = getJdbcTemplate().update(insertPOItems.toString(), new Object[] { 
+															poid,model.getItem(),totalqty1,model.getItem(),discount_amt,walletid
+														});
+													   		
+													  
+													   System.out.println(poRow);
+													  
+													 
 												
-									
-									   }catch(DataAccessException ex){
+												   }catch(DataAccessException ex){
+											            ex.printStackTrace();
+											
+											        }
+			            						
+			            					}
+			            				   else{
+			            					   
+			            					   StringBuilder updatePOItems = new StringBuilder();
+			    							   
+			    							   updatePOItems.append("update po_orders_items  ");
+			    							   updatePOItems.append("set qty = ?, price = (select face_value_amount from purchase_items where item_name = ?), discount_amount = ?, walletid=?");
+			    							   updatePOItems.append(" where  poid = ? and itemcode = ? ");
+			    							   
+			    							   try{
+			    								   
+			    								   poRow = getJdbcTemplate().update(updatePOItems.toString(), new Object[] { 
+														totalqty1,model.getItem(),discount_amt,walletid,poid,model.getItem()
+													});
+
+			    								 
+			    							
+			    							   }catch(DataAccessException ex){
+			    						            ex.printStackTrace();
+			    						
+			    						        }
+			            					   
+			            					   
+			            				   }
+			            				   
+			            				  
+			            				   
+			            			   }catch(DataAccessException ex){
 								            ex.printStackTrace();
-								
+											
 								        }
 				            		   
 				            		   
 				            		   
 				            	   }
-				            	
-		
 								   
-								   
-				         
+				         i++;
 				            }
+				            
+				            
+				            
+				            
 				            
 				    		if(poRow>0){
 								
@@ -203,8 +339,7 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 									   poid,poid
 									});
 
-									
-							
+								   
 										
 							
 							   }catch(DataAccessException ex){
@@ -305,7 +440,7 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 									   try{
 										   
 										   poRow = getJdbcTemplate().update(insertPOItems.toString(), new Object[] { 
-												poid,model.getItem(),model.getQuantity(),model.getQuantity(),discount_amt,walletid
+												poid,model.getItem(),model.getQuantity(),model.getQuantity(),discount_amt,walletid,model.getItem()
 											});
 
 											
@@ -361,9 +496,9 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 				            		   
 				             		   qty = Integer.parseInt(model.getQuantity());
 				          
-				            		   discount_amt = facevalue.subtract(discount);
+				            		   discount_amt1 = facevalue.subtract(discount);
 				            		   
-				            		   BigDecimal totaldcamount = discount_amt.multiply(new BigDecimal(qty));
+				            		   BigDecimal totaldcamount = discount_amt1.multiply(new BigDecimal(qty));
 				            				   
 									   StringBuilder insertPOItems = new StringBuilder();
 									   
@@ -443,6 +578,163 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 		return false;
 	}
 	
+	public boolean insertProcessOrder(HttpSession session, int poid ){
+		
+		final String pid = session.getAttribute("PID").toString();
+		String role = session.getAttribute("USERLEVEL").toString();
+			
+		String status = "processing";
+		String po_status = "active";
+		
+		if(role.equals("superadmin")){
+			
+			
+		      int poRow = 0;
+		      
+		    	  
+					StringBuilder update = new StringBuilder();
+					
+					update.append("update po_orders set delivery_status = ? ");
+					update.append("where POId = ? and PO_status = ?");
+					
+					try{
+						   
+						   poRow = getJdbcTemplate().update(update.toString(), new Object[] { 
+							   status,poid,po_status
+							});
+						   
+						   
+					
+					   }catch(DataAccessException ex){
+				            ex.printStackTrace();
+				
+				        }
+
+}
+			
+			if(role.equals("manager")){
+				
+								
+					      int poRow = 0;
+					      
+					    	  
+								StringBuilder update = new StringBuilder();
+								
+								update.append("update po_orders set delivery_status = ? ");
+								update.append("where POId = ? and PO_status = ?");
+								
+								try{
+									   
+									   poRow = getJdbcTemplate().update(update.toString(), new Object[] { 
+										   status,poid,po_status
+										});
+									   
+									   
+								
+								   }catch(DataAccessException ex){
+							            ex.printStackTrace();
+							
+							        }
+	            
+			
+			}
+		
+		
+		return false;
+		
+	}
+	
+	public boolean insertDeliveredOrder(HttpSession session, int poid ){
+		
+		String status = "delivered";
+		
+		int poRow = 0;
+				
+				StringBuilder updateDeliver = new StringBuilder();
+				
+				updateDeliver.append("update po_orders set delivery_status = ? where POId = ?");
+				
+				try{
+					   
+					   poRow = getJdbcTemplate().update(updateDeliver.toString(), new Object[] { 
+						   status,poid,
+						});
+					   
+					   
+				
+				   }catch(DataAccessException ex){
+			            ex.printStackTrace();
+			
+			        }
+			
+		
+		return false;
+	}
+	
+	public boolean insertPaymentOrder(HttpSession session, int poid, HttpServletRequest request){
+				
+		String type = request.getParameter("type");
+		String amt = request.getParameter("amount");
+		String bank = request.getParameter("bank");
+		String branch = request.getParameter("branch");
+		String txt = request.getParameter("text");
+		String type2 = "Manual";
+		String type3 = "Bancnet";
+		
+		this.getPurchaseTotal(session, poid);
+		this.getPurchaseList(session, poid);
+		this.getPaymentOrderItemsDetails(session, poid);
+		
+		PaymentOrderModel pom = new PaymentOrderModel();
+		
+		if(type.equalsIgnoreCase("2")){
+			
+			if(!status.equalsIgnoreCase("checking")){
+			
+			type = type2;
+			
+			int poRow = 0;
+			
+			
+			 StringBuilder insertPayment = new StringBuilder();
+			 
+			 insertPayment.append("INSERT INTO po_payment (payment_type, total_amount, total_order, total_fee, POId)");
+			 insertPayment.append("VALUES (?,?,?,?,?)");
+			 
+			 try{
+				 poRow = getJdbcTemplate().update(insertPayment.toString(), new Object[] {
+					 	type,total_amount,total_order,null,poid
+				 });
+				 
+				 StringBuilder insertManual = new StringBuilder();
+				 
+				 insertManual.append("INSERT INTO po_payment_manual_details(branch, amount, remarks)");
+				 insertManual.append("VALUES (?, ?, ?)");
+				 
+				 try{
+					 poRow = getJdbcTemplate().update(insertManual.toString(), new Object[]{
+						 branch,amt,txt
+					 });
+					 
+					 
+				 }catch(DataAccessException ex){
+			            ex.printStackTrace();
+				 }
+				 
+			 }catch(DataAccessException ex){
+		            ex.printStackTrace();
+			 }
+			}
+			else{
+				System.out.println("Error! Active payment Existing");
+				return false;
+			}
+		}
+		
+		 
+		return false;
+	}
+	
 
 	public void getPartnerDiscount(HttpSession session,String item_name){
 		
@@ -513,7 +805,6 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 			if(rs.next()) {
 				
 				walletid = rs.getInt("walletid");
-				
 			
 			}
 			
@@ -537,7 +828,82 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 				
 			
 			}
+	
 			
+	}
+	
+	public List<PaymentOrderModel> getPaymentOrderItemsDetails(HttpSession session, int poid){
+		
+		ArrayList<PaymentOrderModel> paymentorderList = new ArrayList<PaymentOrderModel>();
+		
+		StringBuilder strSql = new StringBuilder();
+		
+		strSql.append("SELECT a.PaymentId, a.payment_type, a.total_amount, a.total_order, a.total_fee, a.POId, a.status,");
+		strSql.append("a.datecreated, a.payment_date, a.returned_amount, a.returned_date, b.branch, b.amount, b.remarks ");
+		strSql.append("FROM po_payment a ");
+		strSql.append("INNER JOIN po_payment_manual_details b ON a.PaymentId = b.PaymentId ");
+		strSql.append("WHERE POId = ?");
+		
+		paymentorderList.clear();
+		
+		List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSql.toString(),poid);
+		
+		for (Map row: rows){
+			
+			SimpleDateFormat formatDate = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa");
+			String paymentDate = "";
+			String returnedDate = "";
+			String dateCreated = "";
+			
+			if(row.get("payment_date")!= null)
+			{
+				paymentDate = formatDate.format(row.get("payment_date"));
+				
+			}
+			else{
+				paymentDate="N/A";	
+			}
+			if(row.get("returned_date")!=null){
+				
+				returnedDate = formatDate.format(row.get("returned_date"));
+			}
+			else{
+				
+				returnedDate="N/A";
+			}
+			if(row.get("datecreated")!=null){
+				
+				dateCreated = formatDate.format(row.get("datecreated"));
+			}
+			else{
+				
+				returnedDate="N/A";
+			}
+			
+			
+			PaymentOrderModel pom = new PaymentOrderModel();
+					
+			pom.setBranch((String) (row.get("branch")));
+			pom.setRemarks((String)(row.get("remarks")));
+			pom.setPaymentID((int) (row.get("PaymentId")));
+			pom.setDate_created(dateCreated);
+			pom.setPayment_date(paymentDate);
+			pom.setReturned_date(returnedDate);
+			pom.setReturned_amount((String)(row.get("returned_amount")));
+			pom.setStatus((String)(row.get("status")));
+			pom.setTotal_amount((String)(row.get("total_amount")+""));
+			pom.setTotal_fee((String)(row.get("total_fee")));
+			pom.setTotal_order((String)(row.get("total_order")+""));
+			pom.setType((String)(row.get("type")));
+			
+			
+			 status = pom.getStatus();
+			
+			paymentorderList.add(pom);	
+		}
+		
+		return paymentorderList;
+		
 	}
 
 	public List<PurchaseOrderModel>  getPurchaseOrderItemsDetails(HttpSession session, int poid)
@@ -572,6 +938,9 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 					String dateAsString = simpleDateFormat.format(row.get("po_date"));
 					String cancelAsString = "";
 					String deliverAsString = "";
+					
+					String totalpaid = "";
+					
 					if(row.get("cancelled_date")!= null)
 					{
 						cancelAsString = simpleDateFormat.format(row.get("cancelled_date"));
@@ -613,6 +982,11 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 					BigDecimal qty = new BigDecimal((int)(row.get("qty")));
 					
 					PO.setTotal_amount(dcamount.multiply(qty)+"");
+					
+					
+					
+					
+					
 					
 					purchaseorderlist.add(PO);			
 				}
@@ -658,6 +1032,262 @@ public class PurchaseOrderDAO extends JdbcDaoSupport
 			return purchaseorderlist;
 		   	  
 	   } 
+	
+	public List<PurchaseOrderModel>  getPurchaseList(HttpSession session, int poid)
+	   {
+		   ArrayList<PurchaseOrderModel> purchaseorderlist = new ArrayList<PurchaseOrderModel>();
+		
+		   StringBuilder strSQL = new StringBuilder()	;
+		   
+		   String role = session.getAttribute("USERLEVEL").toString();
+		   
+		   if(role.equals("manager"))
+		   {
+			   
+			   strSQL.append("SELECT a.poid, a.po_date, sum(a.order_amount) as total_order_amount, a.payment_status,a.delivery_status, a.po_status, a.paid_amount, a.partnerid, a.cancelled_date, a.delivered_date, ");
+			   strSQL.append("c.itemcode, c.qty, c.price, c.discount_amount, f.wallet_name ");
+			   strSQL.append("FROM po_orders a  ");
+			   strSQL.append("INNER JOIN  partners b ON a.partnerid = b.partnerid ");
+			   strSQL.append("INNER JOIN  po_orders_items c ON a.poid = c.poid ");
+			   strSQL.append("LEFT JOIN  wallets d ON c.walletid = d.walletid ");
+			   strSQL.append("LEFT JOIN  partners_wallet e ON d.walletid = e.walletid  ");
+			   strSQL.append("LEFT JOIN  wallet_types f ON e.wallet_type = f.wallet_type  ");
+			   strSQL.append("WHERE b.partnerid = ? ");
+			   strSQL.append("and c.poid = ?");
+			   
+			   purchaseorderlist.clear();
+			 
+				List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString(),session.getAttribute("PID"),poid);
+				
+				for (Map row : rows) {
+					
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa");
+					String dateAsString = simpleDateFormat.format(row.get("po_date"));
+					String cancelAsString = "";
+					String deliverAsString = "";
+					
+					String totalpaid = "";
+					
+					if(row.get("cancelled_date")!= null)
+					{
+						cancelAsString = simpleDateFormat.format(row.get("cancelled_date"));
+						
+					}
+					else{
+						cancelAsString="N/A";	
+					}
+					if(row.get("delivered_date")!=null){
+						
+						deliverAsString = simpleDateFormat.format(row.get("delivered_date"));
+					}
+					else{
+						
+						deliverAsString="N/A";
+					}
+					
+					PurchaseOrderModel PO = new PurchaseOrderModel();
+					
+					PO.setPoid((int)(row.get("poid")));
+					PO.setPodate((String)(dateAsString));
+					PO.setOrder_amount((String)(row.get("order_amount")+""));
+					PO.setPayment_status((String)(row.get("payment_status")));
+					PO.setDelivery_status((String)(row.get("delivery_status")));
+					PO.setPo_status((String)(row.get("po_status")));
+					
+					PO.setItem((String)(row.get("itemcode")));
+					PO.setQuantity((String)(row.get("qty")+""));
+					PO.setFace_value_amount((String)(row.get("price")+""));
+					PO.setDiscount_amount((String)(row.get("discount_amount")+""));
+					PO.setWallet((String)(row.get("wallet_name")));
+					PO.setAmount_paid((String)(row.get("paid_amount")+""));
+					PO.setCancel_date((String)(cancelAsString));
+					PO.setDeliver_date((String)(row.get("delivered_date")+""));
+					PO.setPartner_name((String)(row.get("partnerid")));
+					
+					PO.setTotal_amount(row.get("total_order_amount")+"");
+					
+					total_order = (BigDecimal) row.get("total_order_amount");
+					
+					
+					
+					
+					purchaseorderlist.add(PO);			
+				}
+			   
+			   
+		   }
+		   else if (role.equals("superadmin")){
+			   
+			   strSQL.append("SELECT a.poid, a.po_date, a.order_amount, a.payment_status,a.delivery_status, a.po_status ");
+			   strSQL.append("FROM po_orders a  ");
+			   strSQL.append("INNER JOIN  partners b ON a.partnerid = b.partnerid ");
+			   strSQL.append("WHERE b.partnerid = ? OR  b.parent_partnerid = (select partner from partners where partnerid = ?)");
+			   
+			   purchaseorderlist.clear();
+			 
+				List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString(),"Requested",poid);
+				
+				for (Map row : rows) {
+					
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa");
+					String dateAsString = simpleDateFormat.format(row.get("requesteddate"));
+					
+					
+					PurchaseOrderModel PO = new PurchaseOrderModel();
+
+					
+					PO.setPoid((int)(row.get("poid")));
+					PO.setPodate((String)(dateAsString));
+					PO.setOrder_amount((String)(row.get("order_amount")+""));
+					PO.setPayment_status((String)(row.get("payment_status")));
+					PO.setDelivery_status((String)(row.get("delivery_status")));
+					PO.setPo_status((String)(row.get("po_status")));
+					
+					purchaseorderlist.add(PO);			
+				}
+			   
+			   
+		   }
+			   
+		   
+
+		
+			return purchaseorderlist;
+		   	  
+	   } 
+	
+	public List<PurchaseOrderModel>  getPurchaseTotal(HttpSession session, int poid)
+	   {
+		   ArrayList<PurchaseOrderModel> purchaseorderlist = new ArrayList<PurchaseOrderModel>();
+		
+		   StringBuilder strSQL = new StringBuilder()	;
+		   
+		   String role = session.getAttribute("USERLEVEL").toString();
+		   
+		   if(role.equals("manager"))
+		   {
+			   
+			   strSQL.append("SELECT a.poid, a.po_date, a.order_amount, a.payment_status,a.delivery_status, a.po_status, a.paid_amount, a.partnerid, a.cancelled_date, a.delivered_date, ");
+			   strSQL.append("c.itemcode, c.qty, c.price, c.discount_amount, f.wallet_name ");
+			   strSQL.append("FROM po_orders a  ");
+			   strSQL.append("INNER JOIN  partners b ON a.partnerid = b.partnerid ");
+			   strSQL.append("INNER JOIN  po_orders_items c ON a.poid = c.poid ");
+			   strSQL.append("LEFT JOIN  wallets d ON c.walletid = d.walletid ");
+			   strSQL.append("LEFT JOIN  partners_wallet e ON d.walletid = e.walletid  ");
+			   strSQL.append("LEFT JOIN  wallet_types f ON e.wallet_type = f.wallet_type  ");
+			   strSQL.append("WHERE b.partnerid = ? ");
+			   strSQL.append("and c.poid = ?");
+			   
+			   purchaseorderlist.clear();
+			 
+				List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString(),session.getAttribute("PID"),poid);
+				BigDecimal total3 = new BigDecimal(0);
+				for (Map row : rows) {
+					
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa");
+					String dateAsString = simpleDateFormat.format(row.get("po_date"));
+					String cancelAsString = "";
+					String deliverAsString = "";
+					
+					String totalpaid = "";
+					
+					if(row.get("cancelled_date")!= null)
+					{
+						cancelAsString = simpleDateFormat.format(row.get("cancelled_date"));
+						
+					}
+					else{
+						cancelAsString="N/A";	
+					}
+					if(row.get("delivered_date")!=null){
+						
+						deliverAsString = simpleDateFormat.format(row.get("delivered_date"));
+					}
+					else{
+						
+						deliverAsString="N/A";
+					}
+					
+					PurchaseOrderModel PO = new PurchaseOrderModel();
+					
+					PO.setPoid((int)(row.get("poid")));
+					PO.setPodate((String)(dateAsString));
+					PO.setOrder_amount((String)(row.get("order_amount")+""));
+					PO.setPayment_status((String)(row.get("payment_status")));
+					PO.setDelivery_status((String)(row.get("delivery_status")));
+					PO.setPo_status((String)(row.get("po_status")));
+					
+					PO.setItem((String)(row.get("itemcode")));
+					PO.setQuantity((String)(row.get("qty")+""));
+					PO.setFace_value_amount((String)(row.get("price")+""));
+					PO.setDiscount_amount((String)(row.get("discount_amount")+""));
+					PO.setWallet((String)(row.get("wallet_name")));
+					PO.setAmount_paid((String)(row.get("paid_amount")+""));
+					PO.setCancel_date((String)(cancelAsString));
+					PO.setDeliver_date((String)(row.get("delivered_date")+""));
+					PO.setPartner_name((String)(row.get("partnerid")));
+
+					if(PO.getItem().equals("GHP 300")||PO.getItem().equals("LOP"))
+					{
+						BigDecimal dcamount1 = (BigDecimal)(row.get("discount_amount"));
+						BigDecimal qty1 = new BigDecimal((int)(row.get("qty")));
+						
+						BigDecimal total2 = dcamount1.multiply(qty1);
+						
+						total3 = total3.add(total2);
+										
+					PO.setTotal_amount(total3+"");
+					total_amount = total3;
+					
+					}
+				
+				purchaseorderlist.add(PO);					
+							
+							
+				}
+					
+			   
+		   }
+		   else if (role.equals("superadmin")){
+			   
+			   strSQL.append("SELECT a.poid, a.po_date, a.order_amount, a.payment_status,a.delivery_status, a.po_status ");
+			   strSQL.append("FROM po_orders a  ");
+			   strSQL.append("INNER JOIN  partners b ON a.partnerid = b.partnerid ");
+			   strSQL.append("WHERE b.partnerid = ? OR  b.parent_partnerid = (select partner from partners where partnerid = ?)");
+			   
+			   purchaseorderlist.clear();
+			 
+				List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString(),"Requested",poid);
+				
+				for (Map row : rows) {
+					
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa");
+					String dateAsString = simpleDateFormat.format(row.get("requesteddate"));
+					
+					
+					PurchaseOrderModel PO = new PurchaseOrderModel();
+
+					
+					PO.setPoid((int)(row.get("poid")));
+					PO.setPodate((String)(dateAsString));
+					PO.setOrder_amount((String)(row.get("order_amount")+""));
+					PO.setPayment_status((String)(row.get("payment_status")));
+					PO.setDelivery_status((String)(row.get("delivery_status")));
+					PO.setPo_status((String)(row.get("po_status")));
+					
+					purchaseorderlist.add(PO);			
+				}
+			   
+			   
+		   }
+			   
+		   
+
+		
+			return purchaseorderlist;
+		   	  
+	   } 
+	
 	
 	public List<PurchaseOrderModel>  getPurchaseOrdersRequestListHistory(HttpSession session)
 	   {

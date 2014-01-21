@@ -107,10 +107,7 @@ public class PurchaseOrderController {
 		List<PurchaseOrderModel> po = purchaseForm.getPO();
 		
 		PurchaseModelList poList = new PurchaseModelList();
-//		PurchaseOrderModel poModel = new PurchaseOrderModel();
-//		Iterator<PurchaseOrderModel> poIterator = purchaseForm.getPO().iterator();
-//		System.out.println(poIterator);
-//		int testDupe = 0;
+
 		
 	      for (PurchaseOrderModel model : po) 
           {

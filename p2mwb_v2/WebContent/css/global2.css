@@ -9,7 +9,7 @@ ul{
 
 /* ---------->>> jtip <<<---------------------------------------------------------------*/
 
-#JT_arrow_left{
+#JT2_arrow_left{
 	background-image: url(../css/images/arrow_left.gif);
 	background-repeat: no-repeat;
 	background-position: left top;
@@ -23,7 +23,7 @@ ul{
 
 
 
-#JT {
+#JT2 {
 	position: absolute !important;
 	z-index:100;
 	border: 2px solid #CCCCCC;
@@ -32,7 +32,7 @@ ul{
 
 
 
-.JT_loader{
+.JT2_loader{
 	background-image: url(../css/images/loader.gif);
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -40,7 +40,7 @@ ul{
 	height:12px;
 }
 
-#JT_close_left{
+#JT2_close_left{
 	background-color: #CCCCCC;
 	text-align: left;
 	padding-left: 8px;
@@ -51,11 +51,11 @@ ul{
 
 
 
-#JT_copy img{
+#JT2_copy img{
 	padding: 1px;
 	border: 1px solid #CCCCCC;
 }
 
-.jTip{
+.jTip2{
 cursor:help;
 }

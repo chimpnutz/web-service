@@ -16,15 +16,20 @@ ul	li {font: 80.5%/1.4em Arial, Helvetica, sans-serif;color:#333333;margin-left:
 <body>
 
 
-<core:forEach var="data" items="${polist }">
+<core:forEach var="data" items="${pomlist}">
+
 <ul>
-<li>1) ${data.podate }</li>
-<li>2) ${data.payment_status }</li>
-<li>3) ${data.amount_paid}</li>
-<li>4) ${data.total_amount }</li>
-<li>5) data here</li>
+<li><label class="text12_tungsten_bold">Payment Date:</label> <label class="text10_tungsten">${data.date_created }</label></li>
+<li><label class="text12_tungsten_bold">Status:</label> <label class="text10_tungsten">${data.payment_status }</label></li>
+<li><label class="text12_tungsten_bold">Total Payment Amount:</label> <label class="text10_tungsten">${data.total_order}</label></li>
+<li><label class="text12_tungsten_bold">Total Order Amount:</label> <label class="text10_tungsten">${data.total_amount }</label></li>
+<li><label class="text12_tungsten_bold">Total Fee:</label> <label class="text10_tungsten">${data.total_fee }</label></li>
+
 
 </ul>
+
 </core:forEach>
+
+
 </body>
 </html>

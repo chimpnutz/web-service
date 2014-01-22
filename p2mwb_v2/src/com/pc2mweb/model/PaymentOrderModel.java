@@ -18,8 +18,14 @@ public class PaymentOrderModel {
 	String returned_date;
 	String payment_status;
 	int poid;
+	String po_status;
 	
-	
+	public String getPo_status() {
+		return po_status;
+	}
+	public void setPo_status(String po_status) {
+		this.po_status = po_status;
+	}
 	public int getPoid() {
 		return poid;
 	}

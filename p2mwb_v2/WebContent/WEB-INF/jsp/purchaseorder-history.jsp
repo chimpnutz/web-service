@@ -108,9 +108,9 @@ cssdropdown.startchrome("payphilexchange")
 <div align="center">
 
  		<ol id="toc">
-            <li class="current"><a href="purchaseorder-ordernow.html">Order Now</a></li>  
+            <li><a href="purchaseorder-ordernow.html">Order Now</a></li>  
             <li><a href="purchaseorder-retailer.html">Retailer</a></li>    
-            <li><a href="purchaseorder-history.html">Purchase Order</a></li>  
+            <li class="current"><a href="purchaseorder-history.html">Purchase Order</a></li>  
       	</ol>
 
 </div>
@@ -125,6 +125,7 @@ cssdropdown.startchrome("payphilexchange")
 					         <td>Payment Status</td>
 					         <td>Delivery Status</td>	
 					         <td>PO Status</td>	
+					         
 
 						     
 					   
@@ -151,15 +152,14 @@ cssdropdown.startchrome("payphilexchange")
 
 <div align="center">
  		<ol id="toc">
-            <li><a href="purchaseorder-retailer.html">Retailer</a></li>    
-            <li><a href="purchaseorder-history.html">Purchase Order</a></li>  
+            <li class="current"><a href="purchaseorder-history.html">Purchase Order</a></li>  
           </ol>
  		<p>&nbsp;</p>
 </div>
 
 				<table width="100%" align="center">		
 				
-												<tr class ="text12_tungsten_bold">	
+						<tr class ="text12_tungsten_bold">	
 							 <td >PO ID</td>			
 					         <td >Requested Date</td>
 					         <td>Agent</td>
@@ -168,25 +168,15 @@ cssdropdown.startchrome("payphilexchange")
 					         <td>Bank</td>	
 					         <td>Branch</td>		
 					         <td>Status</td>	
-						     
+						     <td>${polist }</td>
 					   
 						</tr>	
-						<core:forEach var="data" items="${polist}">
-						<tr class="text10_steel">	
-							 <td>${data.id}</td>												 
-				 	  		 <td>${data.date}</td>
-					         <td>${data.username}</td>
-					         <td>${data.partnername}</td>
-					     	 <td>${data.amount}</td>
-					         <td>${data.bank}</td>
-					         <td>${data.branch}</td>
-					         <td>${data.status}</td>
-					
-					         
-					         
-						</tr>
-						</core:forEach>	
-													
+						
+						
+						<tr>
+							<td><a href="purchaseorder-view.html?poid=1">1</a></td>
+						</tr>	
+								
 					</table>
 
 </core:if>

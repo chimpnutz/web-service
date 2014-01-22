@@ -48,11 +48,9 @@ public ModelAndView payCredit(@RequestParam("poid") int id,HttpServletRequest re
 	} else {
 
 			List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
-			List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
-			List<PurchaseOrderModel> List = dao.getPurchaseList(session, id);
+			List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);		
 			List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
-			modelAndView.addObject("pomlist",pomList);
-			modelAndView.addObject("list", List);
+			modelAndView.addObject("pomlist",pomList);			
 			modelAndView.addObject("polist", poList);
 			modelAndView.addObject("pototal", poTotal);
 			modelAndView.addObject("type", "poid");

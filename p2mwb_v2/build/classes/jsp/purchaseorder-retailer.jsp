@@ -84,7 +84,7 @@ cssdropdown.startchrome("payphilexchange")
 
 <div align="center">
  		<ol id="toc">
- 		 	<core:if test="${user == 'superadmin'}">
+ 		<core:if test="${user == 'superadmin'}">
  		
 
             <li class="current"><a href="purchaseorder-retailer.html">Sub Dealer PO Request</a></li>   
@@ -106,7 +106,7 @@ cssdropdown.startchrome("payphilexchange")
 </div>
 <p>&nbsp;</p>
 
-
+<core:if test="${user == 'manager'}">
 					<table width="100%" align="center">		
 				
 						<tr class ="text12_tungsten_bold">	
@@ -134,7 +134,37 @@ cssdropdown.startchrome("payphilexchange")
 						</core:forEach>	
 													
 					</table>
-	
+</core:if>
+
+<core:if test="${user == 'superadmin'}">
+					<table width="100%" align="center">		
+				
+						<tr class ="text12_tungsten_bold">	
+							 <td >PO ID</td>			
+					         <td >Status</td>
+					         <td>Purchase Order Date</td>
+					         <td>Total Amount</td>
+					         <td>Payment Status</td>	
+					         <td>Delivery Status</td>	
+					         <td>PO Status</td>		
+			
+					   
+						</tr>	
+						<core:forEach var="data" items="${polist}">
+						<tr class="text10_steel">	
+							 <td>${data.poid}</td>			
+							 <td>${data.retailer}</td>									 
+				 	  		 <td>${data.podate}</td>
+					         <td>${data.order_amount}</td>
+					         <td>${data.payment_status}</td>
+					     	 <td>${data.delivery_status}</td>
+					         <td>${data.po_status}</td>
+ 
+						</tr>
+						</core:forEach>	
+													
+					</table>
+</core:if>		
 
 
 

@@ -78,7 +78,7 @@ cssdropdown.startchrome("payphilexchange")
     </tr>
     
     <tr>
-     <td><a href="purchaseorder-retailer.html"><img title="Purchase Order" onmouseover="this.src='../css/images/icons_on_07.png';" onmouseout="this.src='../css/images/icons_07.png';" src="../css/images/icons_07.png" alt="" width="200" height="141" border="0"></a></td>
+     <td><a href="purchaseorder-history.html"><img title="Purchase Order" onmouseover="this.src='../css/images/icons_on_07.png';" onmouseout="this.src='../css/images/icons_07.png';" src="../css/images/icons_07.png" alt="" width="200" height="141" border="0"></a></td>
     </tr>
     
   </table>

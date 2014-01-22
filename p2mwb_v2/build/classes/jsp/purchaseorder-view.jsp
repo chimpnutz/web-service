@@ -97,14 +97,6 @@ cssdropdown.startchrome("payphilexchange")
 
 <div align="center">
  		<ol id="toc">
- 		 	<core:if test="${user == 'superadmin'}">
- 		
-
-            <li class="current"><a href="purchaseorder-retailer.html">Sub Dealer PO Request</a></li>   
-            <li><a href="purchaseorder-history.html?">Sub Dealer Request History</a></li>   
- 		
- 		
- 		</core:if>
  		
  		<core:if test="${user == 'manager'}">
  		
@@ -188,24 +180,20 @@ cssdropdown.startchrome("payphilexchange")
 </core:if>
 </div>
 <form:form action="" commandName="processorderForm" id="processorderForm">
+	<core:if test="${user == 'superadmin'}">
+	
+		 <input type="submit" value="Process Order" class="button" name="processOrder"></input>
+		
+			<core:forEach var="data" items="${list}">	
 
- <input type="submit" value="Process Order" class="button" name="processOrder"></input>
-
-<core:forEach var="data" items="${list}">	
-
-
-	<core:if test="${data.delivery_status == 'processing'}"	>	
- 	
-       <input type="submit" value="Delivered Order" class="button" name="deliveredOrder"></input>
-
- 	</core:if>
- 	
- 	  
- 		
- 
- 
-</core:forEach>
- 
+				<core:if test="${data.delivery_status == 'processing'}"	>	
+			 	
+			       <input type="submit" value="Delivered Order" class="button" name="deliveredOrder"></input>
+			
+			 	</core:if>
+			 			 
+			</core:forEach>
+	</core:if> 
 </form:form>
 
 
@@ -227,8 +215,10 @@ cssdropdown.startchrome("payphilexchange")
 
 <header><h2 class="text18_tungsten">Payment Section <a href="#modal">
 	<core:forEach var="data" items="${list }">
-		<core:if test="${data.po_status == 'active' && data.payment_status != 'paid' }">  	
-			<input type="button" id="button1" class="button" value="Add"></input>
+		<core:if test="${data.po_status == 'active' && data.payment_status != 'paid' }">
+			<core:if test="${user != 'superadmin'}">  	
+				<input type="button" id="button1" class="button" value="Add"></input>
+			</core:if>
 		</core:if>
 	</core:forEach>
 </a></h2></header>
@@ -236,7 +226,7 @@ cssdropdown.startchrome("payphilexchange")
 
 </div>
 <core:forEach var="data" items="${pomlist}">
-<core:if test="${data.payment_status != 'initial'}">
+<core:if test="${user == 'superadmin'}">
 
 <div class="adjustspace">
 
@@ -272,7 +262,7 @@ cssdropdown.startchrome("payphilexchange")
   
 
  
-    <td><a href="entry.html?poid=${data.poid}"  class="jTip"  id="thirteen" name="Payment">${data.date_created }</a></td>
+    <td><a href="entry.html?poid=${data.poid}" class="jTip" id="thirteen" name="Payment">${data.date_created }</a></td>
       <td><a href="entry.html?poid=${data.poid}" class="jTip" id="fourteen" name="Payment">${data.payment_status }</a></td>
     <td><a href="entry.html?poid=${data.poid}" class="jTip" id="fifteen" name="Payment">${data.total_order }</a></td>
        <td><a href="entry.html?poid=${data.poid}" class="jTip" id="sixteen" name="Payment">${data.total_amount }</a></td>
@@ -334,11 +324,11 @@ cssdropdown.startchrome("payphilexchange")
 
     	<div class="one">
     	
-        <core:forEach var="data" items="${pomlist }">
+        <core:forEach var="data" items="${pototal }">
         <div id="amnt">
         <label class="text12_tungsten_bold">Amount</label>
         <input name="amount" type="text" id="amnt1" style="color:black !important"  value="${data.total_amount }" disabled="disabled"/><br/> <span class="inline"> 
-        </div>
+        </div>        
 		</core:forEach>	
 
         <div id="bank">

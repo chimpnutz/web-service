@@ -71,11 +71,13 @@ public class PurchaseOrderViewController {
 		} else {
 
 				List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+				List<PurchaseOrderModel> otList = dao.getOthersPurchaseOrderItemsDetails(session,id);
 				List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
 				List<PurchaseOrderModel> List = dao.getPurchaseList(isSession, id);
 				List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
 				
 				modelAndView.addObject("pomlist",pomList);
+				modelAndView.addObject("otlist",otList);
 				modelAndView.addObject("list", List);
 				modelAndView.addObject("polist", poList);
 				modelAndView.addObject("pototal", poTotal);
@@ -160,6 +162,44 @@ public class PurchaseOrderViewController {
 			modelAndView.addObject("type", "poid");
 			modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
 			
+			return modelAndView;
+		}
+		
+		if(request.getParameter("confirmPayment")!= null){
+			
+			dao.confirmPayment(session, id);
+			
+			List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+			List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
+			List<PurchaseOrderModel> List = dao.getPurchaseList(isSession, id);
+			List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
+			modelAndView.addObject("pomlist",pomList);
+			modelAndView.addObject("list", List);
+			modelAndView.addObject("polist", poList);
+			modelAndView.addObject("pototal", poTotal);
+			modelAndView.addObject("type", "poid");
+			modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+			
+			return modelAndView;
+		}
+		
+		if(request.getParameter("cancelPayment")!= null){
+			
+			dao.cancelPayment(session, id);
+			
+			List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+			List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
+			List<PurchaseOrderModel> List = dao.getPurchaseList(isSession, id);
+			List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
+			
+			modelAndView.addObject("pomlist",pomList);
+			modelAndView.addObject("list", List);
+			modelAndView.addObject("polist", poList);
+			modelAndView.addObject("pototal", poTotal);
+			modelAndView.addObject("type", "poid");
+			modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+			modelAndView.addObject("valid","ok");
+			modelAndView.addObject("message","payment has been cancelled");
 			return modelAndView;
 		}
 			

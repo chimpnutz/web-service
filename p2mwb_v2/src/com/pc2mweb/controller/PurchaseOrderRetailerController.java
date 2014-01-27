@@ -62,7 +62,9 @@ public class PurchaseOrderRetailerController {
 		} else {
 
 				List<PurchaseOrderModel> poList = dao.getPurchaseOrdersRetailersList(usersession);
+				List<PurchaseOrderModel> retailer = dao.getPurchaseOrdersRetailersList(usersession);
 				modelAndView.addObject("polist", poList);
+				modelAndView.addObject("retailer", retailer);
 				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
 
 				return modelAndView;

@@ -2,17 +2,22 @@ package com.pc2mweb.model;
 
 public class PaymentOrderModel {
 
-	String type;
-	String bank;
-	String branch;
+	String type;	
 	String remarks;
+	
 	int paymentID;
+	String branch;
+	String partnername;
+	String partnerid;
+	String bank;
+	String status;
+	String date_created;
 	
 	String total_amount;
 	String total_order;
 	String total_fee;
-	String status;
-	String date_created;
+	
+	
 	String payment_date;
 	String returned_amount;
 	String returned_date;
@@ -20,6 +25,19 @@ public class PaymentOrderModel {
 	int poid;
 	String po_status;
 	
+	
+	public String getPartnername() {
+		return partnername;
+	}
+	public void setPartnername(String partnername) {
+		this.partnername = partnername;
+	}
+	public String getPartnerid() {
+		return partnerid;
+	}
+	public void setPartnerid(String partnerid) {
+		this.partnerid = partnerid;
+	}	
 	public String getPo_status() {
 		return po_status;
 	}

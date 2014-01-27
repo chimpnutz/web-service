@@ -247,7 +247,66 @@ cssdropdown.startchrome("payphilexchange")
 </div>
 <p>&nbsp;</p>
 
+<form:form action=""  commandName="purchaseorderForm" id="purchaseorderForm">
+		
+		   <label class="text12_tungsten_bold">
+		   	<core:if test="${msg=='success' }">
+		   		${message}
+		   	</core:if>
+		   </label>
+		
+              <div id="ordernew">
+	        <p class="text12_tungsten"> &nbsp;Item Code:
+	       <select id="ordernew2" name="PO[0].item" class="selectItem2">
+	       
+	       <option value="none">Please Choose Item</option>
+		   <core:forEach var="data" items="${item}">
+																				 
+			<option value="${data.itemname}">${data.itemname}</option>
+						
+			</core:forEach>
+	      </select style>
+	      <core:if test="${valid=='fails'}">
+			${message}
+			</core:if>
+	      </p>
+	      </div>
+	
+		<input type="hidden" name="PO[0].amount" value="" />
+	
+        <div id="qantity">
+        <p class="text12_tungsten"> &nbsp;Quantity:
+        <input type="text" name="PO[0].quantity" id="qty"/>
+        <core:if test="${valid=='fail'}">
+		${message}
+		</core:if>
+        <br/> <span class="inline"></p>       
+        </div>
+
+
+
+
+
+        <div id="wallet" > 
+        <p class="text12_tungsten"> &nbsp;Wallet types:
+        <select id="wallet2" name="PO[0].wallet">
+	   <core:forEach var="data" items="${wallet}">
+																			 
+		<option value="${data.wallet}">${data.wallet}</option>
+				
+					         
+						
+		</core:forEach>
+        </select style>
+          <br/>
+           <span class="inline"></p>
+        </div>
       
+  <p><a href="#" id="addorder" ><input type="button" value="Add New Order" style="margin-left:30px;" class="addnewbtn addnewbtn-primary"/></a>
+  <input type="image" value="Submit" style="margin-left:45px;" class="button" id="btnprocess"/></p>
+
+  	
+  </form:form>      
      
 
 </core:if>

@@ -79,7 +79,7 @@ public class PurchaseOrderController {
 				return redirect;	
 			
 		} else {
-				List<PurchaseOrderBean> item = dao.fillItemCodeList();
+				List<PurchaseOrderBean> item = dao.fillItemCodeList(usersession);
 				List<PurchaseOrderBean> wallet = dao.fillWalletlist(usersession);
 				modelAndView.addObject("purchaseorderForm", poList);
 				modelAndView.addObject("wallet", wallet);
@@ -114,7 +114,7 @@ public class PurchaseOrderController {
 	    	   
 	       	   if(model.getQuantity().equals(""))
 	       	   {
-	       		List<PurchaseOrderBean> item = dao.fillItemCodeList();
+	       		List<PurchaseOrderBean> item = dao.fillItemCodeList(session);
 	    		List<PurchaseOrderBean> wallet = dao.fillWalletlist(session);
 	    		modelAndView.addObject("purchaseorderForm", poList);
 	    		modelAndView.addObject("item", item);
@@ -127,7 +127,7 @@ public class PurchaseOrderController {
 	       	   
 	       	   if(!model.getQuantity().matches(NUMB_REGEX))
 	       	   {
-	       		List<PurchaseOrderBean> item = dao.fillItemCodeList();
+	       		List<PurchaseOrderBean> item = dao.fillItemCodeList(session);
 	    		List<PurchaseOrderBean> wallet = dao.fillWalletlist(session);
 	    		modelAndView.addObject("purchaseorderForm", poList);
 	    		modelAndView.addObject("item", item);
@@ -140,7 +140,7 @@ public class PurchaseOrderController {
 	       	   
 	       	   if(model.getItem().equals("none"))
 	       	   {
-	       		List<PurchaseOrderBean> item = dao.fillItemCodeList();
+	       		List<PurchaseOrderBean> item = dao.fillItemCodeList(session);
 	    		List<PurchaseOrderBean> wallet = dao.fillWalletlist(session);
 	    		modelAndView.addObject("purchaseorderForm", poList);
 	    		modelAndView.addObject("item", item);
@@ -162,7 +162,7 @@ public class PurchaseOrderController {
 		
 		
 	
-		List<PurchaseOrderBean> item = dao.fillItemCodeList();
+		List<PurchaseOrderBean> item = dao.fillItemCodeList(session);
 		List<PurchaseOrderBean> wallet = dao.fillWalletlist(session);
 		modelAndView.addObject("purchaseorderForm", poList);
 		modelAndView.addObject("item", item);

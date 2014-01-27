@@ -61,7 +61,7 @@ cssdropdown.startchrome("payphilexchange")
 <div align="center">
  		<ol id="toc">
             <li><a href="purchaseorder-ordernow.html">Order Now</a></li>  
-            <li class="current"><a href="purchaseorder-history.html"> My PO History</a></li>
+            <li class="current"><a href="purchaseorder-history.html">Purchase Order</a></li>
           </ol>
  		<p>&nbsp;</p>
 </div>
@@ -82,14 +82,8 @@ cssdropdown.startchrome("payphilexchange")
 						</tr>	
 						<core:forEach var="data" items="${polist}">
 						<tr class="text10_steel">	
-							 <td>${data.id}</td>												 
-				 	  		 <td>${data.date}</td>
-					         <td>${data.username}</td>
-					         <td>${data.partnername}</td>
-					     	 <td>${data.amount}</td>
-					         <td>${data.bank}</td>
-					         <td>${data.branch}</td>
-					         <td>${data.status}</td>
+							<td>${data.poid}</td>										 
+				 	  		 
 					
 					         
 					         
@@ -151,10 +145,13 @@ cssdropdown.startchrome("payphilexchange")
 <p class="text18_tungsten">Purchase Order</p>
 
 <div align="center">
+
  		<ol id="toc">
-            <li class="current"><a href="purchaseorder-history.html">Purchase Order</a></li>  
+            <li class="current"><a href="purchaseorder-history.html">Purchase Order</a></li>
           </ol>
- 		<p>&nbsp;</p>
+          
+<p>&nbsp;</p>
+
 </div>
 
 				<table width="100%" align="center">		
@@ -165,17 +162,26 @@ cssdropdown.startchrome("payphilexchange")
 					         <td>Agent</td>
 					         <td>Partner ID</td>
 					         <td>Amount</td>	
-					         <td>Bank</td>	
 					         <td>Branch</td>		
 					         <td>Status</td>	
-						     <td>${polist }</td>
+						      <td>Payment Status</td>	
 					   
 						</tr>	
 						
 						
-						<tr>
-							<td><a href="purchaseorder-view.html?poid=1">1</a></td>
-						</tr>	
+						<core:forEach var="data" items="${polist}">
+						<tr class="text10_steel">	
+							  <td><a href="purchaseorder-view.html?poid=${data.poid}">${data.poid}</a></td>										 
+				 	  		 <td>${data.date_created}</td>
+					         <td>${data.partnername}</td>
+					         <td>${data.partnerid}</td>
+					     	 <td>${data.total_amount}</td>
+					     	 <td>${data.branch}</td>
+					         <td>${data.status}</td>
+					         <td>${data.payment_status}</td>
+ 
+						</tr>
+						</core:forEach>	
 								
 					</table>
 

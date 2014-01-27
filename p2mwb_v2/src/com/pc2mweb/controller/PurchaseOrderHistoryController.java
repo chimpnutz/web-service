@@ -22,6 +22,7 @@ import com.pc2mweb.beans.MessageBean;
 import com.pc2mweb.dao.transactions.PurchaseOrderDAO;
 import com.pc2mweb.dao.transactions.UserManagementDAO;
 import com.pc2mweb.dao.transactions.WalletTransferDAO;
+import com.pc2mweb.model.PaymentOrderModel;
 import com.pc2mweb.model.PurchaseOrderModel;
 import com.pc2mweb.model.UserManagementModel;
 
@@ -52,7 +53,7 @@ public class PurchaseOrderHistoryController {
 		} else {
 
 				List<PurchaseOrderModel> poList = dao.getPurchaseOrdersRequestListHistory(usersession);
-				modelAndView.addObject("polist", poList);
+ 				modelAndView.addObject("polist", poList);
 				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
 
 				return modelAndView;

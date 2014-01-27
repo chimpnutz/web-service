@@ -26,6 +26,63 @@ public class PurchaseOrderModel {
 	String retailer;
 	String amount_paid;
 	
+	int paymentID;
+	String branch;
+	String partnername;
+	String partnerid;
+	String bank;
+	String status;
+	String date_created;
+	String price;
+	
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
+	public int getPaymentID() {
+		return paymentID;
+	}
+	public void setPaymentID(int paymentID) {
+		this.paymentID = paymentID;
+	}
+	public String getBranch() {
+		return branch;
+	}
+	public void setBranch(String branch) {
+		this.branch = branch;
+	}
+	public String getPartnername() {
+		return partnername;
+	}
+	public void setPartnername(String partnername) {
+		this.partnername = partnername;
+	}
+	public String getPartnerid() {
+		return partnerid;
+	}
+	public void setPartnerid(String partnerid) {
+		this.partnerid = partnerid;
+	}
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getDate_created() {
+		return date_created;
+	}
+	public void setDate_created(String date_created) {
+		this.date_created = date_created;
+	}
 	public String getAmount_paid() {
 		return amount_paid;
 	}

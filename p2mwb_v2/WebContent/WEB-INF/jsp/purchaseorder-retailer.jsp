@@ -120,9 +120,9 @@ cssdropdown.startchrome("payphilexchange")
 			
 					   
 						</tr>	
-						<core:forEach var="data" items="${polist}">
+						<core:forEach var="data" items="${retailer}">
 						<tr class="text10_steel">	
-							 <td>${data.poid}</td>			
+							<td><a href="purchaseorder-viewretailer.html?poid=${data.poid}">${data.poid}</a></td>	
 							 <td>${data.retailer}</td>									 
 				 	  		 <td>${data.podate}</td>
 					         <td>${data.order_amount}</td>

@@ -169,6 +169,29 @@ cssdropdown.startchrome("payphilexchange")
 						</tr>
 						</core:if>
 						</core:forEach>	
+						
+						<core:forEach var="data" items="${otlist}">
+						<core:if test="${data.item == 'LOP' }">
+						<tr class="text10_steel">	
+							 <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="one" name="LOP">${data.item}</a></td>												 
+				 	  		 <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="two" name="LOP">${data.quantity}</a></td>
+					         <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="three" name="LOP">${data.face_value_amount}</a></td>
+					         <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="four" name="LOP">${data.discount_amount}</a></td>
+					     	 <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="five" name="LOP">${data.total_amount}</a></td>
+					         <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="six" name="LOP">${data.wallet}</a></td>
+						</tr>
+						</core:if>
+						<core:if test="${data.item == 'GHP 300' }">
+						<tr class="text10_steel">	
+							 <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="seven" name="GHP 300">${data.item}</a></td>												 
+				 	  		 <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="eight" name="GHP 300">${data.quantity}</a></td>
+					         <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="nine" name="GHP 300">${data.face_value_amount}</a></td>
+					         <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="ten" name="GHP 300">${data.discount_amount}</a></td>
+					     	 <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="eleven" name="GHP 300">${data.total_amount}</a></td>
+					         <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="twelve" name="GHP 300">${data.wallet}</a></td>
+						</tr>
+						</core:if>
+						</core:forEach>	
 												
 					</table>
 
@@ -225,6 +248,7 @@ cssdropdown.startchrome("payphilexchange")
 <div style="margin-left:50px;"> 
 
 </div>
+
 <core:forEach var="data" items="${pomlist}">
 <core:if test="${user == 'superadmin'}">
 
@@ -262,30 +286,31 @@ cssdropdown.startchrome("payphilexchange")
   
 
  
-    <td><a href="entry.html?poid=${data.poid}" class="jTip" id="thirteen" name="Payment">${data.date_created }</a></td>
-      <td><a href="entry.html?poid=${data.poid}" class="jTip" id="fourteen" name="Payment">${data.payment_status }</a></td>
-    <td><a href="entry.html?poid=${data.poid}" class="jTip" id="fifteen" name="Payment">${data.total_order }</a></td>
-       <td><a href="entry.html?poid=${data.poid}" class="jTip" id="sixteen" name="Payment">${data.total_amount }</a></td>
-      <td><a href="entry.html?poid=${data.poid}" class="jTip" id="seventeen" name="Payment">${data.total_fee }</a></td>
-      <td><input type="button" value="Confirm" title="confirm" class="button"></input> <input type="button" class="button" value="Cancel" title="cancel"></input></td>
-   
-     <td></td>
+    <td><a href="entry.html?width=195.5&poid=${data.poid}" class="jTip" id="thirteen" name="Payment">${data.date_created }</a></td>
+      <td><a href="entry.html?width=195.5&poid=${data.poid}" class="jTip" id="fourteen" name="Payment">${data.payment_status }</a></td>
+    <td><a href="entry.html?width=195.5&poid=${data.poid}" class="jTip" id="fifteen" name="Payment">${data.total_order }</a></td>
+       <td><a href="entry.html?width=195.5&poid=${data.poid}" class="jTip" id="sixteen" name="Payment">${data.total_amount }</a></td>
+      <td><a href="entry.html?width=195.5&poid=${data.poid}" class="jTip" id="seventeen" name="Payment">${data.total_fee }</a></td>
+      <td>
+      <form:form action="" commandName="paymentForm" id="paymentForm">
+      <core:if test = "${valid=='ok' }">
+      	${message }
+      </core:if>
+      <input type="submit" value="Confirm" class="button" name="confirmPayment"></input> 
+      
+      <input type="submit" class="button" value="Cancel" name="cancelPayment"></input>
+      </form:form>
+      </td>
+   	 
+    
     </tr>
 
 
 </table>
 
 
-
-
-
-
-   <div>
-
-     <div >
 </core:if>
 </core:forEach>
-
 
 
 
@@ -333,19 +358,19 @@ cssdropdown.startchrome("payphilexchange")
 
         <div id="bank">
         <label class="text12_tungsten_bold">Bank</label>
-        <input name="bank" type="text" id="bank1" required/><br/> <span class="inline">
+        <input name="bank" type="text" id="bank1" /><br/> <span class="inline">
         </div>
 
 
 
         <div id="branch">
         <label class="text12_tungsten_bold">Branch</label>
-        <input name="branch" type="text" id="branch1" required/><br/> <span class="inline">
+        <input name="branch" type="text" id="branch1" /><br/> <span class="inline">
         </div>	 
 
         <div id="remarks">
             <label for="textarea" class="text12_tungsten_bold">Remarks</label>
-    		<textarea name="text" id="textarea" cols="60" rows="5" style="resize: none;" placeholder="Leave a message..." required></textarea>   
+    		<textarea name="text" id="textarea" cols="60" rows="5" style="resize: none;" placeholder="Leave a message..." ></textarea>   
     		 <input type = "submit" style="margin-top:72px" class = "btn" id="moveme" value= "Submit" name="submit"> 	   
         </div>
         
@@ -364,7 +389,7 @@ cssdropdown.startchrome("payphilexchange")
 <div class="3">
 	
 	<div class="one">
-  	<core:forEach var="data" items="${pomlist }">
+  	<core:forEach var="data" items="${pototal }">
         <div id="amnt">
         <label class="text12_tungsten_bold">Amount</label>
         <input name="amount" type="text" id="amnt1" style="color:black !important"  value="${data.total_amount }" disabled="disabled"/> <span class="inline">         

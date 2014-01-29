@@ -70,20 +70,22 @@ cssdropdown.startchrome("payphilexchange")
 				
 						<tr class ="text12_tungsten_bold">	
 							 <td >PO ID</td>			
-					         <td >Requested Date</td>
-					         <td>Agent</td>
-					         <td>Partner ID</td>
-					         <td>Amount</td>	
-					         <td>Bank</td>	
-					         <td>Branch</td>		
-					         <td>Status</td>	
+					         <td >Purchase Order Date</td>
+					         <td>Total Amount</td>
+					         <td>Payment Status</td>
+					         <td>Delivery Status</td>	
+					         <td>PO Status</td>	
 						     
 					   
 						</tr>	
 						<core:forEach var="data" items="${polist}">
 						<tr class="text10_steel">	
 							<td>${data.poid}</td>										 
-				 	  		 
+				 	  		<td>${data.podate}</td>
+					         <td>${data.order_amount}</td>
+					         <td>${data.payment_status}</td>
+					     	 <td>${data.delivery_status}</td>
+					         <td>${data.po_status}</td>
 					
 					         
 					         

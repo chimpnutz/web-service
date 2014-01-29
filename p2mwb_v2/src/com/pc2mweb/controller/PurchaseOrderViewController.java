@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.paysetter.topup.amax.exceptions.AutoloadMaxException;
 import com.pc2mweb.beans.MessageBean;
+import com.pc2mweb.beans.TransactionIDObject;
 import com.pc2mweb.dao.transactions.PurchaseOrderDAO;
 import com.pc2mweb.dao.transactions.UserManagementDAO;
 import com.pc2mweb.dao.transactions.WalletTransferDAO;
@@ -99,6 +100,8 @@ public class PurchaseOrderViewController {
 		
 		ModelAndView modelAndView = new ModelAndView("purchaseorder-view");
 		
+		TransactionIDObject obj = new TransactionIDObject();
+		
 		List<PurchaseOrderModel> po = purchaseForm.getPO();
 		List<PaymentOrderModel> pom = paymentorderForm.getPOMS();
 		
@@ -108,7 +111,7 @@ public class PurchaseOrderViewController {
 		
 		if(request.getParameter("processOrder")!= null){
 		
-			dao.insertProcessOrder(session, id);
+			dao.insertProcessOrder(session, id, obj);
 			
 			List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
 			List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);

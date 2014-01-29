@@ -216,7 +216,6 @@ public class TransfertoRetailerDAO extends JdbcDaoSupport {
 		 if(session.getAttribute("USERLEVEL").toString().equalsIgnoreCase("manager"))
 		 {
 	
-				
 					    String updateTxBranch = "Update wallets set  wallet = wallet + ?, partnertxid = ? where  partnerid = ?  and (wallet + ?) >= 0 and walletid = ? ";
 						
 						String transid = "MTR"+txid+"";

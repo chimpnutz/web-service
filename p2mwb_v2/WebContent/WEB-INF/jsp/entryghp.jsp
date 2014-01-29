@@ -31,6 +31,7 @@ ul	li {font: 80.5%/1.4em Arial, Helvetica, sans-serif;color:#333333;margin-left:
 </ul>
  </core:if>
 </core:forEach>
+
 </body>
 </html>
 

@@ -101,8 +101,8 @@ cssdropdown.startchrome("payphilexchange")
  		<core:if test="${user == 'manager'}">
  		
  		 	<li><a href="purchaseorder-ordernow.html">Order Now</a></li>  
-            <li ><a href="purchaseorder-retailer.html">Retailer</a></li>   
-            <li class="current"><a href="purchaseorder-history.html">Purchase Order</a></li>   
+            <li class="current"><a href="purchaseorder-retailer.html">Retailer</a></li>   
+            <li><a href="purchaseorder-history.html">Purchase Order</a></li>   
 
  		
  		
@@ -120,7 +120,7 @@ cssdropdown.startchrome("payphilexchange")
 
 
 <div align="center">
-    <form action="purchaseorder-viewretailer.html">
+    <form action="purchaseorder-retailer.html">
  		<input type="submit" value="Back" style="margin-left:45px;" class="button"/>
     </form>
 </div>
@@ -175,7 +175,13 @@ cssdropdown.startchrome("payphilexchange")
 <div align="center">
 <hr/>
 <div class="note">
-<core:if test="${valid=='ok'}">
+<core:if test="${status=='decline'}">
+			<label class="text12_tungsten_bold">${message}</label>
+</core:if>
+<core:if test="${status=='approve'}">
+			<label class="text12_tungsten_bold">${message}</label>
+</core:if>
+<core:if test="${status=='blank'}">
 			<label class="text12_tungsten_bold">${message}</label>
 </core:if>
 </div>
@@ -207,7 +213,6 @@ cssdropdown.startchrome("payphilexchange")
 </center>
 </form:form>
  
-
 </div>
 
 </div>

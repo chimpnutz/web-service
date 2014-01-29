@@ -16,11 +16,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pc2mweb.beans.ApproveBean;
+import com.pc2mweb.beans.TransactionIDObject;
 import com.pc2mweb.dao.transactions.PurchaseOrderDAO;
+import com.pc2mweb.dao.transactions.TopupDAO;
 import com.pc2mweb.model.PaymentModelList;
 import com.pc2mweb.model.PaymentOrderModel;
 import com.pc2mweb.model.PurchaseModelList;
 import com.pc2mweb.model.PurchaseOrderModel;
+import com.pc2mweb.model.TransferCreditsModel;
+import com.pc2mweb.model.TransfertoRetailerModel;
 
 
 @Controller
@@ -76,22 +81,28 @@ private static final Logger logger = Logger.getLogger(PurchaseOrderViewControlle
 	}
 	
 	@RequestMapping(method = RequestMethod.POST,params={"poid"})
-	public ModelAndView processOrder(@RequestParam("poid") int id,HttpServletRequest request,HttpSession session,PurchaseModelList purchaseForm, PaymentModelList paymentorderForm) {
+	public ModelAndView processOrder(@RequestParam("poid") int id,HttpServletRequest request,HttpSession session,PurchaseModelList purchaseForm, TransfertoRetailerModel topup) {
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
 		
 		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
 		
-		ModelAndView modelAndView = new ModelAndView("purchaseorder-view");
+		TransactionIDObject obj = new TransactionIDObject();
 		
+		ModelAndView modelAndView = new ModelAndView("purchaseorder-viewretailer");
+		
+		ApproveBean pom = new ApproveBean();
 		List<PurchaseOrderModel> po = purchaseForm.getPO();
-		List<PaymentOrderModel> pom = paymentorderForm.getPOMS();
+		ArrayList<TransferCreditsModel> transfercreditsList = new ArrayList<TransferCreditsModel>();
+		
+		pom.setType(request.getParameter("type"));
 		
 		HttpSession isSession = request.getSession();
 		
 		if(request.getParameter("update")!= null){
 			
-//			dao.insertPaymentOrder(session, id, request);
+			dao.transfertobranch(session,obj,id,pom.getType());
+			if(pom.getType().equalsIgnoreCase("approve")){
 			
 			List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
 			List<PurchaseOrderModel> otList = dao.getOthersPurchaseOrderItemsDetails(session,id);
@@ -106,8 +117,53 @@ private static final Logger logger = Logger.getLogger(PurchaseOrderViewControlle
 			modelAndView.addObject("pototal", poTotal);
 			modelAndView.addObject("type", "poid");
 			modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+			modelAndView.addObject("status", "approve");
+			modelAndView.addObject("message", "Your request has been approved!");
 			
 			return modelAndView;
+			}
+			
+			if(pom.getType().equalsIgnoreCase("decline")){
+				
+				List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+				List<PurchaseOrderModel> otList = dao.getOthersPurchaseOrderItemsDetails(session,id);
+				List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
+				List<PurchaseOrderModel> List = dao.getPurchaseList(isSession, id);
+				List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
+				
+				modelAndView.addObject("pomlist",pomList);
+				modelAndView.addObject("otlist",otList);
+				modelAndView.addObject("list", List);
+				modelAndView.addObject("polist", poList);
+				modelAndView.addObject("pototal", poTotal);
+				modelAndView.addObject("type", "poid");
+				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+				modelAndView.addObject("status", "decline");
+				modelAndView.addObject("message", "Your request has been declined!");
+				
+				return modelAndView;
+				}
+			
+				if(pom.getType().equalsIgnoreCase("")){
+				
+				List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
+				List<PurchaseOrderModel> otList = dao.getOthersPurchaseOrderItemsDetails(session,id);
+				List<PurchaseOrderModel> poTotal = dao.getPurchaseTotal(session,id);
+				List<PurchaseOrderModel> List = dao.getPurchaseList(isSession, id);
+				List<PaymentOrderModel> pomList= dao.getPaymentOrderItemsDetails(session, id);
+				
+				modelAndView.addObject("pomlist",pomList);
+				modelAndView.addObject("otlist",otList);
+				modelAndView.addObject("list", List);
+				modelAndView.addObject("polist", poList);
+				modelAndView.addObject("pototal", poTotal);
+				modelAndView.addObject("type", "poid");
+				modelAndView.addObject("user",isSession.getAttribute("USERLEVEL"));
+				modelAndView.addObject("status", "blank");
+				modelAndView.addObject("message", "Please choose an option!");
+				
+				return modelAndView;
+				}
 		}
 		
 			

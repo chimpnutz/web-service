@@ -31,6 +31,21 @@ ul	li {font: 80.5%/1.4em Arial, Helvetica, sans-serif;color:#333333;margin-left:
  </core:if>
 </core:forEach>
 
+<core:forEach var="data" items="${otlist }">
+ <core:if test="${data.item == 'LOP'}">
+<ul>
+<li><label  class ="text10_tungsten_bold">PO Date:</label> <label  class ="text10_tungsten">${data.podate }</label></li>
+<li><label  class ="text10_tungsten_bold">Partner Name:</label> <label  class ="text10_tungsten">${data.partner_name}</label></li>
+<li><label  class ="text10_tungsten_bold">Payment Status:</label> <label  class ="text10_tungsten">${data.payment_status}</label></li>
+<li><label  class ="text10_tungsten_bold">Delivery Status:</label> <label  class ="text10_tungsten">${data.delivery_status }</label></li>
+<li><label  class ="text10_tungsten_bold">PO Status:</label> <label  class ="text10_tungsten">${data.po_status }</label></li>
+<li><label  class ="text10_tungsten_bold">Total Order Amount:</label> <label  class ="text10_tungsten">${data.total_amount }</label></li>
+<li><label  class ="text10_tungsten_bold">Amount Paid:</label> <label  class ="text10_tungsten">${data.amount_paid }</label></li>
+<li><label  class ="text10_tungsten_bold">Cancel Date:</label> <label  class ="text10_tungsten">${data.cancel_date }</label></li>
+</ul>
+ </core:if>
+</core:forEach>
+
 
 </body>
 </html>

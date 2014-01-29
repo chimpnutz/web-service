@@ -150,48 +150,26 @@ cssdropdown.startchrome("payphilexchange")
 						<core:forEach var="data" items="${polist}">
 						<core:if test="${data.item == 'LOP' }">
 						<tr class="text10_steel">	
-							 <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="one" name="LOP">${data.item}</a></td>												 
-				 	  		 <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="two" name="LOP">${data.quantity}</a></td>
-					         <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="three" name="LOP">${data.face_value_amount}</a></td>
-					         <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="four" name="LOP">${data.discount_amount}</a></td>
-					     	 <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="five" name="LOP">${data.total_amount}</a></td>
-					         <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="six" name="LOP">${data.wallet}</a></td>
+							 <td><a href="entrylop.html?width=190&poid=${data.poid}"  class="jTip"  id="one" name="LOP">${data.item}</a></td>												 
+				 	  		 <td><a href="entrylop.html?width=190&poid=${data.poid}"  class="jTip"  id="two" name="LOP">${data.quantity}</a></td>
+					         <td><a href="entrylop.html?width=190&poid=${data.poid}"  class="jTip"  id="three" name="LOP">${data.face_value_amount}</a></td>
+					         <td><a href="entrylop.html?width=190&poid=${data.poid}"  class="jTip"  id="four" name="LOP">${data.discount_amount}</a></td>
+					     	 <td><a href="entrylop.html?width=190&poid=${data.poid}"  class="jTip"  id="five" name="LOP">${data.total_amount}</a></td>
+					         <td><a href="entrylop.html?width=190&poid=${data.poid}"  class="jTip"  id="six" name="LOP">${data.wallet}</a></td>
 						</tr>
 						</core:if>
 						<core:if test="${data.item == 'GHP 300' }">
 						<tr class="text10_steel">	
-							 <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="seven" name="GHP 300">${data.item}</a></td>												 
-				 	  		 <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="eight" name="GHP 300">${data.quantity}</a></td>
-					         <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="nine" name="GHP 300">${data.face_value_amount}</a></td>
-					         <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="ten" name="GHP 300">${data.discount_amount}</a></td>
-					     	 <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="eleven" name="GHP 300">${data.total_amount}</a></td>
-					         <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="twelve" name="GHP 300">${data.wallet}</a></td>
+							 <td><a href="entryghp.html?width=190&poid=${data.poid}"  class="jTip"  id="seven" name="GHP 300">${data.item}</a></td>												 
+				 	  		 <td><a href="entryghp.html?width=190&poid=${data.poid}"  class="jTip"  id="eight" name="GHP 300">${data.quantity}</a></td>
+					         <td><a href="entryghp.html?width=190&poid=${data.poid}"  class="jTip"  id="nine" name="GHP 300">${data.face_value_amount}</a></td>
+					         <td><a href="entryghp.html?width=190&poid=${data.poid}"  class="jTip"  id="ten" name="GHP 300">${data.discount_amount}</a></td>
+					     	 <td><a href="entryghp.html?width=190&poid=${data.poid}"  class="jTip"  id="eleven" name="GHP 300">${data.total_amount}</a></td>
+					         <td><a href="entryghp.html?width=190&poid=${data.poid}"  class="jTip"  id="twelve" name="GHP 300">${data.wallet}</a></td>
 						</tr>
 						</core:if>
 						</core:forEach>	
 						
-						<core:forEach var="data" items="${otlist}">
-						<core:if test="${data.item == 'LOP' }">
-						<tr class="text10_steel">	
-							 <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="one" name="LOP">${data.item}</a></td>												 
-				 	  		 <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="two" name="LOP">${data.quantity}</a></td>
-					         <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="three" name="LOP">${data.face_value_amount}</a></td>
-					         <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="four" name="LOP">${data.discount_amount}</a></td>
-					     	 <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="five" name="LOP">${data.total_amount}</a></td>
-					         <td><a href="entrylop.html?width=195.5&poid=${data.poid}"  class="jTip"  id="six" name="LOP">${data.wallet}</a></td>
-						</tr>
-						</core:if>
-						<core:if test="${data.item == 'GHP 300' }">
-						<tr class="text10_steel">	
-							 <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="seven" name="GHP 300">${data.item}</a></td>												 
-				 	  		 <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="eight" name="GHP 300">${data.quantity}</a></td>
-					         <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="nine" name="GHP 300">${data.face_value_amount}</a></td>
-					         <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="ten" name="GHP 300">${data.discount_amount}</a></td>
-					     	 <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="eleven" name="GHP 300">${data.total_amount}</a></td>
-					         <td><a href="entryghp.html?width=195.5&poid=${data.poid}"  class="jTip"  id="twelve" name="GHP 300">${data.wallet}</a></td>
-						</tr>
-						</core:if>
-						</core:forEach>	
 												
 					</table>
 

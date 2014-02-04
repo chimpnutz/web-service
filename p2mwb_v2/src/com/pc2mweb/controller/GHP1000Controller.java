@@ -19,8 +19,8 @@ import com.pc2mweb.dao.transactions.PurchaseOrderDAO;
 import com.pc2mweb.model.PurchaseOrderModel;
 
 @Controller
-@RequestMapping("entryghp")
-public class GHPEntryController {
+@RequestMapping("entryghp1000")
+public class GHP1000Controller {
 
 	private static final Logger logger = Logger.getLogger(PaymentEntryController.class);
 
@@ -30,8 +30,7 @@ public class GHPEntryController {
 		ApplicationContext  context = new ClassPathXmlApplicationContext("Spring-Customer.xml");
 		
 
-		ModelAndView modelAndView = new ModelAndView("entryghp");
-		ModelAndView modelandview = new ModelAndView("entryghp1000");
+		ModelAndView modelAndView = new ModelAndView("entryghp1000");
 		ModelAndView redirect = new ModelAndView("redirect:main.html");
 		
 		PurchaseOrderDAO dao = (PurchaseOrderDAO) context.getBean("purchaseorderDAO");
@@ -43,7 +42,7 @@ public class GHPEntryController {
 				redirect.addObject("login", "no");
 				return redirect;	
 			
-		} else {
+		}else {
 
 				List<PurchaseOrderModel> poList = dao.getPurchaseOrderItemsDetails(session,id);
 				modelAndView.addObject("polist", poList);
@@ -53,7 +52,7 @@ public class GHPEntryController {
 				return modelAndView;
 			}
 		
-			
+		
 		}
 	
 }

@@ -8,9 +8,9 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	
 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 	<property name="host" value="mail.payexchangeinc.com" />
-	<property name="port" value="587" />
-	<property name="username" value="gel.monteverde@payexchangeinc.com" />
-	<property name="password" value="rongel123" />
+	<property name="port" value="25" />
+	<property name="username" value="tristan.lapidez@payexchangeinc.com" />
+	<property name="password" value="charles" />
  
 	<property name="javaMailProperties">
 	   <props>

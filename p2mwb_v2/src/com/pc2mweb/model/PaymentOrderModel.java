@@ -4,7 +4,8 @@ public class PaymentOrderModel {
 
 	String type;	
 	String remarks;
-	
+	String file;
+		
 	int paymentID;
 	String branch;
 	String partnername;
@@ -25,7 +26,14 @@ public class PaymentOrderModel {
 	int poid;
 	String po_status;
 	
+	String delivery_status;
 	
+	public String getFile() {
+		return file;
+	}
+	public void setFile(String file) {
+		this.file = file;
+	}
 	public String getPartnername() {
 		return partnername;
 	}
@@ -134,6 +142,12 @@ public class PaymentOrderModel {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getDelivery_status() {
+		return delivery_status;
+	}
+	public void setDelivery_status(String delivery_status) {
+		this.delivery_status = delivery_status;
 	}
 	
 }

@@ -166,8 +166,9 @@ cssdropdown.startchrome("payphilexchange")
 					         <td>Amount</td>	
 					         <td>Branch</td>		
 					         <td>Status</td>	
-						      <td>Payment Status</td>	
-					   
+						     <td>Payment Status</td>	
+					   		 <td>Delivery Status</td>
+					   		 <td>Attachement</td>	
 						</tr>	
 						
 						
@@ -181,7 +182,8 @@ cssdropdown.startchrome("payphilexchange")
 					     	 <td>${data.branch}</td>
 					         <td>${data.status}</td>
 					         <td>${data.payment_status}</td>
- 
+					         <td>${data.delivery_status}</td>
+ 							 <td><a href="purchaseorder-viewAttachments.html?poid=${data.poid}">See Attachments</a></td>	
 						</tr>
 						</core:forEach>	
 								

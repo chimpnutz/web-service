@@ -122,11 +122,7 @@ cssdropdown.startchrome("payphilexchange")
 <div id="container2">
 <div id="content">
   <table width="610" border="0" align="center" cellpadding="5" cellspacing="5">
-      <tr>
-       <td><a href="cashincustomer.html"><img title="Gcash "onmouseover="this.src='../css/images/icons_on_10_01.png';" onmouseout="this.src='../css/images/icon_10_01.png';" src="../css/images/icon_10_01.png" alt="" width="200" height="140" border="0" /></a></td>
-        <td><a href="billspayment.html"><img title="Gcash "onmouseover="this.src='../css/images/icons_on_13.png';" onmouseout="this.src='../css/images/icons_off_13.png';" src="../css/images/icons_on_13.png" alt="" width="200" height="140" border="0" /></a></td>
-        <td><a href="managebranches.html"><img title="Manage Branches "onmouseover="this.src='../css/images/icons_on_14.png';" onmouseout="this.src='../css/images/icons_off_14.png';" src="../css/images/icons_on_14.png" alt="" width="200" height="140" border="0" /></a></td>
-    </tr>
+
     <tr>
       <td><a href="loadcustomer.html"><img title="Load Customer" onmouseover="this.src='../css/images/icons_on_01.png';" onmouseout="this.src='../css/images/icons_01.png';" src="../css/images/icons_01.png" alt="" width="200" height="140" border="0" /></a></td>
       <td><a href="loadretailer-web.html"><img title="Load Retailer" onmouseover="this.src='../css/images/icons_on_02.png';" onmouseout="this.src='../css/images/icons_02.png';" src="../css/images/icons_02.png" alt="" width="200" height="140" border="0" /></a></td>
@@ -142,21 +138,10 @@ cssdropdown.startchrome("payphilexchange")
       <td><a href="manageretailer.html"><img title="Manage Retailer" onmouseover="this.src='../css/images/icons_on_08.png';" onmouseout="this.src='../css/images/icons_08.png';" src="../css/images/icons_08.png" alt="" width="200" height="141" border="0"></a></td>
       <td><a href="changepassword.html"><img title="Change Password" onmouseover="this.src='../css/images/icons_on_09.png';" onmouseout="this.src='../css/images/icons_09.png';" src="../css/images/icons_09.png" alt="" width="200" height="141" border="0"></a></td>
     </tr>
-    
-    <tr>
-    
-     <td><a href="billspaymenthistory.html"><img title="Gcash "onmouseover="this.src='../css/images/icons_on_15.png';" onmouseout="this.src='../css/images/icons_off_15.png';" src="../css/images/icons_on_15.png" alt="" width="200" height="140" border="0" /></a></td>
-     <td><a href="lop.html"><img title="Gcash "onmouseover="this.src='../css/images/icons_on_16.png';" onmouseout="this.src='../css/images/icons_off_16.png';" src="../css/images/icons_on_16.png" alt="" width="200" height="140" border="0" /></a></td>
-     <td><a href="epinsindividual.html"><img title="Epins "onmouseover="this.src='../css/images/tab-on_01.png';" onmouseout="this.src='../css/images/tab-off_01.png';" src="../css/images/tab-on_01.png" alt="" width="200" height="140" border="0" /></a></td>
-    
+ 	 <tr>
+	  <td><a href="managebranches.html"><img title="Manage Branches "onmouseover="this.src='../css/images/icons_on_14.png';" onmouseout="this.src='../css/images/icons_off_14.png';" src="../css/images/icons_on_14.png" alt="" width="200" height="140" border="0" /></a></td> 	
     </tr>
 
-  <!--  <tr>
-      <td><a href="emegencyloadmanagement.html"><img title="Emergency Load Management" onMouseOver="this.src='../css/images/icons_on_09.png';" onMouseOut="this.src='../css/images/icons_off_09.png';" src="../css/images/icons_off_09.png" alt="" width="200" height="141" border="0"></a></td>
- 	  <td><a href="emegencyload.html"><img title="Request for Emergency Load" onMouseOver="this.src='../css/images/icons_on_10.png';" onMouseOut="this.src='../css/images/icons_off_10.png';" src="../css/images/icons_off_10.png" alt="" width="200" height="141" border="0"></a></td>
-      <td><a href="emergencyloadhistory.html"><img title="Emergency Load History" onMouseOver="this.src='../css/images/icons_on_11.png';" onMouseOut="this.src='../css/images/icons_off_11.png';" src="../css/images/icons_off_11.png" alt="" width="200" height="141" border="0"></a></td>   	
-    </tr>
-    --> 
     
   </table>
 

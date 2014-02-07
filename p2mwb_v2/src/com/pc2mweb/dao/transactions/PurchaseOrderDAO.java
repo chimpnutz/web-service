@@ -1,6 +1,15 @@
 package com.pc2mweb.dao.transactions;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -8,14 +17,17 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.dao.DataAccessException;
@@ -25,7 +37,13 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-
+import org.springframework.validation.BindingResult;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.*;
 import com.pc2mweb.model.MailModel;
 import com.pc2mweb.beans.PurchaseOrderBean;
 import com.pc2mweb.beans.TransactionIDObject;
@@ -931,7 +949,8 @@ public boolean insertProcessOrder(HttpSession session, int poid ,TransactionIDOb
 		return false;
 	}
 	
-	public boolean insertPaymentOrder(HttpSession session, int poid, HttpServletRequest request){
+
+	public boolean insertPaymentOrder(HttpSession session, int poid, HttpServletRequest request,PaymentOrderModel model) throws IOException{
 				
 		String type2 = "Manual";
 		String type3 = "Bancnet";
@@ -942,11 +961,14 @@ public boolean insertProcessOrder(HttpSession session, int poid ,TransactionIDOb
 		
 		PaymentOrderModel pom = new PaymentOrderModel();
 		
-		pom.setFile(request.getParameter("fileUpload"));
+		
+				
+		RestTemplate template = new RestTemplate();
+		
 		pom.setBranch(request.getParameter("branch"));
 		pom.setRemarks(request.getParameter("text"));
 		pom.setType(request.getParameter("type"));
-		
+	
 		final int purchaseid = poid;
 	
 		
@@ -1007,7 +1029,7 @@ public boolean insertProcessOrder(HttpSession session, int poid ,TransactionIDOb
 							
 
 								try{
-
+									 									
 									 StringBuilder insertManual = new StringBuilder();
 									 
 									 insertManual.append("INSERT INTO po_payment_manual_details(paymentId,branch, amount, attachments, remarks)");
@@ -1015,7 +1037,7 @@ public boolean insertProcessOrder(HttpSession session, int poid ,TransactionIDOb
 									 
 									 try{
 										 poRow = getJdbcTemplate().update(insertManual.toString(), new Object[]{
-											 paymentid,pom.getBranch(),purchaseid,pom.getFile(),pom.getRemarks()
+											 paymentid,pom.getBranch(),purchaseid,model.getAttachment(),pom.getRemarks()
 										 });
 										 
 										 
@@ -1037,14 +1059,14 @@ public boolean insertProcessOrder(HttpSession session, int poid ,TransactionIDOb
 														   	"for verification",purchaseid,session.getAttribute("PID")
 														});
 													   
-													   return true;
+													   
 												
 												   }catch(DataAccessException ex){
 											            ex.printStackTrace();
 											
 											        }
 												
-												
+												return true;
 												
 												
 											}
@@ -1060,175 +1082,16 @@ public boolean insertProcessOrder(HttpSession session, int poid ,TransactionIDOb
 								 }catch(DataAccessException ex){
 							            ex.printStackTrace();
 								 }
-								
-								
-								
-								
-								
+							
 							}
-						
-
-			
+	
 			}
 			else
-			{							
-				int poRow = 0;
-				
-				
-				
-				   final  StringBuilder strSQL = new StringBuilder();
-					  
-					
-				   strSQL.append("INSERT INTO po_payment (Payment_TXID, payment_type, total_amount, total_order, total_fee, POId)");
-				   strSQL.append("VALUES (?,?,(select order_amount from po_orders where poid = ?),(select order_amount from po_orders where poid = ?),?,?)");
-				   
-				   KeyHolder keyHolder = new GeneratedKeyHolder();
-				   
-					int row = getJdbcTemplate().update(new PreparedStatementCreator() 
-					{
-						  public PreparedStatement createPreparedStatement(Connection con)
-								    throws SQLException 
-								    {
-								   PreparedStatement ps = con.prepareStatement(strSQL.toString(),Statement.RETURN_GENERATED_KEYS);
-
-								   ps.setInt(1, purchaseid);
-								   ps.setString(2, "Manual");
-								   ps.setInt(3, purchaseid);
-								   ps.setInt(4, purchaseid);
-								   ps.setString(5, null);
-								   ps.setInt(6, purchaseid);
-								  
-								 
-								   return ps;
-								     }
-
-				
-					}, keyHolder);
-				   
-				   
-					int paymentid = keyHolder.getKey().intValue();
-					
-					if(row>0)						
-					{
-						try{
-
-							 StringBuilder insertManual = new StringBuilder();
-							 
-							 insertManual.append("INSERT INTO po_payment_manual_details(paymentId,branch, amount, attachments, remarks)");
-							 insertManual.append("VALUES (?,?, (select order_amount from po_orders where poid = ?), ?, ?)");
-							 
-							 try{
-								 poRow = getJdbcTemplate().update(insertManual.toString(), new Object[]{
-									 paymentid,pom.getBranch(),purchaseid,pom.getFile(),pom.getRemarks()
-								 });
-								 
-								 
-								 
-									if(poRow>0)
-									
-									
-									{
-										
-										StringBuilder updateSql = new StringBuilder();
-										
-										updateSql.append("UPDATE po_orders SET ");
-										updateSql.append("payment_status = ? ");
-										updateSql.append("WHERE POId = ? and partnerid = ?");
-										
-										try{
-											   
-											   poRow = getJdbcTemplate().update(updateSql.toString(), new Object[] { 
-												   	"for verification",purchaseid,session.getAttribute("PID")
-												});
-											   System.out.println("PO Orders has been updated");
-											   return true;
-										
-										   }catch(DataAccessException ex){
-									            ex.printStackTrace();
-									
-									        }									
-										
-									}
-								 
-								 									 
-								 return true;
-								 
-								 
-							 }catch(DataAccessException ex){
-						            ex.printStackTrace();
-							 }
-							 
-						 }catch(DataAccessException ex){
-					            ex.printStackTrace();
-						 }
-					}
-				
+			{	
+				System.out.println("Payment Already Exist!");
 			}
 			return false;		
-		}
-			
-//		
-//		if(pom.getType().equalsIgnoreCase("3")){
-//			
-//			StringBuilder chkSql = new StringBuilder();
-//			
-//			chkSql.append("SELECT status FROM po_payment ");
-//			chkSql.append("WHERE POId = ?");
-//			
-//			SqlRowSet rs   = getJdbcTemplate().queryForRowSet(chkSql.toString(),poid);
-//			
-//			if(!rs.next()) {
-//				
-//						String type = pom.getType();
-//				
-//						type = type3;
-//						String status = "initial";
-//						int poRow = 0;
-//						
-//						
-//						 StringBuilder insertPayment = new StringBuilder();
-//						 
-//						 insertPayment.append("INSERT INTO po_payment (Payment_TXID, payment_type, total_amount, total_order, total_fee, POId, status)");
-//						 insertPayment.append("VALUES (?,?,?,?,?,?)");
-//						 
-//						 try{
-//							 poRow = getJdbcTemplate().update(insertPayment.toString(), new Object[] {
-//								 	poid,type,total_amount,total_order,null,poid,status
-//							 });
-//							 
-////							 StringBuilder insertManual = new StringBuilder();
-////							 
-////							 insertManual.append("INSERT INTO po_payment_money_transfer_details (request_date, response_date, resp_code, resp_time, ");
-////							 insertManual.append("request_type, trxn_type, merchant_id, track_id, rrn, rebill_id, payment_method, currency_code, ");
-////							 insertManual.append("trxn_amount, auth_code, auth_msg, auth_state, fraud_state, fraud_score, fraud_msg, secure_hash )");
-////							 insertManual.append("VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-////							 
-////							 try{
-////								 poRow = getJdbcTemplate().update(insertManual.toString(), new Object[]{
-////									 branch,total_amount,null,txt,null,null,null,null,null,null,null,
-////									 null,null,null,null,null,null,null,null,null
-////								 });
-////								 
-////								 
-////							 }catch(DataAccessException ex){
-////						            ex.printStackTrace();
-////							 }
-//							 
-//							 return true;
-//							 
-//						 }catch(DataAccessException ex){
-//					            ex.printStackTrace();
-//						 }
-//			
-//			}
-//			else{
-//				System.out.println("Error! Payment is already exist!");
-//				
-//				return false;
-//			}
-//					
-//		}
-		
+		}	
 		 
 		return false;
 	}
@@ -1252,13 +1115,13 @@ public boolean updatePaymentOrderForm(HttpSession session, int id, HttpServletRe
 						
 						StringBuilder update = new StringBuilder();
 						
-						update.append("UPDATE po_payment SET status = ? ");
-						update.append("WHERE POId = ?");
+						update.append("UPDATE po_payment a INNER JOIN po_orders b ON a.POId = b.POId SET a.status = ?, b.delivery_status = ?, b.PO_status = ? ");
+						update.append("WHERE a.POId = ?");
 						
 						try{
 							
 							poRow = getJdbcTemplate().update(update.toString(), new Object[] {
-							 	"cancelled",id					 								 	
+							 	"cancelled","cancelled","cancelled",id					 								 	
 						 });
 							
 							StringBuilder checkSQL = new StringBuilder();
@@ -1278,7 +1141,7 @@ public boolean updatePaymentOrderForm(HttpSession session, int id, HttpServletRe
 								try{
 									
 									poRow = getJdbcTemplate().update(updatePO.toString(), new Object[] {
-									 	"initial",id					 								 	
+										"cancelled",id					 								 	
 								 });
 								
 								}catch(DataAccessException ex){
@@ -1302,7 +1165,39 @@ public boolean updatePaymentOrderForm(HttpSession session, int id, HttpServletRe
 			}
 		return false;
 	}	
-
+	public List<PaymentOrderModel> getAttachment(HttpSession session, int id){
+		
+		ArrayList<PaymentOrderModel> attachementlist = new ArrayList<PaymentOrderModel>();
+		
+		StringBuilder strAttach = new StringBuilder();
+		
+		strAttach.append("SELECT a.attachments FROM po_payment_manual_details a ");
+		strAttach.append("INNER JOIN po_payment b ON a.PaymentId = b.PaymentId ");
+		strAttach.append("INNER JOIN po_orders c ON b.POId = c.POId ");
+		strAttach.append("WHERE b.POId = ?");
+		
+		attachementlist.clear();
+		
+		List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strAttach.toString(),id);
+		
+		for (Map row : rows) {
+			
+			PaymentOrderModel PO = new PaymentOrderModel();
+			
+			PO.setFile((String) (row.get("attachments")));
+			
+			attachementlist.add(PO);			
+		} 
+		
+			
+			
+			
+		
+		return attachementlist ;
+		
+	}
+	
+	
 	public void getPartnerDiscount(HttpSession session,String item_name){
 		
 		   StringBuilder strSQL = new StringBuilder();
@@ -2232,6 +2127,8 @@ public boolean updatePaymentOrderForm(HttpSession session, int id, HttpServletRe
 				for (Map row : rows) {
 									
 		
+					
+					System.out.println("dito ako kinukuha hahaha");
 		
 						
 						PO.setTotal_amount((String)(row.get("order_amount")+""));
@@ -2384,7 +2281,7 @@ public boolean updatePaymentOrderForm(HttpSession session, int id, HttpServletRe
 					PO.setPayment_status((String)(row.get("payment_status")));
 					PO.setDelivery_status((String)(row.get("delivery_status")));
 					PO.setPo_status((String)(row.get("po_status")));
-
+					
 					
 					purchaseorderlist.add(PO);			
 				}
@@ -2435,7 +2332,7 @@ public boolean updatePaymentOrderForm(HttpSession session, int id, HttpServletRe
 		   {
 			   StringBuilder strSQL = new StringBuilder();
 			   
-			   strSQL.append("SELECT a.poid, a.datecreated, a.status, b.partnerid, b.payment_status, b.delivery_status,c.partnername, d.amount,  d.branch ");
+			   strSQL.append("SELECT a.poid, a.datecreated, a.status, b.partnerid, b.payment_status, b.delivery_status,c.partnername, d.amount,  d.branch, d.attachments ");
 			   strSQL.append("FROM po_payment a ");
 			   strSQL.append("INNER JOIN po_orders b ON a.POId = b.POId ");
 			   strSQL.append("INNER JOIN partners c ON b.partnerid = c.partnerid ");
@@ -2470,11 +2367,13 @@ public boolean updatePaymentOrderForm(HttpSession session, int id, HttpServletRe
 					POM.setPayment_status((String)(row.get("payment_status")));
 					POM.setDate_created(DateCreated);		
 					POM.setDelivery_status((String)(row.get("delivery_status")));
+					POM.setFile((String)(row.get("attachments")));
 					
 					BigDecimal total_amount = new BigDecimal(row.get("amount")+"");
 					
 					POM.setTotal_amount(total_amount+"");
 					
+					System.out.println(POM.getFile());
 					
 					purchaseorderlist.add(POM);			
 				}
@@ -3020,29 +2919,54 @@ public boolean updatePaymentOrderForm(HttpSession session, int id, HttpServletRe
 	public List<PurchaseOrderBean> fillItemCodeList(HttpSession session){
 		
 		   String role = session.getAttribute("USERLEVEL").toString();
-		
-		   StringBuilder strSQL = new StringBuilder();
-		  				 
-		   ArrayList<PurchaseOrderBean> purchaseorderlist = new ArrayList<PurchaseOrderBean>();
 		   
-		   strSQL.append("SELECT item_name,face_value_amount from purchase_items ");
-			
-			List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString());
-			
-			for (Map row : rows) {
-				
-				PurchaseOrderBean PO = new PurchaseOrderBean();
-				PO.setItemname((String)(row.get("item_name")));
-				PO.setFacevalue((String)(row.get("face_value_amount")+""));
-				
-				
-				purchaseorderlist.add(PO);
+		   ArrayList<PurchaseOrderBean> purchaseorderlist = new ArrayList<PurchaseOrderBean>();
 		
-			}
-
+		   if(role.equalsIgnoreCase("manager")){
+		   
+			   StringBuilder strSQL = new StringBuilder();	  
+			   
+			   strSQL.append("SELECT item_name,face_value_amount from purchase_items ");
+				
+				List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString());
+				
+				for (Map row : rows) {
+					
+					PurchaseOrderBean PO = new PurchaseOrderBean();
+					PO.setItemname((String)(row.get("item_name")));
+					PO.setFacevalue((String)(row.get("face_value_amount")+""));
+					
+					
+					purchaseorderlist.add(PO);
 			
-			return purchaseorderlist;
+				}
+				return purchaseorderlist;
+		   }
+		   else if(role.equalsIgnoreCase("user")){
+			   
+			   StringBuilder strSQL = new StringBuilder();	  
+			   
+			   strSQL.append("SELECT item_name,face_value_amount from purchase_items WHERE item_id = ? ");
+				
+				List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString(),1);
+				
+				for (Map row : rows) {
+					
+					PurchaseOrderBean PO = new PurchaseOrderBean();
+					PO.setItemname((String)(row.get("item_name")));
+					PO.setFacevalue((String)(row.get("face_value_amount")+""));
+					
+					
+					purchaseorderlist.add(PO);
 			
+				}
+			   
+			   
+			   return purchaseorderlist;
+		   }
+		 
+			
+		   return purchaseorderlist;
 	}
 	
 	public List<PurchaseOrderBean> fillWalletlist(HttpSession session){

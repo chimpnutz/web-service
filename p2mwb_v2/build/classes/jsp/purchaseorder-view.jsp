@@ -237,11 +237,11 @@ cssdropdown.startchrome("payphilexchange")
 
 <header><h2 class="text18_tungsten">Payment Section <a href="#modal">
 	<core:forEach var="data" items="${list }">
-		<core:if test="${data.po_status == 'active' && data.payment_status != 'paid' }">
+		<core:if test="${data.payment_status != 'paid' }">
 		
 			<core:if test="${user != 'superadmin'}">
 			   		   
-			    <core:if test ="${data.payment_status != 'for verification' && data.payment_status != 'paid'}">	
+			    <core:if test ="${data.payment_status != 'for verification' && data.payment_status != 'paid' && data.po_status != 'cancelled'}">	
 				<input type="button" id="button1" class="button" value="Add"></input>
 				
 				</core:if>
@@ -265,7 +265,7 @@ cssdropdown.startchrome("payphilexchange")
 			   
 				<core:if test="${data.payment_status  == 'for verification' && datas.status != 'cancelled'}">	
 				
-				<input type="button" id="button1" class="button" value="Upadate"></input>
+				<input type="button" id="button1" class="button" value="Update"></input>
 				
 				</core:if>
 				</core:forEach>
@@ -392,7 +392,7 @@ cssdropdown.startchrome("payphilexchange")
       </div>
       <div class="copy">
         
-<form action="" commandName="paymentorderForm" id="paymentorderForm" method="POST" enctype="multipart/form-data">
+<form:form action="" commandName="paymentorderForm" id="paymentorderForm" enctype="multipart/form-data">
 <fieldset style="border:0">
 
   <label class="text12_tungsten_bold">Select</label>
@@ -419,13 +419,13 @@ cssdropdown.startchrome("payphilexchange")
         <core:forEach var="data" items="${pototal }">
         <div id="amnt">
         <label class="text12_tungsten_bold">Amount</label>
-        <input name="amount" type="text" id="amnt1" style="color:black !important"  value="${data.total_amount }" disabled="disabled"/><br/> <span class="inline"> 
+        <form:input  path="total_amount" type="text" id="amnt1" style="color:black !important"  value="${data.total_amount }" disabled="disabled"/><br/> <span class="inline"> 
         </div>        
 		</core:forEach>	
 
         <div id="bank">
         <label class="text12_tungsten_bold">Bank</label>
-        <input name="bank" type="text" id="bank1" />
+        <form:input  path="bank" type="text" id="bank1" />
        
          <span class="inline">
         </div>
@@ -434,15 +434,15 @@ cssdropdown.startchrome("payphilexchange")
 
         <div id="branch">
         <label class="text12_tungsten_bold">Branch</label>
-        <input name="branch" type="text" id="branch1" /><br/> <span class="inline">
+        <form:input  path="branch" type="text" id="branch1" /><br/> <span class="inline">
         
         <label class="text12_tungsten_bold">Attachment</label>
-        <input name="fileUpload" type="file"/><span class="inline">
+        <form:input  path="cfile" type="file"/><span class="inline">
         </div> 
 
         <div id="remarks">
             <label for="textarea" class="text12_tungsten_bold">Remarks</label>
-    		<textarea name="text" id="textarea" cols="60" rows="5" style="resize: none;" placeholder="Leave a message..." ></textarea>
+    		<form:textarea  path="text" id="textarea" cols="60" rows="5" style="resize: none;" placeholder="Leave a message..." />
  		   
     		 <input type = "submit" style="margin-top:72px" class = "btn" id="moveme" value= "Submit" name="submit"> 	   
         </div>
@@ -481,7 +481,7 @@ cssdropdown.startchrome("payphilexchange")
   </div>
 </article>
 	
-</form>
+</form:form>
 
 
       </div>

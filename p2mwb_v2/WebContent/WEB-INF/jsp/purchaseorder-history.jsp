@@ -14,6 +14,7 @@
 <link href="../css/unibar.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/header.js"></script>
 <script type="text/javascript" src="../js/dropdown.js"></script>
+
 <title>Pay PhilExchange</title>
 </head>
 
@@ -182,11 +183,13 @@ cssdropdown.startchrome("payphilexchange")
 					     	 <td>${data.branch}</td>
 					         <td>${data.status}</td>
 					         <td>${data.payment_status}</td>
-					         <td>${data.delivery_status}</td>
- 							 <td><a href="purchaseorder-viewAttachments.html?poid=${data.poid}">See Attachments</a></td>	
+					         <td>${data.delivery_status}</td>					  
+ 							 <td><a href="../css/uploadedimages/${data.file }" >See Attachments</a></td>	
+ 					 
 						</tr>
 						</core:forEach>	
-								
+								 
+						
 					</table>
 
 </core:if>

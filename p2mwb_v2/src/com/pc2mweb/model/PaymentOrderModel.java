@@ -1,11 +1,22 @@
 package com.pc2mweb.model;
 
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.io.File;
+import java.util.List;
+
 public class PaymentOrderModel {
 
 	String type;	
 	String remarks;
 	String file;
-		
+	//MultipartFile file;
+	File filez;
+	CommonsMultipartFile cfile;
+	
+	String text;
+
 	int paymentID;
 	String branch;
 	String partnername;
@@ -25,9 +36,16 @@ public class PaymentOrderModel {
 	String payment_status;
 	int poid;
 	String po_status;
-	
+
 	String delivery_status;
 	
+	String attachment;
+	public File getFilez() {
+		return filez;
+	}
+	public void setFilez(File filez) {
+		this.filez = filez;
+	}
 	public String getFile() {
 		return file;
 	}
@@ -148,6 +166,24 @@ public class PaymentOrderModel {
 	}
 	public void setDelivery_status(String delivery_status) {
 		this.delivery_status = delivery_status;
+	}
+	public CommonsMultipartFile getCfile() {
+		return cfile;
+	}
+	public void setCfile(CommonsMultipartFile cfile) {
+		this.cfile = cfile;
+	}
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	public String getAttachment() {
+		return attachment;
+	}
+	public void setAttachment(String attachment) {
+		this.attachment = attachment;
 	}
 	
 }

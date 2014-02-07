@@ -267,7 +267,7 @@ cssdropdown.startchrome("payphilexchange")
 			</core:forEach>
 	      </select style>
 	      <core:if test="${valid=='fails'}">
-			${message}
+			<label class="test12_tungsten_bold">${message}</p></label>
 			</core:if>
 	      </p>
 	      </div>

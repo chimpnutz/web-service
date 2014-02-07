@@ -14,6 +14,10 @@ public class PurchaseOrderModel {
 	String wallet;
 	String amount;
 	String total_amount;
+	String file;
+	
+	
+	
 	
 	int poid;
 	String podate;
@@ -34,6 +38,13 @@ public class PurchaseOrderModel {
 	String status;
 	String date_created;
 	String price;
+	
+	public String getFile() {
+		return file;
+	}
+	public void setFile(String file) {
+		this.file = file;
+	}
 	
 	public String getPrice() {
 		return price;
@@ -197,6 +208,5 @@ public class PurchaseOrderModel {
 	public void setDeliver_date(String deliver_date) {
 		this.deliver_date = deliver_date;
 	}
-
 
 }

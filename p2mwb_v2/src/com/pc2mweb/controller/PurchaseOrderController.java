@@ -169,7 +169,7 @@ public class PurchaseOrderController {
 		modelAndView.addObject("wallet", wallet);
 		modelAndView.addObject("user",session.getAttribute("USERLEVEL"));
 		modelAndView.addObject("msg","success");
-		modelAndView.addObject("message", "Success.");
+		modelAndView.addObject("message", "Purchase Order Success.");
 	
 		
 		return modelAndView;
@@ -193,119 +193,119 @@ public class PurchaseOrderController {
 //		
 //		return modelAndView;
 //		
-////		modelAndView.addObject("user",session.getAttribute("USERLEVEL"));
-////		
-////	    SimpleDateFormat  datetodayFormat = new SimpleDateFormat("yyyyMMddkmsS");
-////	        
-////	    String filename = datetodayFormat.format(new Date());
-////	        
-////		if(session.getAttribute("USERLEVEL").toString().equalsIgnoreCase("manager"))
-////		{
-////			
-////		    long filesize = purchaseForm.getFile().getSize();
-////		    		    
-////		    String filetype = purchaseForm.getFile().getContentType();
-////		   
-////		    if(filetype.equalsIgnoreCase("image/jpeg") || filetype.equalsIgnoreCase("application/octet-stream") )
-////		    {
-////
-////			    if(filesize>100000){
-////			    	
-////					modelAndView.addObject("status","fail");
-////					modelAndView.addObject("msg", "Image Size too Large.");
-////					return modelAndView;
-////					
-////			    }
-////			    
-////			    if(filetype.equalsIgnoreCase("application/octet-stream")){
-////			    	
-////			    	
-////			    }else{
-////			    	
-////			    	 purchaseForm.setAttachment(filename+".jpg");
-////			    }
-////			    
-////		    }
-////		    
-////		    else{
-////		    	
-////		    	
-////				modelAndView.addObject("status","fail");
-////				modelAndView.addObject("msg", "Invalid File Type.");
-////				return modelAndView;
-////				
-////		    	
-////		    }
-////		    	
-////		    	
-////
-////		    
-////			
-////		}
-////		    
-////		
-////	    
-////		if(dao.insertPurchaseOrder(session, purchaseForm))
-////		
-////		
-////		{
-////			   String role = session.getAttribute("USERLEVEL").toString();
-////			   
-////			   if(role.equals("manager"))
-////			   {
-////				   
-////					ApplicationContext mailcontext = new ClassPathXmlApplicationContext("Spring-Mail.xml");
-////					
-////					
-////					Props props = new Props();
-////					
-////					MailModel mm = (MailModel) mailcontext.getBean("mail");
-////					
-////					String [] recipient =  props.getRecipients().split(",");
-////					
-////					String sender = props.getSender();
-////					
-////					mm.sendMail(sender,
-////							    recipient,
-////				    		   "Purchase Order", 
-////				    		   "Hi, \n\nA Purchase Order amounting to PHP  "+purchaseForm.getAmount()+"  was forwarded by: "+session.getAttribute("PID")+","+session.getAttribute("partnername")+". \n\nThanks, \n\n"+session.getAttribute("USER"));
-////				    
-////				
-////				    String orginalName = purchaseForm.getFile().getOriginalFilename();
-////				    String filePath = props.getPath()+filename+".jpg";
-////				    File destination = new File(filePath);
-////				    
-////				    
-////				   
-////				    try {
-////				    	purchaseForm.getFile().transferTo(destination);
-////				    } catch (IllegalStateException e) {
-////				        // TODO Auto-generated catch block
-////				        e.printStackTrace();
-////			
-////				    } catch (IOException e) {
-////				        // TODO Auto-generated catch block
-////				        e.printStackTrace();
-////		
-////				    }
-////				   
-////			   }
-////			
-////
-////			
-////			modelAndView.addObject("status","success");
-////			modelAndView.addObject("msg", "Purchase Order Request Successful!");
-////			return modelAndView;
-////			
-////		}
-////		else
-////		
-////		
-////		{
-////			modelAndView.addObject("status","fail");
-////			modelAndView.addObject("msg", "Purchase Order Request Fail!");
-////			return modelAndView;
-////		}
+//		modelAndView.addObject("user",session.getAttribute("USERLEVEL"));
+//		
+//	    SimpleDateFormat  datetodayFormat = new SimpleDateFormat("yyyyMMddkmsS");
+//	        
+//	    String filename = datetodayFormat.format(new Date());
+//	        
+//		if(session.getAttribute("USERLEVEL").toString().equalsIgnoreCase("manager"))
+//		{
+//			
+//		    long filesize = purchaseForm.getFile().getSize();
+//		    		    
+//		    String filetype = purchaseForm.getFile().getContentType();
+//		   
+//		    if(filetype.equalsIgnoreCase("image/jpeg") || filetype.equalsIgnoreCase("application/octet-stream") )
+//		    {
+//
+//			    if(filesize>100000){
+//			    	
+//					modelAndView.addObject("status","fail");
+//					modelAndView.addObject("msg", "Image Size too Large.");
+//					return modelAndView;
+//					
+//			    }
+//			    
+//			    if(filetype.equalsIgnoreCase("application/octet-stream")){
+//			    	
+//			    	
+//			    }else{
+//			    	
+//			    	 purchaseForm.setAttachment(filename+".jpg");
+//			    }
+//			    
+//		    }
+//		    
+//		    else{
+//		    	
+//		    	
+//				modelAndView.addObject("status","fail");
+//				modelAndView.addObject("msg", "Invalid File Type.");
+//				return modelAndView;
+//				
+//		    	
+//		    }
+//		    	
+//		    	
+//
+//		    
+//			
+//		}
+//		    
+//		
+//	    
+//		if(dao.insertPurchaseOrder(session, purchaseForm))
+//		
+//		
+//		{
+//			   String role = session.getAttribute("USERLEVEL").toString();
+//			   
+//			   if(role.equals("manager"))
+//			   {
+//				   
+//					ApplicationContext mailcontext = new ClassPathXmlApplicationContext("Spring-Mail.xml");
+//					
+//					
+//					Props props = new Props();
+//					
+//					MailModel mm = (MailModel) mailcontext.getBean("mail");
+//					
+//					String [] recipient =  props.getRecipients().split(",");
+//					
+//					String sender = props.getSender();
+//					
+//					mm.sendMail(sender,
+//							    recipient,
+//				    		   "Purchase Order", 
+//				    		   "Hi, \n\nA Purchase Order amounting to PHP  "+purchaseForm.getAmount()+"  was forwarded by: "+session.getAttribute("PID")+","+session.getAttribute("partnername")+". \n\nThanks, \n\n"+session.getAttribute("USER"));
+//				    
+//				
+//				    String orginalName = purchaseForm.getFile().getOriginalFilename();
+//				    String filePath = props.getPath()+filename+".jpg";
+//				    File destination = new File(filePath);
+//				    
+//				    
+//				   
+//				    try {
+//				    	purchaseForm.getFile().transferTo(destination);
+//				    } catch (IllegalStateException e) {
+//				        // TODO Auto-generated catch block
+//				        e.printStackTrace();
+//			
+//				    } catch (IOException e) {
+//				        // TODO Auto-generated catch block
+//				        e.printStackTrace();
+//		
+//				    }
+//				   
+//			   }
+//			
+//
+//			
+//			modelAndView.addObject("status","success");
+//			modelAndView.addObject("msg", "Purchase Order Request Successful!");
+//			return modelAndView;
+//			
+//		}
+//		else
+//		
+//		
+//		{
+//			modelAndView.addObject("status","fail");
+//			modelAndView.addObject("msg", "Purchase Order Request Fail!");
+//			return modelAndView;
+//		}
 //
 //	    
 //

@@ -1,0 +1,156 @@
+ a
+{
+	text-decoration: none;
+}
+#whole
+{
+	width: 1349px;
+	position: absolute;
+}
+
+#whitecover
+{
+
+	position: fixed;
+	width: 1163px;
+	height: 121px;
+	margin-left: 43.5px;
+	margin-top: -40px;
+	background-color: #fff;
+	z-index: 2;
+	 	font-style: Helvetica;
+
+}
+
+
+
+
+
+#secondnav
+{
+	width: 1110px;
+	height: 50px;
+	margin-left: 50px;
+	position:fixed;
+	margin-top: 30px;
+	font-style: Helvetica;
+	z-index: 1;
+	-webkit-transition: all 500ms ease;
+-moz-transition: all 500ms ease;
+-ms-transition: all 500ms ease;
+-o-transition: all 500ms ease;
+transition: all 500ms ease;
+-webkit-margin-start:55px;
+
+}
+
+
+#cont
+{
+	
+	width: 1200px;
+	height: 500px;
+	
+}
+
+#cont img
+{
+	z-index: -9;
+}
+
+.bodytype
+{
+	width: 800px;
+	height: 500px;
+	z-index: 9999;
+	margin-left: 100px;
+}
+
+
+
+.pageheader
+{
+	z-index: 999;
+	margin: 0 0 0 20px;
+
+
+}
+
+h1
+{
+	color: #4b4b4b;
+	font-family: Tahoma;
+	font-size: 22px;
+	line-height: 24px;
+	font-weight: normal;
+	z-index: 999;
+}
+	.encodea
+	{
+		width: 100%;
+		height: 50px;
+		margin-top: 20px;
+		border:double blue;
+		margin-left: 10%;
+		
+	}
+
+	.encodea a{
+		float: right;
+	}
+
+
+	.leftdetails
+	{	
+		margin-top: 50px;
+		float: left;
+		position: absolute;
+
+		
+	}
+
+
+
+
+
+
+	
+#paging-table {
+	float: right;
+	margin: 0 4px 0 0;
+}	
+.page-far-left	{
+	background: url(../css/images/table/paging_far_left.gif) no-repeat;
+	display: block;
+	float: left;
+	height: 24px;
+	margin: 0 4px 0 0;
+	width: 24px;
+	}
+.page-left	{
+	background: url(../css/images/table/paging_far_left.gif) no-repeat;
+	display: block;
+	float: left;
+	height: 24px;
+	width: 24px;
+	}
+.page-far-right	{
+	background: url(../css/images/table/paging_far_right.gif) no-repeat;
+	display: block;
+	float: left;
+	height: 24px;
+	margin: 0 4px 0 4px;
+	width: 24px;
+	}
+.page-right	{
+	background: url(../css/images/table/paging_far_right.gif) no-repeat;
+	display: block;
+	float: left;
+	height: 24px;
+	width: 24px;
+	}
+#page-info	{
+	float: left;
+	line-height: 16px;
+	padding: 3px 12px 0 12px;
+	}

@@ -1,0 +1,1828 @@
+.bluebox
+{
+	width: 900px;
+	height: 30px;
+	position: absolute;
+	margin-left: 250px;
+	background: #222222 url(../css/images/topblue.png);
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+  	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+
+.bluebox p
+{
+margin-left:250px; color:#fff; font-size:15px;
+margin-top: 10px;
+
+}
+
+
+
+
+
+
+
+.bluebox2
+{
+	width: 900px;
+	height: 30px;
+	position: absolute;
+	margin-left: 250px;
+	background: #222222 url(../css/images/topblue.png);
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+  	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	margin-top: 490px;
+}
+
+
+.bluebox2 p
+{
+margin-left:250px; color:#fff; font-size:15px;
+margin-top: 10px;
+
+}
+
+
+
+
+
+.bluebox3
+{
+	width: 900px;
+	height: 30px;
+	position: absolute;
+	margin-left: 250px;
+	background: #222222 url(../css/images/topblue.png);
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+  	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	margin-top: 620px;
+}
+
+
+.bluebox3 p
+{
+margin-left:250px; color:#fff; font-size:15px;
+margin-top: 10px;
+
+}
+
+
+
+
+
+.bluebox4
+{
+	width: 900px;
+	height: 30px;
+	position: absolute;
+	margin-left: 250px;
+	background: #222222 url(../css/images/topblue.png);
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+  	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	margin-top: 800px;
+}
+
+
+.bluebox4 p
+{
+margin-left:250px; color:#fff; font-size:15px;
+margin-top: 10px;
+
+}
+
+
+.bluebox5
+{
+	width: 900px;
+	height: 30px;
+	position: absolute;
+	margin-left: 250px;
+	background: #222222 url(../css/images/topblue.png);
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+  	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	margin-top: 960px;
+}
+
+
+.bluebox5 p
+{
+margin-left:250px; color:#fff; font-size:15px;
+margin-top: 10px;
+
+}
+
+
+
+
+
+.mimages
+{
+	width: 100px;
+	height: auto;
+	margin-left: 600px;
+	margin-top: 45px;
+
+
+}
+
+
+.mimages a
+{
+	width: 800px;
+	height: auto;
+
+}
+
+.fade {
+    opacity: 1;
+transition: opacity .25s ease-in-out;
+-moz-transition: opacity .25s ease-in-out;
+-webkit-transition: opacity .25s ease-in-out;
+}
+.fade:hover {
+    opacity: 0.5;
+}
+
+
+.mimages2
+{
+	width: 100px;
+	height: auto;
+	margin-left: 750px;
+margin-top: 45px;
+}
+
+
+.mimages2 a
+{
+	width: 800px;
+	height: auto;
+
+}
+
+.fontsa{
+	font-family: arial;
+	z-index: 1;
+}
+
+
+.fontsa :hover{
+	font-family: arial;
+
+	color: #62c9ff;
+	z-index: 1;
+}
+
+
+
+.fontsa p{
+font-family: arial;
+z-index: 1;
+-webkit-transition: all 500ms ease;
+-moz-transition: all 500ms ease;
+-ms-transition: all 500ms ease;
+-o-transition: all 500ms ease;
+transition: all 500ms ease;
+}
+
+
+
+.currentselect
+{	
+
+	color: #b4b4b4;
+	z-index: 1;
+
+}
+
+.fontsb {
+	width: 300px;
+	height: auto;
+	margin-left: 700px;
+}
+#borderside
+{	
+	margin-top: 80px;
+	width: 1200px;
+	height: 1070px;
+	
+	margin-left: -20px;
+	
+}
+
+#borderside3
+{	
+	margin-top: 80px;
+	width: 1200px;
+	height: 370px;
+	
+	margin-left: -20px;
+	
+}
+
+
+#borderside2
+{	
+	margin-top: -25px;
+	width: 1200px;
+	height: 900px;
+	
+	margin-left: 25px;
+	
+}
+
+
+#topside	{
+	height: 70px;
+	margin: 80px auto 0px auto;
+	padding: 0px 0 0 0;
+	width: 1240px;
+
+	}
+
+
+
+#topside-center	{
+	color: #818181;
+	font-size: 11px;
+	line-height: 11px;
+	padding: 15px 0 15px 25px;
+	margin: 0 20px;
+	position: fixed;
+	
+
+	} 
+
+ #top-center a
+ {
+ 	margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+ 	position: fixed;
+ 	font-style: arial;
+ 	font-size: 16px;
+ 	color: #666666;
+ 	z-index: 99999;
+ 
+ }
+
+
+
+
+
+ #centerside	{
+	height: 70px;
+	margin: 80px auto 0px auto;
+	padding: 0px 0 0 0;
+	
+	width: 1240px;
+
+	}
+
+
+#centerside-center	{
+	color: #818181;
+	font-size: 11px;
+	line-height: 11px;
+	padding: 15px 0 15px 25px;
+
+	margin: 0 20px;
+
+	} 
+
+
+
+
+.cutter
+{
+	position: absolute;
+	border-left: solid 1px #e6e6e6;
+	height: 1060px;
+	width: 5px;
+	margin-left: 230px;
+	margin-top: 5px;
+}
+
+
+.holder{
+	width: 100%;
+	height: 100px;
+	border:red double;
+	margin-top: 40px;
+}
+
+.horizon
+{
+	position: absolute;
+	border-bottom: inset 1px #e6e6e6;
+	height: 5px;
+	width: 850px;
+	margin-left: 280px;
+	
+
+	margin-top: 465px;
+}
+
+
+
+
+.horizon2
+{
+	position: absolute;
+	border-bottom: inset 1px #e6e6e6;
+	height: 5px;
+	width: 850px;
+	margin-left: 280px;
+	
+
+	margin-top: 600px;
+}
+
+
+.horizon3
+{
+	position: absolute;
+	border-bottom: solid 1px #e6e6e6;
+	height: 5px;
+	width: 850px;
+	margin-left: 280px;
+	
+
+	margin-top: 780px;
+}
+
+
+
+.horizon4
+{
+	position: absolute;
+	border-bottom: solid 1px #e6e6e6;
+	height: 5px;
+	width: 850px;
+	margin-left: 280px;
+	
+
+	margin-top: 940px;
+}
+.leftmain{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 55px;
+		font-family: arial;
+
+}
+
+.leftmain p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+
+.leftmain2{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 520px;
+
+}
+
+.leftmain2 p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+
+
+.leftmain3{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 650px;
+
+}
+
+.leftmain3 p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+
+.leftmain4{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 810px;
+
+}
+
+.leftmain4 p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+
+
+.leftmain5{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 980px;
+
+}
+
+.leftmain5 p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+
+
+
+
+
+	.form1
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 50px;
+	}
+
+	
+
+
+
+
+
+
+	.form2
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 90px;
+	}
+
+
+	
+	.form3
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 130px;
+	}
+
+
+	.form4
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 170px;
+	}
+
+
+
+	.form5
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 210px;
+	}
+
+	.form6
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 250px;
+	}
+
+
+	.form7
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 290px;
+	}
+
+	.form8
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 330px;
+	}
+
+
+		.form9
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 370px;
+	}
+
+
+			.form10
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 410px;
+	}
+
+			.form11
+	{
+			width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 530px;
+	}
+
+
+
+			.form12
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 570px;
+	}
+
+
+
+			.form13
+	{
+			width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 670px;
+	}
+
+
+	
+			.form14
+	{
+				width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 710px;
+	}
+	
+
+				.form15
+	{
+				width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 750px;
+	}
+
+
+
+
+				.form16
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		margin-top: 840px;
+		font-family: arial;
+		font-size: 12px;
+		color: #666666;
+	}
+
+
+
+
+				.form17
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		margin-top: 880px;
+		font-family: arial;
+		font-size: 12px;
+		color: #666666;
+	}
+
+
+
+				.form18
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		margin-top: 910px;
+		font-family: arial;
+		font-size: 12px;
+		color: #666666;
+	}
+
+
+				.form19
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		margin-top: 1000px;
+		font-family: arial;
+		font-size: 12px;
+		color: #666666;
+	}
+
+
+
+
+				.form20
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 245px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		margin-top: 1040px;
+		font-family: arial;
+		font-size: 12px;
+		color: #666666;
+	}
+
+
+
+
+
+
+
+
+	.nextprev
+
+	{
+
+		width: 200px;
+		height: 10px;
+		position: absolute;
+		margin-left: 465px;
+		margin-top: 1100px;
+		font-family: arial;
+		font-size: 12px;
+		color: #666666;
+
+		}
+
+
+
+	.nextprev2
+
+	{
+
+		width: 200px;
+		height: 10px;
+		position: absolute;
+		margin-left: 465px;
+		margin-top: 940px;
+		font-family: arial;
+		font-size: 12px;
+		color: #666666;
+
+		}
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+/*for applicationform 2 pag */
+.cutter2
+{
+	position: absolute;
+	border-left: solid 1px #e6e6e6;
+	height: 890px;
+	width: 5px;
+	margin-left: 230px;
+	
+	
+	
+
+	margin-top: 5px;
+}
+
+.leftsideview{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 55px;
+
+}
+
+.leftsideview p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+
+.leftsideview2{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 140px;
+
+}
+
+.leftsideview2 p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+.leftsideview3{
+		width: 300px;
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 240px;
+
+}
+
+.leftsideview3 p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+
+.leftsideview4{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 480px;
+
+}
+
+.leftsideview4 p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+
+
+
+
+.leftsideview5{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 630px;
+
+}
+
+.leftsideview5 p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+.leftsideview6{
+
+		position: absolute;
+		margin-left: 30px;
+		margin-top: 760px;
+
+}
+
+.leftsideview6 p{
+		font-family: arial;
+		color: #2c6e99;
+		font-size: 15px;
+
+}
+
+
+.horizontal
+{
+	position: absolute;
+	border-bottom: inset 1px #e6e6e6;
+	height: 5px;
+	width: 850px;
+	
+
+	margin-left: 280px;
+	
+
+	
+
+	
+
+	margin-top: 95px;
+}
+
+
+.horizontal2
+{
+	position: absolute;
+	border-bottom: inset 1px #e6e6e6;
+	height: 5px;
+	width: 850px;
+	
+
+	margin-left: 280px;
+	
+
+	
+
+	
+
+	margin-top: 190px;
+}
+
+
+.horizontal3
+{
+	position: absolute;
+	border-bottom: inset 1px #e6e6e6;
+	height: 5px;
+	width: 850px;
+	
+
+	margin-left: 280px;
+	
+
+	
+
+	
+
+	margin-top: 440px;
+}
+
+
+
+.horizontal4
+{
+	position: absolute;
+	border-bottom: inset 1px #e6e6e6;
+	height: 5px;
+	width: 850px;
+	
+
+	margin-left: 280px;
+	
+
+	
+
+	
+
+	margin-top: 580px;
+}
+
+
+
+.horizontal5
+{
+	position: absolute;
+	border-bottom: inset 1px #e6e6e6;
+	height: 5px;
+	width: 850px;
+	
+
+	margin-left: 280px;
+	
+
+	
+
+	
+
+	margin-top: 720px;
+}
+
+
+
+		.form21
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 50px;
+	}
+
+
+
+		.form22
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 140px;
+	}
+
+
+		.form23
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 235px;
+	}
+
+		.form23a
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 215px;
+	}
+
+
+
+
+	.form24
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 275px;
+	}
+
+.form25
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 355px;
+	}
+
+.form25a
+{
+	width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 325px;
+}
+
+
+
+
+.form26
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 395px;
+	}
+
+
+
+
+.form27
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 495px;
+	}
+
+
+
+.form27a
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 475px;
+	}
+
+
+	.form28
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 535px;
+	}
+
+
+
+	.form29a
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 625px;
+	}
+
+	.form29
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 665px;
+	}
+		.form30
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 755px;
+	}
+
+
+		.form31
+	{
+		width: 1000px;
+		height: 10px;
+		position: absolute;
+		margin-left: 200px;
+	
+	
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+		font-family: arial;
+		color: #666666;
+		font-size: 12px;
+		margin-top: 795px;
+	}

@@ -1,0 +1,115 @@
+
+
+#basic-modal {
+	width:100%;
+	height:auto;
+}
+#divamount {
+	padding:5px;
+	
+}
+
+.branch_class {
+		float:left;
+		width:25%;
+		margin-top:10px;
+		font-size:12px;
+		font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+		color:#666;
+		
+
+
+	       }
+.branchid_class {
+		float:left;
+		width:15%;
+		margin-top:10px;
+		font-size:12px;
+		font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+		color:#666;
+		
+
+
+		}
+.balance_class {
+		float:left;
+		width:15%;
+		margin-top:10px;
+		font-size:12px;
+		font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+		color:#666;
+		
+}
+.mobile_no{ 
+		float:left;
+		width:15%;
+		margin-top:10px;
+		font-size:12px;
+		font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+		color:#666;
+		}
+
+.amount_class {
+		float:left;
+		width:20%;
+		margin-top:10px;
+		font-size:12px;
+		font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+		color:#666;
+}
+
+.status  {
+	float:left;
+	width:15%;
+	font-size:12px;
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	color:#666;	
+}
+
+.statusmsg  {
+	float:left;
+	width:15%;
+	font-size:12px;
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	color:#666;	
+}
+
+.basic  {
+	margin-top:50px;
+	margin-bottom:20px;
+	margin-left:300px;
+	
+}
+
+
+#data {
+
+	width: 600px;
+	margin-left : 0px;
+	float: left;
+}
+
+#data2 {
+
+	width: 20%;
+	float: right;
+	margin-top: 10px;
+	margin-right: 5px;
+	font-size:12px;
+	font-family:"Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+	color:#666
+}
+
+input[type="string"], input[type="text"], input[type="password"]
+{
+padding:3px;
+background:#fff;
+border:1px;
+border-style:solid;
+border-color:#999;
+outline:none;
+}
+
+
+
+

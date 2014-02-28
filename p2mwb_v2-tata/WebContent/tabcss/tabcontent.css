@@ -1,0 +1,56 @@
+#tablist{
+padding: 5px 0;
+margin-left: 0;
+margin-bottom: 0;
+margin-top: 0.1em;
+
+}
+
+#tablist li{
+list-style: none;
+display: inline;
+margin: 0;
+}
+
+#tablist li a{
+padding: 7px 1em;
+margin-left: 3px;
+border:1px;
+border-style:solid;
+border-color:#cccccc;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+		-khtml-border-top-left-radius:5px 5px 0 0;
+		-ms-border-top-left-radius:5px 5px 0 0;
+	 	-o-border-top-left-radius:5px 5px 0 0;
+	 	-moz-border-top-left-radius:5px 5px 0 0;
+	 	-webkit-border-top-left-radius:5px 5px 0 0;
+	 	
+	 	-khtml-border-top-right-radius:5px 5px 0 0;
+		-ms-border-top-right-radius:5px 5px 0 0;
+	 	-o-border-top-right-radius:5px 5px 0 0;
+	 	-moz-border-top-right-radius:5px 5px 0 0;
+	 	-webkit-border-top-right-radius:5px 5px 0 0;
+border-bottom: none;
+
+}
+
+#tablist li a:link, #tablist li a:visited{
+color: #444444;
+}
+
+#tablist li a.current{
+background: #fff;
+}
+
+#tabcontentcontainer{
+width: 95%;
+height:100%;
+padding: 5px;
+border:1px;
+border-style:solid;
+border-color:#cccccc;
+margin:0 5px 20px 3px;
+overflow: auto;
+}
+

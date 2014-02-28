@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="P2MWEB Sales Consumer Reposts" pageWidth="968" pageHeight="552" orientation="Landscape" columnWidth="968" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="566d9d22-dc11-4209-b789-2001ebd7e67d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.xls.detect.cell.type" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.create.custom.palette" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.one.page.per.sheet" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.rows" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.remove.empty.space.between.columns" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.white.page.background" value="true"/>
+	<property name="net.sf.jasperreports.export.xls.size.fix.enabled" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.graphics" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.collapse.row.span" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.cell.border" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.ignore.cell.background" value="false"/>
+	<property name="net.sf.jasperreports.export.xls.wrap.text" value="true"/>
+	<queryString>
+		<![CDATA[SELECT txdate,
+mobilenumber, amount, amount as amountdeducted, amount as retainedearnings, status, tracenumber,transactionid
+from user_transactions_logs  where username = 'express172769' ORDER BY txdate desc]]>
+	</queryString>
+	<field name="txdate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="mobilenumber" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amount" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="amountdeducted" class="java.lang.Float"/>
+	<field name="retainedearnings" class="java.lang.Float"/>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tracenumber" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="transactionid" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="11"/>
+	</title>
+	<pageHeader>
+		<band height="15">
+			<staticText>
+				<reportElement uuid="84062ac9-eaf4-4aed-8d82-8ac9914811ce" x="14" y="0" width="74" height="15"/>
+				<textElement/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cd5c8f2b-4872-4ea5-8180-db033fe18f81" x="116" y="0" width="76" height="15"/>
+				<textElement/>
+				<text><![CDATA[Trace Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="99ce971b-e8db-48ff-b891-ecd0588de70c" x="204" y="0" width="104" height="15"/>
+				<textElement/>
+				<text><![CDATA[Mobile Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3cd8feb9-e2ec-4b8f-931b-f6d5a302c568" x="333" y="0" width="81" height="15"/>
+				<textElement/>
+				<text><![CDATA[Face Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="49303ad6-af90-45b0-b001-fdd1a9bd4267" x="437" y="0" width="136" height="15"/>
+				<textElement/>
+				<text><![CDATA[Amount Deducted]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9b468728-0cc0-48a4-8add-db2a4e885500" x="610" y="0" width="87" height="15"/>
+				<textElement/>
+				<text><![CDATA[Retained Earnings]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="807d4663-3a41-4385-9665-544a41350372" x="829" y="0" width="49" height="15"/>
+				<textElement/>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="13" splitType="Prevent">
+			<textField pattern="dd-MMM-yyyy">
+				<reportElement uuid="4c0325e2-7687-44a2-a853-da81128c577b" x="2" y="0" width="114" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy hh:mm").format($F{txdate})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5bb2cdff-4fe6-4b81-bfc2-ff50a14778fb" x="745" y="0" width="223" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0677ef21-89bc-4882-8d07-8e70026e0daa" x="308" y="0" width="116" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="39318e7b-2094-4b82-80b7-67f897ad5c51" x="599" y="0" width="87" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{retainedearnings}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5cd75079-8df9-4c60-bdcc-4f7100a619e9" x="204" y="0" width="104" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{mobilenumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ef252743-b4d1-49c5-a33b-4ff435695bd7" x="116" y="0" width="76" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{tracenumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3c2e5cd8-d3b2-43bf-9446-6270539d4278" x="437" y="0" width="136" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{amountdeducted}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

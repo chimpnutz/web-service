@@ -1,0 +1,33 @@
+	<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+
+	
+<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	<property name="host" value="mail.payexchangeinc.com" />
+	<property name="port" value="25" />
+	<property name="username" value="tristan.lapidez@payexchangeinc.com" />
+	<property name="password" value="charles" />
+ 
+	<property name="javaMailProperties">
+	   <props>
+       	      <prop key="mail.smtp.auth">true</prop>
+       	      <prop key="mail.smtp.starttls.enable">false</prop>
+       	   </props>
+	</property>
+</bean>
+ 
+<bean id="mail" class="com.pc2mweb.model.MailModel">
+	<property name="mailSender" ref="mailSender" />
+
+</bean>
+		
+
+
+
+
+
+</beans>

@@ -1,0 +1,119 @@
+
+form input,form textarea,select {
+
+	border-bottom-color: #cccccc;
+	border-right-color: #cccccc;
+	
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 2px;
+
+}
+
+select option {
+	padding-left: 5px;
+	padding-top: 2px;
+
+}
+
+
+
+
+span.inline{
+				display:inline;
+				clear:none;
+			}
+
+
+
+#pn1{
+	margin-left: 45px;
+
+}
+#pod1{
+	margin-left:80px;
+}
+
+#ps1{
+	margin-left: 34px;
+}
+
+
+#ds1{
+	margin-left: 34px;
+}
+
+#pos1{
+	margin-left: 69px;
+}
+
+#ap1{
+	margin-left: 48px;
+}
+
+#c1{
+	margin-left: 34px;
+}
+
+
+.actionmove
+{
+	margin-left: 5px;
+}
+
+
+.actionmove a img
+{
+	margin-left: 10px;
+}
+
+
+#remarks *
+{
+	 vertical-align: middle;
+}
+
+
+#branch1
+{
+	margin-left: 12px;
+}
+
+
+#bank1
+{
+	margin-left: 24px;
+}
+
+
+
+#amnt1
+{
+	margin-left: 6px;
+}
+
+#space1{
+	margin-top: 5px;
+}
+
+
+.actionbuttons
+{
+	width: auto;
+	height: auto;
+}
+
+.button1{
+margin-left: 20px;
+margin-top: 10px;
+}
+
+.adjustspace
+{
+	margin-top: 10px;
+}
+
+.viewpobot
+{
+	margin-bottom: 50px;
+}

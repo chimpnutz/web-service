@@ -1,0 +1,98 @@
+<web-app
+    xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    version="3.0">
+
+	<servlet>
+		<servlet-name>Spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+        <param-name>contextConfigLocation</param-name>
+         <param-value>/WEB-INF/app-config.xml</param-value>
+    	</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<listener>
+		<listener-class>
+		org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<servlet-mapping>
+		<servlet-name>Spring</servlet-name>
+		<url-pattern>/jsp/*</url-pattern>
+	</servlet-mapping>
+
+			
+		<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+		</welcome-file-list>
+
+	 <context-param>
+       <param-name>DatabaseContext</param-name>
+       <param-value>jdbc/p2m</param-value>
+    </context-param>
+
+     <context-param>
+       <param-name>SMSDatabaseContext</param-name>
+       <param-value>jdbc/psdb</param-value>
+     </context-param>
+     
+    <context-param>
+			<param-name>EpinDatabaseContext</param-name>
+			<param-value>jdbc/epin</param-value>
+	</context-param>
+     
+	 <context-param>
+       <param-name>AMAX_HOST</param-name>
+       <param-value>https://autoloadmaxweb.globe.com.ph/cgi-bin/soapServer2.cgi</param-value>
+     </context-param>
+     
+     <context-param>
+       <param-name>AMAX_URI</param-name>
+       <param-value>urn:SMITHWS</param-value>
+     </context-param>
+     
+     <context-param>
+       <param-name>AMAX_USER</param-name>
+       <param-value>PAYPHILLOCAL</param-value>
+     </context-param>
+     
+     <context-param>
+       <param-name>AMAX_PASSWORD</param-name>
+       <param-value>4721582569</param-value>
+     </context-param>
+     
+      <context-param>
+       <param-name>GHP_NUMRANGE</param-name>
+       <param-value>C:/temp/GlobePrepaidNumberRanges.properties</param-value>
+     </context-param>
+     
+     <context-param>
+       <param-name>TM_NUMRANGE</param-name>
+       <param-value>C:/temp/TouchMobilePrepaidNumberRanges.properties</param-value>
+     </context-param>	
+     
+        <context-param>
+       <param-name>DEBUG_AMAX</param-name>
+       <param-value>PROD</param-value>
+     </context-param>
+     
+      <context-param>
+       <param-name>TOPUP_TYPE</param-name>
+       <param-value>AMAX</param-value>
+     </context-param>
+     
+  
+     
+     
+
+     
+  <error-page>
+	<error-code>404</error-code>
+	<location>/WEB-INF/jsp/error.jsp</location>
+  </error-page>
+  
+</web-app>

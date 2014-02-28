@@ -1,0 +1,108 @@
+#unibar {
+	width:100%;
+	height:54px;
+	background-image:url(../css/images/uninav_bg.gif);
+	background-repeat:repeat-x;
+}
+#unibar img {border:none;}
+
+#unibarlogo {
+	width:400px;
+	height:54px;
+	margin:0px;
+	padding:0px 0px 0px 22px;
+	background-image:url(../css/images/unibar_leftsidebg.gif);
+	background-repeat:no-repeat;
+	background-position:top left;
+	position:absolute;
+
+}
+#unibarlogo img {border:none;}
+
+/* --------------------------------------- */
+
+.unibarnav {
+width: 100%;
+background-image:url(../css/images/unibar_rightsidebg.jpg);
+background-repeat:no-repeat;
+background-position:top right;
+
+}
+
+.unibarnav:after{ /*Add margin between menu and rest of content in Firefox*/
+content: "."; 
+display: block; 
+height: 0; 
+clear: both; 
+visibility: hidden;
+}
+
+.unibarnav ul{
+padding: 20px 10px 0px 0px;
+margin: 0px 0px 0px 0px;
+text-align: right; /*set value to "left", "center", or "right"*/
+height:33px;
+}
+
+.unibarnav ul li{
+display: inline;
+color:#333333;
+}
+
+.unibarnav ul li a {
+color: #333333;
+padding: 0px 10px 8px 10px;
+margin: 0;
+text-decoration: none;
+font-size:11px;
+text-transform:uppercase;
+font-family:"Lucida Grande", sans-serif;
+font-weight:bold;
+line-height:30px;
+height:26px;
+}
+
+.unibarnav ul li a:hover, .unibarnav ul li a.selected{ /*script dynamically adds a class of "selected" to the current active menu item*/
+color:#6397ab; /*THEME CHANGE HERE*/
+}
+
+/* ######### Style for Drop Down Menu ######### */
+
+.unibar_dropmenu{
+position:absolute;
+top: 0;
+font-size:11px;
+font-weight:normal;
+font-family:"Lucida Grande", sans-serif;
+line-height:18px;
+z-index:10000;
+width: 150px;
+visibility: hidden;
+background-color:#f1f1f1;
+border-left:2px solid #ffffff;
+border-right:2px solid #ffffff;
+border-bottom:2px solid #ffffff;
+padding:5px 5px 8px 5px;
+}
+
+.unibar_dropmenu a {
+width: auto;
+display: block;
+padding: 3px 5px 3px 16px;
+text-decoration: none;
+color:#706f6f;
+background-image:url(../css/images/unibarsubnav_icon.gif);
+background-repeat:no-repeat;
+background-position:top left;
+border-bottom:1px solid #cccccc;
+font-weight:bold;
+}
+
+* html .unibar_dropmenu a{ /*IE only hack*/
+width: 100%;
+}
+
+.unibar_dropmenu a:hover{ /*THEME CHANGE HERE*/
+color:#6397ab;
+font-weight:bold;
+}

@@ -1,0 +1,98 @@
+.recentmenus
+{
+	
+	width: 220px;
+	margin-left: 50px;
+	margin-top: 20px;
+
+
+}
+
+
+
+.cssmenu2{
+	
+	
+	}
+ul.cssmenu2 {
+	list-style: none;
+	padding: 0px;
+	}
+
+.displace2 {
+	position: absolute;
+	left: -5000px;
+	}
+
+ul.cssmenu2 li {
+	
+	}
+
+ul.cssmenu2 li a {
+	display: block;
+	width: 240px;
+	height: 65px;
+	background: url('../images/recentmenup2.png');background-repeat: no-repeat;
+	
+	
+	}
+
+/*
+*	Normal Links
+*/
+ul.cssmenu2 li.allapp a {
+	background-position: 1px 0px;
+	}
+
+ul.cssmenu2 li.approved a {
+	background-position: 1px -70px;
+	}
+
+ul.cssmenu2 li.encoded a {
+	background-position: 1px -140px;
+	}
+ul.cssmenu2 li.notapproved a {
+	background-position: 1px -210px;
+	}
+/*
+*	Hover Links
+*/
+ul.cssmenu2 li.allapp a:hover {
+	background-position: -240px 0px;
+	}
+
+ul.cssmenu2 li.approved a:hover {
+	background-position: -240px -70px;
+
+	}
+
+ul.cssmenu2 li.encoded a:hover {
+	background-position: -240px -140px;
+	}
+
+ul.cssmenu2 li.notapproved a:hover {
+	background-position: -240px -210px;
+	}
+	
+/*
+*	Clicked Links
+
+/*
+*	selected2/active2 Links
+*/
+ul.cssmenu2 li.allapp a.selected2 {
+	background-position: -240px 0px;
+	}
+
+ul.cssmenu2 li.approved a.selected2 {
+	background-position: -240px -70px;
+	}
+
+ul.cssmenu2 li.encoded a.selected2 {
+	background-position: -240px -140px;
+	}
+
+
+ul.cssmenu2 li.notapproved a.selected2 {
+	background-position: -240px -210px;
+	}

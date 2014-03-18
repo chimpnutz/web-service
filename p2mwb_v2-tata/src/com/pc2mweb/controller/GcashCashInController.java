@@ -88,6 +88,7 @@ import com.pc2mweb.model.TopupModel;
 import com.pc2mweb.model.TransactionReportsModel;
 import com.pc2mweb.model.TransactionReportsResultModel;
 import com.pc2mweb.model.TransferCreditsModel;
+import com.pc2mweb.model.Wallet_Transaction_Information;
 import com.pc2mweb.utility.function.ProcessorUtil;
 import com.pc2mweb.utility.function.pc2mwebFunc;
 
@@ -316,12 +317,31 @@ public class GcashCashInController implements ServletContextAware  {
 		AgentModel agent = new AgentModel();
 
 		mobile = topup.getPrefix() + topup.getMobnum();
-		
+		int walletid = -1;
 		try {
+			walletid= dao.getWalletid(usersession, "GCASH");
+			
+			logger.info("get walletid: " + walletid);
+			
+			if(walletid == - 1){
+				Float currwallet = dao.getWallet(usersession);
+				fail.addObject("status", "fail");
+				fail.addObject("msg", "No Wallet found for Partnerid");
+				fail.addObject("fillbox", fillbox);
+				//fail.addObject("producttype", prodtype);
+				fail.addObject("currentwallet", currwallet);
+				fail.addObject("user",usersession.getAttribute("USERLEVEL"));
+				logger.info(P2MConstants.getMessage(errorState));
+				closeconn(conn, sms_conn);
+				return fail;
+			}
+
+			
+	
 			logger.info("get profile: " + usersession.getAttribute("USER"));
 			partner = profiledao.GetProfilebyUsername(usersession.getAttribute("USER").toString());
 			topup.agentid = partner.agentid;
-			topup.txid = dao.insertTransaction(topup,usersession);
+			topup.txid = dao.insertTransaction(topup,usersession,walletid);
 			logger.info("topup tx id is: "+topup.txid);
 			logger.info("partner topup tx id is: "+topup.ptxid);
 		} catch (Exception e) {
@@ -479,10 +499,17 @@ public class GcashCashInController implements ServletContextAware  {
 	    
 		Float walletbalance = 0.0F;
 		
-		Wallet wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
+//		int walletid = dao.getWalletid(usersession, "GCASH");
+//		logger.info("get walletid: " + walletid);
+//		
+//		if(walletid == -1){
+//			
+//		}
+		Wallet wallets = dao.GetWalletInfo(pid, walletid);
 		
 
 
+		
 			walletbalance = wallets.wallet;
 			if (wallets.paymenttype.equalsIgnoreCase("FEES"))
 				isfeesettlement = true;
@@ -503,7 +530,8 @@ public class GcashCashInController implements ServletContextAware  {
 
 		logger.info("Transaction Fee" + transactionFee + " wallet balance = " + walletbalance + " fee settled? " + isfeesettlement + " fee included ? " + isfeeincluded );
 		
-
+		
+		Wallet_Transaction_Information wallettransactioninfo = new Wallet_Transaction_Information(usersession.getAttribute("PID").toString(), topup.ptxid.toString(), String.valueOf(topup.txid),String.valueOf(walletid));
 		
 	       if (agent.getAllows().charAt(AMAXGCASHConstants.ALLOW_GCASH) != '1'){
 		
@@ -629,38 +657,56 @@ public class GcashCashInController implements ServletContextAware  {
 					
 						if (wallets.paymenttype.equalsIgnoreCase("PREPAID"))
 						{
+							
 							Float denom =  ( amount + transactionFee);
 							if (isfeesettlement)
 								denom = amount;
-							 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
-							deductflg =  dao.DeductWallet(pid,Integer.parseInt(usersession.getAttribute("walletid").toString()), denom,  topup.txid);
-							 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
+							 wallets = dao.GetWalletInfo(pid, walletid);
+							deductflg =  dao.DeductWallet(pid,walletid, denom,  topup.txid);
+							 wallets = dao.GetWalletInfo(pid, walletid);
 							walletbalance = wallets.wallet;
 						}
 						else if (wallets.paymenttype.equalsIgnoreCase("SETTLEMENT"))
 						{
 							Float denom =  ( amount + transactionFee);
-							 wallets = dao.GetWalletInfo(pid,Integer.parseInt(usersession.getAttribute("walletid").toString()));
-							deductflg =  dao.CreditWallet(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()), denom, topup.txid);
+							 wallets = dao.GetWalletInfo(pid,walletid);
+							deductflg =  dao.CreditWallet(pid, walletid, denom, topup.txid);
 							logger.info("crediting for settlement wallet done");
-							 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
+							 wallets = dao.GetWalletInfo(pid, walletid);
 							walletbalance = wallets.wallet;
 						}
 						else if (wallets.paymenttype.equalsIgnoreCase("FEES"))
 						{
 							Float denom =  new Float( transactionFee);
-							 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
-							deductflg =  dao.CreditWallet(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()), denom, topup.txid);
+							 wallets = dao.GetWalletInfo(pid, walletid);
+							deductflg =  dao.CreditWallet(pid, walletid, denom, topup.txid);
 							logger.info("amount credited fee: " + denom);
 
-							 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
+							 wallets = dao.GetWalletInfo(pid, walletid);
 							walletbalance = wallets.wallet;
 						}
 				
 
 						logger.info("AMAXConstants.TOPUP_SUCCESSFUL_MSG");
+						
+						 GCMaxResponse gcResponse = new GCMaxResponse();
+						 
+						 gcResponse.setResponse("RC_GCASH_SUCCESS");
+						 gcResponse.setResponseCode(0);
+						 gcResponse.setTrace("123456");
+						 gcResponse.setGCashTraceNo("123456");
+						 gcResponse.setSessionCode(0);
+						 
+							
+						 
+						 resp = gcResponse;
+						 
+						 logger.info("response test: "+resp.equals(null));
+						 
+
 						try {
-							int iupfee = dao.updateTransactionwithFee("00(TEST)","RC_GCASH_SUCCESS","123456",  transactionFee, isfeesettlement,px_transactionfeetype,pid,topup.txid);
+							dao.getWalletBalances(wallettransactioninfo);
+							int iupfee = dao.updateTransactionwithFee("00(TEST)","RC_GCASH_SUCCESS","123456",  transactionFee, isfeesettlement,px_transactionfeetype,pid,topup.txid,wallettransactioninfo);
 							errorState = 0;
 							dao.updateTransaction(topup.txid,topup.ptxid,AMAXGCASHConstants.TOPUP_SUCCESSFUL_MSG,"",usersession);
 						} catch (Exception e) {
@@ -706,8 +752,8 @@ public class GcashCashInController implements ServletContextAware  {
 						int returnCommission = dao.updatetxid(usersession, topup.ptxid, decreamount.floatValue());
 						
 						if(returnCommission>0){
-							
-							dao.updateTransactionDecre(topup.txid, topup.ptxid, decreamount.floatValue(),usersession);
+							dao.getWalletBalances(wallettransactioninfo);
+							dao.updateTransactionDecre(topup.txid, topup.ptxid, decreamount.floatValue(),wallettransactioninfo,usersession);
 							
 						}
 					}
@@ -739,29 +785,29 @@ public class GcashCashInController implements ServletContextAware  {
 				
 					if (isfeesettlement)
 						denom = amount;
-					 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
-					 debit =  dao.DeductWallet(pid,Integer.parseInt(usersession.getAttribute("walletid").toString()), denom, topup.txid);
-					 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
+					 wallets = dao.GetWalletInfo(pid, walletid);
+					 debit =  dao.DeductWallet(pid,walletid, denom, topup.txid);
+					 wallets = dao.GetWalletInfo(pid, walletid);
 					walletbalance = wallets.wallet;
 	
 				}
 				else if (wallets.paymenttype.equalsIgnoreCase("SETTLEMENT"))
 				{
 					
-					 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
-					 debit =  dao.CreditWallet(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()), denom, topup.txid);
+					 wallets = dao.GetWalletInfo(pid, walletid);
+					 debit =  dao.CreditWallet(pid, walletid, denom, topup.txid);
 					logger.info("crediting for settlement wallet done");
-					 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
+					 wallets = dao.GetWalletInfo(pid, walletid);
 					walletbalance = wallets.wallet;
 				}
 				else if (wallets.paymenttype.equalsIgnoreCase("FEES"))
 				{
 				
-					 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
-					 debit =  dao.CreditWallet(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()), denom, topup.txid);
+					 wallets = dao.GetWalletInfo(pid, walletid);
+					 debit =  dao.CreditWallet(pid, walletid, denom, topup.txid);
 					logger.info("amount credited fee: " + denom);
 
-					 wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
+					 wallets = dao.GetWalletInfo(pid, walletid);
 					walletbalance = wallets.wallet;
 				}
 				
@@ -783,8 +829,8 @@ public class GcashCashInController implements ServletContextAware  {
 						 	if (resp.getResponse().equalsIgnoreCase("RC_GCASH_SUCCESS")) 
 						 	{
 								
-				
-						 		int iupfee = dao.updateTransactionwithFee("00", "RC_GCASH_SUCCESS", gcMaxResponse.getGCashTraceNo(),  transactionFee,isfeesettlement,px_transactionfeetype,pid,topup.txid);
+						 		dao.getWalletBalances(wallettransactioninfo);
+						 		int iupfee = dao.updateTransactionwithFee("00", "RC_GCASH_SUCCESS", gcMaxResponse.getGCashTraceNo(),  transactionFee,isfeesettlement,px_transactionfeetype,pid,topup.txid,wallettransactioninfo);
 				
 								if ( ( topup.getMessage() != null ) && ( topup.getMessage().length() > 0) ) {
 									
@@ -822,14 +868,14 @@ public class GcashCashInController implements ServletContextAware  {
 										{
 											if (isfeesettlement)
 												denom = amount;
-											flgcreditwallet = dao.CreditWallet(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()), denom, topup.txid);
-											wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
+											flgcreditwallet = dao.CreditWallet(pid, walletid, denom, topup.txid);
+											wallets = dao.GetWalletInfo(pid, walletid);
 											walletbalance = wallets.wallet;
 										}
 										else if (wallets.paymenttype.equalsIgnoreCase("SETTLEMENT"))
 										{
-											flgcreditwallet =  dao.DeductWallet(pid,Integer.parseInt(usersession.getAttribute("walletid").toString()), denom,  topup.txid);
-											wallets = dao.GetWalletInfo(pid, Integer.parseInt(usersession.getAttribute("walletid").toString()));
+											flgcreditwallet =  dao.DeductWallet(pid,walletid, denom,  topup.txid);
+											wallets = dao.GetWalletInfo(pid, walletid);
 											walletbalance = wallets.wallet;
 										}
 										
@@ -886,7 +932,7 @@ public class GcashCashInController implements ServletContextAware  {
 				Float currwallet = dao.getWallet(usersession);
 				Map fillprodtype = dao.fillprodtype();
 				success.addObject("status","success");
-				success.addObject("msg", pc2mwebFunc.AmaxgetMessage(errorState)+" Trace Number is: "+ resp.getGCashTraceNo());
+				success.addObject("msg", pc2mwebFunc.Gcashgetmessage(errorState)+" Trace Number is: "+ resp.getGCashTraceNo());
 				success.addObject("fillbox", fillbox);
 				success.addObject("fillprodtype", fillprodtype);
 				success.addObject("currentwallet", currwallet);

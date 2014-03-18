@@ -8,29 +8,23 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class WalletTransferHistoryModel {
 	
-	String txid;
+	String transid;
 	String branchid;
-	String wallettransferdate;
-	String sourcewallet;
+	java.sql.Timestamp transdate;
+	String sender;
 	Double amount;
-	Double beginningbalancesourcewallet;
-	Double endingbalancesourcewallet;
-	String destinationwallet;
-	Double beginningbalancedestionationwallet;
-	Double endingbalancedestinationwallet;
+	Double sender_start_bal;
+	Double sender_end_bal;
+	String receiver;
+	Double receiver_start_bal;
+	Double receiver_end_bal;
 	String transfertype;
 	
-	public String getTxid() {
-		return txid;
+	public String getTransid() {
+		return transid;
 	}
-	public void setTxid(String txid) {
-		this.txid = txid;
-	}
-	public String getTransfertype() {
-		return transfertype;
-	}
-	public void setTransfertype(String transfertype) {
-		this.transfertype = transfertype;
+	public void setTransid(String transid) {
+		this.transid = transid;
 	}
 	public String getBranchid() {
 		return branchid;
@@ -38,17 +32,17 @@ public class WalletTransferHistoryModel {
 	public void setBranchid(String branchid) {
 		this.branchid = branchid;
 	}
-	public String getWallettransferdate() {
-		return wallettransferdate;
+	public java.sql.Timestamp  getTransdate() {
+		return transdate;
 	}
-	public void setWallettransferdate(String wallettransferdate) {
-		this.wallettransferdate = wallettransferdate;
+	public void setTransdate(java.sql.Timestamp  transdate) {
+		this.transdate = transdate;
 	}
-	public String getSourcewallet() {
-		return sourcewallet;
+	public String getSender() {
+		return sender;
 	}
-	public void setSourcewallet(String sourcewallet) {
-		this.sourcewallet = sourcewallet;
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
 	public Double getAmount() {
 		return amount;
@@ -56,43 +50,44 @@ public class WalletTransferHistoryModel {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-	public Double getBeginningbalancesourcewallet() {
-		return beginningbalancesourcewallet;
+	public Double getSender_start_bal() {
+		return sender_start_bal;
 	}
-	public void setBeginningbalancesourcewallet(
-			Double beginningbalancesourcewallet) {
-		this.beginningbalancesourcewallet = beginningbalancesourcewallet;
+	public void setSender_start_bal(Double sender_start_bal) {
+		this.sender_start_bal = sender_start_bal;
 	}
-	public Double getEndingbalancesourcewallet() {
-		return endingbalancesourcewallet;
+	public Double getSender_end_bal() {
+		return sender_end_bal;
 	}
-	public void setEndingbalancesourcewallet(Double endingbalancesourcewallet) {
-		this.endingbalancesourcewallet = endingbalancesourcewallet;
+	public void setSender_end_bal(Double sender_end_bal) {
+		this.sender_end_bal = sender_end_bal;
 	}
-	public String getDestinationwallet() {
-		return destinationwallet;
+	public String getReceiver() {
+		return receiver;
 	}
-	public void setDestinationwallet(String destinationwallet) {
-		this.destinationwallet = destinationwallet;
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
 	}
-	public Double getBeginningbalancedestionationwallet() {
-		return beginningbalancedestionationwallet;
+	public Double getReceiver_start_bal() {
+		return receiver_start_bal;
 	}
-	public void setBeginningbalancedestionationwallet(
-			Double beginningbalancedestionationwallet) {
-		this.beginningbalancedestionationwallet = beginningbalancedestionationwallet;
+	public void setReceiver_start_bal(Double receiver_start_bal) {
+		this.receiver_start_bal = receiver_start_bal;
 	}
-	public Double getEndingbalancedestinationwallet() {
-		return endingbalancedestinationwallet;
+	public Double getReceiver_end_bal() {
+		return receiver_end_bal;
 	}
-	public void setEndingbalancedestinationwallet(
-			Double endingbalancedestinationwallet) {
-		this.endingbalancedestinationwallet = endingbalancedestinationwallet;
+	public void setReceiver_end_bal(Double receiver_end_bal) {
+		this.receiver_end_bal = receiver_end_bal;
+	}
+	public String getTransfertype() {
+		return transfertype;
+	}
+	public void setTransfertype(String transfertype) {
+		this.transfertype = transfertype;
 	}
 	
 	
-
-
 	
 	
 	

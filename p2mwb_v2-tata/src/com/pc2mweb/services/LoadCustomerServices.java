@@ -34,6 +34,7 @@ import com.pc2mweb.dao.transactions.ProfileManagerDAO;
 import com.pc2mweb.dao.transactions.TopupDAO;
 import com.pc2mweb.model.OutgoingSMSModel;
 import com.pc2mweb.model.TopupModel;
+import com.pc2mweb.model.Wallet_Transaction_Information;
 import com.pc2mweb.utility.function.pc2mwebFunc;
 
 public class LoadCustomerServices 
@@ -241,11 +242,14 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 		
 		
 		
+		
 		try {
+			int walletid = dao.getWalletid(usersession, "AMAX");
+			logger.info("get walletid: " + walletid);
 			logger.info("get profile: " + usersession.getAttribute("USER"));
 			partner = profiledao.GetProfilebyUsername(usersession.getAttribute("USER").toString());
 			topup.agentid = partner.agentid;
-			topup.txid = dao.insertTransaction(topup,usersession);
+			topup.txid = dao.insertTransaction(topup,usersession,walletid);
 			logger.info("topup tx id is: "+topup.txid);
 			logger.info("partner topup tx id is: "+topup.ptxid);
 		} catch (Exception e) {
@@ -302,6 +306,7 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 			closeconn(conn, sms_conn);
 			return fail;
 		}
+		Wallet_Transaction_Information wallettransactioninfo= new Wallet_Transaction_Information(usersession.getAttribute("PID").toString(), topup.ptxid.toString(), String.valueOf(topup.txid),usersession.getAttribute("walletid").toString());
 		
 		TopUpResponse resp = null;
 		int debit = 0;
@@ -391,8 +396,8 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 						int returnCommission = dao.updatetxid(usersession, topup.ptxid, decreamount.floatValue());
 						
 						if(returnCommission>0){
-							
-							dao.updateTransactionDecre(topup.txid,topup.ptxid, decreamount.floatValue(),usersession);
+							dao.getWalletBalances(wallettransactioninfo);
+							dao.updateTransactionDecre(topup.txid,topup.ptxid, decreamount.floatValue(),wallettransactioninfo,usersession);
 							
 						}
 					}
@@ -599,7 +604,7 @@ private static final Logger logger = Logger.getLogger(LoadCustomerServices.class
 												
 												if(returnCommission>0){
 													
-													int decre = dao.updateTransactionDecre(topup.txid, topup.ptxid, decreamount.floatValue(),usersession);
+													int decre = dao.updateTransactionDecre(topup.txid, topup.ptxid, decreamount.floatValue(),wallettransactioninfo,usersession);
 													logger.info("Updating Transaction status: "+decre);
 													
 												}

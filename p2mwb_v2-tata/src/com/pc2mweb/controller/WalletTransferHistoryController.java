@@ -85,6 +85,7 @@ public class WalletTransferHistoryController {
 			
 		}else{
 			
+//			dao.writeExcelWallet(searchModel.getBranchid(),usersession);
 			modelAndView.addObject("wallethistory",searchresult);
 			modelAndView.addObject("type","wallethistory");
 			modelAndView.addObject("user",usersession.getAttribute("USERLEVEL"));

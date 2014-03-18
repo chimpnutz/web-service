@@ -51,11 +51,11 @@ public class TransactionHistoryDAO extends JdbcDaoSupport {
 		   
 		   strSQL.append("SELECT a.transactionid,a.transactiondate,a.topuptrace,a.amount,a.status, b.targetmsisdn  ");
 		   strSQL.append("FROM transactions a INNER JOIN mobile_transaction b ON a.transactionid = b.transactionid ");
-		   strSQL.append("WHERE a.agentid = ?   order by a.transactiondate desc");
+		   strSQL.append("WHERE a.agentid = ? AND a.partnerid = ?   order by a.transactiondate desc");
 		  
 		   userlogs.clear();
 		 
-			List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString(),session.getAttribute("AID"));
+			List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString(),session.getAttribute("AID"),session.getAttribute("PID"));
 			for (Map row : rows) {
 
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa");
@@ -69,6 +69,7 @@ public class TransactionHistoryDAO extends JdbcDaoSupport {
 					TransactionHistoryModel logs = new TransactionHistoryModel();
 					logs.setTransactionid((String)(row.get("transactionid")+""));
 					//logs.setTxdate((String)(dateAsString));
+					
 					logs.setTxdate((java.sql.Timestamp)(new java.sql.Timestamp(parsedDate.getTime())));
 					logs.setTracenumber((String)(row.get("topuptrace")));
 					logs.setMobilenumber((String)(row.get("targetmsisdn")));
@@ -154,16 +155,16 @@ public class TransactionHistoryDAO extends JdbcDaoSupport {
 //		   strSQL.append("msisdn, transactionid, amount,status,username ");
 //		   strSQL.append("from retailer_sim_transfer_logs ");
 //		   strSQL.append("where username = ? ORDER BY transferdate desc ");
-		   
+//			tatanong ko pa kay mam..		   
 		   
 		   strSQL.append("SELECT a.transactionid,a.transactiondate,a.topuptrace,a.amount,a.status,b.targetmsisdn  ");
 		   strSQL.append("FROM transactions a INNER JOIN mobile_transaction b ON a.transactionid = b.transactionid ");
-		   strSQL.append("WHERE a.agentid = ? and a.productcode = ? order by a.transactiondate desc");
+		   strSQL.append("WHERE a.agentid = ? and a.partnerid = ? and a.productcode = ? order by a.transactiondate desc");
 		  
 		   
 		   userlogs.clear();
 		 
-			List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString(),session.getAttribute("AID"),"TRANSFER");
+			List<Map<String,Object>> rows = getJdbcTemplate().queryForList(strSQL.toString(),session.getAttribute("AID"),session.getAttribute("PID"),"TRANSFER");
 			
 			for (Map row : rows) {
 				

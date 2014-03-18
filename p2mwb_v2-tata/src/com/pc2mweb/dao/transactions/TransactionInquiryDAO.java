@@ -75,13 +75,13 @@ public class TransactionInquiryDAO extends JdbcDaoSupport {
 			   strSQL.append("ON c.agentid = d.agentid ");
 			   strSQL.append("INNER JOIN partners e ");
 			   strSQL.append("on  d.partnerid = e.partner "); 
-			   strSQL.append("INNER JOIN partners f ");
+			   strSQL.append("LEFT JOIN partners f ");
 			   strSQL.append("on  e.partner = f.parent_partnerid "); 
 			   strSQL.append("LEFT  JOIN retailer_sim_transfer_logs g  ");  
 			   strSQL.append("on a.partnertxid = g.transactionid	 ");
 			   strSQL.append("LEFT  JOIN user_transactions_logs h "); 
 			   strSQL.append("on a.partnertxid = h.transactionid ");
-			   strSQL.append("WHERE b.targetmsisdn = ? and f.parent_partnerid = (SELECT partner FROM partners WHERE partnerid = ? ) OR f.partnerid = ? ");
+			   strSQL.append("WHERE b.targetmsisdn = ? and  e.partnerid = ? and (a.partnerid = ? or  f.partnerid is not null) ");
 //			   strSQL.append(" AND b.targetmsisdn = ? ");
 //			   strSQL.append("ORDER BY a.TRANSACTIONDATE desc");
 		     

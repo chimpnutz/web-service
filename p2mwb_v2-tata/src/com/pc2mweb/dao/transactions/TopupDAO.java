@@ -37,12 +37,14 @@ import com.paysetter.commons.pctomobile.P2MConstants;
 import com.pc2mweb.beans.BulkOffersBean;
 import com.pc2mweb.beans.CredentialsBean;
 import com.pc2mweb.beans.DecrementationBean;
+import com.pc2mweb.beans.MessageBean;
 import com.pc2mweb.beans.TransactionIDObject;
 import com.pc2mweb.beans.UserBean;
 import com.pc2mweb.beans.Wallet;
 import com.pc2mweb.model.BillsPaymentModel;
 import com.pc2mweb.model.TopupModel;
 import com.pc2mweb.model.TransfertoRetailerModel;
+import com.pc2mweb.model.Wallet_Transaction_Information;
 import com.pc2mweb.utility.function.pc2mwebFunc;
 
 public class TopupDAO extends JdbcDaoSupport {
@@ -113,6 +115,42 @@ public class TopupDAO extends JdbcDaoSupport {
 //			
 //	}
 	
+	public int getWalletid(HttpSession session, String wallet_name){
+		
+//		StringBuilder getWalletName = new StringBuilder();
+//		
+//		getWalletName.append("SELECT c.wallet_name FROM wallets a INNER JOIN partners_wallet b ON a.walletid = b.walletid ");
+//		getWalletName.append("INNER JOIN wallet_types c ON b.wallet_type = c.wallet_type ");
+//		getWalletName.append("WHERE a.partnerid = ? ");
+//		
+//		SqlRowSet rs   = getJdbcTemplate().queryForRowSet(getWalletName.toString(),session.getAttribute("PID"));
+//		
+//		if(rs.next()) {
+			
+//			String walletname = rs.getString("wallet_name");
+				int wallet_id = -1;
+				
+				StringBuilder getWalletid = new StringBuilder();
+				
+				getWalletid.append("SELECT a.walletid FROM wallets a INNER JOIN partners_wallet b ON a.walletid = b.walletid ");
+				getWalletid.append("INNER JOIN wallet_types c ON b.wallet_type = c.wallet_type ");
+				getWalletid.append("WHERE c.wallet_name = ? AND a.partnerid = ? ");
+				
+				SqlRowSet rs2   = getJdbcTemplate().queryForRowSet(getWalletid.toString(),wallet_name,session.getAttribute("PID"));
+				
+				if(rs2.next()) {
+					
+					wallet_id = rs2.getInt("walletid");
+					
+					return wallet_id;
+					
+				
+				}
+//		}
+				
+				return wallet_id;
+	}
+	
 	public List<BulkOffersBean> fillprodtype(String brand){
 	
 		   StringBuilder strSQL = new StringBuilder();
@@ -180,7 +218,7 @@ public class TopupDAO extends JdbcDaoSupport {
 		
 	}
 	
-	public int insertTransaction(TopupModel r,HttpSession session) {
+	public int insertTransaction(TopupModel r,HttpSession session, int wid) {
 
 			  
 				
@@ -188,8 +226,8 @@ public class TopupDAO extends JdbcDaoSupport {
 		
 			   final int aid =  Integer.parseInt( session.getAttribute("AID").toString());
 			   
-			   final int walletid = (int) session.getAttribute("walletid");
-			   
+//			   final int walletid = (int) session.getAttribute("walletid");
+			   final int walletid = wid; 
 			   final TopupModel topup = r;
 			
 			   final  StringBuilder strSQL = new StringBuilder();
@@ -335,14 +373,15 @@ public class TopupDAO extends JdbcDaoSupport {
 	
 
 	
-	public int insertTransaction(TransfertoRetailerModel r,HttpSession session) {
+	public int insertTransaction(TransfertoRetailerModel r,HttpSession session, int wid) {
 		P2MAmaxRequest p2mreq;
 		int txid = -1;
 		
 		Long id = (long) 0;
 		
 			   final int aid =  Integer.parseInt( session.getAttribute("AID").toString());
-			   final int walletid = (int) session.getAttribute("walletid");
+//			   final int walletid = (int) session.getAttribute("walletid");
+			   final int walletid = wid; 
 			   
 			   final TransfertoRetailerModel topup = r;
 			
@@ -532,7 +571,7 @@ public class TopupDAO extends JdbcDaoSupport {
 	}
 	
 	
-	public void updateTransactionTest(int txid,Long ptxid, int errorstate, String trace,HttpSession session) 
+	public void updateTransactionTest(int txid,Long ptxid, int errorstate, String trace, HttpSession session) 
 	{
 
 		
@@ -643,7 +682,7 @@ public class TopupDAO extends JdbcDaoSupport {
 		try {
 			
 
-				String updatetx = "update transactions set status=? where partnertxid = ?,partnerid = ?,transactionid=?";
+				String updatetx = "update transactions set status=? where partnertxid = ? AND partnerid = ? AND transactionid=?";
 				
 		    	
 				int row = getJdbcTemplate().update(updatetx, new Object[] { 
@@ -660,19 +699,42 @@ public class TopupDAO extends JdbcDaoSupport {
 	}
 	
 	
-	
+	public void getWalletBalances(Wallet_Transaction_Information walinfo){
+		
+		   ArrayList<MessageBean> details = new ArrayList<MessageBean>();
+		  
+		   StringBuilder strSQL = new StringBuilder();
+		   
+		   BigDecimal wallet = null;
+		   String SQL_GET_WALLET = "select begin_balance, end_balance, wallet_change from transaction_wallet_changes where partnerid = ? and partnertxid = ? and walletid = ?";
+		   
+			  
+			   
+			   List<Map<String,Object>> rows = getJdbcTemplate().queryForList( SQL_GET_WALLET,walinfo.partnerid,walinfo.partnertxid,walinfo.walletid);
+			   
+			   for (Map row : rows) {
+				   
+				   walinfo.beginbalance = ((BigDecimal)row.get("begin_balance"));
+				   walinfo.endingbalance = ((BigDecimal)row.get("end_balance"));
+				   walinfo.walletchange = ((BigDecimal)row.get("wallet_change"));
+			   }
+			   
+			   
+			   
+			   
+	}
 
 	
-	public int updateTransactionDecre(int txid, long ptxid,float amount,HttpSession session) throws SQLException {
+	public int updateTransactionDecre(int txid, long ptxid,float amount,Wallet_Transaction_Information walinfo,HttpSession session) throws SQLException {
 		
 			int rows = 0;
 			
-			String sql = "update transactions set discount_amount = ? where partnertxid = ?,partnerid = ?,transactionid=?";
+			String sql = "update transactions set discount_amount = ?, begin_balance = ?, end_balance = ? , net_wallet_deduction = ?  where partnertxid = ? and partnerid = ? and transactionid=?";
 	 		
 			try{
 		 		 
 				int row = getJdbcTemplate().update(sql, new Object[] { 
-						amount,ptxid+"",session.getAttribute("PID"),txid
+						amount,walinfo.beginbalance,walinfo.endingbalance, walinfo.walletchange,ptxid+"",session.getAttribute("PID"),txid
 				});
 				
 				
@@ -1018,7 +1080,7 @@ public class TopupDAO extends JdbcDaoSupport {
 		}
 	 
 		
-		public int updateTransactionwithFee(String responseCode, String responseMsg, String trace,  float fee, boolean isfeesettlement,String px_transactionfeetype,String partnertxid,long partnerid) {
+		public int updateTransactionwithFee(String responseCode, String responseMsg, String trace,  float fee, boolean isfeesettlement,String px_transactionfeetype,String partnertxid,long partnerid,Wallet_Transaction_Information walinfo) {
 			
 			
 			int rows = 0;
@@ -1027,12 +1089,35 @@ public class TopupDAO extends JdbcDaoSupport {
 			if (isfeesettlement)
 				feepaymentmode = "CASH";
 			
-			String sql = "update transactions set status = ?, TOPUPTRACE = ?, RESPONSEMSG = ?,TRANSACTIONFEE = ?,  px_transactionfee_paymentmode = ?, px_transactionfeetype = ?  where partnertxid = ? and Partnerid = ?";
+			String sql = "update transactions set " +
+					"status = ?, " +
+					"TOPUPTRACE = ?, " +
+					"RESPONSEMSG = ?," +
+					"TRANSACTIONFEE = ?,  " +
+					"px_transactionfee_paymentmode = ?, " +
+					"px_transactionfeetype = ?," +
+					" begin_balance = ?, " +
+					"end_balance = ? , " +
+					"net_wallet_deduction = ?   " +
+					"where " +
+					"partnertxid = ? " +
+					"and Partnerid = ?";
 	 		
 			try{
 		 		 
 				int row = getJdbcTemplate().update(sql, new Object[] { 
-						responseCode,trace,responseMsg,fee,feepaymentmode,partnertxid+"",partnerid
+						responseCode,
+						trace,
+						responseMsg,
+						fee,
+						feepaymentmode,
+						px_transactionfeetype,
+						walinfo.beginbalance,
+						walinfo.endingbalance,
+						walinfo.walletchange,
+						
+						partnertxid+"",
+						partnerid
 				});
 				
 				

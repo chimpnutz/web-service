@@ -310,15 +310,15 @@ cssdropdown.startchrome("payphilexchange")
 						<core:forEach var="data" items="${wallethistory}">
 						<tr class="text10_steel">
 																			 
-					         <td>${data.wallettransferdate}</td>
-					         <td>${data.txid}</td>
-					         <td>${data.sourcewallet}</td>			         
-					     	 <td>${data.beginningbalancesourcewallet}</td>
+					         <td>${data.transdate}</td>
+					         <td>${data.transid}</td>
+					         <td>${data.sender}</td>			         
+					     	 <td>${data.sender_start_bal}</td>
 					     	 <td>${data.amount}</td>
-					         <td>${data.endingbalancesourcewallet}</td>
-					         <td>${data.destinationwallet}</td>
-					         <td>${data.beginningbalancedestionationwallet}</td>
-					         <td>${data.endingbalancedestinationwallet}</td>
+					         <td>${data.sender_end_bal}</td>
+					         <td>${data.receiver}</td>
+					         <td>${data.receiver_start_bal}</td>
+					         <td>${data.receiver_end_bal}</td>
 					         
 						</tr>
 						
@@ -335,6 +335,13 @@ cssdropdown.startchrome("payphilexchange")
 <core:if test="${type == 'tx'}">
 <div class="text10_steel" id = "downloadlink">
 <core:url value="/jsp/download/export/xls" var="downloadXls"/>
+<a href="${downloadXls}"><img src="../css/images/excel_icon.png" align="absmiddle">Click the icon to download in excel</a>
+</div>
+</core:if>
+
+<core:if test="${type == 'wallethistory'}">
+<div class="text10_steel" id = "downloadlink">
+<core:url value="/jsp/download/export/xls/walletHistory" var="downloadXls"/>
 <a href="${downloadXls}"><img src="../css/images/excel_icon.png" align="absmiddle">Click the icon to download in excel</a>
 </div>
 </core:if>

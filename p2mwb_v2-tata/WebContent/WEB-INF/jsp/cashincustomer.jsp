@@ -131,7 +131,7 @@ cssdropdown.startchrome("payphilexchange")
 <div style="clear:both"></div>
 <div id="container3">
 <div id="content">
-<p class="text18_tungsten">Load Customer</p>
+<p class="text18_tungsten">Cash In Customer</p>
 
 <core:if test="${user == 'viewer'}">
 
@@ -171,11 +171,7 @@ cssdropdown.startchrome("payphilexchange")
     <td style="float:left;"><form:select path="prefix" style="width: 70px; text-align:left;"> <form:options items="${fillbox}" />
 				    </form:select> &nbsp; &nbsp;<form:input path="mobnum" size="18" style="background-color:white;" id="mobnum" maxlength="7"/></td>
   </tr>
-  <tr>
-    <td class="text12_tungsten" style="text-align: left; width:100px;">Product Type</td>
-    <td style="float:left;"><form:select path="prodtype" id="producttype" class="producttype" style="width: 206px; text-align:left;"> <form:options items="${fillprodtype}" />
-				    </form:select> &nbsp; &nbsp;</td>
-  </tr>
+
   <tr>
     <td class="text12_tungsten" style="text-align: left;">Amount</td>
     <td style="float:left;"><form:input path="amount" size="30" style="background-color:white;" id="amount" class="amount" /></td>

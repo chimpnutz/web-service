@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+s<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -139,6 +139,7 @@ cssdropdown.startchrome("payphilexchange")
       <td><a href="changepassword.html"><img title="Change Password" onmouseover="this.src='../css/images/icons_on_09.png';" onmouseout="this.src='../css/images/icons_09.png';" src="../css/images/icons_09.png" alt="" width="200" height="141" border="0"></a></td>
     </tr>
  	 <tr>
+ 	 <td><a href="cashincustomer.html"><img title="Gcash "onmouseover="this.src='../css/images/icons_on_10_01.png';" onmouseout="this.src='../css/images/icon_10_01.png';" src="../css/images/icon_10_01.png" alt="" width="200" height="140" border="0" /></a></td>
 	  <td><a href="managebranches.html"><img title="Manage Branches "onmouseover="this.src='../css/images/icons_on_14.png';" onmouseout="this.src='../css/images/icons_off_14.png';" src="../css/images/icons_on_14.png" alt="" width="200" height="140" border="0" /></a></td> 	
     </tr>
 

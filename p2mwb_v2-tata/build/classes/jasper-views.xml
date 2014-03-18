@@ -40,4 +40,11 @@ p:reportDataKey="datasource" />
 class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"
 p:url="classpath:pc2mweb_dom.jrxml"
 p:reportDataKey="datasource" />
+
+<bean id="xlsWalletReport"
+class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
+p:url="classpath:WalletReport.jrxml"
+p:reportDataKey="datasource" />
 </beans>
+
+

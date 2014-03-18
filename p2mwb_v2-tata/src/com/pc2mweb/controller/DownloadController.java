@@ -27,6 +27,7 @@ import com.pc2mweb.dao.transactions.TransactionHistoryDAO;
 import com.pc2mweb.model.RetailerTransactionHistoryModel;
 import com.pc2mweb.model.TransactionHistoryModel;
 import com.pc2mweb.model.TransactionReportsResultModel;
+import com.pc2mweb.model.WalletTransferHistoryModel;
 
 
 @Controller
@@ -133,6 +134,33 @@ public class DownloadController{
 //		    	return modelAndView;
 //			}
 		}
+	
+	@RequestMapping(value = "/export/xls/walletHistory",method = RequestMethod.GET)
+ 	public ModelAndView exportResultWallet(ModelAndView modelAndView, HttpSession excel)  {
+		
+		
+//	  if(excel.getAttribute("USERLEVEL").equals("manager")){
+		  
+	   logger.info("Received request to download Excel report");
+	      		
+	   List<WalletTransferHistoryModel> searchresult = (List<WalletTransferHistoryModel>) excel.getAttribute("reports");
+	   
+	   JRDataSource datasource = new JRBeanCollectionDataSource(searchresult,false); 
+
+	   Map<String,Object> parameterMap = new HashMap<String,Object>();
+	   
+	   parameterMap.put("datasource", datasource);
+	   
+	   modelAndView = new ModelAndView("xlsWalletReport", parameterMap);
+	   
+       return modelAndView;
+//		}
+//		else {
+//			logger.info("You don't have permission to do transaction in this page.");
+//	    	modelAndView.addObject("access","no");
+//	    	return modelAndView;
+//		}
+	}
 	
 	
 	@ExceptionHandler()

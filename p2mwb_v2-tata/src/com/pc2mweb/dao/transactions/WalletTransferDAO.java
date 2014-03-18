@@ -19,6 +19,7 @@ import com.pc2mweb.beans.UserBean;
 
 import com.pc2mweb.model.UserManagementModel;
 import com.pc2mweb.model.WalletTransferModel;
+import com.pc2mweb.model.Wallet_Transaction_Information;
 
 
 public class WalletTransferDAO extends JdbcDaoSupport {
@@ -204,6 +205,10 @@ public class WalletTransferDAO extends JdbcDaoSupport {
 			   
 			   
 	}
+	
+	
+	
+	
 	
 	public List<MessageBean> getWallet(HttpSession session){
 		

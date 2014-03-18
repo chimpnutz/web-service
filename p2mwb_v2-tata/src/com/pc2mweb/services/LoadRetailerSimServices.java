@@ -133,10 +133,12 @@ public class LoadRetailerSimServices {
 		logger.info("simPID: "+bean.pid +",simNumber: "+bean.msisdn+"");
 
 		try {
+			int walletid = dao.getWalletid(usersession, "AMAX");
+			logger.info("get walletid: " + walletid);
 			logger.info("get profile: " + usersession.getAttribute("USER"));
 			partner = profiledao.GetProfilebyUsername(usersession.getAttribute("USER").toString());
 			topup.agentid = partner.agentid;
-			topup.txid = dao.insertTransaction(topup,usersession);
+			topup.txid = dao.insertTransaction(topup,usersession,walletid);
 			logger.info("topup tx id is: "+topup.txid + ",User agent id: " + partner.agentid + ",User pid: " + partner.partnerid);
 			logger.info("partner topup tx id is: "+topup.ptxid);
 		} catch (Exception e) {

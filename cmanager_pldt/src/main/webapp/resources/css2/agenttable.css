@@ -1,0 +1,147 @@
+/* Essentials */
+
+html, div, map, dt, isindex, form, header, aside, section, section, article, footer {  
+    display: block;  
+} 
+
+html, body {
+
+margin: 0;
+padding: 0;
+font-family: "Arial";
+
+font-size: 12px;
+}
+
+.clear {
+clear: both;
+}
+
+.spacer {
+height: 20px;
+}
+
+a {
+	text-decoration: none;
+}
+
+
+
+
+
+
+
+
+table
+{
+    border-collapse: collapse; /* 'cellspacing' equivalent */
+}
+
+table td, table th
+{
+    padding: 0; /* 'cellpadding' equivalent */
+}
+
+
+
+
+
+
+
+
+/* Modules */
+
+.module {
+/*border: 1px solid #9BA0AF;*/
+width: 100%;
+margin: 20px 3% 0 3%;
+margin-top: 20px;
+/*-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;*/
+background: #ffffff;
+}
+
+
+
+
+.module_content {
+margin: 10px 20px;
+color: #666;}
+
+/* Module Widths */
+
+.width_full {
+width: 95%;
+}
+
+.width_half {
+width: 46%;
+margin-right: 0;
+float: left;
+}
+
+.width_quarter {
+width: 26%;
+margin-right: 0;
+float: left;
+}
+
+
+
+.width_adjusted {
+width: 42%;
+margin-right: 0;
+float: left;
+}
+.width_3_quarter {
+width: 1100px;
+margin-right: 0;
+float: left;
+}
+
+
+/* Content Manager */
+
+.tablesorter {
+width: 100%;
+margin: -5px 0 0 0;
+}
+
+.tablesorter td{
+margin: 0;
+padding: 0;
+border-bottom: 1px dotted #ccc;
+
+}
+
+.tablesorter thead tr {
+height: 34px;
+/*background: url(../images/table_sorter_header.png) repeat-x;*/
+background-color: #51C1F1;
+text-align: left;
+text-indent: 10px;
+cursor: pointer;
+
+
+}
+
+.tablesorter td {
+padding: 15px 10px;
+}
+
+.tablesorter input[type=image] {
+margin-right: 10px;}
+
+
+#main .module header h3.tabs_involved {
+display: block;
+width: 60%;
+float: left;
+}
+
+
+
+.linespace{
+	margin-top: 10px;
+}

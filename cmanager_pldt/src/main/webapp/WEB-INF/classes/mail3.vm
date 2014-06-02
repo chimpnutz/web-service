@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+
+
+
+
+
+
+
+  </head>
+
+  <body style="background:#F6F6F6">
+
+
+    <form >
+        <table width="500px" cellpadding="0" cellspacing="0">
+        <tr>
+          
+          <td style="background-color:#FDFFF9;border:1px solid #dcdcdc;color:#DE6759; font-family:Helvetica; border-top-right-radius:40px; border-top-left-radius:40px; font-size:22px" height="80px;" width="350px">
+          <img src="http://${imageLocation}/resources/images/smart.png" width="60px" height="25px" style="position:absolute; margin-top:-5px; margin-left:20px;">
+          <text style="float:right;margin-right:20px;">Your application is declined.</text> </td>
+       
+        </tr>
+        <tr>
+          
+          <td style="border-left:1px solid #dcdcdc;border-right:1px solid #dcdcdc; background:#FFFCF9" > 
+          <p style="margin-left:10px;margin-top:30px;;font-family:Helvetica;font-size:15px;color:#2F1700" align="left">Dear Firstname,</p>
+        <p style="margin-left:10px;font-family:Helvetica;font-size:15px;margin-right:5px;color:#565A5A;text-shadow: 2px 2px #ffffff;" align="left" ><text>We are so thankful that you considered Smart for your mobile needs.</text>
+        
+        <br/><br/>
+        <text style="color:#565A5A">However, after going through it carefully, we can't approve your application</text><br/>
+        <text style="color:#565A5A">at this time.</text><br/><br/>
+        <text style="color:#565A5A">We hope that you would again consider Smart in the future.</text>
+        <br/>
+        <br/>
+        <text style="color:#565A5A">Yours truly,</text>
+         <br/><br/>
+         <text style="color:#565A5A">Smart</text>
+        </p> </td>
+          
+      </tr>
+
+       <tr>
+      
+         
+          <td style="background-color:#FDFFF9;font-family:Helvetica; font-size:10px;border:1px solid #dcdcdc;border-bottom-right-radius:40px; border-bottom-left-radius:40px;color:#3D98D4" height="80px;" width="350px">
+          <text style="float:left;margin-left:40px;"><a style="color:#3D98D4;text-decoration:none" href="http://www.smart.com.ph">www.smart.com.ph</a></text><text style="margin-left:70px;"><a style="color:#3D98D4;text-decoration:none" href="http://www.info@smart.com.ph">info@smart.com.ph</a></text><text style="float:right;margin-right:50px;">1-800-843-8888</text> </td>
+       
+      </tr>
+        
+</table>
+</form>
+
+
+
+
+
+	</body></html>

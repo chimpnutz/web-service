@@ -113,7 +113,7 @@ ORDER BY transdate DESC]]>
 			<textField>
 				<reportElement uuid="ff25c7b4-2c8d-4738-8c73-9ab05a5dbe1e" x="88" y="0" width="104" height="13"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy hh:mm").format($F{transdate})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yyyy").format($F{transdate})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="bbdf471d-735e-4176-934c-c1d478185f04" x="192" y="0" width="83" height="13"/>

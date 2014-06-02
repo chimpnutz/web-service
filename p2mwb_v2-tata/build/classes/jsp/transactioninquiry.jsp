@@ -251,7 +251,7 @@ cssdropdown.startchrome("payphilexchange")
 	 
                 <tr>
                     <td class="text12_tungsten" style="text-align: left">Mobile no.</td>
-                    <td align="left"><form:input path="msisdn" style="background-color:white; margin-left: -79px;" id="msisdn" maxlength="11" size="21"/></td>
+                    <td align="left"><form:input path="msisdn" style="background-color:white; margin-left: 0px;" id="msisdn" maxlength="11" size="21"/></td>
                 </tr> 
                  <tr>
                     <td class="text12_tungsten" style="text-align: left">Transaction Date</td>

@@ -1,0 +1,161 @@
+
+body{ -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from {padding:0;} to {padding:0;} }
+
+.header { position: relative; }
+.menu > li { list-style: none; float:left;	}
+
+/*  micro clearfix */
+.clearfix:before, .clearfix:after { display: table; content: ""; }
+.clearfix:after { clear: both; }
+
+
+/*--------------------------------
+ Styles 
+---------------------------------*/
+.header{
+	
+	height: 70px;
+	padding: 0 20px;
+	background: #FFFFFF;
+
+	width: 650px;
+	margin-left: 310px;
+	
+	
+}
+
+.boxes{
+	width: 1360px;
+
+	height: 70px;
+background: #FFFFFF;
+position: absolute;
+}
+
+.nav{ 
+	display: block; 
+	
+}
+
+.nav, .menu, .menu > li, .menu > li > a{ 
+	height: 100%; 
+}
+
+
+.menu > li > a{
+	text-align: center;
+	display: block;
+	padding: 30px 20px;
+	text-decoration: none;
+	font-weight: normal;
+	font-size: 11px;
+	color: #333333;
+	line-height: 1;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	box-sizing: border-box;
+	-webkit-transition: all 0.25s linear;
+	-moz-transition: all 0.25s linear;
+	-o-transition: all 0.25s linear;
+	transition: all 0.25s linear;
+}
+
+.menu > li > a:hover, .menu > li > a:focus{
+	background: #F2F2F2;
+	box-shadow: inset 0px 5px #51C1F1;
+	color: #51C1F1;
+	padding: 30px 20px 34px;
+}
+
+.selected{
+	background: #F2F2F2;
+	box-shadow: inset 0px 5px #51C1F1;
+	color: #51C1F1;
+	padding: 40px 20px 34px;
+}
+
+
+.agentname
+{
+	width: auto;
+	height: auto;
+	position: absolute;
+	margin-top: 100px;
+	margin-left: 50px
+
+
+}
+
+.agentname p{
+	font-family: arial;
+	font-size: 18px;
+	text-align: right;
+	 color: #666666;
+	 -webkit-transition: all 500ms ease;
+-moz-transition: all 500ms ease;
+-ms-transition: all 500ms ease;
+-o-transition: all 500ms ease;
+transition: all 500ms ease;
+}
+
+
+.agentname a{
+	text-decoration: none;
+	color: #666666;
+}
+
+.agentname p:hover
+{
+	color: #3cd3ff;
+
+}
+.graph{
+
+
+	width: 1100px;
+	height:150px;
+	margin-left: 200px;
+	margin-top: 50px;
+	position: absolute;
+	
+
+}
+
+.preactive
+{
+	
+}
+
+.preactive a
+{
+	color: #a3a3a3;
+}
+.application
+{	
+	width: auto;
+	height: auto;
+	position: absolute;
+	font-family: arial;
+	padding-left: 250px;
+	margin-top: 15px;
+
+
+}
+
+.application a
+{	font-family: arial;
+	text-decoration: none;
+	font-size: 15px;
+	-webkit-transition: all 500ms ease;
+-moz-transition: all 500ms ease;
+-ms-transition: all 500ms ease;
+-o-transition: all 500ms ease;
+transition: all 500ms ease;
+	
+}
+
+.application a:hover
+{
+	color: #3cd3ff;
+}

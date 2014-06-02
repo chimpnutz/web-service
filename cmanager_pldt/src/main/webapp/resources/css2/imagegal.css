@@ -1,0 +1,85 @@
+-webkit-text-shadow: 0px 0px 5px #222;
+-moz-text-shadow: 0px 0px 5px #222;
+text-shadow: 0px 0px 5px #222;
+-moz-transform: rotate(45deg);
+-o-transform: rotate(45deg);
+-webkit-transform: rotate(45deg);
+cursor: pointer;
+
+a {
+     float: left;
+    width: 25%;
+    height: 25%;
+    position: relative;
+    border: 1px solid #333;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+img {
+	width: 150px;
+    height: 150px;
+}
+
+a img{
+    display: block;
+    width: 150px;
+    height: 150px;
+    -webkit-transition-property: width, height; /* we specify, what properties we need to change*/
+    -webkit-transition-duration: 300ms; /* we specify, with what speed it is necessary to return an image in its initial look*/
+    -moz-transition-property: width, height;
+    -moz-transition-duration: 300ms;
+    -o-transition-property: width, height;
+    -o-transition-duration: 300ms;
+    opacity: 0.7; /* add opacity*/
+    cursor: pointer;
+}
+
+a:after {
+    display: block;
+    
+    width: 100%;
+    height: 100%;
+    
+    color: #eaeaea;
+    font-family: "Trebuchet MS";
+    font-size: 16px;
+    opacity: 0.5;
+}
+
+a:focus img{
+    width: 250%; /* we increased an image to this size */
+    height: 250%;
+    position: absolute;
+    opacity: 1; /* transparency is not needed */
+    z-index: 1; /* for a photo to enlarge over all images */
+    -moz-box-shadow: 0 0 15px 2px #000;
+    -webkit-box-shadow: 0 0 15px 2px #000;
+    box-shadow: 0 0 15px 2px #000; /* we add some beauty */
+    -webkit-transition-property: width, height; /* we decrease the image */
+    -webkit-transition-duration: 2s; /* we specify, with what speed it is necessary to increase an image */
+    -webkit-transition-delay: 0.3s; /* as a browser will process it, before enlarging a photo */
+    -moz-transition-property: width, height;
+    -moz-transition-duration: 2s;
+    -moz-transition-delay: 0.3s;
+    -o-transition-property:width, height;
+    -o-transition-duration: 2s;
+    -o-transition-delay: 0.3s;
+    cursor: default;
+}
+
+a:nth-child(4n+4) img, a:nth-child(4n+3) img{
+    right: 0;
+} /* every fourth element starting with 3rd and 4th will be enlarged from the right border of browser window */
+
+a:nth-child(n+9) img{
+    bottom: 0;
+} /* all elements, starting with the ninth will begin to enlarge upwards */
+
+.closed{
+    display: none;
+}
+a:focus~.closed{
+    display: block;
+}

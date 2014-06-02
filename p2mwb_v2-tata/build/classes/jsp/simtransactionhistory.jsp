@@ -144,7 +144,7 @@ cssdropdown.startchrome("payphilexchange")
 		<tr>
 			<td class="text12_tungsten">Branch</td>
 			<td colspan="3">
-              <form:select style="width:200px;  margin-left:-182px" path="branch">             
+              <form:select style="width:200px;  margin-left:0px" path="branch">             
                     <form:option value="NONE" label="All" />
                     <form:options items="${fillbox}" />
 				    </form:select>

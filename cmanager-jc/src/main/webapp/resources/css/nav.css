@@ -1,0 +1,346 @@
+ a
+{
+	text-decoration: none;
+}
+#whole
+{
+	width: 1349px;
+	position: absolute;
+}
+#whitecover
+{
+
+	position: fixed;
+	width: 100%;
+	height: 121px;
+
+	margin-top: 40px;
+	background-color: #fff;
+	z-index: 3;
+	font-style: Helvetica;
+
+
+}
+
+
+
+
+
+#secondnav
+{
+	width: 100%;
+	height: 50px;
+
+	position:fixed;
+	margin-top: 110px;
+	font-style: Helvetica;
+	z-index: 1;
+	-webkit-transition: all 500ms ease;
+-moz-transition: all 500ms ease;
+-ms-transition: all 500ms ease;
+-o-transition: all 500ms ease;
+transition: all 500ms ease;
+
+
+}
+
+
+#cont
+{
+	
+	width: 1200px;
+	height: 500px;
+	
+}
+
+#cont img
+{
+	z-index: -9;
+}
+
+.bodytype
+{
+	width: 800px;
+	height: 500px;
+	z-index: 9999;
+	margin-left: 100px;
+}
+
+
+
+.pageheader
+{
+	z-index: 999;
+	margin: 0 0 0 20px;
+
+
+}
+
+h1
+{
+	color: #4b4b4b;
+	font-family: Tahoma;
+	font-size: 22px;
+	line-height: 24px;
+	font-weight: normal;
+	z-index: 999;
+}
+	.encodea
+	{
+		width: 100%;
+		height: 50px;
+		margin-top: 20px;
+		border:double blue;
+		margin-left: 10%;
+		
+	}
+
+	.encodea a{
+		float: right;
+	}
+
+
+	.leftdetails
+	{	
+		margin-top: 50px;
+		float: left;
+		position: absolute;
+
+		
+	}
+
+
+
+
+
+
+	
+#paging-table {
+	float: right;
+	margin: 0 4px 0 0;
+}	
+.page-far-left	{
+	background: url(../images/table/paging_far_left.gif) no-repeat;
+	display: block;
+	float: left;
+	height: 24px;
+	margin: 0 4px 0 0;
+	width: 24px;
+	}
+.page-left	{
+	background: url(../images/table/paging_far_left.gif) no-repeat;
+	display: block;
+	float: left;
+	height: 24px;
+	width: 24px;
+	}
+.page-far-right	{
+	background: url(../images/table/paging_far_right.gif) no-repeat;
+	display: block;
+	float: left;
+	height: 24px;
+	margin: 0 4px 0 4px;
+	width: 24px;
+	}
+.page-right	{
+	background: url(../images/table/paging_far_right.gif) no-repeat;
+	display: block;
+	float: left;
+	height: 24px;
+	width: 24px;
+	}
+#page-info	{
+	float: left;
+	line-height: 16px;
+	padding: 3px 12px 0 12px;
+	}
+
+body{ -webkit-animation: bugfix infinite 1s; }
+@-webkit-keyframes bugfix { from {padding:0;} to {padding:0;} }
+
+.header { position: relative; }
+.menu > li { list-style: none; float:left;	}
+
+/*  micro clearfix */
+.clearfix:before, .clearfix:after { display: table; content: ""; }
+.clearfix:after { clear: both; }
+
+
+/*--------------------------------
+ Styles 
+---------------------------------*/
+.header{
+	
+	height: 70px;
+	padding: 0 20px;
+	background: #FFFFFF;
+	width: 650px;
+	margin-left: 310px;
+	
+	
+}
+
+.boxes{
+	width: 1360px;
+
+	height: 70px;
+background: #FFFFFF;
+position: absolute;
+}
+
+.nav{ 
+	display: block; 
+	
+}
+
+.nav, .menu, .menu > li, .menu > li > a{ 
+	height: 100%; 
+}
+
+.menu > li > a{
+	text-align: center;
+	display: block;
+	padding: 30px 20px;
+	text-decoration: none;
+	font-weight: normal;
+	font-size: 11px;
+	color: #333333;
+	line-height: 1;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	box-sizing: border-box;
+	-webkit-transition: all 0.25s linear;
+	-moz-transition: all 0.25s linear;
+	-o-transition: all 0.25s linear;
+	transition: all 0.25s linear;
+}
+
+.menu > li > a:hover, .menu > li > a:focus{
+	background: #F2F2F2;
+	box-shadow: inset 0px 5px #51C1F1;
+	color: #51C1F1;
+	padding: 30px 20px 34px;
+}
+
+.selected{
+	background: #F2F2F2;
+	box-shadow: inset 0px 5px #51C1F1;
+	color: #51C1F1;
+	padding: 40px 20px 34px;
+}
+
+
+
+.graph{
+
+
+	width: auto;
+	height:100px;
+	margin-left: 350px;
+	margin-top: 50px;
+	position: absolute;
+
+}
+
+
+.agentgraph1
+{
+	width: auto;
+	height:auto;
+	margin-left: 80px;
+	margin-top: 280px;
+	position: absolute;
+
+}
+
+
+.salesgraph
+{
+	width: auto;
+	height:auto;
+	margin-left: 80px;
+	margin-top: 110px;
+	position: absolute;
+
+}
+
+
+
+
+.coverup
+{
+
+	width: 150px;
+	height: 50px;
+	position: absolute;
+	z-index: 2;
+	margin-left: 1070px;
+	margin-top: 570px;
+}
+
+
+
+.allapps
+{
+	width: 800px;
+
+
+
+	margin-left: 400px;
+	margin-top: 20px;
+}
+
+
+
+.classification
+{
+	width: auto;
+	height: auto;
+	position: absolute;
+	margin-top: 50px;
+	margin-left: 650px;
+}
+
+
+.classification p
+{
+	font-size: 15px;
+	font-family: verdana;
+}
+
+
+.totaltarget
+{
+	width: auto;
+	height: auto;
+	position: absolute;
+
+}
+
+.agenticon
+{
+	width: auto;
+	height: auto;
+	position: absolute;
+}
+
+.legend
+{
+	width: auto;
+	height: auto;
+	position: absolute;
+	margin-top: 525px;
+	margin-left: 130px;
+}
+
+
+
+.legend2
+{
+	width: auto;
+	height: auto;
+	position: absolute;
+	margin-top: 685px;
+	margin-left: 130px;
+}
+	

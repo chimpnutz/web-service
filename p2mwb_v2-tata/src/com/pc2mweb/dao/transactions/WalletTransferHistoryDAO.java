@@ -96,7 +96,7 @@ public class WalletTransferHistoryDAO extends JdbcDaoSupport {
 						//	partnerlist.setPartnerid((String)(row.get("partnerid")));
 						partner.add(history);	
 						
-						System.out.println(history.getSender_end_bal());
+						
 						
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block

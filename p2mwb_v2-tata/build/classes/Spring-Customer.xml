@@ -10,6 +10,13 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
+	
+	<bean id="dataSource2" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost/subwayapi2" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
 
 	<!--
 
@@ -47,15 +54,15 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	</bean>
 	
 	<bean id="transactionreportsDAO" class="com.pc2mweb.dao.transactions.TransactionReportsDAO"  >
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dataSource2" />
 	</bean>
 	
 	<bean id="transactioninquiryDAO" class="com.pc2mweb.dao.transactions.TransactionInquiryDAO"  >
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dataSource2" />
 	</bean>
 	
 	<bean id="wallettransferhistoryDAO" class="com.pc2mweb.dao.transactions.WalletTransferHistoryDAO"  >
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dataSource2" />
 	</bean>
 	
 	<bean id="transfertobranchDAO" class="com.pc2mweb.dao.transactions.TransfertoBranchDAO"  >

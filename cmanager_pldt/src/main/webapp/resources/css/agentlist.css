@@ -1,0 +1,104 @@
+.agentname2
+{
+	width: auto;
+	height: auto;
+	position: absolute;
+	margin-top: 250px;
+	margin-left: 50px
+
+
+}
+
+.agentname2 p{
+	font-family: arial;
+	font-size: 18px;
+	text-align: right;
+	 color: #666666;
+	 	-webkit-transition: all 500ms ease;
+-moz-transition: all 500ms ease;
+-ms-transition: all 500ms ease;
+-o-transition: all 500ms ease;
+transition: all 500ms ease;
+}
+
+.agentname2 p:hover{
+		color: #3cd3ff;
+}
+
+.agentname2 a{
+	text-decoration: none;
+	color: #666666;
+}
+.graph2{
+
+
+	width: 1100px;
+	height:150px;
+	margin-left: 200px;
+	margin-top: 250px;
+	position: absolute;
+
+
+}
+
+
+
+
+.colorth
+{
+	color: #1ba1ff;
+}
+
+
+.colortd1
+{
+	color: #ff2f2f;
+}
+
+.colortd2
+{
+	color: #00c409;
+}
+
+
+.agentname3
+{
+	width: auto;
+	height: auto;
+	position: absolute;
+	margin-top: 450px;
+	margin-left: 50px
+
+}
+
+.agentname3 p{
+	font-family: arial;
+	font-size: 18px;
+	text-align: right;
+	 color: #666666;
+	 	-webkit-transition: all 500ms ease;
+-moz-transition: all 500ms ease;
+-ms-transition: all 500ms ease;
+-o-transition: all 500ms ease;
+transition: all 500ms ease;
+}
+
+
+.agentname3 a{
+	text-decoration: none;
+	color: #666666;
+}
+.agentname3 p:hover{
+	color: #3cd3ff;
+}
+.graph3{
+
+
+	width: 1100px;
+	height:150px;
+	margin-left: 200px;
+	margin-top: 450px;
+	position: absolute;
+	
+
+}

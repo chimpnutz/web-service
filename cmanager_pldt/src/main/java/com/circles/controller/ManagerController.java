@@ -261,108 +261,126 @@ public class ManagerController {
 	    }
 	}
 	
-	
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/saveaddProduct",headers = "content-type=multipart/*",method=RequestMethod.POST)
-	public String savePhone(@ModelAttribute("loginForm") User loginForm,Model model,
-			HttpSession session,BindingResult result, 
+	@RequestMapping(value="/saveProduct", method = RequestMethod.POST)
+	public String saveProduct(@ModelAttribute("loginForm") User loginForm,Model model,
+			HttpSession session,BindingResult result,
 			@RequestParam(value="submit",required=false) String submit,
 			@RequestParam(value="product_name",required=false) String product_name ,
 			@RequestParam(value="product_type",required=false) String product_type ,
 			@RequestParam(value="product_desc",required=false) String product_desc ,
 			@RequestParam(value="product_price",required=false) String product_price,
-			@RequestParam(value="filename",required=false) final MultipartFile filename ,
-	Products product) throws IOException{
+			@RequestParam(value="filename",required=false) final MultipartFile filename) throws SQLException, IOException{
 		
-
 		if(null == session.getAttribute("USER")||null == session.getAttribute("ROLE")){
 			return "index";
 	    }
 	    
 	    else{
-	    	
-				if(submit!=null){
-					
-					String commentUID = "{"+UUID.randomUUID().toString()+"}";
-					
-					
-					
-					product.setProduct_id(commentUID);
-					product.setProduct_name(product_name);
-					product.setProduct_desc(product_desc);
-					product.setProduct_type(product_type);
-					product.setProduct_price(product_price);
-					String s = "";
-					try{
-						Resource resource = new ClassPathResource("../properties/filepath.properties");
-						Properties props = PropertiesLoaderUtils.loadProperties(resource);
-		
-						String filepath = props.getProperty("filepath.url");
-						BufferedImage img = ImageIO.read(filename.getInputStream());
-				        File file = new File(filepath+filename.getOriginalFilename());
-				        s=filename.getOriginalFilename();
-				        file.createNewFile();
-				        System.out.println(file);
-				        ImageIO.write(img, "jpg", file);
-					}catch(IllegalArgumentException e){
-						e.printStackTrace();
-					}
+	    	if(submit!=null){
+	    		
+	    		String NUMB_REGEX = "\\d+";
+	    		
+	    		Products product = new Products();
 				
-					product.setFilename(s);
-					String date = ""+new Date().getTime()+"";
-					product.setEdited_by(session.getAttribute("username").toString());
-					product.setCreated(date);
-					product.setUpdated(date);
-					product.setVersion("1");
-					
-					if(product.getProduct_name().equalsIgnoreCase("")){
-						model.addAttribute("message1","Please input product name");
-						model.addAttribute("role",session.getAttribute("ROLE"));
-					 	model.addAttribute("user",session.getAttribute("USER"));
-						logger.info("Error inserting product, Please input product name");
-						return "manager/addproduct";
-					}
-					else if(product.getProduct_price().equalsIgnoreCase("")){
-						model.addAttribute("message2","Please input product price");
-						model.addAttribute("role",session.getAttribute("ROLE"));
-					 	model.addAttribute("user",session.getAttribute("USER"));
-						logger.info("Error inserting product, Please input product price");
-						return "manager/addproduct";
-					}	
-					else if(product.getProduct_desc().equalsIgnoreCase("")){
-						model.addAttribute("message5","Please input product description");
-						model.addAttribute("role",session.getAttribute("ROLE"));
-					 	model.addAttribute("user",session.getAttribute("USER"));
-						logger.info("Error inserting phone settings, Please input product description");
-						return "manager/addproduct";
-					}
-					else{
-					int save = productDAOImpl.save(product);
-					
+				String commentUID = "{"+UUID.randomUUID().toString()+"}";
+
+				product.setProduct_id(commentUID);
+				product.setProduct_name(product_name);
+				product.setProduct_desc(product_desc);
+				product.setProduct_type(product_type);
+				product.setProduct_price(product_price);
+				String s = "";
+				try{
+//					Resource resource = new ClassPathResource("../properties/filepath.properties");
+//					Properties props = PropertiesLoaderUtils.loadProperties(resource);
+	
+					String filepath = "C:/Users/tata/workspace/cmanager_pldt/src/main/webapp/resources/uploaded/";
+//							props.getProperty("filepath.url");
+					BufferedImage img = ImageIO.read(filename.getInputStream());
+			        File file = new File(filepath+filename.getOriginalFilename());
+			        s=filename.getOriginalFilename();
+			        file.createNewFile();
+			        System.out.println("filename: "+file);
+			        ImageIO.write(img, "jpg", file);
+				}catch(IllegalArgumentException e){
+					e.printStackTrace();
+				}
+			
+				product.setFilename(s);
+				String date = ""+new Date().getTime()+"";
+				product.setEdited_by(session.getAttribute("USER").toString());
+				product.setCreated(date);
+				product.setUpdated(date);
+				product.setVersion(1+"");
+				
+				if(product.getProduct_name().equalsIgnoreCase("")){
+					model.addAttribute("message1","Please input product name");
 					model.addAttribute("role",session.getAttribute("ROLE"));
 				 	model.addAttribute("user",session.getAttribute("USER"));
-					model.addAttribute("message","Success");
-					logger.info("Inserting product is successfully updated");
-					
+				 	logger.info("Error inserting product, Please input product name");
 					return "manager/addproduct";
-					}
+				}
+				else if(product.getProduct_price().equalsIgnoreCase("")){
+					model.addAttribute("message2","Please input product price");
+					model.addAttribute("role",session.getAttribute("ROLE"));
+				 	model.addAttribute("user",session.getAttribute("USER"));
+				 	logger.info("Error inserting product, Please input product price");
+					return "manager/addproduct";
+				}	
+				else if(product.getProduct_price().matches(NUMB_REGEX)){
+					model.addAttribute("message2","Please input numbers only");
+					model.addAttribute("role",session.getAttribute("ROLE"));
+				 	model.addAttribute("user",session.getAttribute("USER"));
+				 	logger.info("Error inserting product, Please input numbers only");
+					return "manager/addproduct";
+				}	
+				else if(product.getProduct_desc().equalsIgnoreCase("")){
+					model.addAttribute("message5","Please input product description");
+					model.addAttribute("role",session.getAttribute("ROLE"));
+				 	model.addAttribute("user",session.getAttribute("USER"));
+				 	logger.info("Error inserting product settings, Please input product description");
+					return "manager/addproduct";
+				}
+				else if(product.getFilename().equalsIgnoreCase("")){
+					model.addAttribute("message4","Please select a file");
+					model.addAttribute("role",session.getAttribute("ROLE"));
+				 	model.addAttribute("user",session.getAttribute("USER"));
+				 	logger.info("Error inserting product settings, Please select a file");
+					return "manager/addproduct";
+				}
+				else if(product.getFilename().length()>1200000){
+					model.addAttribute("message4","Maximum Size of image is 1Mb");
+					model.addAttribute("role",session.getAttribute("ROLE"));
+				 	model.addAttribute("user",session.getAttribute("USER"));
+				 	logger.info("Error inserting product settings, Maximum Size of image is 1Mb");
+					return "manager/addproduct";
 				}
 				else{
-					
-					model.addAttribute("message","failed");
-					model.addAttribute("role",session.getAttribute("ROLE"));
-				 	model.addAttribute("user",session.getAttribute("USER"));
-					logger.info("Error inserting product settings");
-					return "manager/addproduct";
+				int save = productDAOImpl.save(product);
+				
+				model.addAttribute("role",session.getAttribute("ROLE"));
+			 	model.addAttribute("user",session.getAttribute("USER"));
+				model.addAttribute("message","Success");
+				logger.info("Inserting product is successfully updated");
+				
+				return "manager/addproduct";
 				}
-		
-	    }
-		
+			}
+			else{
+				
+				model.addAttribute("message","failed");
+				model.addAttribute("role",session.getAttribute("ROLE"));
+			 	model.addAttribute("user",session.getAttribute("USER"));
+			 	logger.info("Error inserting product settings");
+				return "manager/addproduct";
+			}
 
+	    }
 	}
+		
 	
 	@RequestMapping(value="/addproduct", method = RequestMethod.GET)
-	public String viewMobile(@ModelAttribute("loginForm") User loginForm,Model model,
+	public String viewProduct(@ModelAttribute("loginForm") User loginForm,Model model,
 			HttpSession session,BindingResult result) throws SQLException{
 		
 		if(null == session.getAttribute("USER")||null == session.getAttribute("ROLE")){
@@ -370,7 +388,6 @@ public class ManagerController {
 	    }
 	    
 	    else{
-			Application application = new Application();
 			
 			model.addAttribute("role",session.getAttribute("ROLE"));
 		 	model.addAttribute("user",session.getAttribute("USER"));

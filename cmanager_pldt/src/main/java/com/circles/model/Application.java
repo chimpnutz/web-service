@@ -14,6 +14,8 @@ public class Application {
 	private String isincomeDone;
 	private String contact_person;
 	private String contact_number;
+	private String details;
+	private String product_id;
 	
 	private String title;
 	private String birthplace;
@@ -998,6 +1000,18 @@ public class Application {
 	}
 	public void setCount(int count) {
 		this.count = count;
+	}
+	public String getDetails() {
+		return details;
+	}
+	public void setDetails(String details) {
+		this.details = details;
+	}
+	public String getProduct_id() {
+		return product_id;
+	}
+	public void setProduct_id(String product_id) {
+		this.product_id = product_id;
 	}
 
 	

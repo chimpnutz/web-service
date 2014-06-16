@@ -1,0 +1,53 @@
+
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+
+
+
+
+
+
+
+  </head>
+
+  <body style="background:#F6F6F6">
+
+
+    <form >
+        <table width="500px" cellpadding="0" cellspacing="0">
+        <tr>
+          
+          <td style="background-color:#FDFFF9;border:1px solid #dcdcdc;color:#2F1700; font-family:Helvetica; border-top-right-radius:40px; border-top-left-radius:40px; font-size:22px" height="80px;" width="350px">
+          
+          <text style="float:right;margin-right:20px;">We received your application.</text> </td>
+       
+
+        <br/><br/>
+        <text style="color:#565A5A">You'll hear from us in the next 3 days to advice you of the result.</text><br/>
+
+        <br/>
+        <br/>
+
+        </p> </td>
+          
+      </tr>
+
+       <tr>
+
+      </tr>
+        
+</table>
+</form>
+
+
+
+
+
+	</body></html>

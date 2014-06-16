@@ -110,12 +110,12 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 			<thead> 
 				<tr> 
 				<th width="70px">No.</th>
-   				<th width="150px">Application ID</th>
-    				<th>Name of Applicant</th> 
-    				<th>Plan Code</th> 
-    				<th>Phone Code</th> 
-    				<th>Status</th>
-    				<th>Date </th>
+   					<th width="150px">Application ID</th>
+    				<th width="170px">Name of Applicant</th> 
+    				<th width="150px">Plan Name</th> 
+    				<!--<th width="150px">Phone Name</th> -->
+    				<th width="150px">Status</th>
+    				<th width="150px">Date </th>
     			
 				</tr> 
 			</thead> 
@@ -133,7 +133,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 						<td>${applications.companyauth}</td>
 						</c:if>
 						<td>${applications.getPlan_code()}</td>
-						<td>${applications.getPhone_id()}</td>
+						<!--  <td>${applications.getPhone_id()}</td>-->
 						<c:if test="${applications.getStatus().equals('0')}">
 						<td>Submitted</td>
 						</c:if>

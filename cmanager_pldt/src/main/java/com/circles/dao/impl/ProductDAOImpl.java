@@ -24,8 +24,9 @@ private JdbcTemplate jdbcTemplate;
 				"ispushed," +
 				"edited_by," +
 				"created," +
-				"updated) " +
-				"VALUES(?,?,?,?,?,?,?,?,?,?)";
+				"updated," +
+				"version) " +
+				"VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 		
 //		String update = "UPDATE product SET "
 //				+ "product_id = ?,"
@@ -44,7 +45,7 @@ private JdbcTemplate jdbcTemplate;
 			int iSave = jdbcTemplate.update(sql.toString(),new Object[] {
 				pd.getProduct_id(),pd.getProduct_name(),pd.getProduct_type(),pd.getProduct_desc(),
 				pd.getProduct_price(),pd.getFilename(),pd.getIspushed(),pd.getEdited_by(),pd.getCreated(),
-				pd.getUpdated()
+				pd.getUpdated(),pd.getVersion()
 			});
 			System.out.println("Success");
 		return iSave;

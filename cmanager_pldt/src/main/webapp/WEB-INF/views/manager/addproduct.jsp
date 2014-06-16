@@ -110,7 +110,7 @@
 					<li><a href="salesmtd" ><i class="fa fa-usd"></i>&nbsp;SALES</a></li>
 					<li><a href="agent"><i class="icon-agent" style="font-size:20px;"></i>&nbsp;AGENTS</a></li>		
 					<li><a href="recent"><i class="fa fa-clock-o"></i>&nbsp;RECENT</a></li>
-					<li><a href="addproduct" class="selected"><i class="fa fa-clock-o"></i>&nbsp;ADD PRODUCTS</a></li>	
+					<li><a href="addproduct" class="selected"><i class="fa fa-cubes"></i>&nbsp;ADD PRODUCTS</a></li>	
 					<li><a href="logout"><i class="fa fa-laptop"></i>&nbsp;LOG OUT</a></li>
 					
 				</ul>
@@ -142,22 +142,22 @@
 		<p>&copy; 2013 Circles</p>
 	</div>
 </c:if>
-<font face="Lucida Grande" size="4" color="#666666">${message }</font>
+
 
 
 <c:if test="${role=='manager' }">
-<form action="saveaddProduct"  method="POST" ENCTYPE="multipart/form-data" class="box login">
+<form action="saveProduct"  method="post" ENCTYPE="multipart/form-data" class="box login">
 	<fieldset class="boxBody" style="border:0">
 	 <table style="margin-left:auto; margin-top:35px; margin-right:auto;" width="800" border="0" cellpadding="5" cellspacing="0" bgcolor="transparent" style="text-align:left;">
     <tr>
-      <td colspan="3"> </td>
+      <td colspan="3"><font face="Lucida Grande" size="4" color="#666666"><label style="color:red"><center>${message }</center></label></font> </td>
     </tr>
     <tr >
       <td width="300">
         <font face="Lucida Grande" size="2" color="#666666"><b>Product Name</b></font> <span style="color:red;"><small>*</small></span>
       </td>
       <td colspan="2" style="">
-        <input value="" size="52" name="product_name" type="text" />${message1 }
+        <input value="" size="52" name="product_name" type="text" /><label style="color:red">${message1 }</label>
         <div style="padding-bottom:8px;color:#666666;"></div>
       </td>
     </tr>
@@ -166,15 +166,16 @@
         <font face="Lucida Grande" size="2" color="#666666"><b>Product Price</b></font> <span style="color:red;"><small>*</small></span>
       </td>
       <td colspan="2" id="td_element_field_1" style="">
-        <input value="" size="52" name="product_price" type="text" />${message2 }
+        <input value="" size="52" name="product_price" type="number" required/><label style="color:red">${message2 }</label>
         <div style="padding-bottom:8px;color:#666666;"></div>
       </td>
     </tr>
 
        <tr>
 <td><font face="Lucida Grande" size="2" color="#666666"><b>File</b></font></td>
-<td><input name="filename" type="file" id="file"/></td>
+<td><input name="filename" type="file" id="file"/><label style="color:red">${message4 }</label></td>
 </tr>
+
  <tr>
    <td class="tdspace"></td>
    </tr>
@@ -204,7 +205,7 @@
       </td>
       <td colspan="2">
         <textarea  name="product_desc"   cols="70" rows="10">
-</textarea>${message5 }
+</textarea><label style="color:red">${message5 }</label>
         <div style="padding-bottom:8px;color:#666666;"></div>
       </td>
     </tr>

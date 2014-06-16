@@ -114,7 +114,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
    					<th width="150px">Application ID</th>
     				<th width="170px">Name of Applicant</th> 
     				<th width="150px">Plan Name</th> 
-    				<th width="150px">Phone Name</th> 
+    				<!--<th width="150px">Phone Name</th> -->
     				<th width="150px">Status</th>
     				<th width="150px">Date </th>
     			
@@ -134,7 +134,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 						<td>${applications.companyauth}</td>
 						</c:if>
 						<td>${applications.getPlan_code()}</td>
-						<td>${applications.phone_id}</td>						
+						<!--<td>${applications.phone_id}</td>-->					
 						<c:if test="${applications.getStatus().equals('0')}">
 						<td style="color:red">No Action</td>
 						</c:if>

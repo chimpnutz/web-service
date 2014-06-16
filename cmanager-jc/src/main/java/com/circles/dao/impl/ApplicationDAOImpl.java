@@ -22,6 +22,7 @@ import com.circles.model.Application;
 import com.circles.model.CompanyDetails;
 import com.circles.model.Phone;
 import com.circles.model.Plan;
+import com.circles.model.Relative;
 import com.circles.model.SpouseDetails;
 import com.google.gson.Gson;
 
@@ -159,11 +160,23 @@ public class ApplicationDAOImpl {
 				+ "updated,"
 				+ "version,"
 				+ "application_type,"
-				+ "user_id"
+				+ "user_id," +
+				"company," +
+				"cc_type," +
+				"cc_expiration," +
+				"id_type," +
+				"id_no," +
+				"id_expiration," +
+				"car_ownership," +
+				"business_no," +
+				"fax_no," +
+				"smart_no," +
+				"relative"
 				+ ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
 				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
 				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
-				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?" +
+				",?,?,?,?)";
 				Object[] params = {
 					application.getApplication_id(),
 					application.getTitle(),
@@ -289,7 +302,17 @@ public class ApplicationDAOImpl {
 					application.getUpdate(),
 					application.getVersion(),
 					application.getApplication_type(),
-					application.getUser_id()
+					application.getUser_id(),
+					application.getCc_type(),
+					application.getCc_expiration(),
+					application.getCompany(),
+					application.getId_type(),
+					application.getId_no(),
+					application.getId_expiration(),
+					application.getBusiness_no(),
+					application.getCar_ownership(),
+					application.getFax_no(),
+					application.getSmart_no()
 				};
 		
 		int[] types ={
@@ -416,6 +439,17 @@ public class ApplicationDAOImpl {
 				Types.BIGINT,
 				Types.BIGINT,
 				Types.INTEGER,
+				Types.VARCHAR,
+				Types.VARCHAR,
+				Types.VARCHAR,
+				Types.VARCHAR,
+				Types.VARCHAR,
+				Types.VARCHAR,
+				Types.VARCHAR,
+				Types.VARCHAR,
+				Types.VARCHAR,
+				Types.VARCHAR,
+				Types.VARCHAR,
 				Types.VARCHAR,
 				Types.VARCHAR
 		};
@@ -3457,6 +3491,97 @@ public class ApplicationDAOImpl {
 		}catch(NullPointerException e){
 			
 		}
+		try{
+			if(!application.getCompany().isEmpty()||!application.getCompany().equals(null)||!application.getCompany().equals("")){
+				sql+=" AND company=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getRelative().isEmpty()||!application.getRelative().equals(null)||!application.getRelative().equals("")){
+				sql+=" AND relative=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getCc_type().isEmpty()||!application.getCc_type().equals(null)||!application.getCc_type().equals("")){
+				sql+=" AND cc_type=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getCc_expiration().isEmpty()||!application.getCc_expiration().equals(null)||!application.getCc_expiration().equals("")){
+				sql+=" AND cc_expiration=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		
+		try{
+			if(!application.getId_type().isEmpty()||!application.getId_type().equals(null)||!application.getId_type().equals("")){
+				sql+=" AND id_type=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getId_no().isEmpty()||!application.getId_no().equals(null)||!application.getId_no().equals("")){
+				sql+=" AND id_no=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getId_expiration().isEmpty()||!application.getId_expiration().equals(null)||!application.getId_expiration().equals("")){
+				sql+=" AND id_expiration=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		
+		try{
+			if(!application.getCar_ownership().isEmpty()||!application.getCar_ownership().equals(null)||!application.getCar_ownership().equals("")){
+				sql+=" AND car_ownership=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getBusiness_no().isEmpty()||!application.getBusiness_no().equals(null)||!application.getBusiness_no().equals("")){
+				sql+=" AND business_no=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		
+		try{
+			if(!application.getFax_no().isEmpty()||!application.getFax_no().equals(null)||!application.getFax_no().equals("")){
+				sql+=" AND fax_no=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getSmart_no().isEmpty()||!application.getSmart_no().equals(null)||!application.getSmart_no().equals("")){
+				sql+=" AND smart_no=?";
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
 			
 		Object[] params = new Object[iterator];
 
@@ -4454,6 +4579,95 @@ public class ApplicationDAOImpl {
 		}catch(NullPointerException e){
 			
 		}
+		try{
+			if(!application.getCompany().isEmpty()||!application.getCompany().equals(null)||!application.getCompany().equals("")){
+				params[iterator] = application.getCompany();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getRelative().isEmpty()||!application.getRelative().equals(null)||!application.getRelative().equals("")){
+				params[iterator] = application.getRelative();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getCc_type().isEmpty()||!application.getCc_type().equals(null)||!application.getCc_type().equals("")){
+				params[iterator] = application.getCc_type();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		
+		try{
+			if(!application.getCc_expiration().isEmpty()||!application.getCc_expiration().equals(null)||!application.getCc_expiration().equals("")){
+				params[iterator] = application.getCc_expiration();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getId_type().isEmpty()||!application.getId_type().equals(null)||!application.getId_type().equals("")){
+				params[iterator] = application.getId_type();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getId_no().isEmpty()||!application.getId_no().equals(null)||!application.getId_no().equals("")){
+				params[iterator] = application.getId_no();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getId_expiration().isEmpty()||!application.getId_expiration().equals(null)||!application.getId_expiration().equals("")){
+				params[iterator] = application.getId_expiration();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getCar_ownership().isEmpty()||!application.getCar_ownership().equals(null)||!application.getCar_ownership().equals("")){
+				params[iterator] = application.getCar_ownership();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getBusiness_no().isEmpty()||!application.getBusiness_no().equals(null)||!application.getBusiness_no().equals("")){
+				params[iterator] = application.getBusiness_no();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getFax_no().isEmpty()||!application.getFax_no().equals(null)||!application.getFax_no().equals("")){
+				params[iterator] = application.getFax_no();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
+		try{
+			if(!application.getSmart_no().isEmpty()||!application.getSmart_no().equals(null)||!application.getSmart_no().equals("")){
+				params[iterator] = application.getSmart_no();
+				iterator++;
+			}
+		}catch(NullPointerException e){
+			
+		}
 
 		System.out.println(sql);
 		for(Object s : params){
@@ -4731,6 +4945,17 @@ public class ApplicationDAOImpl {
 	        application.setVersion(rs.getString("version"));
 	        application.setApplication_type(rs.getString("application_type"));
 	        application.setUser_id(rs.getString("user_id"));
+	        application.setCompany(rs.getString("company"));
+	        application.setCc_type(rs.getString("cc_type"));
+	        application.setCc_expiration(rs.getString("cc_expiration"));
+	        application.setId_type(rs.getString("id_type"));
+	        application.setId_no(rs.getString("id_no"));
+	        application.setId_expiration(rs.getString("id_expiration"));
+	        application.setCar_ownership(rs.getString("car_ownership"));
+	        application.setBusiness_no(rs.getString("business_no"));
+	        application.setFax_no(rs.getString("fax_no"));
+	        application.setSmart_no(rs.getString("smart_no"));
+	        application.setRelative(rs.getString("relative"));
 	        return application;
 	        
 	    }
@@ -4743,9 +4968,7 @@ public class ApplicationDAOImpl {
 	    	
 
 	        Application application = new Application();
-	        
-	        
-	        
+      
 	        application.setCount(++ctr);
 	        application.setApplication_id(rs.getString("application_id"));
 	        application.setTitle(rs.getString("title"));
@@ -4873,14 +5096,26 @@ public class ApplicationDAOImpl {
 	        application.setVersion(rs.getString("version"));
 	        application.setApplication_type(rs.getString("application_type"));
 	        application.setUser_id(rs.getString("user_id"));
+	        application.setCompany(rs.getString("company"));
+	        application.setCc_type(rs.getString("cc_type"));
+	        application.setCc_expiration(rs.getString("cc_expiration"));
+	        application.setId_type(rs.getString("id_type"));
+	        application.setId_no(rs.getString("id_no"));
+	        application.setId_expiration(rs.getString("id_expiration"));
+	        application.setCar_ownership(rs.getString("car_ownership"));
+	        application.setBusiness_no(rs.getString("business_no"));
+	        application.setFax_no(rs.getString("fax_no"));
+	        application.setSmart_no(rs.getString("smart_no"));
+	        application.setRelative(rs.getString("relative"));
 
 	        if(application.getApplication_type().equalsIgnoreCase("personal")){
-	            
+	         
 		        Gson gson2 = new Gson();
 		        
 		        System.out.println(application.getAddLine1());
 		        AddressDetails add = gson2.fromJson(application.getAddLine1(), AddressDetails.class);
 	        	SpouseDetails spouse = gson2.fromJson(application.getSpouse_firstName(), SpouseDetails.class);
+	        	Relative rel = gson2.fromJson(application.getRelative(), Relative.class);
 	        	application.setHomeownership(add.getHomeownership());
 	        	application.setYearsofstay(add.getYearsofstay());
 	        	application.setHousenumber(add.getHousenumber());
@@ -4890,7 +5125,19 @@ public class ApplicationDAOImpl {
 	        	application.setSpousefullname(spouse.getSpousefullname());
 	        	application.setSpousecontact(spouse.getSpousecontact());
 	        	application.setSpousebirthday(spouse.getSpousebirthday());
-	        	
+	        	application.setSpouse_building(spouse.getSpouse_building());
+	        	application.setSpouse_village(spouse.getSpouse_village());
+	        	application.setSpouse_streetname(spouse.getSpouse_streetname());
+	        	application.setSpouse_zipCode(spouse.getSpouse_zipCode());
+//	        	application.setRel_firstName(rel.getRel_firstName());
+//	        	application.setRel_middleName(rel.getRel_middleName());
+//	        	application.setRel_lastName(rel.getRel_lastName());
+//	        	application.setRel_birthday(rel.getRel_birthday());
+//	        	application.setRel_building(rel.getRel_building());
+//	        	application.setRel_streetname(rel.getRel_streetname());
+//	        	application.setRel_village(rel.getRel_village());
+//	        	application.setRel_zipCode(rel.getRel_zipCode());
+	         
 	        	
 	        }else{
 	            
@@ -4957,27 +5204,18 @@ public class ApplicationDAOImpl {
 		String sql = "SELECT addLine1 FROM application WHERE  application_id = ?";
 		String result = "-1";
 		List<Map<String,Object>> rows  =  jdbcTemplate.queryForList(sql,id);
-		//System.out.println(isExisting);
-
 		
 		ArrayList<Application> applist = new ArrayList<Application>();
 		
 		for(Map row:rows)
 		{
 		
-			Application app = new Application();
-			
+			Application app = new Application();			
 			
 			result = (String)(row.get("details"));
 			app.setAddLine1(result);
 			
 			System.out.println("details: "+result);
-			
-//			Gson gson = new Gson();
-//			
-//			user = gson.fromJson(result,UserDetails.class);
-//			
-//			result = gson.toJson(user);
 				
 			applist.add(app);
 		}

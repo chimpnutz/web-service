@@ -108,7 +108,7 @@
 					<li><a href="salesmtd" class="selected"><i class="fa fa-usd"></i>&nbsp;SALES</a></li>
 					<li><a href="agent"><i class="icon-agent" style="font-size:20px;"></i>&nbsp;AGENTS</a></li>		
 					<li><a href="recent"><i class="fa fa-clock-o"></i>&nbsp;RECENT</a></li>
-							<li><a href="settings"><i class="fa fa-mobile-phone"></i>&nbsp;MOBILE</a></li>			
+							<li><a href="settings.html"><i class="fa fa-mobile-phone"></i>&nbsp;MOBILE</a></li>	
 					<li><a href="logout"><i class="fa fa-laptop"></i>&nbsp;LOG OUT</a></li>
 					
 				</ul>\

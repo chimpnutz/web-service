@@ -192,7 +192,6 @@ public class UserDAOImpl {
 	@SuppressWarnings("deprecation")
 	public int checkIfExists(User user){
 		String sql="SELECT count(*) FROM user WHERE username=? AND password=?";
-		//Object[] params ={user.getUsername(),user.getPassword()};
 		
 		int isExisting =jdbcTemplate.queryForInt(sql,new Object[] {user.getUsername(),user.getPassword()},new int[] {Types.VARCHAR,Types.VARCHAR});
 		return isExisting;

@@ -14,9 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.circles.controller.ManagerController;
 import com.circles.model.AddressDetails;
 import com.circles.model.Application;
 import com.circles.model.CompanyDetails;
@@ -27,404 +30,434 @@ import com.google.gson.Gson;
 
 public class ApplicationDAOImpl {
 
+	private static final Logger logger = LoggerFactory.getLogger(ApplicationDAOImpl.class);
+	
 	private JdbcTemplate jdbcTemplate;
 
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
+//	public int save(Application application){
+//		String sql = "INSERT INTO application("
+//				+ "application_id,"
+//				+ "title,"
+//				+ "birthplace,"
+//				+ "occupation,"
+//				+ "position_level,"
+//				+ "position_title,"
+//				+ "tenure,"
+//				+ "monthly_income,"
+//				+ "company_name,"
+//				+ "business_nature,"
+//				+ "tin,"
+//				+ "sss,"
+//				+ "civil_status,"
+//				+ "gender,"
+//				+ "dependents,"
+//				+ "other_phone_subscriptions,"
+//				+ "fundssource,"
+//				+ "spouse_firstName,"
+//				+ "spouse_middleName,"
+//				+ "spouse_lastName,"
+//				+ "spouse_birthday,"
+//				+ "mothers_maidenname,"
+//				+ "phone_id,"
+//				+ "plan_code,"
+//				+ "status,"
+//				+ "ref_no,"
+//				+ "email,"
+//				+ "firstName,"
+//				+ "middleName,"
+//				+ "lastName,"
+//				+ "birthday,"
+//				+ "type,"
+//				+ "image,"
+//				+ "termination_image,"
+//				+ "addRegion,"
+//				+ "addCity,"
+//				+ "addBrgy,"
+//				+ "addLine1,"
+//				+ "addLine2,"
+//				+ "zipCode,"
+//				+ "addWorkRegion,"
+//				+ "addWorkCity,"
+//				+ "addWorkBrgy,"
+//				+ "addWorkLine1,"
+//				+ "addWorkLine2,"
+//				+ "workZipCode,"
+//				+ "sendBillTo,"
+//				+ "telephone,"
+//				+ "mobile,"
+//				+ "phone_retrieval_type,"
+//				+ "business_center_name,"
+//				+ "business_center_lng,"
+//				+ "business_center_lat,"
+//				+ "payment_type,"
+//				+ "cc_number,"
+//				+ "cc_bank,"
+//				+ "pp_email,"
+//				+ "pp_refno,"
+//				+ "cod_amt,"
+//				+ "doc_identity_sss,"
+//				+ "doc_identity_sss_no,"
+//				+ "doc_identity_pagibig,"
+//				+ "doc_identity_pagibig_no,"
+//				+ "doc_identity_philhealth,"
+//				+ "doc_identity_philhealth_no,"
+//				+ "doc_identity_tin,"
+//				+ "doc_identity_tin_no,"
+//				+ "doc_identity_driverslicense,"
+//				+ "doc_identity_driverslicense_no,"
+//				+ "doc_identity_passport,"
+//				+ "doc_identity_passport_no,"
+//				+ "doc_identity_companyid,"
+//				+ "doc_identity_companyid_no,"
+//				+ "doc_identity_others,"
+//				+ "doc_identity_others_no,"
+//				+ "doc_address_electricity,"
+//				+ "doc_address_electricity_no,"
+//				+ "doc_address_water,"
+//				+ "doc_address_water_no,"
+//				+ "doc_address_isp,"
+//				+ "doc_address_isp_no,"
+//				+ "doc_address_cable,"
+//				+ "doc_address_cable_no,"
+//				+ "doc_address_telecom,"
+//				+ "doc_address_telecom_no,"
+//				+ "doc_address_bankloan,"
+//				+ "doc_address_bankloan_no,"
+//				+ "doc_address_others,"
+//				+ "doc_address_others_no,"
+//				+ "doc_income_bankstatement,"
+//				+ "doc_income_bankstatement_no,"
+//				+ "doc_income_payslip,"
+//				+ "doc_income_payslip_no,"
+//				+ "doc_income_security,"
+//				+ "doc_income_security_no,"
+//				+ "doc_income_bonds,"
+//				+ "doc_income_bonds_no,"
+//				+ "doc_income_stockcert,"
+//				+ "doc_income_stockcert_no,"
+//				+ "doc_income_companyownership,"
+//				+ "doc_income_companyownership_no,"
+//				+ "doc_income_others,"
+//				+ "doc_income_others_no,"
+//				+ "doc_income_autocharge,"
+//				+ "doc_income_autocharge_no,"
+//				+ "doc_terms_sig1,"
+//				+ "doc_terms_sig2,"
+//				+ "doc_terms_sig3,"
+//				+ "step0Done,"
+//				+ "step1Done,"
+//				+ "step2Done,"
+//				+ "step3Done,"
+//				+ "isaddressDone,"
+//				+ "isidentityDone,"
+//				+ "isincomeDone,"
+//				+ "contact_person,"
+//				+ "contact_number,"
+//				+ "decline_remarks,"
+//				+ "ispushed,"
+//				+ "edited_by,"
+//				+ "created,"
+//				+ "updated,"
+//				+ "version,"
+//				+ "application_type,"
+//				+ "user_id"
+//				+ ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
+//				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
+//				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
+//				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+//				Object[] params = {
+//					application.getApplication_id(),
+//					application.getTitle(),
+//					application.getBirthplace(),
+//					application.getOccupation(),
+//					application.getPosition_level(),
+//					application.getPosition_title(),
+//					application.getTenure(),
+//					application.getMonthly_income(),
+//					application.getCompany_name(),
+//					application.getBusiness_nature(),
+//					application.getTin(),
+//					application.getSss(),
+//					application.getCivil_status(),
+//					application.getGender(),
+//					application.getDependents(),
+//					application.getOther_phone_subscriptions(),
+//					application.getFundssource(),
+//					application.getSpouse_firstName(),
+//					application.getSpouse_middleName(),
+//					application.getSpouse_lastName(),
+//					application.getSpouse_birthday(),
+//					application.getMothers_maidenname(),
+//					application.getPhone_id(),
+//					application.getPlan_code(),
+//					application.getStatus(),
+//					application.getRef_no(),
+//					application.getEmail(),
+//					application.getFirstName(),
+//					application.getMiddleName(),
+//					application.getLastName(),
+//					application.getBirthday(),
+//					application.getType(),
+//					application.getImage(),
+//					application.getTermination_image(),
+//					application.getAddRegion(),
+//					application.getAddCity(),
+//					application.getAddBrgy(),
+//					application.getAddLine1(),
+//					application.getAddLine2(),
+//					application.getZipCode(),
+//					application.getAddWorkRegion(),
+//					application.getAddWorkCity(),
+//					application.getAddWorkBrgy(),
+//					application.getAddWorkLine1(),
+//					application.getAddWorkLine2(),
+//					application.getWorkZipCode(),
+//					application.getSendBillTo(),
+//					application.getTelephone(),
+//					application.getMobile(),
+//					application.getPhone_retrieval_type(),
+//					application.getBusiness_center_name(),
+//					application.getBusiness_center_lng(),
+//					application.getBusiness_center_lat(),
+//					application.getPayment_type(),
+//					application.getCc_number(),
+//					application.getCc_bank(),
+//					application.getPp_email(),
+//					application.getPp_refNo(),
+//					application.getCod_amt(),
+//					application.getDoc_identity_sss(),
+//					application.getDoc_identity_sss_no(),
+//					application.getDoc_identity_pagibig(),
+//					application.getDoc_identity_pagibig_no(),
+//					application.getDoc_identity_philhealth(),
+//					application.getDoc_identity_philhealth_no(),
+//					application.getDoc_identity_tin(),
+//					application.getDoc_identity_tin_no(),
+//					application.getDoc_identity_driverslicense(),
+//					application.getDoc_identity_driverslicense_no(),
+//					application.getDoc_identity_passport(),
+//					application.getDoc_identity_passport_no(),
+//					application.getDoc_identity_companyid(),
+//					application.getDoc_identity_companyid_no(),
+//					application.getDoc_identity_others(),
+//					application.getDoc_identity_others_no(),
+//					application.getDoc_address_electricity(),
+//					application.getDoc_address_electricity_no(),
+//					application.getDoc_address_water(),
+//					application.getDoc_address_water_no(),
+//					application.getDoc_address_isp(),
+//					application.getDoc_address_isp_no(),
+//					application.getDoc_address_cable(),
+//					application.getDoc_address_cable_no(),
+//					application.getDoc_address_telecom(),
+//					application.getDoc_address_telecom_no(),
+//					application.getDoc_address_bankloan(),
+//					application.getDoc_address_bankloan_no(),
+//					application.getDoc_address_others(),
+//					application.getDoc_address_others_no(),
+//					application.getDoc_income_bankstatement(),
+//					application.getDoc_income_bankstatement_no(),
+//					application.getDoc_income_payslip(),
+//					application.getDoc_income_payslip_no(),
+//					application.getDoc_income_security(),
+//					application.getDoc_income_security_no(),
+//					application.getDoc_income_bonds(),
+//					application.getDoc_income_bonds_no(),
+//					application.getDoc_income_stockcert(),
+//					application.getDoc_income_stockcert_no(),
+//					application.getDoc_income_companyownership(),
+//					application.getDoc_income_companyownership_no(),
+//					application.getDoc_income_others(),
+//					application.getDoc_income_others_no(),
+//					application.getDoc_income_autocharge(),
+//					application.getDoc_income_autocharge_no(),
+//					application.getDoc_terms_sig1(),
+//					application.getDoc_terms_sig2(),
+//					application.getDoc_terms_sig3(),
+//					application.getStep0Done(),
+//					application.getStep1Done(),
+//					application.getStep2Done(),
+//					application.getStep3Done(),
+//					application.getIsaddressDone(),
+//					application.getIsidentityDone(),
+//					application.getIsincomeDone(),
+//					application.getContact_person(),
+//					application.getContact_number(),
+//					application.getDecline_remarks(),
+//					application.getIspushed(),
+//					application.getEditedBy(),
+//					application.getCreated(),
+//					application.getUpdate(),
+//					application.getVersion(),
+//					application.getApplication_type(),
+//					application.getUser_id()
+//				};
+//		
+//		int[] types ={
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.INTEGER,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.INTEGER,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.INTEGER,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.INTEGER,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.INTEGER,
+//				Types.VARCHAR,
+//				Types.INTEGER,
+//				Types.INTEGER,
+//				Types.INTEGER,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.INTEGER,
+//				Types.INTEGER,
+//				Types.INTEGER,
+//				Types.INTEGER,
+//				Types.INTEGER,
+//				Types.INTEGER,
+//				Types.INTEGER,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.VARCHAR,
+//				Types.INTEGER,
+//				Types.VARCHAR,
+//				Types.BIGINT,
+//				Types.BIGINT,
+//				Types.INTEGER,
+//				Types.VARCHAR,
+//				Types.VARCHAR
+//		};
+//		System.out.println(sql);
+//		for(Object s : params){
+//			System.out.print(s+",");
+//		}
+//		int isSaved = jdbcTemplate.update(sql, params, types);	
+//		return isSaved;
+//	}
+	
 	public int save(Application application){
-		String sql = "INSERT INTO application("
-				+ "application_id,"
-				+ "title,"
-				+ "birthplace,"
-				+ "occupation,"
-				+ "position_level,"
-				+ "position_title,"
-				+ "tenure,"
-				+ "monthly_income,"
-				+ "company_name,"
-				+ "business_nature,"
-				+ "tin,"
-				+ "sss,"
-				+ "civil_status,"
-				+ "gender,"
-				+ "dependents,"
-				+ "other_phone_subscriptions,"
-				+ "fundssource,"
-				+ "spouse_firstName,"
-				+ "spouse_middleName,"
-				+ "spouse_lastName,"
-				+ "spouse_birthday,"
-				+ "mothers_maidenname,"
-				+ "phone_id,"
-				+ "plan_code,"
-				+ "status,"
-				+ "ref_no,"
-				+ "email,"
-				+ "firstName,"
-				+ "middleName,"
-				+ "lastName,"
-				+ "birthday,"
-				+ "type,"
-				+ "image,"
-				+ "termination_image,"
-				+ "addRegion,"
-				+ "addCity,"
-				+ "addBrgy,"
-				+ "addLine1,"
-				+ "addLine2,"
-				+ "zipCode,"
-				+ "addWorkRegion,"
-				+ "addWorkCity,"
-				+ "addWorkBrgy,"
-				+ "addWorkLine1,"
-				+ "addWorkLine2,"
-				+ "workZipCode,"
-				+ "sendBillTo,"
-				+ "telephone,"
-				+ "mobile,"
-				+ "phone_retrieval_type,"
-				+ "business_center_name,"
-				+ "business_center_lng,"
-				+ "business_center_lat,"
-				+ "payment_type,"
-				+ "cc_number,"
-				+ "cc_bank,"
-				+ "pp_email,"
-				+ "pp_refno,"
-				+ "cod_amt,"
-				+ "doc_identity_sss,"
-				+ "doc_identity_sss_no,"
-				+ "doc_identity_pagibig,"
-				+ "doc_identity_pagibig_no,"
-				+ "doc_identity_philhealth,"
-				+ "doc_identity_philhealth_no,"
-				+ "doc_identity_tin,"
-				+ "doc_identity_tin_no,"
-				+ "doc_identity_driverslicense,"
-				+ "doc_identity_driverslicense_no,"
-				+ "doc_identity_passport,"
-				+ "doc_identity_passport_no,"
-				+ "doc_identity_companyid,"
-				+ "doc_identity_companyid_no,"
-				+ "doc_identity_others,"
-				+ "doc_identity_others_no,"
-				+ "doc_address_electricity,"
-				+ "doc_address_electricity_no,"
-				+ "doc_address_water,"
-				+ "doc_address_water_no,"
-				+ "doc_address_isp,"
-				+ "doc_address_isp_no,"
-				+ "doc_address_cable,"
-				+ "doc_address_cable_no,"
-				+ "doc_address_telecom,"
-				+ "doc_address_telecom_no,"
-				+ "doc_address_bankloan,"
-				+ "doc_address_bankloan_no,"
-				+ "doc_address_others,"
-				+ "doc_address_others_no,"
-				+ "doc_income_bankstatement,"
-				+ "doc_income_bankstatement_no,"
-				+ "doc_income_payslip,"
-				+ "doc_income_payslip_no,"
-				+ "doc_income_security,"
-				+ "doc_income_security_no,"
-				+ "doc_income_bonds,"
-				+ "doc_income_bonds_no,"
-				+ "doc_income_stockcert,"
-				+ "doc_income_stockcert_no,"
-				+ "doc_income_companyownership,"
-				+ "doc_income_companyownership_no,"
-				+ "doc_income_others,"
-				+ "doc_income_others_no,"
-				+ "doc_income_autocharge,"
-				+ "doc_income_autocharge_no,"
-				+ "doc_terms_sig1,"
-				+ "doc_terms_sig2,"
-				+ "doc_terms_sig3,"
-				+ "step0Done,"
-				+ "step1Done,"
-				+ "step2Done,"
-				+ "step3Done,"
-				+ "isaddressDone,"
-				+ "isidentityDone,"
-				+ "isincomeDone,"
-				+ "contact_person,"
-				+ "contact_number,"
-				+ "decline_remarks,"
-				+ "ispushed,"
-				+ "edited_by,"
-				+ "created,"
-				+ "updated,"
-				+ "version,"
-				+ "application_type,"
-				+ "user_id"
-				+ ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
-				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
-				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?"
-				+ ",?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-				Object[] params = {
-					application.getApplication_id(),
-					application.getTitle(),
-					application.getBirthplace(),
-					application.getOccupation(),
-					application.getPosition_level(),
-					application.getPosition_title(),
-					application.getTenure(),
-					application.getMonthly_income(),
-					application.getCompany_name(),
-					application.getBusiness_nature(),
-					application.getTin(),
-					application.getSss(),
-					application.getCivil_status(),
-					application.getGender(),
-					application.getDependents(),
-					application.getOther_phone_subscriptions(),
-					application.getFundssource(),
-					application.getSpouse_firstName(),
-					application.getSpouse_middleName(),
-					application.getSpouse_lastName(),
-					application.getSpouse_birthday(),
-					application.getMothers_maidenname(),
-					application.getPhone_id(),
-					application.getPlan_code(),
-					application.getStatus(),
-					application.getRef_no(),
-					application.getEmail(),
-					application.getFirstName(),
-					application.getMiddleName(),
-					application.getLastName(),
-					application.getBirthday(),
-					application.getType(),
-					application.getImage(),
-					application.getTermination_image(),
-					application.getAddRegion(),
-					application.getAddCity(),
-					application.getAddBrgy(),
-					application.getAddLine1(),
-					application.getAddLine2(),
-					application.getZipCode(),
-					application.getAddWorkRegion(),
-					application.getAddWorkCity(),
-					application.getAddWorkBrgy(),
-					application.getAddWorkLine1(),
-					application.getAddWorkLine2(),
-					application.getWorkZipCode(),
-					application.getSendBillTo(),
-					application.getTelephone(),
-					application.getMobile(),
-					application.getPhone_retrieval_type(),
-					application.getBusiness_center_name(),
-					application.getBusiness_center_lng(),
-					application.getBusiness_center_lat(),
-					application.getPayment_type(),
-					application.getCc_number(),
-					application.getCc_bank(),
-					application.getPp_email(),
-					application.getPp_refNo(),
-					application.getCod_amt(),
-					application.getDoc_identity_sss(),
-					application.getDoc_identity_sss_no(),
-					application.getDoc_identity_pagibig(),
-					application.getDoc_identity_pagibig_no(),
-					application.getDoc_identity_philhealth(),
-					application.getDoc_identity_philhealth_no(),
-					application.getDoc_identity_tin(),
-					application.getDoc_identity_tin_no(),
-					application.getDoc_identity_driverslicense(),
-					application.getDoc_identity_driverslicense_no(),
-					application.getDoc_identity_passport(),
-					application.getDoc_identity_passport_no(),
-					application.getDoc_identity_companyid(),
-					application.getDoc_identity_companyid_no(),
-					application.getDoc_identity_others(),
-					application.getDoc_identity_others_no(),
-					application.getDoc_address_electricity(),
-					application.getDoc_address_electricity_no(),
-					application.getDoc_address_water(),
-					application.getDoc_address_water_no(),
-					application.getDoc_address_isp(),
-					application.getDoc_address_isp_no(),
-					application.getDoc_address_cable(),
-					application.getDoc_address_cable_no(),
-					application.getDoc_address_telecom(),
-					application.getDoc_address_telecom_no(),
-					application.getDoc_address_bankloan(),
-					application.getDoc_address_bankloan_no(),
-					application.getDoc_address_others(),
-					application.getDoc_address_others_no(),
-					application.getDoc_income_bankstatement(),
-					application.getDoc_income_bankstatement_no(),
-					application.getDoc_income_payslip(),
-					application.getDoc_income_payslip_no(),
-					application.getDoc_income_security(),
-					application.getDoc_income_security_no(),
-					application.getDoc_income_bonds(),
-					application.getDoc_income_bonds_no(),
-					application.getDoc_income_stockcert(),
-					application.getDoc_income_stockcert_no(),
-					application.getDoc_income_companyownership(),
-					application.getDoc_income_companyownership_no(),
-					application.getDoc_income_others(),
-					application.getDoc_income_others_no(),
-					application.getDoc_income_autocharge(),
-					application.getDoc_income_autocharge_no(),
-					application.getDoc_terms_sig1(),
-					application.getDoc_terms_sig2(),
-					application.getDoc_terms_sig3(),
-					application.getStep0Done(),
-					application.getStep1Done(),
-					application.getStep2Done(),
-					application.getStep3Done(),
-					application.getIsaddressDone(),
-					application.getIsidentityDone(),
-					application.getIsincomeDone(),
-					application.getContact_person(),
-					application.getContact_number(),
-					application.getDecline_remarks(),
-					application.getIspushed(),
-					application.getEditedBy(),
-					application.getCreated(),
-					application.getUpdate(),
-					application.getVersion(),
-					application.getApplication_type(),
-					application.getUser_id()
-				};
 		
-		int[] types ={
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.INTEGER,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.INTEGER,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.INTEGER,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.INTEGER,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.INTEGER,
-				Types.VARCHAR,
-				Types.INTEGER,
-				Types.INTEGER,
-				Types.INTEGER,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.INTEGER,
-				Types.INTEGER,
-				Types.INTEGER,
-				Types.INTEGER,
-				Types.INTEGER,
-				Types.INTEGER,
-				Types.INTEGER,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.VARCHAR,
-				Types.INTEGER,
-				Types.VARCHAR,
-				Types.BIGINT,
-				Types.BIGINT,
-				Types.INTEGER,
-				Types.VARCHAR,
-				Types.VARCHAR
-		};
-		System.out.println(sql);
-		for(Object s : params){
-			System.out.print(s+",");
-		}
-		int isSaved = jdbcTemplate.update(sql, params, types);	
-		return isSaved;
+		String sql = "INSERT INTO application(application_id," +
+				"product_id," +
+				"details," +
+				"company_name," +
+				"spouse_firstName," +
+				"addLine1," +
+				"application_type," +
+				"edited_by," +
+				"ispushed," +
+				"version," +
+				"created," +
+				"updated," +
+				"status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ";
+		
+		logger.info("inserting "+ application.getApplication_id());
+		int iSave = jdbcTemplate.update(sql.toString(), new Object[]{
+			application.getApplication_id(),application.getProduct_id(),application.getDetails(),
+			application.getCompany_name(),application.getSpouse_firstName(),application.getAddLine1(),
+			application.getEditedBy(),application.getIspushed(),application.getVersion(),application.getCreated(),
+			application.getUpdate(),application.getStatus()
+		});
+		
+		return iSave;
+		
 	}
 	public int update(Application application){
 		String sql = "UPDATE application SET dvar=?";

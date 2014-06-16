@@ -47,19 +47,19 @@ $(document).ready(function() {
     <!--END SLIDE-IN ICONS-->
 
 <!--LOGIN FORM-->
-<form:form name="login-form" class="login-form" modelAttribute="loginForm" action="auth" method="post">
+<form name="login-form" class="login-form"  action="auth" method="post">
 
 	<!--HEADER-->
     <div class="header">
     <!--TITLE--><h1>Circles</h1><!--END TITLE-->
  	
     </div>
-    <!--END HEADER-->
+    <!--END HEADER modelAttribute="loginForm"-->
 	
 	<!--CONTENT-->
     <div class="content">
-	<!--USERNAME--><form:input path="username" type="text" class="input username" placeholder="Username" /><!--END USERNAME-->
-    <!--PASSWORD--><form:input path="password" type="password" class="input password" placeholder="Password" /><!--END PASSWORD-->
+	<!--USERNAME--><input name="username" type="text" class="input username" placeholder="Username" /><!--END USERNAME-->
+    <!--PASSWORD--><input name="password" type="password" class="input password" placeholder="Password" /><!--END PASSWORD-->
    	<br></br>
    	<c:if test="${validate == 'invalid' }">
  	<span style="color:red; font-size:12px">${error}</span>
@@ -81,7 +81,7 @@ $(document).ready(function() {
     </div>
     <!--END FOOTER-->
 
-</form:form>
+</form>
 <!--END LOGIN FORM-->
 
 </div>

@@ -77,7 +77,7 @@ public class EncoderController
   private JavaMailSenderImpl mailSender;
   private static final Logger logger = LoggerFactory.getLogger(ManagerController.class);
 
-  @RequestMapping(value={"/applicationform"}, method={org.springframework.web.bind.annotation.RequestMethod.GET}, params={"appid"})
+  @RequestMapping(value={"/applicationform1"}, method={org.springframework.web.bind.annotation.RequestMethod.GET}, params={"appid"})
   public String viewMobile(@ModelAttribute("loginForm") User loginForm,BindingResult result,Model model, @RequestParam("appid") String id, HttpSession session) throws SQLException {
     Application application = new Application();
     Collection s = null;
@@ -105,7 +105,7 @@ public class EncoderController
 		    Application app = new Application();
 	 
 			application.setApplication_id(id);
-			return "encoder/applicationform";
+			return "encoder/applicationform1";
     }
    	 	
 
@@ -275,7 +275,7 @@ public class EncoderController
            System.out.println("second try.....");
            model.addAttribute("images", this.imageDAOImpl.getImages(image));
            System.out.println(isSaved);
-           return "encoder/applicationform";
+           return "encoder/applicationform1";
          }
     	 System.out.println("third try.....");
          Image image = new Image();
@@ -292,7 +292,7 @@ public class EncoderController
  		}
          System.out.println("fifth try.....");
          model.addAttribute("images", this.imageDAOImpl.getImages(image));
-         return "encoder/applicationform";
+         return "encoder/applicationform1";
   	  
  
 
@@ -374,7 +374,7 @@ public class EncoderController
       model.addAttribute("comment", this.commentDAOImpl.findComment(comment));
       model.addAttribute("images", this.imageDAOImpl.getImages(image));
 
-      return "encoder/applicationform";
+      return "encoder/applicationform1";
     }
 
     Image image = new Image();
@@ -384,7 +384,7 @@ public class EncoderController
     comment.setApplication_id(application_id);
     model.addAttribute("comment", this.commentDAOImpl.findComment(comment));
     model.addAttribute("images", this.imageDAOImpl.getImages(image));
-    return "encoder/applicationform";
+    return "encoder/applicationform1";
   }
 
   public boolean sendEmail(Application application, HttpServletRequest request,String id) throws SQLException

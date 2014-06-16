@@ -89,7 +89,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 					<li><a href="salesmtd"><i class="fa fa-usd"></i>&nbsp;SALES</a></li>
 					<li><a href="agent"><i  class="icon-agent" style="font-size:20px;"></i>&nbsp;AGENTS</a></li>		
 					<li><a href="recent"  class="selected"><i class="fa fa-clock-o"></i>&nbsp;RECENT</a></li>	
-							<li><a href="settings"><i class="fa fa-mobile-phone"></i>&nbsp;MOBILE</a></li>		
+							<li><a href="settings.html"><i class="fa fa-mobile-phone"></i>&nbsp;MOBILE</a></li>	
 					<li><a href="logout"><i class="fa fa-laptop"></i>&nbsp;LOG OUT</a></li>
 					
 				</ul>
@@ -114,7 +114,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
    					<th width="150px">Application ID</th>
     				<th width="170px">Name of Applicant</th> 
     				<th width="150px">Plan Name</th> 
-    				<th width="150px">Phone Name</th> 
+    				<th width="150px">Phone Name</th>
     				<th width="150px">Status</th>
     				<th width="150px">Date </th>
     			
@@ -134,7 +134,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 						<td>${applications.companyauth}</td>
 						</c:if>
 						<td>${applications.getPlan_code()}</td>
-						<td>${applications.phone_id}</td>						
+						<td>${applications.phone_id}</td> 					
 						<c:if test="${applications.getStatus().equals('0')}">
 						<td style="color:red">No Action</td>
 						</c:if>

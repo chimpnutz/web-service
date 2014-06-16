@@ -55,7 +55,10 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	@RequestMapping(value="/auth", method = RequestMethod.GET)
-	public ModelAndView view(HttpServletRequest request,BindException e){
+	public ModelAndView view(
+			HttpServletRequest request,Model model){
+		
+//		@ModelAttribute("loginForm") User loginForm,BindingResult result,
 	
 		ModelAndView mainpage = new ModelAndView("index");
 		ModelAndView loginpage = new ModelAndView("index");
@@ -78,20 +81,17 @@ public class LoginController {
 	}
 	@RequestMapping(value="/auth" ,method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("loginForm") User loginForm,
-			BindingResult result,HttpSession session,HttpServletRequest request,Model model) throws SQLException{
+			BindingResult result,HttpSession session,Model model) throws SQLException{
 		
 		ModelAndView encoder = new ModelAndView("encoder/encoderrecent");
 		ModelAndView manager = new ModelAndView("manager/salesmtd");
 		ModelAndView fail = new ModelAndView("index");
 		
-		System.out.println("username: "+loginForm.getUsername());
-		System.out.println("password: "+loginForm.getPassword());
-		
 		if(loginForm.getUsername().equals("")){
 			
 	    	logger.info("Please input your Username.");
 	    	fail.addObject("blankUser", "yes");
-	    	fail.addObject("msg", "*Please input your username");
+	    	fail.addObject("msg", "*Please enter your username");
 	    	return fail;
 			
 		}
@@ -100,49 +100,69 @@ public class LoginController {
 			
 			logger.info("Please input your Password");
 			fail.addObject("blankPass", "yes");
-	    	fail.addObject("msg", "*Please input your password.");
+	    	fail.addObject("msg", "*Please enter your password.");
 	    	return fail;
 			
 		}
 		
+		Md5Hasher md = new Md5Hasher();
+		User mrBean = new User();	
+	
+		mrBean.setUsername(loginForm.getUsername().trim());
+		mrBean.setPassword(md.md5(loginForm.getPassword().trim()));
+			
+		System.out.println("username: "+mrBean.getUsername());
+		System.out.println("password: "+mrBean.getPassword());
 		
-		UserBean bean =  userDAOImpl.getUser(loginForm.getUsername(),loginForm.getPassword());
-
-		if(bean!=null){
+		int bean2 = userDAOImpl.checkIfExists(mrBean);
+		System.out.println("bean: "+bean2);
+		
+		if(bean2 == 1){
 			
-			session.setAttribute("USER",loginForm.getUsername());
+			UserBean bean =  userDAOImpl.getUser(mrBean.getUsername(),mrBean.getPassword());
 			
-			if(bean.getRole().equals("1")){
-				session.setAttribute("ROLE", "manager");
-				model.addAttribute("user",session.getAttribute("USER"));
-				model.addAttribute("role",session.getAttribute("ROLE"));
-				return manager;
-			}
-			else if(bean.getRole().equals("2")){
-				session.setAttribute("ROLE", "encoder");
-				Application application = new Application();
-				Collection s = null;
+			if(bean!=null){
 				
-				s= applicationDAOImpl.getRecentApplication(application);
-				model.addAttribute("application",s);
-				model.addAttribute("role",session.getAttribute("ROLE"));
-				model.addAttribute("user",session.getAttribute("USER"));
-				return encoder;
-			}
-			else{
+				session.setAttribute("USER",loginForm.getUsername());
+				
+				if(bean.getRole().equals("1")){
+					session.setAttribute("ROLE", "manager");
+					model.addAttribute("user",session.getAttribute("USER"));
+					model.addAttribute("role",session.getAttribute("ROLE"));
+					return manager;
+				}
+				else if(bean.getRole().equals("2")){
+					session.setAttribute("ROLE", "encoder");
+					Application application = new Application();
+					Collection s = null;
+					
+					s= applicationDAOImpl.getRecentApplication(application);
+					model.addAttribute("application",s);
+					model.addAttribute("role",session.getAttribute("ROLE"));
+					model.addAttribute("user",session.getAttribute("USER"));
+					return encoder;
+				}
+				else{
+					fail.addObject("validate","invalid");
+					fail.addObject("error","Please Enter Username or Password");
+					return fail;
+				}
+			}else{
+				fail.addObject("validate","invalid");
+				fail.addObject("error","Please Enter Username or Password");
 				return fail;
 			}
+						
 		}else{
 			fail.addObject("validate","invalid");
 			fail.addObject("error","Please Enter Username or Password");
 			return fail;
 		}
-		
+	
 		
 	}
 	
-	
-	
+
 	
 //	@SuppressWarnings("unchecked")
 //	@RequestMapping(value="/auth")

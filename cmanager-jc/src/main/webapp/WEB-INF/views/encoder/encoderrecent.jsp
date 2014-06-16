@@ -131,29 +131,29 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 				<tr>
 					<td>${data.count}</td>
 					<core:if test="${data.application_type=='Personal'}">
-					<td><a href="applicationform.html?appid=${data.application_id}">${data.getFirstName()}&nbsp;${data.getLastName()}</a></td>
+					<td><a href="applicationform1.html?appid=${data.application_id}">${data.getFirstName()}&nbsp;${data.getLastName()}</a></td>
 					</core:if>
 					<core:if test="${data.application_type=='Business'}">
-					<td><a href="applicationform.html?appid=${data.application_id}">${data.companyauth}</a></td>						
+					<td><a href="applicationform1.html?appid=${data.application_id}">${data.companyauth}</a></td>						
 					</core:if>
-					<td><a href="applicationform.html?appid=${data.application_id}">${data.application_id}</a></td>
-					<td><a href="applicationform.html?appid=${data.application_id}">${data.getRef_no() }</a></td>
-					<!--<td><a href="applicationform.html?appid=${data.application_id}">${data.getUser_id()}</a></td>-->
+					<td><a href="applicationform1.html?appid=${data.application_id}">${data.application_id}</a></td>
+					<td><a href="applicationform1.html?appid=${data.application_id}">${data.getRef_no() }</a></td>
+					<!--<td><a href="applicationform1.html?appid=${data.application_id}">${data.getUser_id()}</a></td>-->
 					<core:if test="${data.getStatus().equals('0')}">
-						<td><a href="applicationform.html?appid=${data.application_id}" style="color:red">No Action</a></td>						</core:if>
+						<td><a href="applicationform1.html?appid=${data.application_id}" style="color:red">No Action</a></td>						</core:if>
 						<core:if test="${data.getStatus().equals('1')}">
-						<td><a href="applicationform.html?appid=${data.application_id}">Approved</a></td>
+						<td><a href="applicationform1.html?appid=${data.application_id}">Approved</a></td>
 						</core:if>
 						<core:if test="${data.getStatus().equals('2')}">
-						<td><a href="applicationform.html?appid=${data.application_id}">Ongoing</a></td>
+						<td><a href="applicationform1.html?appid=${data.application_id}">Ongoing</a></td>
 						</core:if>
 						<core:if test="${data.getStatus().equals('3')}">
-						<td><a href="applicationform.html?appid=${data.application_id}">Declined</a></td>
+						<td><a href="applicationform1.html?appid=${data.application_id}">Declined</a></td>
 						</core:if>
 						<core:if test="${data.getStatus().equals('4')}">
-						<td><a href="applicationform.html?appid=${data.application_id}">Incomplete</a></td>
+						<td><a href="applicationform1.html?appid=${data.application_id}">Incomplete</a></td>
 						</core:if>
-					<td><a href="applicationform.html?appid=${data.application_id}"><jsp:useBean id="dateValue" class="java.util.Date" />
+					<td><a href="applicationform1.html?appid=${data.application_id}"><jsp:useBean id="dateValue" class="java.util.Date" />
 						<jsp:setProperty name="dateValue" property="time" value="${data.getCreated()}" />
 						<fmt:formatDate value="${dateValue}" pattern="MM/dd/yyyy HH:mm" /></a></td>
 					

@@ -56,8 +56,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 
-
-
 /**
  * Handles requests for the application home page.
  */
@@ -186,7 +184,7 @@ public class ApplicationRequestController {
 
 	}
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unused", "rawtypes" })
 	@RequestMapping(value="/saveApplication",produces="application/json")
 	public @ResponseBody boolean saveApplication(
 			@RequestParam(value="application_id",required=false) String application_id,
@@ -315,6 +313,17 @@ public class ApplicationRequestController {
 			@RequestParam(value="content",required=false) String content,
 			@RequestParam(value="version",required=false) String version,
 			@RequestParam(value="application_type",required=false) String application_type,
+			@RequestParam(value="relative",required=false) String relative,
+			@RequestParam(value="company",required=false) String company,
+			@RequestParam(value="cc_type",required=false) String cc_type,
+			@RequestParam(value="cc_expiration",required=false) String cc_expiration,
+			@RequestParam(value="id_type",required=false) String id_type,
+			@RequestParam(value="id_no",required=false) String id_no,
+			@RequestParam(value="id_expiration",required=false) String id_expiration,
+			@RequestParam(value="car_ownership",required=false) String car_ownership,
+			@RequestParam(value="business_no",required=false) String business_no,
+			@RequestParam(value="fax_no",required=false) String fax_no,
+			@RequestParam(value="smart_no",required=false) String smart_no,
 			HttpSession session
 		
 			)throws NullPointerException, IOException, SQLException,ConversionNotSupportedException{
@@ -322,19 +331,22 @@ public class ApplicationRequestController {
         Application application = new Application();
         Comment comment = new Comment();
         
-        CompanyDetails company = new CompanyDetails();
+        CompanyDetails companyname = new CompanyDetails();
         AddressDetails address = new AddressDetails();
         SpouseDetails spouse = new SpouseDetails();
+        Relative rel = new Relative();
         
         Gson gson = new Gson();
         
-        company=gson.fromJson(company_name, CompanyDetails.class);
+        rel=gson.fromJson(relative, Relative.class);
+        companyname=gson.fromJson(company_name, CompanyDetails.class);
         address=gson.fromJson(addLine1,AddressDetails.class);
         spouse=gson.fromJson(spouse_firstName, SpouseDetails.class);
         
-        System.out.println("company details: "+company);
+        System.out.println("company details: "+companyname);
         System.out.println("address details: "+address);
         System.out.println("spouse details: "+spouse);
+        System.out.println("relative: "+rel);
         
       /*  String applicationUID = "{"+UUID.randomUUID().toString()+"}";
         application.setApplication_id(applicationUID);
@@ -479,6 +491,18 @@ public class ApplicationRequestController {
         application.setVersion("1");
         application.setUser_id(user_id);
         application.setApplication_type(application_type);
+        application.setRelative(relative);
+        application.setCompany(company);
+        application.setCc_type(cc_type);
+        application.setCc_expiration(cc_expiration);
+        application.setId_type(id_type);
+        application.setId_no(id_no);
+        application.setId_expiration(id_expiration);
+        application.setCar_ownership(car_ownership);
+        application.setBusiness_no(business_no);
+        application.setFax_no(fax_no);
+        application.setSmart_no(smart_no);
+        
 		int	s= 0;
 		
 		int isExisting = applicationDAOImpl.checkIfExists(application);
@@ -566,7 +590,7 @@ public class ApplicationRequestController {
 			return "1";
 		
 	}
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "rawtypes", "unchecked", "unused" })
 	@RequestMapping(value="/updateApplication", produces="application/json")
 			public @ResponseBody int updateApplication(
 					@RequestParam(value="applicationid",required=true) String applicationid,
@@ -691,26 +715,37 @@ public class ApplicationRequestController {
 					@RequestParam(value="edited_by",required=false) String edited_by,
 					@RequestParam(value="version",required=false) String version,
 					@RequestParam(value="application_type",required=false) String application_type,
-//					@RequestParam(value="companyid",required=false) String companyid
-//					@RequestParam(value="sketch",required=false) String sketch
+					@RequestParam(value="relative",required=false) String relative,
+					@RequestParam(value="company",required=false) String company,
+					@RequestParam(value="cc_type",required=false) String cc_type,
+					@RequestParam(value="cc_expiration",required=false) String cc_expiration,
+					@RequestParam(value="id_type",required=false) String id_type,
+					@RequestParam(value="id_no",required=false) String id_no,
+					@RequestParam(value="id_expiration",required=false) String id_expiration,
+					@RequestParam(value="car_ownership",required=false) String car_ownership,
+					@RequestParam(value="business_no",required=false) String business_no,
+					@RequestParam(value="fax_no",required=false) String fax_no,
+					@RequestParam(value="smart_no",required=false) String smart_no,
 					HttpSession session)throws NullPointerException, IOException, SQLException,ConversionNotSupportedException{
 //		checksession(session);
 		        Application application = new Application();
 		        
-		        CompanyDetails company = new CompanyDetails();
+		        CompanyDetails companyname = new CompanyDetails();
 		        AddressDetails address = new AddressDetails();
 		        SpouseDetails spouse = new SpouseDetails();
+		        Relative rel = new Relative();
 		        
 		        Gson gson = new Gson();
 		        
-		        company=gson.fromJson(company_name, CompanyDetails.class);
+		        rel=gson.fromJson(relative, Relative.class);
+		        companyname=gson.fromJson(company_name, CompanyDetails.class);
 		        address=gson.fromJson(addLine1,AddressDetails.class);
 		        spouse=gson.fromJson(spouse_firstName, SpouseDetails.class);
 		        
 		        System.out.println("company details: "+company);
 		        System.out.println("address details: "+address);
 		        System.out.println("spouse details: "+spouse);
-		        
+		        System.out.println("relative details: "+rel);
 		        
 		        application.setApplication_id(applicationid);
 		        application.setTitle(title);
@@ -843,7 +878,17 @@ public class ApplicationRequestController {
 		        newVersion+=1;
 		        application.setVersion(newVersion+"");
 		        application.setApplication_type(application_type);
-//		        application.setCompanyid(companyid);
+		        application.setRelative(relative);
+		        application.setCompany(company);
+		        application.setCc_type(cc_type);
+		        application.setCc_expiration(cc_expiration);
+		        application.setId_type(id_type);
+		        application.setId_no(id_no);
+		        application.setId_expiration(id_expiration);
+		        application.setCar_ownership(car_ownership);
+		        application.setBusiness_no(business_no);
+		        application.setFax_no(fax_no);
+		        application.setSmart_no(smart_no);
 		        
 		        
 		        Resource resource = new ClassPathResource("../properties/filepath.properties");
@@ -859,9 +904,7 @@ public class ApplicationRequestController {
 			    imageDAOImpl.delete(imageDelete);
 		        int	s= applicationDAOImpl.update(application);
 				if(s==1){
-					
-					
-					
+								
 					MulticastResult result2 = null;
 					Result result = null;
 					Application newApp = new Application();
@@ -894,8 +937,7 @@ public class ApplicationRequestController {
 	public @ResponseBody  int deleteApplication(
 			@RequestParam(value="applicationid",required=true) String applicationid,
 			HttpSession session) throws ConversionNotSupportedException{
-//		checksession(session);
-		//int isExisting = userDAOImpl.checkIfExists(userParams);
+
 		Application application = new Application();
 		application.setApplication_id(applicationid);
 		int s = applicationDAOImpl.delete(application);		
@@ -906,219 +948,10 @@ public class ApplicationRequestController {
 	@RequestMapping(value="/uploadTest")
 	public String upload(@ModelAttribute("applicationForm") Application application, Model model,
 			@RequestParam(value="invalid",required =false) String invalid){
-		//int isExisting = userDAOImpl.checkIfExists(userParams);asdasdasdasdasd
+	
 		model.addAttribute("error","display:none");
 		return "index";
 	}
-	
-//	@RequestMapping(value = "/saveResetPassword",produces="application/json")
-//	public @ResponseBody String resetPass(
-//			HttpServletRequest request,
-//			@RequestParam(value="password",required=false)String password,
-//			@RequestParam(value="params",required=false)String params,
-//			Model model) throws  SQLException {	
-//		Gson gson = new Gson();
-//		User user = new User();
-//		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-//		Date date = new Date();
-//		long unixDate = date.getTime();
-//		System.out.println("UNIX CURRENT TIME: "+unixDate);
-//	    Calendar cal = Calendar.getInstance();
-//	    cal.setTime(date);
-//	    cal.add(Calendar.DAY_OF_WEEK, 1);
-//
-//	            java.util.Date expirationDate = cal.getTime();
-//
-//	    System.err.println("expire date"+expirationDate.getTime());
-//	    
-//		long expiration = expirationDate.getTime();
-//		
-//		System.out.println("EXPIRATION: "+expiration);
-//		
-//		String resetUID = "{"+UUID.randomUUID().toString()+"}";
-//		ResetPassword rp = new ResetPassword();
-//		
-//		rp.setResetid(resetUID);
-//		rp.setCode(RandomStringUtils.randomAlphanumeric(6));
-//		rp.setCodetype("activation");
-//		rp.setUserid(user.getUserid());
-//		rp.setPassword(user.getPassword());
-//		rp.setCreated(unixDate+"");
-//		rp.setExpiration(expiration+"");
-//		
-//		String json = gson.toJson(rp);
-//		String json2 = gson.toJson(params);
-//		System.out.println("reset password params:"+params);
-//		
-//		System.out.println("user id: "+rp.getUserid());
-//		int isSaved= resetpasswordDAOImpl.save(rp);
-//		System.out.println("isSave = "+isSaved);
-//		if(isSaved==1){
-//			
-//				System.out.println("JSON:"+gson.toJson(rp));
-//			}
-//		
-//		System.out.println("code: "+RandomStringUtils.randomAlphanumeric(6));
-//		
-//		if( unixDate <  expiration){
-//	
-//				ApplicationContext a = new ClassPathXmlApplicationContext("Spring-Mail.xml");
-//				System.out.println(a);
-//				MailModel mail = (MailModel) a.getBean("mail");
-//				
-//				mail.ResetPass(user,rp,request);
-//				logger.info("success");
-//						
-//		
-//		}
-//		return isSaved+"";
-//	
-//	}
 
-	/*@RequestMapping(value="/authJson", method = RequestMethod.GET,produces="application/json	
-	public @ResponseBody  Collection getUser (
-			@RequestParam(value = "userid", required = false) String userid,
-			@RequestParam(value = "firstname", required = false) String firstName,
-			@RequestParam(value = "middlename", required = false) String middleName,
-			@RequestParam(value = "lastname", required = false) String lastName,
-			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "role", required = false) String role)throws NullPointerException{
-		User userParams = new User();
-		userParams.setUserid(userid);
-		userParams.setFirstName(firstName);
-		userParams.setMiddleName(middleName);
-		userParams.setLastName(lastName);
-		userParams.setEmail(email);	
-		userParams.setRole(role);
-		//int isExisting = userDAOImpl.checkIfExists(userParams);
-		Collection s = userDAOImpl.findUser(userParams);
-
-		
-		return s;
-		
-	}
-	@RequestMapping(value="/saveJson", method = RequestMethod.GET,produces="application/json	
-	public @ResponseBody  int saveUser (
-			@RequestParam(value = "userid", required = true) String userid,
-			@RequestParam(value= "password", required = true) String password,
-			@RequestParam(value = "firstname", required = false) String firstName,
-			@RequestParam(value = "middlename", required = false) String middleName,
-			@RequestParam(value = "lastname", required = false) String lastName,
-			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "role", required = true) String role)throws NullPointerException{
-		User userParams = new User();
-		Md5Hasher md = new Md5Hasher();
-		userParams.setPassword(md.md5(password.trim()));
-		userParams.setUserid(userid);
-		userParams.setFirstName(firstName);
-		userParams.setMiddleName(middleName);
-		userParams.setLastName(lastName);
-		userParams.setEmail(email);	
-		userParams.setRole(role);
-		//int isExisting = userDAOImpl.checkIfExists(userParams);
-		int s = userDAOImpl.save(userParams);
-		return s;	
-	}
-	@RequestMapping(value="/updateJson", method = RequestMethod.GET,produces="application/json	
-	public @ResponseBody  int updateUser (
-			@RequestParam(value = "userid", required = false) String userid,
-			@RequestParam(value = "olduserid" ,required = false) String oUserid,
-			@RequestParam(value= "password", required = false) String password,
-			@RequestParam(value = "firstname", required = false) String firstName,
-			@RequestParam(value = "middlename", required = false) String middleName,
-			@RequestParam(value = "lastname", required = false) String lastName,
-			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "role", required = false) String role)throws NullPointerException{
-		User userParams = new User();
-		Md5Hasher md = new Md5Hasher();
-		
-		try{
-			if(!password.isEmpty()||!password.equals(null)||!password.equals("){
-				userParams.setPassword(md.md5(password.trim()));
-			}
-		}catch(NullPointerException e){
-			
-		}
-	
-		
-		userParams.setUserid(userid);
-		userParams.setFirstName(firstName);
-		userParams.setMiddleName(middleName);
-		userParams.setLastName(lastName);
-		userParams.setEmail(email);	
-		userParams.setRole(role);
-		//int isExisting = userDAOImpl.checkIfExists(userParams);
-		int s = userDAOImpl.update(userParams,oUserid);
-		return s;	
-	}*/
-//	@SuppressWarnings("deprecation")
-//	@RequestMapping(value="saveApplication2",produces="application/json")
-//	public @ResponseBody boolean saveApplication2(
-//			@RequestParam(value="jsondetails",required=false) String app,
-//			@RequestParam(value = "ispushed", required = false) String lastName,
-//			@RequestParam(value = "created", required = false) String created,
-//			@RequestParam(value = "version", required = false) String version,
-//			@RequestParam(value = "edited_by", required = false) String edited_by,
-//			@RequestParam(value = "updated", required = false) String updated,
-//			@RequestParam(value = "application_id", required = false) String application_id,
-//			@RequestParam(value = "application_type", required = false) String application_type,
-//			@RequestParam(value = "user_id", required = false) String user_id
-//			)throws NullPointerException, IOException, SQLException{
-        //parse request parameter to json
-//		System.out.println(app);
-//		JsonElement root = new JsonParser().parse(app);
-		//initiate the POJO (plain old java object)
-//		Application2 application = new Application2();
-		//get elements by name then bind it to the model
-		/*application.setApplication_id(root.getAsJsonObject().get("application_id").getAsString());
-		application.setApplication_type(root.getAsJsonObject().get("application_type").getAsString());
-		application.setCompany_id(root.getAsJsonObject().get("company_id").getAsString());
-		application.setUser_id(root.getAsJsonObject().get("userid").getAsString());
-		application.setCreated(root.getAsJsonObject().get("created").getAsString());
-		application.setUpdated(root.getAsJsonObject().get("updated").getAsString());
-		application.setStatus(root.getAsJsonObject().get("status").getAsString());
-		application.setIspushed(root.getAsJsonObject().get("ispushed").getAsString());
-		application.setVersion(version);
-		application.setDetails(app);*/
-		//String[] detailArray = root.getAsJsonObject().get("details").getAsJsonArray();
-		
-//		if(application_type=="personal"){
-			/*JsonElement details = new JsonParser().parse(application.getDetails());
-			//get json array from details 
-			JsonArray attachments = (JsonArray) details.getAsJsonObject().get("attachments").getAsJsonArray();
-			//iterate array elements from with in attachments
-			for(int i = 0; i< attachments.size();i++){
-				System.out.println(((JsonObject)attachments.get(i)).get("attachment_id"));
-			}
-			//same as above using a different procedure binding it to a POJO
-			Gson gson = new Gson();
-			Attachment[] attachmentData = gson.fromJson(attachments,Attachment[].class);
-			for(int i = 0;i< attachmentData.length;i++){
-				System.out.println(attachmentData[i].getAttachment_id());
-			}*/
-			//JsonElement details = new JsonParser().parse(app);
-//			Gson gson = new Gson();
-			//Residential residential = gson.fromJson(app,Residential.class);
-//			System.out.println(app);
-//		}
-//		else if(application_type=="business"){
-//			Gson gson = new Gson();
-//			Commercial commercial = gson.fromJson(app,Commercial.class);
-//			System.out.println(app);
-//		}
-//		int saveApplication = application2DAOImpl.save(application);
-//		System.out.println(saveApplication);
-//		System.out.println(application.getDetails());
-//		return false;
-		
-		/// parse json request parameter to application class first, then get the detail json object then parse it with
-		/// the corresponding POJO(residential/commercial). to get the attachments, get the attachment json array from 
-		/// the detail class then parse it to the attachment POJO 
-		
-		
-		/// just add a request mapper for the update application.
-//	}
-	
 
 }

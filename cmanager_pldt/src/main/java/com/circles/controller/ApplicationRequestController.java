@@ -318,7 +318,7 @@ public class ApplicationRequestController {
 			HttpSession session
 		
 			)throws NullPointerException, IOException, SQLException,ConversionNotSupportedException{
-//		checksession(session);
+
         Application application = new Application();
         Comment comment = new Comment();
         
@@ -335,21 +335,6 @@ public class ApplicationRequestController {
         System.out.println("company details: "+company);
         System.out.println("address details: "+address);
         System.out.println("spouse details: "+spouse);
-        
-      /*  String applicationUID = "{"+UUID.randomUUID().toString()+"}";
-        application.setApplication_id(applicationUID);
-        int isExisting = applicationDAOImpl.checkIfExists(application);
-        if(isExisting == 1){
-        	applicationUID = "{"+UUID.randomUUID().toString()+"}";
-		}
-        
-        String commentUID = "{"+UUID.randomUUID().toString()+"}";
-        comment.setId(commentUID);
-        isExisting = commentDAOImpl.checkIfExists(comment);
-        if(isExisting == 1){
-        	commentUID = "{"+UUID.randomUUID().toString()+"}";
-		}*/
-        
         
         System.out.println(birthday);
         application.setApplication_id(application_id);
@@ -502,7 +487,7 @@ public class ApplicationRequestController {
 
 
 		
-		//
+		
 		int s2 = 0;
 			try{
 				if(!id.isEmpty() || !id.equals(null) ||!id.equals("") || id != null || id != ""){

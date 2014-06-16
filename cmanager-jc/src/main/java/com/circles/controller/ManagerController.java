@@ -74,7 +74,7 @@ public class ManagerController {
 	
 	@RequestMapping(value="/home", method = RequestMethod.GET)
 	public String home(Model model){
-		//int isExisting = userDAOImpl.checkIfExists(userParams);asdasdasdasdasd
+	
 		return "home";
 	}
 
@@ -284,9 +284,7 @@ public class ManagerController {
 				if(submit!=null){
 					
 					String commentUID = "{"+UUID.randomUUID().toString()+"}";
-					
-					
-					
+		
 					phone.setPhone_id(commentUID);
 					phone.setPhone_model(phone_model);
 					phone.setPhone_code(phone_code);
@@ -398,7 +396,7 @@ public class ManagerController {
 	@RequestMapping(value="/approved", method = RequestMethod.GET)
 	public String viewApproved(@ModelAttribute("loginForm") User loginForm,Model model,
 			HttpSession session,BindingResult result) throws SQLException{
-		
+
 		if(null == session.getAttribute("USER")||null == session.getAttribute("ROLE")){
 			return "index";
 	    }

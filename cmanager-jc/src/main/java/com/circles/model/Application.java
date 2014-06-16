@@ -14,7 +14,18 @@ public class Application {
 	private String isincomeDone;
 	private String contact_person;
 	private String contact_number;
+	private String company;
+	private String cc_type;
+	private String cc_expiration;
+	private String id_type;
+	private String id_no;
+	private String id_expiration;
+	private String car_ownership;
+	private String business_no;
+	private String fax_no;
+	private String smart_no;
 	
+	private String relative;
 	private String title;
 	private String birthplace;
 	private String occupation;
@@ -974,6 +985,10 @@ public class Application {
 	String spousefullname;
 	String spousecontact;
 	long spousebirthday;
+	String spouse_building;
+	String spouse_village;
+	String spouse_streetname;
+	String spouse_zipCode;
 	
 	public String getSpousefullname() {
 		return spousefullname;
@@ -993,13 +1008,159 @@ public class Application {
 	public void setSpousebirthday(long spousebirthday) {
 		this.spousebirthday = spousebirthday;
 	}
+	public String getSpouse_building() {
+		return spouse_building;
+	}
+	public void setSpouse_building(String spouse_building) {
+		this.spouse_building = spouse_building;
+	}
+	public String getSpouse_village() {
+		return spouse_village;
+	}
+	public void setSpouse_village(String spouse_village) {
+		this.spouse_village = spouse_village;
+	}
+	public String getSpouse_streetname() {
+		return spouse_streetname;
+	}
+	public void setSpouse_streetname(String spouse_streetname) {
+		this.spouse_streetname = spouse_streetname;
+	}
+	public String getSpouse_zipCode() {
+		return spouse_zipCode;
+	}
+	public void setSpouse_zipCode(String spouse_zipCode) {
+		this.spouse_zipCode = spouse_zipCode;
+	}
 	public int getCount() {
 		return count;
 	}
 	public void setCount(int count) {
 		this.count = count;
 	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public String getCc_type() {
+		return cc_type;
+	}
+	public void setCc_type(String cc_type) {
+		this.cc_type = cc_type;
+	}
+	public String getCc_expiration() {
+		return cc_expiration;
+	}
+	public void setCc_expiration(String cc_expiration) {
+		this.cc_expiration = cc_expiration;
+	}
+	public String getId_type() {
+		return id_type;
+	}
+	public void setId_type(String id_type) {
+		this.id_type = id_type;
+	}
+	public String getId_no() {
+		return id_no;
+	}
+	public void setId_no(String id_no) {
+		this.id_no = id_no;
+	}
+	public String getId_expiration() {
+		return id_expiration;
+	}
+	public void setId_expiration(String id_expiration) {
+		this.id_expiration = id_expiration;
+	}
+	public String getCar_ownership() {
+		return car_ownership;
+	}
+	public void setCar_ownership(String car_ownership) {
+		this.car_ownership = car_ownership;
+	}
+	public String getBusiness_no() {
+		return business_no;
+	}
+	public void setBusiness_no(String business_no) {
+		this.business_no = business_no;
+	}
+	public String getFax_no() {
+		return fax_no;
+	}
+	public void setFax_no(String fax_no) {
+		this.fax_no = fax_no;
+	}
+	public String getSmart_no() {
+		return smart_no;
+	}
+	public void setSmart_no(String smart_no) {
+		this.smart_no = smart_no;
+	}
 
-	
+	private String rel_firstName;
+	private String rel_middleName;
+	private String rel_lastName;
+	private String rel_birthday;
+	private String rel_building;
+	private String rel_streetname;
+	private String rel_village;
+	private String rel_zipCode;
+
+	public String getRel_firstName() {
+		return rel_firstName;
+	}
+	public void setRel_firstName(String rel_firstName) {
+		this.rel_firstName = rel_firstName;
+	}
+	public String getRel_middleName() {
+		return rel_middleName;
+	}
+	public void setRel_middleName(String rel_middleName) {
+		this.rel_middleName = rel_middleName;
+	}
+	public String getRel_lastName() {
+		return rel_lastName;
+	}
+	public void setRel_lastName(String rel_lastName) {
+		this.rel_lastName = rel_lastName;
+	}
+	public String getRel_birthday() {
+		return rel_birthday;
+	}
+	public void setRel_birthday(String rel_birthday) {
+		this.rel_birthday = rel_birthday;
+	}
+	public String getRel_building() {
+		return rel_building;
+	}
+	public void setRel_building(String rel_building) {
+		this.rel_building = rel_building;
+	}
+	public String getRel_streetname() {
+		return rel_streetname;
+	}
+	public void setRel_streetname(String rel_streetname) {
+		this.rel_streetname = rel_streetname;
+	}
+	public String getRel_village() {
+		return rel_village;
+	}
+	public void setRel_village(String rel_village) {
+		this.rel_village = rel_village;
+	}
+	public String getRel_zipCode() {
+		return rel_zipCode;
+	}
+	public void setRel_zipCode(String rel_zipCode) {
+		this.rel_zipCode = rel_zipCode;
+	}
+	public String getRelative() {
+		return relative;
+	}
+	public void setRelative(String relative) {
+		this.relative = relative;
+	}
 	
 }

@@ -26,6 +26,7 @@ public class CommentDAOImpl {
 	}
 	
 	public int save(Comment comment){
+		System.out.println("username on comment: "+comment.getUser_id());
 		String sql = "INSERT INTO comment("
 				+ "id,"
 				+ "application_id,"
@@ -241,12 +242,9 @@ public class CommentDAOImpl {
 	@SuppressWarnings("deprecation")
 	public int checkIfExists(Comment comment){
 		String sql="SELECT * FROM comment where id=?";
-		//Object[] params ={user.getUserid(),user.getPassword()};
-		//System.out.println(comment.getId());
 		int isExisting = 0;
 		
 		SqlRowSet rs  =  jdbcTemplate.queryForRowSet(sql,new Object[] {comment.getId()},new int[] {Types.VARCHAR});
-		//System.out.println(isExisting);
 		if(rs.next()){
 			do{
 				isExisting++;
@@ -296,168 +294,15 @@ public class CommentDAOImpl {
 	}
 	
 	public Collection findComment(Comment comment) throws SQLException{
-		String sql = "SELECT * FROM comment WHERE dvar=? ";
-		int iterator = 1;
-		try{
-			if(!comment.getId().isEmpty()||!comment.getId().equals(null)||!comment.getId().equals("")){
-				sql+=" AND id=?";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getApplication_id().isEmpty()||!comment.getApplication_id().equals(null)||!comment.getApplication_id().equals("")){
-				sql+=" AND application_id=?";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getUser_id().isEmpty()||!comment.getUser_id().equals(null)||!comment.getUser_id().equals("")){
-				sql+=" AND user_id=?";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getIspushed().isEmpty()||!comment.getIspushed().equals(null)||!comment.getIspushed().equals("")){
-				sql+=" AND ispushed=?";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-
-		try{
-			if(!comment.getEdited_by().isEmpty()||!comment.getEdited_by().equals(null)||!comment.getEdited_by().equals("")){
-				sql+=" AND edited_by=?";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getCreated().isEmpty()||!comment.getCreated().equals(null)||!comment.getCreated().equals("")){
-				sql+=" AND created=?";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getUpdated().isEmpty()||!comment.getUpdated().equals(null)||!comment.getUpdated().equals("")){
-				sql+=" AND updated=?";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getVersion().isEmpty()||!comment.getVersion().equals(null)||!comment.getVersion().equals("")){
-				sql+=" AND version=?";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getContent().isEmpty()||!comment.getContent().equals(null)||!comment.getIspushed().equals("")){
-				sql+=" AND ispushed=?";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-
-		Object[] params = new Object[iterator];
-		params[0] = "1";
-		iterator = 1;
+		String sql = "SELECT * FROM comment WHERE application_id = ? ORDER BY created DESC";
 		
-		try{
-			if(!comment.getId().isEmpty()||!comment.getId().equals(null)||!comment.getId().equals("")){
-				params[iterator] = comment.getId();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getApplication_id().isEmpty()||!comment.getApplication_id().equals(null)||!comment.getApplication_id().equals("")){
-				params[iterator] = comment.getApplication_id();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getUser_id().isEmpty()||!comment.getUser_id().equals(null)||!comment.getUser_id().equals("")){
-				params[iterator] = comment.getUser_id();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getIspushed().isEmpty()||!comment.getIspushed().equals(null)||!comment.getIspushed().equals("")){
-				params[iterator] = comment.getIspushed();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-
-		try{
-			if(!comment.getEdited_by().isEmpty()||!comment.getEdited_by().equals(null)||!comment.getEdited_by().equals("")){
-				params[iterator] = comment.getEdited_by();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getCreated().isEmpty()||!comment.getCreated().equals(null)||!comment.getCreated().equals("")){
-				params[iterator] = comment.getCreated();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getUpdated().isEmpty()||!comment.getUpdated().equals(null)||!comment.getUpdated().equals("")){
-				params[iterator] = comment.getUpdated();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getVersion().isEmpty()||!comment.getVersion().equals(null)||!comment.getVersion().equals("")){
-				params[iterator] = comment.getVersion();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!comment.getContent().isEmpty()||!comment.getContent().equals(null)||!comment.getIspushed().equals("")){
-				params[iterator] = comment.getContent();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		
-		sql+= " ORDER BY created DESC";
-		return jdbcTemplate.query(sql, params,new CommentMapper());
+		return jdbcTemplate.query(sql, new Object[]{comment.getApplication_id()},new CommentMapper());
 	
 	}
 	
 	public Collection getUserComment(String username){
 		
-		String sql = "SELECT a.*, b.* FROM comment a INNER JOIN application b ON b.application_id = a.application_id WHERE b.user_id=?";
+		String sql = "SELECT a.*, b.* FROM comment a INNER JOIN application b ON b.application_id = a.application_id WHERE b.username=?";
 
 		return jdbcTemplate.query(sql,new Object[] {username},new CommentMapper());
 	}

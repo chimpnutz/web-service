@@ -45,7 +45,7 @@ public class AttachmentController
 		
 		    Collection s = null;
 		    application.setApplication_id(id);
-		    s = this.applicationDAOImpl.findApplication2(application);
+		    s = this.applicationDAOImpl.findApplication3(application);
 		    Image image = new Image();
 		    image.setApplication_id(id);
 		
@@ -53,7 +53,7 @@ public class AttachmentController
 		    ArrayList a = new ArrayList(s2);
 		//    System.out.println(((Image)a.get(1)).getType());
 		    ArrayList b = new ArrayList(s);
-		    System.out.println("SSS:" + ((Application)b.get(0)).getDoc_identity_sss_no());
+//		    System.out.println("SSS:" + ((Application)b.get(0)).getDoc_identity_sss_no());
 		    model.addAttribute("images", this.imageDAOImpl.getImages(image));
 		
 		    model.addAttribute("application", s);
@@ -74,7 +74,7 @@ public class AttachmentController
     
 	    Collection s = null;
 	    application.setApplication_id(id);
-	    s = this.applicationDAOImpl.findApplication2(application);
+	    s = this.applicationDAOImpl.findApplication3(application);
 	    Image image = new Image();
 	    image.setApplication_id(id);
 	
@@ -82,7 +82,7 @@ public class AttachmentController
 	    ArrayList a = new ArrayList(s2);
 	//    System.out.println(((Image)a.get(1)).getType());
 	    ArrayList b = new ArrayList(s);
-	    System.out.println("SSS:" + ((Application)b.get(0)).getDoc_identity_sss_no());
+	   
 	    model.addAttribute("images", this.imageDAOImpl.getImages(image));
 	
 	    model.addAttribute("application", s);

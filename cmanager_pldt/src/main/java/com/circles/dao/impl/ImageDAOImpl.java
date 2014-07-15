@@ -29,21 +29,24 @@ public class ImageDAOImpl {
 				+ "id,"
 				+ "application_id,"
 				+ "filename,"
-				+ "type)"
-				+ "VALUES(?,?,?,?)";
+				+ "type," 
+				+ "requirements_no)"
+				+ "VALUES(?,?,?,?,?)";
 
 		Object[]  params ={
 				image.getId(),
 				image.getApplication_id(),
 				image.getFilename(),
 				image.getType(),
+				image.getNumber(),
 		};
 		
 		int[] types = {
 				Types.VARCHAR,
 				Types.VARCHAR,
 				Types.VARCHAR,
-				Types.VARCHAR
+				Types.VARCHAR,
+				Types.VARCHAR,
 				
 		};
 		
@@ -56,7 +59,7 @@ public class ImageDAOImpl {
 			
 			StringBuilder updateImage = new StringBuilder();
 			   
-			updateImage.append("update image set type = ?, filename=? where type = ? and application_id = ? ");
+			updateImage.append("update image set type = ?, filename=?,number = ? where type = ? and application_id = ? ");
 		   
 			int poRow=0;
 			
@@ -64,7 +67,7 @@ public class ImageDAOImpl {
 		   try{
 			   
 			   poRow = jdbcTemplate.update(updateImage.toString(), new Object[] { 
-				   image.getType(),image.getFilename(),image.getType(),image.getApplication_id()
+				   image.getType(),image.getFilename(),image.getNumber(),image.getType(),image.getApplication_id()
 				});
 			   
 			   System.out.println("image of application_id: "+image.getApplication_id()+" has been updated");	   
@@ -100,88 +103,11 @@ public class ImageDAOImpl {
 	}
 	
 	public Collection getImages(Image image){
-		String sql = "SELECT * FROM image WHERE dvar=? ";
-		int iterator = 1;
-		System.out.println("it gets here");
-		try{
-			if(!image.getId().isEmpty()||!image.getId().equals(null)||!image.getId().equals("")){
-				sql+="AND id=? ";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!image.getApplication_id().isEmpty()||!image.getApplication_id().equals(null)||!image.getApplication_id().equals("")){
-				sql+="AND application_id=? ";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!image.getFilename().isEmpty()||!image.getFilename().equals(null)||!image.getFilename().equals("")){
-				sql+="AND filename=? ";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!image.getType().isEmpty()||!image.getType().equals(null)||!image.getType().equals("")){
-				sql+="AND type=? ";
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		Object[] params = new Object[iterator];
-		params[0] = "1";
-	
-		iterator = 1;
+		String sql = "SELECT * FROM image WHERE application_id = ? ";
 		
-		try{
-			if(!image.getId().isEmpty()||!image.getId().equals(null)||!image.getId().equals("")){
-				params[iterator] = image.getId();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!image.getApplication_id().isEmpty()||!image.getApplication_id().equals(null)||!image.getApplication_id().equals("")){
-				params[iterator] = image.getApplication_id();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!image.getFilename().isEmpty()||!image.getFilename().equals(null)||!image.getFilename().equals("")){
-				params[iterator] = image.getFilename();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-		try{
-			if(!image.getType().isEmpty()||!image.getType().equals(null)||!image.getType().equals("")){
-				params[iterator] = image.getType();
-				iterator++;
-			}
-		}catch(NullPointerException e){
-			
-		}
-
-
+		return jdbcTemplate.query(sql.toString(), new Object[]{image.getApplication_id()},new ImageMapper());
 		
-		Collection s = null; 
-		System.out.println(sql);
-		for(Object o:params){
-			System.out.println(o);
-		}
-		s = jdbcTemplate.query(sql, params, new ImageMapper());
-		return s;
+		
 	}
 	
 	public int checkIfExists(Image image){
@@ -206,6 +132,7 @@ private static final class ImageMapper implements RowMapper<Image>{
 			image.setApplication_id(rs.getString("application_id"));
 			image.setFilename(rs.getString("filename"));
 			image.setType(rs.getString("type"));
+			image.setNumber(rs.getString("requirements_no"));
 			
 			return image;
 		}

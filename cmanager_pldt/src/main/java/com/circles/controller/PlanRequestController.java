@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.circles.model.*;
 import com.circles.dao.impl.PlanDAOImpl;
+import com.circles.dao.impl.ProductDAOImpl;
 import com.circles.utils.*;
 import com.circles.model.Plan;
 @Controller
@@ -31,20 +33,21 @@ public class PlanRequestController {
 
 
 	@Autowired
-	private PlanDAOImpl planDAOImpl;
+	private ProductDAOImpl productDAOImpl;
 	
 	private static final Logger logger = LoggerFactory.getLogger(ApplicationRequestController.class);
 	
 
 	@RequestMapping(value="/savePlan", produces="application/json")
 	public @ResponseBody  String savePlan(
-			@RequestParam(value="plan_id", required=false) String plan_id,
-			@RequestParam(value="availability", required=false) String availability,
-			@RequestParam(value="plan_name",required=false) String plan_name,
-			@RequestParam(value="plan_code",required=false) String plan_code,
-			@RequestParam(value="plan_type",required=false) String plan_type,
-			@RequestParam(value="plan_desc",required=false) String plan_desc,
-			@RequestParam(value="plan_price",required=false) String plan_price,
+			@RequestParam(value="product_id", required=false) String product_id,
+			@RequestParam(value="product_name", required=false) String product_name,
+			@RequestParam(value="product_desc",required=false) String product_desc,
+			@RequestParam(value="conditions",required=false) String conditions,
+			@RequestParam(value="device",required=false) String device,
+			@RequestParam(value="monthly_price",required=false) String monthly_price,
+			@RequestParam(value="one_time_price",required=false) String one_time_price,
+			@RequestParam(value="image_name",required=false) MultipartFile image,
 			@RequestParam(value="edited_by",required=false) String edited_by,
 			@RequestParam(value="ispushed",required=false) String ispushed,
 			@RequestParam(value="version",required=false) String version,
@@ -52,21 +55,23 @@ public class PlanRequestController {
 			@RequestParam(value="updated",required=false) String updated
 			)throws SQLException{
 
-		Plan plan = new Plan();
+		Products pd = new Products();
 		
-		plan.setPlan_id(plan_id);
-		plan.setAvailability(availability);
-		plan.setPlan_name(plan_name);
-		plan.setPlan_code(plan_code);
-		plan.setPlan_type(plan_type);
-		plan.setPlan_desc(plan_desc);
-		plan.setPlan_price(plan_price);
-		plan.setEdited_by(edited_by);
-		plan.setIspushed(ispushed);
-		plan.setVersion(version);
-		plan.setCreated(created);
-		plan.setUpdated(updated);
-		int isSaved = planDAOImpl.save(plan);
+		pd.setProduct_id(product_id);
+		pd.setProduct_name(product_name);
+		pd.setProduct_desc(product_desc);
+		pd.setCondition(conditions);
+		pd.setDevice(device);
+		pd.setMonthly_price(monthly_price);
+		pd.setOne_time_price(one_time_price);
+		pd.setFilename(image.getOriginalFilename());
+		pd.setEdited_by(edited_by);
+		pd.setIspushed(ispushed);
+		pd.setVersion(version);
+		pd.setCreated(created);
+		pd.setUpdated(updated);
+		
+		int isSaved = productDAOImpl.save(pd);
 		
 		if(isSaved == 1){
 			return "1";
@@ -76,35 +81,40 @@ public class PlanRequestController {
 	}
 	@RequestMapping(value="/updatePlan", produces="application/json")
 	public @ResponseBody  String updatePlan(
-			@RequestParam(value="plan_id", required=false) String plan_id,
-			@RequestParam(value="availability", required=false) String availability,
-			@RequestParam(value="plan_name",required=false) String plan_name,
-			@RequestParam(value="plan_code",required=false) String plan_code,
-			@RequestParam(value="plan_type",required=false) String plan_type,
-			@RequestParam(value="plan_desc",required=false) String plan_desc,
-			@RequestParam(value="plan_price",required=false) String plan_price,
+			@RequestParam(value="product_id", required=false) String product_id,
+			@RequestParam(value="product_name", required=false) String product_name,
+			@RequestParam(value="product_desc",required=false) String product_desc,
+			@RequestParam(value="conditions",required=false) String conditions,
+			@RequestParam(value="device",required=false) String device,
+			@RequestParam(value="monthly_price",required=false) String monthly_price,
+			@RequestParam(value="one_time_price",required=false) String one_time_price,
+			@RequestParam(value="image_name",required=false) MultipartFile image,
 			@RequestParam(value="edited_by",required=false) String edited_by,
 			@RequestParam(value="ispushed",required=false) String ispushed,
 			@RequestParam(value="version",required=false) String version,
 			@RequestParam(value="created",required=false) String created,
 			@RequestParam(value="updated",required=false) String updated
 			)throws SQLException{
-
-		Plan plan = new Plan();
 		
-		plan.setPlan_id(plan_id);
-		plan.setAvailability(availability);
-		plan.setPlan_name(plan_name);
-		plan.setPlan_code(plan_code);
-		plan.setPlan_type(plan_type);
-		plan.setPlan_desc(plan_desc);
-		plan.setPlan_price(plan_price);
-		plan.setEdited_by(edited_by);
-		plan.setIspushed(ispushed);
-		plan.setVersion(version);
-		plan.setCreated(created);
-		plan.setUpdated(updated);
-		int isSaved = planDAOImpl.save(plan);
+		String date  = ""+new Date().getTime()+"";
+
+		Products pd = new Products();
+		
+		pd.setProduct_id(product_id);
+		pd.setProduct_name(product_name);
+		pd.setProduct_desc(product_desc);
+		pd.setCondition(conditions);
+		pd.setDevice(device);
+		pd.setMonthly_price(monthly_price);
+		pd.setOne_time_price(one_time_price);
+		pd.setFilename(image.getOriginalFilename());
+		pd.setEdited_by(edited_by);
+		pd.setIspushed(ispushed);
+		pd.setVersion(version);
+		pd.setCreated(created);
+		pd.setUpdated(updated);
+		
+		int isSaved = productDAOImpl.save(pd);
 		
 		if(isSaved == 1){
 			return "1";
@@ -114,13 +124,13 @@ public class PlanRequestController {
 	}
 	@RequestMapping(value="/deletePlan", produces="application/json")
 	public @ResponseBody  String deletePlan(
-			@RequestParam(value="plan_id", required=false) String plan_id) throws SQLException{
+			@RequestParam(value="product_id", required=false) String product_id) throws SQLException{
 
-		Plan plan = new Plan();
+		Products pd = new Products();
 		
-		plan.setPlan_id(plan_id);
+		pd.setProduct_id(product_id);
 
-		int isDeleted = planDAOImpl.delete(plan);
+		int isDeleted = productDAOImpl.delete(pd);
 		
 		if(isDeleted == 1){
 			return "1";
@@ -131,19 +141,21 @@ public class PlanRequestController {
 	
 	@RequestMapping(value="/selectAllPlan", produces="application/json")
 	public @ResponseBody  Collection selectAllPlans() throws SQLException{
-
-		return planDAOImpl.selectAllPlan();
+		
+		Products pd = new Products();
+		return productDAOImpl.viewAllProduct(pd);
 		
 	}
 	@RequestMapping(value="/selectPlan", produces="application/json")
 	public @ResponseBody  Collection selectPlan(
-			@RequestParam(value="plan_id", required=false) String plan_id,
-			@RequestParam(value="availability", required=false) String availability,
-			@RequestParam(value="plan_name",required=false) String plan_name,
-			@RequestParam(value="plan_code",required=false) String plan_code,
-			@RequestParam(value="plan_type",required=false) String plan_type,
-			@RequestParam(value="plan_desc",required=false) String plan_desc,
-			@RequestParam(value="plan_price",required=false) String plan_price,
+			@RequestParam(value="product_id", required=false) String product_id,
+			@RequestParam(value="product_name", required=false) String product_name,
+			@RequestParam(value="product_desc",required=false) String product_desc,
+			@RequestParam(value="conditions",required=false) String conditions,
+			@RequestParam(value="device",required=false) String device,
+			@RequestParam(value="monthly_price",required=false) String monthly_price,
+			@RequestParam(value="one_time_price",required=false) String one_time_price,
+			@RequestParam(value="image_name",required=false) MultipartFile image,
 			@RequestParam(value="edited_by",required=false) String edited_by,
 			@RequestParam(value="ispushed",required=false) String ispushed,
 			@RequestParam(value="version",required=false) String version,
@@ -151,25 +163,132 @@ public class PlanRequestController {
 			@RequestParam(value="updated",required=false) String updated
 			)throws SQLException{
 
-		Plan plan = new Plan();
+		Products pd = new Products();
 		
-		plan.setPlan_id(plan_id);
-		plan.setAvailability(availability);
-		plan.setPlan_name(plan_name);
-		plan.setPlan_code(plan_code);
-		plan.setPlan_type(plan_type);
-		plan.setPlan_desc(plan_desc);
-		plan.setPlan_price(plan_price);
-		plan.setEdited_by(edited_by);
-		plan.setIspushed(ispushed);
-		plan.setVersion(version);
-		plan.setCreated(created);
-		plan.setUpdated(updated);
+		pd.setProduct_id(product_id);
+		pd.setProduct_name(product_name);
+		pd.setProduct_desc(product_desc);
+		pd.setCondition(conditions);
+		pd.setDevice(device);
+		pd.setMonthly_price(monthly_price);
+		pd.setOne_time_price(one_time_price);
+		pd.setFilename(image.getOriginalFilename());
+		pd.setEdited_by(edited_by);
+		pd.setIspushed(ispushed);
+		pd.setVersion(version);
+		pd.setCreated(created);
+		pd.setUpdated(updated);
 		
-		Collection s = planDAOImpl.selectPlan(plan);
+		Collection s = productDAOImpl.viewEdit(pd);
 		
 		return s;
 		
 	}
+//	------------------------------------------------------CATEGORY-------------------------------------------------
 	
+	@RequestMapping(value="/saveCategory", produces="application/json")
+	public @ResponseBody  String saveCategory(
+			@RequestParam(value="groupid", required=false) String groupid,
+			@RequestParam(value="category_name", required=false) String category_name,
+			@RequestParam(value="created",required=false) String created,
+			@RequestParam(value="updated",required=false) String updated,
+			@RequestParam(value="version",required=false) String version,
+			@RequestParam(value="ispushed",required=false) String ispushed,
+			@RequestParam(value="edited_by",required=false) String edited_by
+			)throws SQLException{
+
+		Category cat = new Category();
+		
+		cat.setGroupid(groupid);
+		cat.setCategory_name(category_name);
+		cat.setCreated(created);
+		cat.setUpdated(updated);
+		cat.setVersion(version);
+		cat.setEdited_by(edited_by);
+		
+		int isSaved = productDAOImpl.addCategory(cat);
+		
+		if(isSaved == 1){
+			return "1";
+		}
+		return "-1";
+		
+	}
+	@RequestMapping(value="/updateCategory", produces="application/json")
+	public @ResponseBody  String updateCategory(
+			@RequestParam(value="groupid", required=false) String groupid,
+			@RequestParam(value="category_name", required=false) String category_name,
+			@RequestParam(value="created",required=false) String created,
+			@RequestParam(value="updated",required=false) String updated,
+			@RequestParam(value="version",required=false) String version,
+			@RequestParam(value="ispushed",required=false) String ispushed,
+			@RequestParam(value="edited_by",required=false) String edited_by
+			)throws SQLException{
+
+		Category cat = new Category();
+		
+		cat.setGroupid(groupid);
+		cat.setCategory_name(category_name);
+		cat.setCreated(created);
+		cat.setUpdated(updated);
+		cat.setVersion(version);
+		cat.setEdited_by(edited_by);
+		
+		int isSaved = productDAOImpl.addCategory(cat);
+		
+		if(isSaved == 1){
+			return "1";
+		}
+		return "-1";
+		
+	}
+	@RequestMapping(value="/deleteCategory", produces="application/json")
+	public @ResponseBody  String deleteCategory(
+			@RequestParam(value="groupid", required=false) String groupid) throws SQLException{
+
+		Category cat = new Category();
+		
+		cat.setGroupid(groupid);
+
+		int isDeleted = productDAOImpl.deleteCat(cat);
+		
+		if(isDeleted == 1){
+			return "1";
+		}
+		return "-1";
+		
+	}
+	
+	@RequestMapping(value="/selectAllCategory", produces="application/json")
+	public @ResponseBody  Collection selectAllCategory() throws SQLException{
+		
+		Category cat = new Category();
+		return productDAOImpl.viewCategory(cat);
+		
+	}
+	@RequestMapping(value="/selectCategory", produces="application/json")
+	public @ResponseBody  Collection selectCategory(
+			@RequestParam(value="groupid", required=false) String groupid,
+			@RequestParam(value="category_name", required=false) String category_name,
+			@RequestParam(value="created",required=false) String created,
+			@RequestParam(value="updated",required=false) String updated,
+			@RequestParam(value="version",required=false) String version,
+			@RequestParam(value="ispushed",required=false) String ispushed,
+			@RequestParam(value="edited_by",required=false) String edited_by
+			)throws SQLException{
+
+		Category cat = new Category();
+		
+		cat.setGroupid(groupid);
+		cat.setCategory_name(category_name);
+		cat.setCreated(created);
+		cat.setUpdated(updated);
+		cat.setVersion(version);
+		cat.setEdited_by(edited_by);
+		
+		Collection s = productDAOImpl.viewSelectedCategory(cat);
+		
+		return s;
+		
+	}
 }

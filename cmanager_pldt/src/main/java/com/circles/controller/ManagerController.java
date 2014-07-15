@@ -14,11 +14,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -181,7 +183,7 @@ public class ManagerController {
 		Collection s = null;	
 		int role = 0;
 		if(isExisting == 1){
-			s= applicationDAOImpl.findApplication(application);
+			s= applicationDAOImpl.findApplication2(application);
 
 		}
 		model.addAttribute("application",s);
@@ -225,9 +227,10 @@ public class ManagerController {
 
 			Application application = new Application();
 			Collection s = null;	
-			Phone phone = new Phone();
-			Plan plan  = new Plan();
+			
 			s= applicationDAOImpl.getRecentApplication(application);
+		
+			
 			model.addAttribute("application",s);
 			model.addAttribute("role",session.getAttribute("ROLE"));
 		 	model.addAttribute("user",session.getAttribute("USER"));
@@ -261,139 +264,7 @@ public class ManagerController {
 	    }
 	}
 	
-	@RequestMapping(value="/saveProduct", method = RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("loginForm") User loginForm,Model model,
-			HttpSession session,BindingResult result,
-			@RequestParam(value="submit",required=false) String submit,
-			@RequestParam(value="product_name",required=false) String product_name ,
-			@RequestParam(value="product_type",required=false) String product_type ,
-			@RequestParam(value="product_desc",required=false) String product_desc ,
-			@RequestParam(value="product_price",required=false) String product_price,
-			@RequestParam(value="filename",required=false) final MultipartFile filename) throws SQLException, IOException{
-		
-		if(null == session.getAttribute("USER")||null == session.getAttribute("ROLE")){
-			return "index";
-	    }
-	    
-	    else{
-	    	if(submit!=null){
-	    		
-	    		String NUMB_REGEX = "\\d+";
-	    		
-	    		Products product = new Products();
-				
-				String commentUID = "{"+UUID.randomUUID().toString()+"}";
-
-				product.setProduct_id(commentUID);
-				product.setProduct_name(product_name);
-				product.setProduct_desc(product_desc);
-				product.setProduct_type(product_type);
-				product.setProduct_price(product_price);
-				String s = "";
-				try{
-//					Resource resource = new ClassPathResource("../properties/filepath.properties");
-//					Properties props = PropertiesLoaderUtils.loadProperties(resource);
-	
-					String filepath = "C:/Users/tata/workspace/cmanager_pldt/src/main/webapp/resources/uploaded/";
-//							props.getProperty("filepath.url");
-					BufferedImage img = ImageIO.read(filename.getInputStream());
-			        File file = new File(filepath+filename.getOriginalFilename());
-			        s=filename.getOriginalFilename();
-			        file.createNewFile();
-			        System.out.println("filename: "+file);
-			        ImageIO.write(img, "jpg", file);
-				}catch(IllegalArgumentException e){
-					e.printStackTrace();
-				}
-			
-				product.setFilename(s);
-				String date = ""+new Date().getTime()+"";
-				product.setEdited_by(session.getAttribute("USER").toString());
-				product.setCreated(date);
-				product.setUpdated(date);
-				product.setVersion(1+"");
-				
-				if(product.getProduct_name().equalsIgnoreCase("")){
-					model.addAttribute("message1","Please input product name");
-					model.addAttribute("role",session.getAttribute("ROLE"));
-				 	model.addAttribute("user",session.getAttribute("USER"));
-				 	logger.info("Error inserting product, Please input product name");
-					return "manager/addproduct";
-				}
-				else if(product.getProduct_price().equalsIgnoreCase("")){
-					model.addAttribute("message2","Please input product price");
-					model.addAttribute("role",session.getAttribute("ROLE"));
-				 	model.addAttribute("user",session.getAttribute("USER"));
-				 	logger.info("Error inserting product, Please input product price");
-					return "manager/addproduct";
-				}	
-				else if(product.getProduct_price().matches(NUMB_REGEX)){
-					model.addAttribute("message2","Please input numbers only");
-					model.addAttribute("role",session.getAttribute("ROLE"));
-				 	model.addAttribute("user",session.getAttribute("USER"));
-				 	logger.info("Error inserting product, Please input numbers only");
-					return "manager/addproduct";
-				}	
-				else if(product.getProduct_desc().equalsIgnoreCase("")){
-					model.addAttribute("message5","Please input product description");
-					model.addAttribute("role",session.getAttribute("ROLE"));
-				 	model.addAttribute("user",session.getAttribute("USER"));
-				 	logger.info("Error inserting product settings, Please input product description");
-					return "manager/addproduct";
-				}
-				else if(product.getFilename().equalsIgnoreCase("")){
-					model.addAttribute("message4","Please select a file");
-					model.addAttribute("role",session.getAttribute("ROLE"));
-				 	model.addAttribute("user",session.getAttribute("USER"));
-				 	logger.info("Error inserting product settings, Please select a file");
-					return "manager/addproduct";
-				}
-				else if(product.getFilename().length()>1200000){
-					model.addAttribute("message4","Maximum Size of image is 1Mb");
-					model.addAttribute("role",session.getAttribute("ROLE"));
-				 	model.addAttribute("user",session.getAttribute("USER"));
-				 	logger.info("Error inserting product settings, Maximum Size of image is 1Mb");
-					return "manager/addproduct";
-				}
-				else{
-				int save = productDAOImpl.save(product);
-				
-				model.addAttribute("role",session.getAttribute("ROLE"));
-			 	model.addAttribute("user",session.getAttribute("USER"));
-				model.addAttribute("message","Success");
-				logger.info("Inserting product is successfully updated");
-				
-				return "manager/addproduct";
-				}
-			}
-			else{
-				
-				model.addAttribute("message","failed");
-				model.addAttribute("role",session.getAttribute("ROLE"));
-			 	model.addAttribute("user",session.getAttribute("USER"));
-			 	logger.info("Error inserting product settings");
-				return "manager/addproduct";
-			}
-
-	    }
-	}
-		
-	
-	@RequestMapping(value="/addproduct", method = RequestMethod.GET)
-	public String viewProduct(@ModelAttribute("loginForm") User loginForm,Model model,
-			HttpSession session,BindingResult result) throws SQLException{
-		
-		if(null == session.getAttribute("USER")||null == session.getAttribute("ROLE")){
-			return "index";
-	    }
-	    
-	    else{
-			
-			model.addAttribute("role",session.getAttribute("ROLE"));
-		 	model.addAttribute("user",session.getAttribute("USER"));
-			return "manager/addproduct";	
-	    }
-	}
+	//cut products
 	
 	@RequestMapping(value="/approved", method = RequestMethod.GET)
 	public String viewApproved(@ModelAttribute("loginForm") User loginForm,Model model,
@@ -482,7 +353,7 @@ public class ManagerController {
 			    int isExisting = this.applicationDAOImpl.checkIfExists(application);
 			    Collection s = null;
 			    if (isExisting == 1) {
-			      s = this.applicationDAOImpl.findApplication2(application);
+			      s = this.applicationDAOImpl.findApplication3(application);
 			    }
 			    Image image = new Image();
 			    image.setApplication_id(applicationid);
@@ -521,7 +392,7 @@ public class ManagerController {
 			    int isExisting = this.applicationDAOImpl.checkIfExists(application);
 			    Collection s = null;
 			    if (isExisting == 1) {
-			      s = this.applicationDAOImpl.findApplication2(application);
+			      s = this.applicationDAOImpl.findApplication3(application);
 			    }
 			    Image image = new Image();
 			    image.setApplication_id(applicationid);
@@ -546,6 +417,7 @@ public class ManagerController {
 	
 	//@RequestMapping(value="/refreshComments", produces="")
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/saveCommentM")
 	public String saveComment(
 			@RequestParam(value="id", required=false) String id,
@@ -557,13 +429,15 @@ public class ManagerController {
 			@RequestParam(value="updated",required=false) String updated,
 			@RequestParam(value="version",required=false)String version,
 			@RequestParam(value="content",required=false)String content,
+			HttpSession session,
 			Model model) throws SQLException, IOException{
 
 		Comment comment = new Comment();
 		String commentUID = "{"+UUID.randomUUID().toString()+"}";
-
-        
-   
+		
+		System.out.println("userid: "+user_id);
+		System.out.println("edited_by: "+edited_by);
+			
 		comment.setId(commentUID);
 		comment.setApplication_id(application_id);
 		comment.setUser_id(user_id);
@@ -603,13 +477,16 @@ public class ManagerController {
 		
 		
 		if(isSaved == 1){
-			System.out.println("testing comment.............");
+			System.out.println("testing comment of: "+application_id);
 			MulticastResult result2 = null;
 			Result result = null;
-			app_user = applicationDAOImpl.findApplication2(application);
+			app_user = applicationDAOImpl.findApplication3(application);
 			copy2 = new ArrayList<Application>(app_user);
-			gcm.setUsername(copy2.get(0).getEditedBy());
-			s = gcmDAOImpl.findGcm(gcm);
+//			gcm.setUsername(copy2.get(0).getEditedBy());
+			gcm.setUsername(session.getAttribute("username")+"");
+			System.out.println("testing comment of: "+copy2.get(0).getEditedBy());
+			System.out.println("asdsad"+gcm.getUsername());
+			s = gcmDAOImpl.findGcm(application_id);
 			copy = new ArrayList<Gcm>(s); 
 			regid = copy.get(0).getRegid();
 			Sender sender = new Sender(GOOGLE_SERVER_KEY);
@@ -618,6 +495,8 @@ public class ManagerController {
 	        ArrayList<String> devices = new ArrayList<String>();
 	        devices.add(regid);
 	        System.out.println("message: "+messages);	
+	        System.out.println("regid: "+regid);
+	       
 	       // result2 = sender.send(messages, devices, 5);
 	        result = sender.send(messages, regid, 4);
 	        System.out.println("regid: "+regid);
@@ -631,6 +510,9 @@ public class ManagerController {
 	        model.addAttribute("comment",commentDAOImpl.findComment(comment));
 	        model.addAttribute("images",imageDAOImpl.getImages(image));
 	        System.out.println(isSaved);
+	        model.addAttribute("role",session.getAttribute("ROLE"));
+			  model.addAttribute("user",session.getAttribute("USER"));
+		      model.addAttribute("userid", session.getAttribute("username"));
 	        return "manager/view";
 		}
 		Image image = new Image();
@@ -640,6 +522,9 @@ public class ManagerController {
         comment.setApplication_id(application_id);
         model.addAttribute("comment",commentDAOImpl.findComment(comment));
         model.addAttribute("images",imageDAOImpl.getImages(image));
+        model.addAttribute("role",session.getAttribute("ROLE"));
+		  model.addAttribute("user",session.getAttribute("USER"));
+	      model.addAttribute("userid", session.getAttribute("username"));
 		return "manager/view";
 	}
 	
@@ -669,16 +554,14 @@ public class ManagerController {
 		//checksession(session);
 		User user = new User();
 		Gcm gcm = new Gcm();
-		user.setUsername(username);
-		
-		
+		user.setUsername(username);		
 		
 		Md5Hasher hasher = new Md5Hasher();
 		user.setPassword(hasher.md5(password));
 		int isExisting = userDAOImpl.checkIfExists(user);
 
 		HttpSession session = request.getSession();
-		
+		System.out.println("agent username: "+session.getAttribute("username"));
 		if(null == session.getAttribute("username"))
 		{
 			if(isExisting == 1){

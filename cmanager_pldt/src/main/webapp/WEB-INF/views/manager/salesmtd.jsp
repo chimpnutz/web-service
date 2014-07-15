@@ -117,7 +117,7 @@
 					<li><a href="salesmtd" class="selected"><i class="fa fa-usd"></i>&nbsp;SALES</a></li>
 					<li><a href="agent"><i class="icon-agent" style="font-size:20px;"></i>&nbsp;AGENTS</a></li>		
 					<li><a href="recent"><i class="fa fa-clock-o"></i>&nbsp;RECENT</a></li>
-							<li><a href="addproduct"><i class="fa fa-cubes"></i>&nbsp;ADD PRODUCTS</a></li>		
+					<li><a href="viewproduct"><i class="fa fa-cubes"></i>&nbsp;PRODUCTS</a></li>			
 					<li><a href="logout"><i class="fa fa-laptop"></i>&nbsp;LOG OUT</a></li>
 					
 				</ul>

@@ -1,0 +1,508 @@
+
+.search-box,.close-icon {
+	position: relative;
+	padding: 10px;
+}
+.search-box {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box:focus {
+	border: 1px solid #bebede;
+}
+.close-icon {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  margin-left:175px;
+  margin-top:-42px;
+ 
+}
+.close-icon:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box:not(:valid) ~ .close-icon {
+	display: none;
+}
+
+/*box2*/
+
+
+.search-box2,.close-icon2 {
+	position: relative;
+	padding: 10px;
+}
+.search-box2 {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box2:focus {
+	border: 1px solid #bebede;
+}
+.close-icon2 {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  margin-left:175px;
+  margin-top:-42px;
+ 
+}
+.close-icon2:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box2:not(:valid) ~ .close-icon2 {
+	display: none;
+}
+
+/*box 3*/
+
+.search-box3,.close-icon3 {
+	position: relative;
+	padding: 10px;
+}
+.search-box3 {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box3:focus {
+	border: 1px solid #bebede;
+}
+.close-icon3 {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  margin-left:175px;
+  margin-top:-42px;
+ 
+}
+.close-icon3:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box3:not(:valid) ~ .close-icon3 {
+	display: none;
+}
+
+
+/*box 4 in addagents*/
+
+.search-box4{
+ 	width: 300px !important; 
+}
+
+.search-box4,.close-icon4 {
+	position: relative;
+	padding: 10px;
+}
+.search-box4 {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box4:focus {
+	border: 1px solid #bebede;
+}
+.close-icon4 {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  margin-left: 120px;
+margin-top: -41px;
+ 
+}
+.close-icon4:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box4:not(:valid) ~ .close-icon4 {
+	display: none;
+}
+
+/*box 5 in addagents*/
+
+.search-box5{
+ 	width: 300px !important; 
+}
+
+.search-box5,.close-icon5 {
+	position: relative;
+	padding: 10px;
+}
+.search-box5 {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box5:focus {
+	border: 1px solid #bebede;
+}
+.close-icon5 {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+ margin-left: 120px;
+margin-top: -41px;
+ 
+}
+.close-icon5:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box5:not(:valid) ~ .close-icon5 {
+	display: none;
+}
+
+/*box 6  in addagents*/
+
+.search-box6{
+ 	width: 300px !important; 
+}
+
+.search-box6,.close-icon6 {
+	position: relative;
+	padding: 10px;
+}
+.search-box6 {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box6:focus {
+	border: 1px solid #bebede;
+}
+.close-icon6 {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  margin-left: 120px;
+margin-top: -41px;
+ 
+}
+.close-icon6:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box6:not(:valid) ~ .close-icon6 {
+	display: none;
+}
+
+/*box 7 in addagents*/
+
+.search-box7{
+ 	width: 300px !important; 
+}
+
+.search-box7,.close-icon7 {
+	position: relative;
+	padding: 10px;
+}
+.search-box7 {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box7:focus {
+	border: 1px solid #bebede;
+}
+.close-icon7 {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  margin-left: 120px;
+margin-top: -41px;
+ 
+}
+.close-icon7:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box7:not(:valid) ~ .close-icon7 {
+	display: none;
+}
+
+/*box 8 in addagents*/
+
+.search-box8{
+ 	width: 300px !important; 
+}
+
+.search-box8,.close-icon8 {
+	position: relative;
+	padding: 10px;
+}
+.search-box8 {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box8:focus {
+	border: 1px solid #bebede;
+}
+.close-icon8 {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  margin-left: 120px;
+margin-top: -41px;
+ 
+}
+.close-icon8:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box8:not(:valid) ~ .close-icon8 {
+	display: none;
+}
+
+/*box 9 in addagents*/
+
+.search-box9{
+ 	width: 300px !important; 
+}
+
+.search-box9,.close-icon9 {
+	position: relative;
+	padding: 10px;
+}
+.search-box9 {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box9:focus {
+	border: 1px solid #bebede;
+}
+.close-icon9 {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  margin-left: 120px;
+margin-top: -41px;
+ 
+}
+.close-icon9:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box9:not(:valid) ~ .close-icon9 {
+	display: none;
+}
+
+/*box 10 in addagents*/
+
+.search-box10{
+ 	width: 300px !important; 
+}
+
+.search-box10,.close-icon10 {
+	position: relative;
+	padding: 10px;
+}
+.search-box10 {
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 0px;
+}
+.search-box10:focus {
+	border: 1px solid #bebede;
+}
+.close-icon10 {
+	position:absolute;
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  margin-left: 120px;
+margin-top: -41px;
+ 
+}
+.close-icon10:after {
+
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	background-color: #FA9595;
+	z-index:1;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box10:not(:valid) ~ .close-icon10 {
+	display: none;
+}

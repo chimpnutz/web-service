@@ -298,7 +298,7 @@ body.modal-open {
               	var img = "${dataz.getFilename()}";
               	
               	
-              	if(type == 'sss'){
+              	if(type == 'proofofbilling'){
               		var viewer;
               		var img = "${dataz.getFilename()}";
              		
@@ -315,7 +315,7 @@ body.modal-open {
                         }
                     	});
               
-              	}else if(type == 'pagibig'){
+              	}else if(type == 'proofofincome'){
               		var viewer;
               		var img = "${dataz.getFilename()}";
               		
@@ -330,7 +330,7 @@ body.modal-open {
                         }
                     	});
               
-              	}else if(type == 'companyid'){
+              	}else if(type == 'identification'){
               		var viewer;
               		var img = "${dataz.getFilename()}";
               		
@@ -680,7 +680,7 @@ body.modal-open {
 					<li><a href="salesmtd"><i class="fa fa-usd"></i>&nbsp;SALES</a></li>
 					<li><a href="agent"><i  class="icon-agent" style="font-size:20px;"></i>&nbsp;AGENTS</a></li>		
 					<li><a href="recent"  class="selected"><i class="fa fa-clock-o"></i>&nbsp;RECENT</a></li>	
-							<li><a href="addproduct"><i class="fa fa-cubes"></i>&nbsp;ADD PRODUCTS</a></li>		
+					<li><a href="viewproduct"><i class="fa fa-cubes"></i>&nbsp;PRODUCTS</a></li>		
 					<li><a href="logout"><i class="fa fa-laptop"></i>&nbsp;LOG OUT</a></li>
 					
 				</ul>
@@ -750,141 +750,24 @@ body.modal-open {
 							
 								<tr>
 																	
-									<c:if test="${data.doc_identity_sss_no!=''}">
+									
 									<c:forEach var="dataz" items="${images}">
-										<c:if test="${dataz.getType()=='sss'}">
+										<c:if test="${dataz.getType()=='identification'}">
 										<td>	
-											<b><p>SSS</p></b>
-											${data.doc_identity_sss_no}<br/>
+											<b><p>${dataz.number} asdsd</p></b>
+											<br/>
 											<div style="float:right; margin-right:15px; margin-top:-40px;">
-											<a data-toggle="modal" href="#myModal" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
+											<a data-toggle="modal" href="#myModal3" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
 											</div>
 										</td>
 										</c:if>
 										</c:forEach>
-									</c:if>
+					
 											
 								
 								</tr>
 							
 							
-							
-								<tr>
-								
-								<c:if test="${data.doc_identity_pagibig_no!=''}">
-								<c:forEach var="dataz" items="${images}">					
-									<c:if test="${dataz.getType()=='pagibig'}">
-									<td>
-										<b><p>Pag-Ibig</p></b>
-										${data.doc_identity_pagibig_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal2" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>
-								
-								
-								
-								</tr>
-								
-								<tr>
-								
-								<c:if test="${data.doc_identity_companyid_no!=''}">
-								<c:forEach var="dataz" items="${images}">					
-									<c:if test="${dataz.getType()=='companyid'}">
-									<td>
-										<b><p>Pag-Ibig</p></b>
-										${data.doc_identity_companyid_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal3" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>
-								
-								
-								
-								</tr>
-								
-								<tr>
-								<c:if test="${data.doc_identity_tin_no!=''}">	
-								<c:forEach var="dataz" items="${images}">	
-									<c:if test="${dataz.getType()=='tin'}">
-									<td>
-										<b><p>Tin</p></b>
-										${data.doc_identity_tin_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal4" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>
-								
-								</tr>
-							
-								<tr>
-								<c:if test="${data.doc_identity_driverslicense_no!=''}">	
-								<c:forEach var="dataz" items="${images}">				
-									<c:if test="${dataz.getType()=='driverslicense'}">
-									<td>
-										<b><p>Drivers License</p></b>
-										${data.doc_identity_driverslicense_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal5" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>	
-								</c:forEach>	
-								</c:if>
-
-								
-								</tr>
-								
-							
-								
-								<tr>	
-								<c:if test="${data.doc_identity_passport_no!=''}">			
-								<c:forEach var="dataz" items="${images}">			
-									<c:if test="${dataz.getType()=='passport'}">
-									<td>
-										<b><p>Passport</p></b>
-										${data.doc_identity_passport_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal6" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>	
-								</c:forEach>
-								</c:if>
-
-								
-									
-								</tr>
-												
-							
-								<tr>
-								
-								
-								<c:if test="${data.doc_identity_others_no!=''}">
-								<c:forEach var="dataz" items="${images}">
-									<c:if test="${dataz.getType()=='identity_others'}">
-									<td>
-										<b><p><b>Others</b></p></b>
-										${data.doc_identity_others_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal7" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>
-								
-								
-								</tr>
 																
 				
 				</table>
@@ -901,133 +784,21 @@ body.modal-open {
 							
 								<tr>
 																	
-								<c:if test="${data.doc_address_electricity_no!=''}">
+								
 								<c:forEach var="dataz" items="${images}">	
-								<c:if test="${dataz.getType()=='electricity'}">
+								<c:if test="${dataz.getType()=='proofofbilling'}">
 									<td>
-										<b><p>Electricity</p></b>
-										${data.doc_address_electricity_no}<br/>
+										<b><p>${dataz.number} asd</p></b>
+										<br/>
 										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal8" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
+										<a data-toggle="modal" href="#myModal" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
 										</div>
 									</td>
 									</c:if>
 								</c:forEach>
-								</c:if>
+								
 
-											
-								
-								</tr>
 							
-							
-							
-								<tr>
-								
-								<c:if test="${data.doc_address_water_no!=''}">
-								<c:forEach var="dataz" items="${images}">	
-									<c:if test="${dataz.getType()=='water'}">
-									<td>
-										<b><p>Water</p></b>
-										${data.doc_address_water_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal9" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>
-								
-								
-								
-								</tr>
-								
-								<tr>
-								<c:if test="${data.doc_address_isp_no!=''}">	
-								<c:forEach var="dataz" items="${images}">	
-									<c:if test="${dataz.getType()=='isp'}">
-									<td>
-										<b><p>ISP</p></b>
-										${data.doc_address_isp_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal10" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>	
-								
-								
-								</tr>
-							
-								<tr>
-								<c:if test="${data.doc_address_cable_no!=''}">	
-								<c:forEach var="dataz" items="${images}">	
-									<c:if test="${dataz.getType()=='cable'}">
-									<td>
-										<b><p>Telecom</p></b>
-										${data.doc_address_cable_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal11" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>
-								
-								
-								</tr>
-								
-							
-								
-								<tr>	
-									<c:if test="${data.doc_address_telecom_no!=''}">		
-								<c:forEach var="dataz" items="${images}">	
-									<c:if test="${dataz.getType()=='telecom'}">
-									<td>
-										<b><p>Cable</p></b>
-										${data.doc_address_telecom_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal12" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>	
-								</c:if>
-									
-								</tr>
-												
-							
-								<tr>
-									<c:if test="${data.doc_address_bankloan_no!=''}">	
-									<c:forEach var="dataz" items="${images}">		
-										<c:if test="${dataz.getType()=='bankloan'}">
-										<td>
-											<b><p>Bank Loan</p></b>
-											${data.doc_address_bankloan_no}<br/>
-											<div style="float:right; margin-right:15px; margin-top:-40px;">
-											<a data-toggle="modal" href="#myModal13" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-											</div>
-										</td>
-										</c:if>	
-									</c:forEach>
-									</c:if>		
-								</tr>
-								
-								<tr>
-								<c:if test="${data.doc_address_others_no!=''}">
-								<c:forEach var="dataz" items="${images}">
-									<c:if test="${dataz.getType()=='address_others'}">
-									<td>
-										<b><p>Others</p></b>
-										${data.doc_address_others_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal14" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>
-								</tr>
 				</table>	
 					</div>
 					
@@ -1042,137 +813,20 @@ body.modal-open {
 							
 								<tr>
 																	
-									<c:if test="${data.doc_income_companyownership_no!=''}">
+									
 								<c:forEach var="dataz" items="${images}">		
-									<c:if test="${dataz.getType()=='companyowner'}">
+									<c:if test="${dataz.getType()=='proofofincome'}">
 									<td>
-										<b><p>Company Ownership</p></b>
-										${data.doc_income_companyownership_no}<br/>
+										<b><p>${dataz.number} asd</p></b>
+										<br/>
 										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal15" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
+										<a data-toggle="modal" href="#myModal2" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
 										</div>
 									</td>
 									</c:if>	
 								</c:forEach>	
-								</c:if>
-											
-								
-								</tr>
 							
-								
-								<tr>
-								<c:if test="${data.doc_income_payslip_no!=''}">
-								<c:forEach var="dataz" items="${images}">	
-									<c:if test="${dataz.getType()=='payslip'}">
-									<td>
-										<b><p>Payslip</p></b>
-										${data.doc_income_payslip_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal16" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>
-								
-								</tr>
-							
-								<tr>
-								<c:if test="${data.doc_income_security_no!=''}">	
-								<c:forEach var="dataz" items="${images}">	
-									<c:if test="${dataz.getType()=='security'}">
-									<td>
-										<b><p>Security</p></b>
-										${data.doc_income_security_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal17" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>	
-								</c:if>
-								
-								</tr>
-								
-							
-								
-								<tr>	
-								<c:if test="${data.doc_income_bonds_no!=''}">
-								<c:forEach var="dataz" items="${images}">				
-									<c:if test="${dataz.getType()=='bondno'}">
-									<td>
-										<b><p>Bonds</p></b>
-										${data.doc_income_bonds_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal18" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>	
-								</c:if>
-								
-								
-									
-								</tr>
-												
-							
-								<tr>
-								
-								
-								<c:if test="${data.doc_income_stockcert_no!=''}">		
-								<c:forEach var="dataz" items="${images}">	
-									<c:if test="${dataz.getType()=='stockcert'}">
-									<td>
-										<b><p>Stockcert</p></b>
-										${data.doc_income_stockcert_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal19" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>	
-								</c:if>	
-								
-								
-								</tr>
-								
-								<tr>
-								
-								
-								<c:if test="${data.doc_income_autocharge_no!=''}">		
-								<c:forEach var="dataz" items="${images}">	
-									<c:if test="${dataz.getType()=='autocharge'}">
-									<td>
-										<b><p>Stockcert</p></b>
-										${data.doc_income_autocharge_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal20" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>	
-								</c:if>	
-								
-								
-								</tr>
-								
-								<tr>
-								
-								<c:if test="${data.doc_income_others_no!=''}">
-								<c:forEach var="dataz" items="${images}">
-									<c:if test="${dataz.getType()=='income_others'}">
-									<td>
-										<b><p>Others</p></b>
-										${data.doc_income_others_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal21" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</c:if>
-								</c:forEach>
-								</c:if>
-								
-								</tr>													
+																		
 				</table>	
 					</div>
 					

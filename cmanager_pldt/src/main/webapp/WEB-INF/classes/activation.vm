@@ -1,0 +1,11 @@
+<font face="Helvetica" color="#4c4c4c">
+Dear <font color="#000000">${user}</font>,
+<BR>
+<BR>
+You are receiving this email because <font color="#000000"><b>${sender}</b></font> has added you as <font color="#000000">Agent</font>.
+<BR>
+To activate your mobile account, please use this activation code <b>${activation}</b>
+<BR>
+<BR>
+***** this is an automatically generated email. please do not reply to this email address *****
+</font>

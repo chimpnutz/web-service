@@ -6,14 +6,17 @@ import com.circles.dao.impl.GcmDAOImpl;
 import com.circles.dao.impl.ImageDAOImpl;
 import com.circles.dao.impl.PhoneDAOImpl;
 import com.circles.dao.impl.PlanDAOImpl;
+import com.circles.dao.impl.ProductDAOImpl;
 import com.circles.model.AddressDetails;
 import com.circles.model.Application;
 import com.circles.model.Comment;
+import com.circles.model.Devices;
 import com.circles.model.Gcm;
 import com.circles.model.Image;
 import com.circles.model.MailModel;
 import com.circles.model.Phone;
 import com.circles.model.Plan;
+import com.circles.model.Products;
 import com.circles.model.User;
 import com.google.android.gcm.server.Message;
 import com.google.android.gcm.server.Message.Builder;
@@ -70,10 +73,8 @@ public class EncoderController
   GcmDAOImpl gcmDAOImpl;
 
   @Autowired
-  PhoneDAOImpl phoneDAOImpl;
+  ProductDAOImpl productDAOImpl;
 
-  @Autowired
-  PlanDAOImpl planDAOImpl;
   private JavaMailSenderImpl mailSender;
   private static final Logger logger = LoggerFactory.getLogger(ManagerController.class);
 
@@ -92,13 +93,13 @@ public class EncoderController
 		    comment.setApplication_id(id);
 		    application.setApplication_id(id);
 		
-		    s = this.applicationDAOImpl.findApplication2(application);
+		    s = this.applicationDAOImpl.findApplication3(application);
 		    
 		    model.addAttribute("role",session.getAttribute("ROLE"));
     	 	model.addAttribute("user",session.getAttribute("USER"));
 		    model.addAttribute("application", s);
 		    ArrayList a = new ArrayList(s);
-		    System.out.println("SSS:" + ((Application)a.get(0)).getDoc_identity_sss_no());
+//		    System.out.println("SSS:" + ((Application)a.get(0)).getDoc_identity_sss_no());
 		    ArrayList user = (ArrayList)session.getAttribute("sess");
 		    model.addAttribute("comment", this.commentDAOImpl.findComment(comment));
 		    
@@ -181,7 +182,8 @@ public class EncoderController
 		  @RequestParam(value="created", required=false) String created,
 		  @RequestParam(value="updated", required=false) String updated,
 		  @RequestParam(value="version", required=false) String version, 
-		  @RequestParam(value="content", required=false) String content, Model model)
+		  @RequestParam(value="content", required=false) String content, Model model,
+		  HttpSession session)
     throws IOException
   {
 
@@ -233,32 +235,38 @@ public class EncoderController
            MulticastResult result2 = null;
            Result result = null;
            try {
-        	      app_user = this.applicationDAOImpl.findApplication2(application);
-                  copy2 = new ArrayList(app_user);
-                  gcm.setUsername(((Application)copy2.get(0)).getEditedBy());
-                  s = this.gcmDAOImpl.findGcm(gcm);
+        	      app_user = this.applicationDAOImpl.findApplication3(application);
+                  copy2 = new ArrayList<Application>(app_user);
+                  System.out.println("printing: "+copy2.get(0));
+                  gcm.setUsername(session.getAttribute("username")+"");
+         
+//                  gcm.setUsername(((Application)copy2.get(0)).getEditedBy());
+                  s = this.gcmDAOImpl.findGcm(application_id);
            }
            catch (NullPointerException | SQLException e)
            {
-        	   
+        	model.addAttribute("role",session.getAttribute("ROLE"));
+       	 	model.addAttribute("user",session.getAttribute("USER"));
+        	   return "encoder/applicationform";
            }
      
-           copy = new ArrayList(s);
+           copy = new ArrayList<Gcm>(s);
+           
+           
+           
            
            System.out.println("hahahaha try.....");
        
            regid = ((Gcm)copy.get(0)).getRegid();
            Sender sender = new Sender(GOOGLE_SERVER_KEY);
            Message messages = new Message.Builder().delayWhileIdle(false).addData("table", "comment").build();
-           System.out.println("lalalalala try.....");
-           ArrayList devices = new ArrayList();
+           ArrayList<String> devices = new ArrayList<String>();
            devices.add(regid);
-           System.out.println(messages);
+           System.out.println("message: "+messages);
            result2 = sender.send(messages, devices, 5);
-           System.out.println(regid);
-           System.out.println(result2.toString());
+           System.out.println("regid: "+regid);
+           System.out.println("result: "+result2.toString());
            //resource = null;
-           System.out.println("tatatatatata try.....");
            Image image = new Image();
            image.setApplication_id(application_id);
            model.addAttribute("application", app_user);
@@ -266,48 +274,52 @@ public class EncoderController
            comment.setApplication_id(application_id);
            
            try {
-        	System.out.println("first try.....");
  			model.addAttribute("comment", this.commentDAOImpl.findComment(comment));
  		} catch (SQLException e1) {
  			// TODO Auto-generated catch block
  			e1.printStackTrace();
  		}
-           System.out.println("second try.....");
+         
            model.addAttribute("images", this.imageDAOImpl.getImages(image));
            System.out.println(isSaved);
+           model.addAttribute("role",session.getAttribute("ROLE"));
+   	 	model.addAttribute("user",session.getAttribute("USER"));
            return "encoder/applicationform";
          }
-    	 System.out.println("third try.....");
+    	
          Image image = new Image();
          image.setApplication_id(application_id);
          model.addAttribute("application", app_user);
          comment = new Comment();
          comment.setApplication_id(application_id);
          try {
-        	 System.out.println("fourth try.....");
+        
  			model.addAttribute("comment", this.commentDAOImpl.findComment(comment));
  		} catch (SQLException e1) {
  			// TODO Auto-generated catch block
  			e1.printStackTrace();
  		}
-         System.out.println("fifth try.....");
+       
          model.addAttribute("images", this.imageDAOImpl.getImages(image));
+         model.addAttribute("role",session.getAttribute("ROLE"));
+ 	 	 model.addAttribute("user",session.getAttribute("USER"));
          return "encoder/applicationform";
   	  
- 
-
-
-
   }
 
   @RequestMapping({"/updateStatus"})
-  public String updateStatus(@RequestParam(value="application_id", required=false) String application_id, @RequestParam(value="status", required=false) String status, Model model, HttpServletRequest request)
+  public String updateStatus(@RequestParam(value="application_id", required=false) String application_id,
+		  @RequestParam(value="status", required=false) String status, 
+		  @RequestParam(value="prod_name", required=false) String prod_name,
+		  @RequestParam(value="dev_name", required=false) String dev_name,
+		  Model model, HttpServletRequest request,HttpSession session)
     throws SQLException, IOException
   {
+	String dated  = ""+new Date().getTime()+"";
     Application getApp = new Application();
     Collection s = null;
     getApp.setApplication_id(application_id);
-    s = this.applicationDAOImpl.findApplication2(getApp);
+    s = this.applicationDAOImpl.findApplication3(getApp);
 
     ArrayList appVersion = new ArrayList(s);
 
@@ -319,10 +331,12 @@ public class EncoderController
     int i = Integer.parseInt(((Application)appVersion.get(0)).getVersion());;
     i++;
     System.out.println("version: " + i);
-
+    application.setEditedBy(session.getAttribute("USER")+"");
     application.setVersion(i+"");
     application.setIspushed("0");
-    int isUpdated = this.applicationDAOImpl.update(application);
+    application.setUpdate(dated);
+    application.setCreated(dated);
+    int isUpdated = this.applicationDAOImpl.update2(application);
     Resource resource = new ClassPathResource("../properties/filepath.properties");
 //    Properties props = PropertiesLoaderUtils.loadProperties(resource);
     String GOOGLE_SERVER_KEY = "AIzaSyCCoMqyTb6-CZPDssq4OPDJj0bOdhgP62Y ";
@@ -337,7 +351,7 @@ public class EncoderController
       Result result = null;
       Application newApp = new Application();
       newApp.setApplication_id(application_id);
-      app_user = this.applicationDAOImpl.findApplication2(application);
+      app_user = this.applicationDAOImpl.findApplication3(application);
       ArrayList copy2 = new ArrayList(app_user);
       gcm.setUsername(((Application)copy2.get(0)).getEditedBy());
       System.out.println(((Application)copy2.get(0)).getEditedBy());
@@ -348,11 +362,11 @@ public class EncoderController
       newApp.setStatus(status);
       System.out.println(status);
       if ((status.equals("2")) || (status.equals("1")) || (status.equals("3"))) {
-        sendEmail(newApp, request,application_id);
+        sendEmail(newApp, request,application_id,prod_name,dev_name);
         System.out.println("An email has been sent to " + ((Application)copy2.get(0)).getEmail() + " on" + new Date().getDate());
       }
 
-      gcms = this.gcmDAOImpl.findGcm(gcm);
+      gcms = this.gcmDAOImpl.findGcm(application_id);
       copy = new ArrayList(gcms);
       regid = ((Gcm)copy.get(0)).getRegid();
       Sender sender = new Sender(GOOGLE_SERVER_KEY);
@@ -373,60 +387,69 @@ public class EncoderController
       System.out.println("Updated status of application " + application_id + "to " + status);
       model.addAttribute("comment", this.commentDAOImpl.findComment(comment));
       model.addAttribute("images", this.imageDAOImpl.getImages(image));
-
+      model.addAttribute("role",session.getAttribute("ROLE"));
+	  model.addAttribute("user",session.getAttribute("USER"));
       return "encoder/applicationform";
     }
 
     Image image = new Image();
     image.setApplication_id(application_id);
-    model.addAttribute("application", this.applicationDAOImpl.findApplication2(application));
+    model.addAttribute("application", this.applicationDAOImpl.findApplication3(application));
     Comment comment = new Comment();
     comment.setApplication_id(application_id);
     model.addAttribute("comment", this.commentDAOImpl.findComment(comment));
     model.addAttribute("images", this.imageDAOImpl.getImages(image));
+    model.addAttribute("role",session.getAttribute("ROLE"));
+ 	 model.addAttribute("user",session.getAttribute("USER"));
     return "encoder/applicationform";
   }
 
-  public boolean sendEmail(Application application, HttpServletRequest request,String id) throws SQLException
+  @SuppressWarnings({ "rawtypes", "rawtypes", "rawtypes" })
+public boolean sendEmail(Application application, HttpServletRequest request,String id,String prod_name,String dev_name) throws SQLException
   {
     ApplicationContext a = new ClassPathXmlApplicationContext("classpath:Spring-Mail.xml");
+    String date  = ""+new Date().getTime()+"";
+    application.setCreated(date);
+    System.out.println("email "+application.getCreated());
 
-    Phone phone = new Phone();
-    Plan plan = new Plan();
-    plan.setPlan_id(application.getPlan_code());
-    phone.setPhone_id(application.getPhone_id());
+    Devices dev = new Devices();
+    Products pd = new Products();
+    pd.setProduct_id(application.getProduct_id());
+    dev.setDeviceid(application.getDeviceid());
     application.setApplication_id(id);
     System.out.println("APPLICATION ID: "+id);
     long unix = Long.parseLong(application.getCreated());
-    Date date = new Date(unix);
+    Date dates = new Date(unix);
     SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
     sdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
 
-    String formattedDate = sdf.format(date);
-
+    String formattedDate = sdf.format(dates);
+    System.out.println("Device/Hardware:" + id);
     Collection s = null;
-    s = this.phoneDAOImpl.getPhone(phone,id);
-    ArrayList phoneApp = new ArrayList(s);
-    String p_code = "";
-    s = this.planDAOImpl.selectPlan(plan);
-    ArrayList planApp = new ArrayList(s);
-    String plan_code = "";
-    try {
-      p_code = ((Phone)phoneApp.get(0)).getPhone_model();
-      System.out.println("Phone:" + p_code);
-    }
-    catch (IllegalArgumentException localIllegalArgumentException) {
-    }
-    try {
-      plan_code = ((Plan)planApp.get(0)).getPlan_name();
-      System.out.println("Plan:" + plan_code);
-    }
-    catch (IllegalArgumentException localIllegalArgumentException1) {
-    }
-    MailModel mail = (MailModel)a.getBean("mail");
+    s = this.productDAOImpl.viewSelectDevice2(dev,id);
+    ArrayList<Devices> devApp = new ArrayList<Devices>(s);
+    String dev_code = "";
+    s = this.productDAOImpl.viewSelectedProduct(pd,id);
+    ArrayList<Products> prodApp = new ArrayList<Products>(s);
+    
+    String prod_code = "";
+//    try {
+//    	
+//    	dev_code = (devApp.get(0)).getDevice_name();
+//      System.out.println("Device/Hardware:" + dev_code);
+//    }
+//    catch (IllegalArgumentException localIllegalArgumentException) {
+//    }
+//    try {
+//        prod_code = (prodApp.get(0)).getProduct_name();
+//        System.out.println("Plan:" + prod_code);
+//      }
+//      catch (IllegalArgumentException localIllegalArgumentException1) {
+//      }
+      MailModel mail = (MailModel)a.getBean("mail");
 
-    mail.sendMail(application, request, p_code, plan_code, formattedDate);
+      mail.sendMail(application, request, dev_name, prod_name, formattedDate);
 
-    return true;
+      return true;
   }
 }

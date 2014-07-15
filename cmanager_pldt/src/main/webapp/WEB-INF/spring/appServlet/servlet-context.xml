@@ -45,6 +45,9 @@
 	<beans:bean id="userDao" class="com.circles.dao.impl.UserDAOImpl">
 	  <beans:property name="jdbcTemplate" ref="jdbcTemplate"></beans:property>
 	</beans:bean>
+	<beans:bean id="agentDao" class="com.circles.dao.impl.AgentDAOImpl">
+	  <beans:property name="jdbcTemplate" ref="jdbcTemplate"></beans:property>
+	</beans:bean>
 	<beans:bean id="productDao" class="com.circles.dao.impl.ProductDAOImpl">
 	  <beans:property name="jdbcTemplate" ref="jdbcTemplate"></beans:property>
 	</beans:bean> 

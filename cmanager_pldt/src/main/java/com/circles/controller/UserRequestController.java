@@ -76,7 +76,8 @@ public class UserRequestController {
 			@RequestParam(value = "middlename", required = false) String middleName,
 			@RequestParam(value = "lastname", required = false) String lastName,
 			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "role", required = false) String role)throws NullPointerException{
+			@RequestParam(value = "role", required = false) String role,
+			@RequestParam(value = "status", required = false) String status)throws NullPointerException{
 		User userParams = new User();
 		userParams.setId(id);
 		userParams.setUsername(username);
@@ -85,6 +86,7 @@ public class UserRequestController {
 		userParams.setLastName(lastName);
 		userParams.setEmail(email);	
 		userParams.setRole(role);
+		userParams.setStatus(status);
 		//int isExisting = userDAOImpl.checkIfExists(userParams);
 		Collection s = userDAOImpl.findUser(userParams);
 
@@ -101,7 +103,8 @@ public class UserRequestController {
 			@RequestParam(value = "middlename", required = false) String middleName,
 			@RequestParam(value = "lastname", required = false) String lastName,
 			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "role", required = true) String role)throws NullPointerException{
+			@RequestParam(value = "role", required = true) String role,
+			@RequestParam(value = "status", required = false) String status)throws NullPointerException{
 		User userParams = new User();
 		Md5Hasher md = new Md5Hasher();
 		String userUID = "{"+UUID.randomUUID().toString()+"}";
@@ -118,6 +121,7 @@ public class UserRequestController {
 		userParams.setLastName(lastName);
 		userParams.setEmail(email);	
 		userParams.setRole(role);
+		userParams.setStatus(status);
 		String date  = ""+new Date().getTime()+"";
 		//System.out.println(date);
 		userParams.setDatecreated(date);
@@ -134,7 +138,8 @@ public class UserRequestController {
 			@RequestParam(value = "middlename", required = false) String middleName,
 			@RequestParam(value = "lastname", required = false) String lastName,
 			@RequestParam(value = "email", required = false) String email,
-			@RequestParam(value = "role", required = false) String role)throws NullPointerException{
+			@RequestParam(value = "role", required = false) String role,
+			@RequestParam(value = "status", required = false) String status)throws NullPointerException{
 		User userParams = new User();
 		Md5Hasher md = new Md5Hasher();
 		
@@ -153,6 +158,7 @@ public class UserRequestController {
 		userParams.setLastName(lastName);
 		userParams.setEmail(email);	
 		userParams.setRole(role);
+		userParams.setStatus(status);
 		//int isExisting = userDAOImpl.checkIfExists(userParams);
 		int s = userDAOImpl.update(userParams,id);
 		return s;	

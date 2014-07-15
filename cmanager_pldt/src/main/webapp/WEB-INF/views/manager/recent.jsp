@@ -89,7 +89,7 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 					<li><a href="salesmtd"><i class="fa fa-usd"></i>&nbsp;SALES</a></li>
 					<li><a href="agent"><i  class="icon-agent" style="font-size:20px;"></i>&nbsp;AGENTS</a></li>		
 					<li><a href="recent"  class="selected"><i class="fa fa-clock-o"></i>&nbsp;RECENT</a></li>	
-							<li><a href="addproduct"><i class="fa fa-cubes"></i>&nbsp;ADD PRODUCTS</a></li>		
+					<li><a href="viewproduct"><i class="fa fa-cubes"></i>&nbsp;PRODUCTS</a></li>	
 					<li><a href="logout"><i class="fa fa-laptop"></i>&nbsp;LOG OUT</a></li>
 					
 				</ul>
@@ -123,17 +123,17 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 			<tbody> 
 			
 			<c:forEach items="${application}" var="applications">
-			
+				
 				<tr>
 						<td>${applications.count}</td>
-						<td><a href="view?applicationid=${applications.getApplication_id()}" style="font-size:12px">${applications.getApplication_id()}</a></td>
-						<c:if test="${applications.application_type=='Personal'}">
-						<td>${applications.getFirstName()}&nbsp;${applications.getLastName()}</td>
+						<td><a href="view?applicationid=${applications.getApplication_id()}" style="font-size:12px;color:#4ba6ed;">${applications.getApplication_id()}</a></td>
+						<c:if test="${applications.application_type=='Residential'}">
+						<td>${applications.firstName }&nbsp;${applications.lastName }</td>
 						</c:if>
 						<c:if test="${applications.application_type=='Business'}">
 						<td>${applications.companyauth}</td>
 						</c:if>
-						<td>${applications.getPlan_code()}</td>
+						<td>${applications.product_name}</td>
 						<!--<td>${applications.phone_id}</td>-->					
 						<c:if test="${applications.getStatus().equals('0')}">
 						<td style="color:red">No Action</td>

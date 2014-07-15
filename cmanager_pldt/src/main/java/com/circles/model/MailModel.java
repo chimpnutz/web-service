@@ -131,7 +131,7 @@ public class MailModel implements ServletContextAware{
      */
     @SuppressWarnings("deprecation")
 	public void sendMail(final Application application, final HttpServletRequest request, 
-			final String p_code, final String plan_code,final String date) {
+			final String dev_code, final String prod_code,final String date) {
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             @SuppressWarnings({ "unchecked" })
 			public void prepare(MimeMessage mimeMessage) throws Exception {
@@ -141,16 +141,16 @@ public class MailModel implements ServletContextAware{
                message.setSubject("Postpaid Application");
                Map map = new HashMap();
                map.put("application", application);
-               map.put("plan", plan_code);
-               map.put("phone", p_code);
+               map.put("product", prod_code);
+               map.put("device", dev_code);
                map.put("date", date);
-              
+               map.put("user", application.getFirstName());
                String body ="";
                String is = null ;
                
                is = String.format("%s://%s:%d/Circles",request.getScheme(),  request.getServerName(), request.getServerPort());
                
-               System.out.println(is+"/resources/images/smart.png");
+               System.out.println(is+"/resources/images/pldthome.png");
                map.put("imageLocation",is);
                ClassLoader classLoader = Thread.currentThread()
                        .getContextClassLoader();
@@ -196,6 +196,49 @@ public class MailModel implements ServletContextAware{
          mailSender.send(preparator);
          
     }
+    
+    @SuppressWarnings("deprecation")
+ 	public void sendMailRegistration(final Gcm gcm,final User user, final HttpServletRequest request) {
+         MimeMessagePreparator preparator = new MimeMessagePreparator() {
+             @SuppressWarnings({ "unchecked" })
+ 			public void prepare(MimeMessage mimeMessage) throws Exception {
+                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+                message.setTo(user.getEmail());
+                message.setFrom("alert@payexchangeinc.com");
+                message.setSubject("User Registration");              
+                Map map = new HashMap();
+                map.put("user", user.getFirstName()+" "+user.getLastName());
+                map.put("sender", "alert@payexchangeinc.com");
+                map.put("activation", gcm.getActivation());
+                String body ="";
+                String is = null ;
+                
+                is = String.format("%s://%s:%d/Circles",request.getScheme(),  request.getServerName(), request.getServerPort());
+                
+               
+                ClassLoader classLoader = Thread.currentThread()
+                        .getContextClassLoader();
+                logger.info("classloader:"+classLoader);
+                if (classLoader == null) {
+                    classLoader = this.getClass().getClassLoader();
+                 
+                    if (classLoader == null) {
+                    	logger.info("classloader is null");
+                    }
+                }
+	   
+             	   body = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "activation.vm", map); 
+                
+                logger.info("body={}", body);
+                logger.info(mailSender.toString());
+                message.setText(body, true);
+             }
+          };
+          
+          mailSender.send(preparator);
+          
+     }
+    
 	@Override
 	public void setServletContext(ServletContext servletContext) {
 		// TODO Auto-generated method stub

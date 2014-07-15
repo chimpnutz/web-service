@@ -4,10 +4,13 @@ public class Products {
 	
 	private String product_id;
 	private String product_name;
-	private String product_type;
 	private String product_desc;
-	private String product_price;
+	private String one_time_price;
+	private String groupid;
 	private String filename;
+	private String condition;
+	private String device;
+	private String monthly_price;
 	private String edited_by;
 	private String ispushed;
 	private String version;
@@ -26,23 +29,11 @@ public class Products {
 	public void setProduct_name(String product_name) {
 		this.product_name = product_name;
 	}
-	public String getProduct_type() {
-		return product_type;
-	}
-	public void setProduct_type(String product_type) {
-		this.product_type = product_type;
-	}
 	public String getProduct_desc() {
 		return product_desc;
 	}
 	public void setProduct_desc(String product_desc) {
 		this.product_desc = product_desc;
-	}
-	public String getProduct_price() {
-		return product_price;
-	}
-	public void setProduct_price(String product_price) {
-		this.product_price = product_price;
 	}
 	public String getFilename() {
 		return filename;
@@ -80,6 +71,35 @@ public class Products {
 	public void setUpdated(String updated) {
 		this.updated = updated;
 	}
-	
+	public String getGroupid() {
+		return groupid;
+	}
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
+	}
+	public String getCondition() {
+		return condition;
+	}
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+	public String getDevice() {
+		return device;
+	}
+	public void setDevice(String device) {
+		this.device = device;
+	}
+	public String getOne_time_price() {
+		return one_time_price;
+	}
+	public void setOne_time_price(String one_time_price) {
+		this.one_time_price = one_time_price;
+	}
+	public String getMonthly_price() {
+		return monthly_price;
+	}
+	public void setMonthly_price(String monthly_price) {
+		this.monthly_price = monthly_price;
+	}
 
 }

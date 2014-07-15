@@ -37,6 +37,7 @@ import com.circles.model.*;
 import com.circles.dao.impl.ApplicationDAOImpl;
 import com.circles.dao.impl.CommentDAOImpl;
 import com.circles.dao.impl.PhoneDAOImpl;
+import com.circles.dao.impl.ProductDAOImpl;
 import com.circles.utils.*;
 import com.circles.model.Phone;
 @Controller
@@ -45,18 +46,16 @@ public class PhoneRequestController {
 
 
 	@Autowired
-	private PhoneDAOImpl phoneDAOImpl;
+	private ProductDAOImpl productDAOImpl;
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(ApplicationRequestController.class);
 	
-	@RequestMapping(value="/settings")
+	@RequestMapping(value="/viewproduct")	
 	
-	
-	
-	public boolean FileUpload(MultipartFile fileName,@RequestParam(value="image",required=false)
+	public boolean FileUpload(MultipartFile fileName,@RequestParam(value="dev_image",required=false)
 			Model model){
-		String filepath ="C:/Users/PayExchange/workspace/cmanager/src/main/webapp/resources/uploaded/";
+		String filepath ="C:/Users/tata/workspace/cmanager_pldt/src/main/webapp/resources/uploaded/";
 		
 		
 		
@@ -75,49 +74,35 @@ public class PhoneRequestController {
 
 	@RequestMapping(value="/savePhone", produces="application/json")
 	public @ResponseBody  String savePhone(
-			@RequestParam(value="phone_id", required=false) String phone_id,
-			@RequestParam(value="availability", required=false) String availability,
-			@RequestParam(value="phone_model",required=false) String phone_model,
-			@RequestParam(value="phone_code",required=false) String phone_code,
-			@RequestParam(value="phone_mfr",required=false) String phone_mfr,
-			@RequestParam(value="phone_desc",required=false) String phone_desc,
-			@RequestParam(value="edited_by",required=false) String edited_by,
-			@RequestParam(value="ispushed",required=false) String ispushed,
-			@RequestParam(value="version",required=false) String version,
-			@RequestParam(value="created",required=false) String created,
-			@RequestParam(value="updated",required=false) String updated,
-			@RequestParam(value="image",required=false) MultipartFile image
-			)throws SQLException{
-
-		Phone phone = new Phone();
+			@RequestParam(value="add",required=false) String add,
+			@RequestParam(value="deviceid",required=false) String deviceid,
+			@RequestParam(value="device_name",required=false) String device_name,
+			@RequestParam(value="dev_desc",required=false) String dev_desc,
+			@RequestParam(value="dev_image",required=false) final MultipartFile filename) throws IOException{
+			
+		Devices dev = new Devices();
 		
-		phone.setPhone_id(phone_id);
-		phone.setAvailability(availability);
-		phone.setPhone_model(phone_model);
-		phone.setPhone_code(phone_code);
-		phone.setPhone_mfr(phone_mfr);
-		phone.setPhone_desc(phone_desc);
-		phone.setEdited_by(edited_by);
-		phone.setIspushed(ispushed);
-		phone.setVersion(version);
+		
 		String date  = ""+new Date().getTime()+"";
-		phone.setCreated(date);
-		phone.setUpdated(date);
-		phone.setImage_name(image.getOriginalFilename());
-
+		
+		dev.setDeviceid(deviceid);
+		dev.setDevice_name(device_name);
+		dev.setDescription(dev_desc);
+		dev.setCreated(date);
+		
 		
 	
 		try{
-			if(!image.isEmpty()||!image.equals(null)||!image.equals("")){
-				FileUpload(image, null);
+			if(!filename.isEmpty()||!filename.equals(null)||!filename.equals("")){
+				FileUpload(filename, null);
 			}
 		}catch(NullPointerException e){
 			
 		}
 		
-		int isSaved = phoneDAOImpl.save(phone);
+		int save = productDAOImpl.addDevice(dev);
 		
-		if(isSaved == 1){
+		if(save == 1){
 			return "1";
 		}
 		return "-1";
@@ -125,48 +110,34 @@ public class PhoneRequestController {
 	}
 	@RequestMapping(value="/updatePhone", produces="application/json")
 	public @ResponseBody  String updatePhone(
-			@RequestParam(value="phone_id", required=false) String phone_id,
-			@RequestParam(value="availability", required=false) String availability,
-			@RequestParam(value="phone_model",required=false) String phone_model,
-			@RequestParam(value="phone_code",required=false) String phone_code,
-			@RequestParam(value="phone_mfr",required=false) String phone_mfr,
-			@RequestParam(value="phone_desc",required=false) String phone_desc,
-			@RequestParam(value="edited_by",required=false) String edited_by,
-			@RequestParam(value="ispushed",required=false) String ispushed,
-			@RequestParam(value="version",required=false) String version,
-			@RequestParam(value="created",required=false) String created,
-			@RequestParam(value="updated",required=false) String updated,
-			@RequestParam(value="image",required=false) MultipartFile image
+			@RequestParam(value="add",required=false) String add,
+			@RequestParam(value="deviceid",required=false) String deviceid,
+			@RequestParam(value="device_name",required=false) String device_name,
+			@RequestParam(value="dev_desc",required=false) String dev_desc,
+			@RequestParam(value="dev_image",required=false) final MultipartFile filename) throws IOException{
 
-			)throws SQLException{
-
-		Phone phone = new Phone();
+		Devices dev = new Devices();
 		
-		phone.setPhone_id(phone_id);
-		phone.setAvailability(availability);
-		phone.setPhone_model(phone_model);
-		phone.setPhone_code(phone_code);
-		phone.setPhone_mfr(phone_mfr);
-		phone.setPhone_desc(phone_desc);
-		phone.setEdited_by(edited_by);
-		phone.setIspushed(ispushed);
-		phone.setVersion(version);
-		phone.setCreated(created);
-		phone.setUpdated(updated);
-		phone.setImage_name(image.getOriginalFilename());
-
+		String date  = ""+new Date().getTime()+"";
 		
+		dev.setDeviceid(deviceid);
+		dev.setDevice_name(device_name);
+		dev.setDescription(dev_desc);
+		dev.setCreated(date);
+		
+		
+	
 		try{
-			if(!image.isEmpty()||!image.equals(null)||!image.equals("")){
-				FileUpload(image, null);
+			if(!filename.isEmpty()||!filename.equals(null)||!filename.equals("")){
+				FileUpload(filename, null);
 			}
 		}catch(NullPointerException e){
 			
 		}
-
-		int isSaved = phoneDAOImpl.save(phone);
 		
-		if(isSaved == 1){
+		int save = productDAOImpl.addDevice(dev);
+		
+		if(save == 1){
 			return "1";
 		}
 		return "-1";
@@ -174,13 +145,13 @@ public class PhoneRequestController {
 	}
 	@RequestMapping(value="/deletePhone", produces="application/json")
 	public @ResponseBody  String deletePhone(
-			@RequestParam(value="phone_id", required=false) String phone_id) throws SQLException{
+			@RequestParam(value="deviceid", required=false) String deviceid) throws SQLException{
 
-		Phone phone = new Phone();
+		Devices dev = new Devices();
 		
-		phone.setPhone_id(phone_id);
+		dev.setDeviceid(deviceid);
 
-		int isDeleted = phoneDAOImpl.delete(phone);
+		int isDeleted = productDAOImpl.deleteDev(dev);
 		
 		if(isDeleted == 1){
 			return "1";
@@ -191,8 +162,10 @@ public class PhoneRequestController {
 	
 	@RequestMapping(value="/selectAllPhone", produces="application/json")
 	public @ResponseBody  Collection selectAllPhones() throws SQLException{
-
-		return phoneDAOImpl.selectAllPhone();
+		
+		Devices dev = new Devices();
+		
+		return productDAOImpl.viewDevice(dev);
 		
 	}
 	
@@ -203,7 +176,7 @@ public class PhoneRequestController {
 		Properties props = PropertiesLoaderUtils.loadProperties(resource);
 
 		String filepath = props.getProperty("filepath.url");
-//				"C:/Users/tata/workspace/cmanager-jc/src/main/webapp/resources/uploaded/";
+//				"C:/Users/tata/workspace/cmanager_pldt/src/main/webapp/resources/uploaded/"+filename+"";			
 				
 	    File imageFile = new File(filepath+filename);
 	    byte[] bytes = org.springframework.util.FileCopyUtils.copyToByteArray(imageFile);
@@ -218,38 +191,23 @@ public class PhoneRequestController {
 	
 	@RequestMapping(value="/selectPhone", produces="application/json")
 	public @ResponseBody  Collection selectPhone(
-			@RequestParam(value="phone_id", required=false) String phone_id,
-			@RequestParam(value="availability", required=false) String availability,
-			@RequestParam(value="phone_model",required=false) String phone_model,
-			@RequestParam(value="phone_code",required=false) String phone_code,
-			@RequestParam(value="phone_mfr",required=false) String phone_mfr,
-			@RequestParam(value="phone_desc",required=false) String phone_desc,
-			@RequestParam(value="edited_by",required=false) String edited_by,
-			@RequestParam(value="ispushed",required=false) String ispushed,
-			@RequestParam(value="version",required=false) String version,
+			@RequestParam(value="add",required=false) String add,
+			@RequestParam(value="deviceid",required=false) String deviceid,
+			@RequestParam(value="device_name",required=false) String device_name,
+			@RequestParam(value="dev_desc",required=false) String dev_desc,
 			@RequestParam(value="created",required=false) String created,
-			@RequestParam(value="updated",required=false) String updated,
-			@RequestParam(value="image",required=false) String image
-
-			)throws SQLException{
-
-		Phone phone = new Phone();
+			@RequestParam(value="dev_image",required=false) final String filename) throws IOException{
 		
-		phone.setPhone_id(phone_id);
-		phone.setAvailability(availability);
-		phone.setPhone_model(phone_model);
-		phone.setPhone_code(phone_code);
-		phone.setPhone_mfr(phone_mfr);
-		phone.setPhone_desc(phone_desc);
-		phone.setEdited_by(edited_by);
-		phone.setIspushed(ispushed);
-		phone.setVersion(version);
-		phone.setCreated(created);
-		phone.setUpdated(updated);
-		phone.setImage_name(image);
+		Devices dev = new Devices();
+		
+		dev.setDeviceid(deviceid);
+		dev.setDevice_name(device_name);
+		dev.setDescription(dev_desc);
+		dev.setCreated(created);
+		dev.setDevice_image(filename);
 
 		
-		Collection s = phoneDAOImpl.selectPhone(phone);
+		Collection s = productDAOImpl.viewSelectDevice(dev);
 		
 		return s;
 		

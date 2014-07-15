@@ -8832,9 +8832,9 @@ li.account p{
                    
  
         <h3 align="left">Dear ${application.getFirstName()},</h3>
-        <p align="left">Your smart post paid application with the free iPhone
+        <p align="left">Your PLDT post paid application
         was just received. Please expect to hear from us in 3 to 5 working days. Your
-        choice to join the number 1 mobile network in the country is a smart choice.
+        choice to join the leading telecommunication provider.
         </p>
        
     			

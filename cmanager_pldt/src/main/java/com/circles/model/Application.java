@@ -1,7 +1,10 @@
 package com.circles.model;
 
+import com.circles.model.Details.packages;
+
 public class Application {
 	
+
 	private int count;
 	private String application_id;
 	private String user_id;
@@ -16,6 +19,40 @@ public class Application {
 	private String contact_number;
 	private String details;
 	private String product_id;
+	private String deviceid;
+	private String product_name;
+	private String device_name;
+	private String company_details;
+	private String spouse_details;
+	private String address_details;
+	private String spouse_title;
+	private String lat;
+	private String lng;
+	private String spouse_addLine1;
+	private String spouse_brgy;
+	private String spouse_city;
+	private String spouse_region;
+	private String spouse_zipcode;
+	
+	private String number;
+	private String image_filename;
+	private String issuer;
+	private String attachment_type;
+	private String expiry_date;
+	
+	private String agent_name;
+	private String agent_code;
+	private String agent_no;
+	private String plan_type;
+	private String cis_no;
+	private String longitude;
+	private String latitude;
+	private String employment_status;
+	private String company_tin;
+	private String dti_registraion;
+	private String mayors_permit;
+	private String valid_id;
+	private String sec_certificat;
 	
 	private String title;
 	private String birthplace;
@@ -323,8 +360,8 @@ public class Application {
 	public String getBirthday() {
 		return birthday;
 	}
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+	public String setBirthday(String birthday) {
+		return this.birthday = birthday;
 	}
 	public String getType() {
 		return type;
@@ -1013,6 +1050,199 @@ public class Application {
 	public void setProduct_id(String product_id) {
 		this.product_id = product_id;
 	}
+	public String getDeviceid() {
+		return deviceid;
+	}
+	public void setDeviceid(String deviceid) {
+		this.deviceid = deviceid;
+	}
+	public String getDevice_name() {
+		return device_name;
+	}
+	public void setDevice_name(String device_name) {
+		this.device_name = device_name;
+	}
+	public String getCompany_details() {
+		return company_details;
+	}
+	public void setCompany_details(String company_details) {
+		this.company_details = company_details;
+	}
+	public String getSpouse_details() {
+		return spouse_details;
+	}
+	public void setSpouse_details(String spouse_details) {
+		this.spouse_details = spouse_details;
+	}
+	public String getAddress_details() {
+		return address_details;
+	}
+	public void setAddress_details(String address_details) {
+		this.address_details = address_details;
+	}
+	public String getAgent_name() {
+		return agent_name;
+	}
+	public void setAgent_name(String agent_name) {
+		this.agent_name = agent_name;
+	}
+	public String getAgent_code() {
+		return agent_code;
+	}
+	public void setAgent_code(String agent_code) {
+		this.agent_code = agent_code;
+	}
+	public String getAgent_no() {
+		return agent_no;
+	}
+	public void setAgent_no(String agent_no) {
+		this.agent_no = agent_no;
+	}
+	public String getPlan_type() {
+		return plan_type;
+	}
+	public void setPlan_type(String plan_type) {
+		this.plan_type = plan_type;
+	}
+	public String getCis_no() {
+		return cis_no;
+	}
+	public void setCis_no(String cis_no) {
+		this.cis_no = cis_no;
+	}
+	public String getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+	public String getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	public String getEmployment_status() {
+		return employment_status;
+	}
+	public void setEmployment_status(String employment_status) {
+		this.employment_status = employment_status;
+	}
+	public String getCompany_tin() {
+		return company_tin;
+	}
+	public void setCompany_tin(String company_tin) {
+		this.company_tin = company_tin;
+	}
+	public String getDti_registraion() {
+		return dti_registraion;
+	}
+	public void setDti_registraion(String dti_registraion) {
+		this.dti_registraion = dti_registraion;
+	}
+	public String getMayors_permit() {
+		return mayors_permit;
+	}
+	public void setMayors_permit(String mayors_permit) {
+		this.mayors_permit = mayors_permit;
+	}
+	public String getValid_id() {
+		return valid_id;
+	}
+	public void setValid_id(String valid_id) {
+		this.valid_id = valid_id;
+	}
+	public String getSec_certificat() {
+		return sec_certificat;
+	}
+	public void setSec_certificat(String sec_certificat) {
+		this.sec_certificat = sec_certificat;
+	}
+	public String getNumber() {
+		return number;
+	}
+	public void setNumber(String number) {
+		this.number = number;
+	}
+	public String getImage_filename() {
+		return image_filename;
+	}
+	public void setImage_filename(String image_filename) {
+		this.image_filename = image_filename;
+	}
+	public String getIssuer() {
+		return issuer;
+	}
+	public void setIssuer(String issuer) {
+		this.issuer = issuer;
+	}
+	public String getAttachment_type() {
+		return attachment_type;
+	}
+	public void setAttachment_type(String attachment_type) {
+		this.attachment_type = attachment_type;
+	}
+	public String getExpiry_date() {
+		return expiry_date;
+	}
+	public void setExpiry_date(String expiry_date) {
+		this.expiry_date = expiry_date;
+	}
+	public String getProduct_name() {
+		return product_name;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public String getSpouse_title() {
+		return spouse_title;
+	}
+	public void setSpouse_title(String spouse_title) {
+		this.spouse_title = spouse_title;
+	}
+	public String getLat() {
+		return lat;
+	}
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+	public String getLng() {
+		return lng;
+	}
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
+	public String getSpouse_addLine1() {
+		return spouse_addLine1;
+	}
+	public void setSpouse_addLine1(String spouse_addLine1) {
+		this.spouse_addLine1 = spouse_addLine1;
+	}
+	public String getSpouse_brgy() {
+		return spouse_brgy;
+	}
+	public void setSpouse_brgy(String spouse_brgy) {
+		this.spouse_brgy = spouse_brgy;
+	}
+	public String getSpouse_city() {
+		return spouse_city;
+	}
+	public void setSpouse_city(String spouse_city) {
+		this.spouse_city = spouse_city;
+	}
+	public String getSpouse_region() {
+		return spouse_region;
+	}
+	public void setSpouse_region(String spouse_region) {
+		this.spouse_region = spouse_region;
+	}
+	public String getSpouse_zipcode() {
+		return spouse_zipcode;
+	}
+	public void setSpouse_zipcode(String spouse_zipcode) {
+		this.spouse_zipcode = spouse_zipcode;
+	}
+	
 
 	
 	

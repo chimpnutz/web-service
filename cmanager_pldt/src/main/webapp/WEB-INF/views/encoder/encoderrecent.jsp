@@ -10,6 +10,8 @@
     <meta charset='utf-8' />
 <title>Circles</title>
 <link rel="stylesheet" href="resources/css/screen2.css" type="text/css" media="screen" title="default" />
+	<link rel="stylesheet" href="resources/css/font-awesome.css" />
+<link rel="stylesheet" href="resources/css/font-awesome.min.css" />
 <!--  <script type="text/javascript" src="resources/js/sortable.js"></script>-->
 <script type="text/javascript" src="resources/js/sorttable.js"></script>
 
@@ -115,13 +117,12 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="product-table" class="sortable">
 				<thead>
 				<tr>
-					<th class="table-header-repeat line-left  sorttable_sorted"style="border-right: 1px solid #373737;"><a href="#" style="color:white">No.</a></th>
-					<th class="table-header-repeat line-left minwidth-1"><a href="#" style="color:white">Name of Applicant</a></th>
-					<th class="table-header-repeat line-left"><a href="#" style="color:white">Application ID</a></th>
-					<th class="table-header-repeat line-left"><a href="#" style="color:white">Receipt Number</a></th>
+					<th class="table-header-repeat line-left  sorttable_sorted"style="border-right: 1px solid #373737;"><a href="#" style="color:white">No. <i class="fa fa-caret-down"></i></a></th>
+					<th class="table-header-repeat line-left minwidth-1"><a href="#" style="color:white">Name of Applicant <i class="fa fa-caret-down"></i></a></th>
+					<th class="table-header-repeat line-left"><a href="#" style="color:white">Application ID <i class="fa fa-caret-down"></i></a></th>
 					<!--<th class="table-header-repeat line-left"><a href="">Agent</a></th>-->
-					<th class="table-header-repeat line-left"style="padding-right:1px"><a href="#" style="color:white">Status</a></th>
-					<th class="table-header-repeat line-left"style="border-right: 1px solid #373737;"><a href="#" style="color:white">Date</a></th>
+					<th class="table-header-repeat line-left"style="padding-right:1px"><a href="#" style="color:white">Status <i class="fa fa-caret-down"></i></a></th>
+					<th class="table-header-repeat line-left"style="border-right: 1px solid #373737;"><a href="#" style="color:white">Date <i class="fa fa-caret-down"></i></a></th>
 					
 				</tr>
 				</thead>
@@ -130,32 +131,32 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
 
 				<tr>
 					<td>${data.count}</td>
-					<core:if test="${data.application_type=='Personal'}">
-					<td><a href="applicationform.html?appid=${data.application_id}">${data.getFirstName()}&nbsp;${data.getLastName()}</a></td>
+					<core:if test="${data.application_type=='Residential'}">
+					<td><a style="color:#4ba6ed;" href="applicationform.html?appid=${data.application_id}">${data.getFirstName()}&nbsp;${data.getLastName()}</a></td>
 					</core:if>
 					<core:if test="${data.application_type=='Business'}">
-					<td><a href="applicationform.html?appid=${data.application_id}">${data.companyauth}</a></td>						
+					<td>${data.companyauth}</td>						
 					</core:if>
-					<td><a href="applicationform.html?appid=${data.application_id}">${data.application_id}</a></td>
-					<td><a href="applicationform.html?appid=${data.application_id}">${data.getRef_no() }</a></td>
+					<td>${data.application_id}</td>
+					
 					<!--<td><a href="applicationform.html?appid=${data.application_id}">${data.getUser_id()}</a></td>-->
 					<core:if test="${data.getStatus().equals('0')}">
-						<td><a href="applicationform.html?appid=${data.application_id}" style="color:red">No Action</a></td>						</core:if>
+						<td style="color:red">No Action</td>						</core:if>
 						<core:if test="${data.getStatus().equals('1')}">
-						<td><a href="applicationform.html?appid=${data.application_id}">Approved</a></td>
+						<td>Approved</td>
 						</core:if>
 						<core:if test="${data.getStatus().equals('2')}">
-						<td><a href="applicationform.html?appid=${data.application_id}">Ongoing</a></td>
+						<td>Ongoing</td>
 						</core:if>
 						<core:if test="${data.getStatus().equals('3')}">
-						<td><a href="applicationform.html?appid=${data.application_id}">Declined</a></td>
+						<td>Declined</td>
 						</core:if>
 						<core:if test="${data.getStatus().equals('4')}">
-						<td><a href="applicationform.html?appid=${data.application_id}">Incomplete</a></td>
+						<td>Incomplete</td>
 						</core:if>
-					<td><a href="applicationform.html?appid=${data.application_id}"><jsp:useBean id="dateValue" class="java.util.Date" />
+					<td><jsp:useBean id="dateValue" class="java.util.Date" />
 						<jsp:setProperty name="dateValue" property="time" value="${data.getCreated()}" />
-						<fmt:formatDate value="${dateValue}" pattern="MM/dd/yyyy HH:mm" /></a></td>
+						<fmt:formatDate value="${dateValue}" pattern="MM/dd/yyyy HH:mm" /></td>
 					
 				</tr>
 				</core:forEach>

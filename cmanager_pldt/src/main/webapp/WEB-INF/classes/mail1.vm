@@ -14,7 +14,6 @@
 
 
 
-
   </head>
 
   <body style="background:#F6F6F6">
@@ -25,7 +24,7 @@
         <tr>
           
           <td style="background-color:#FDFFF9;border:1px solid #dcdcdc;color:#59BB8E; font-family:Helvetica; border-top-right-radius:40px; border-top-left-radius:40px; font-size:22px" height="80px;" width="350px">
-          <img src="http://${imageLocation}/resources/images/smart.png" width="60px" height="25px" style="position:absolute; margin-top:-5px; margin-left:20px;">
+          <img src="http://${imageLocation}/resources/images/pldthome.png" width="60px" height="25px" style="position:absolute; margin-top:-5px; margin-left:20px;">
           <text style="float:right;margin-right:20px;">Your application is approved!</text> </td>
        
         </tr>
@@ -36,23 +35,23 @@
         <p style="margin-left:10px;font-family:Helvetica;font-size:15px;margin-right:5px;color:#565A5A;text-shadow: 2px 2px #ffffff;" align="left" ><text>80 Million (and counting) Subcribers welcome you!</text>
         
         <br/><br/>
-        <text style="color:#565A5A">We are so thrilled that you can now use the country's biggest mobile</text><br/>
-        <text style="color:#565A5A">network along with exciting perks that come with your subscription.</text><br/><br/>
+        <text style="color:#565A5A">PLDT Home™ - The leading telecommunication provider of Fibr, Bro, DSL, Telpad, Wifi, </text><br/>
+        <text style="color:#565A5A">Cyberya, Kaasenso, Hey u & Landline Plus in the Philippines..</text><br/><br/>
        
    
 
-         <text style="color:#565A5A">Your ${phone} for ${plan} is ready for pick up any time at Smart</text> <br/>
-            <text style="color:#565A5A">Wireless Center, address.</text>
+        <!-- <text style="color:#565A5A">Your ${device} for ${product} is ready for pick up any time at PLDT,</text> <br/>
+            <text style="color:#565A5A"> address.</text>-->
 
         <br/>
         <br/>
 
-          <text style="color:#565A5A">Again, welcome and thank you for making the Smart choice.</text>
+          <text style="color:#565A5A">Again, welcome and thank you for making the right choice.</text>
           <br/>
         <br/>
         <text style="color:#565A5A">Yours truly,</text>
          <br/><br/>
-         <text style="color:#565A5A">Smart</text>
+         <text style="color:#565A5A">PLDT</text>
         </p> </td>
           
       </tr>
@@ -60,7 +59,7 @@
        <tr>
       
           <td style="background-color:#FDFFF9;font-family:Helvetica; font-size:10px;border:1px solid #dcdcdc;border-bottom-right-radius:40px; border-bottom-left-radius:40px;color:#3D98D4" height="80px;" width="350px">
-          <text style="float:left;margin-left:40px;"><a style="color:#3D98D4;text-decoration:none" href="http://www.smart.com.ph">www.smart.com.ph</a></text><text style="margin-left:70px;"><a style="color:#3D98D4;text-decoration:none" href="http://www.info@smart.com.ph">info@smart.com.ph</a></text><text style="float:right;margin-right:50px;">1-800-843-8888</text> </td>
+          <text style="float:left;margin-left:40px;"><a style="color:#3D98D4;text-decoration:none" href="http://www.pldt.com">www.pldt.com</a></text><text style="margin-left:70px;"><a style="color:#3D98D4;text-decoration:none" href="http://pldthome.com">pldthome.com</a></text><text style="float:right;margin-right:50px;">1-800-843-8888</text> </td>
        
        
       </tr>

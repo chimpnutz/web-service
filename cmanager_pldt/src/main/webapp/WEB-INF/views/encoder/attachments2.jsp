@@ -291,7 +291,7 @@ body.modal-open {
               	var img = "${dataz.getFilename()}";
               	
               	
-              	if(type == 'sss'){
+              	if(type == 'identification'){
               		var viewer;
               		var img = "${dataz.getFilename()}";
              		
@@ -308,7 +308,7 @@ body.modal-open {
                         }
                     	});
               
-              	}else if(type == 'pagibig'){
+              	}else if(type == 'proofofbilling'){
               		var viewer;
               		var img = "${dataz.getFilename()}";
               		
@@ -323,7 +323,7 @@ body.modal-open {
                         }
                     	});
               
-              	}else if(type == 'companyid'){
+              	}else if(type == 'proofofincome'){
               		var viewer;
               		var img = "${dataz.getFilename()}";
               		
@@ -715,7 +715,7 @@ body.modal-open {
 
 <core:if test="${role=='encoder'}">
 <core:forEach var="datas" items="${application }">
-	<core:if test="${datas.application_type=='Personal'}">
+	<core:if test="${datas.application_type=='Residential'}">
 	<div class="encname"><p>${datas.getFirstName()}&nbsp;${datas.getLastName() }</p></div>
 </core:if>	
 <core:if test="${datas.application_type=='Business'}">
@@ -842,145 +842,23 @@ Attachements</p>
 							
 								<tr>
 																	
-									<core:if test="${data.doc_identity_sss_no!=''}">
+									
 									<core:forEach var="dataz" items="${images}">
 									
-										<core:if test="${dataz.getType()=='sss'}">
+										<core:if test="${dataz.getType()=='identification'}">
 										<td>	
-											<p><b>SSS</p></b>
-											${data.doc_identity_sss_no}<br/>
+											<p><b>${dataz.number }asdsad</p></b>
+											<br/>
 											<div style="float:right; margin-right:15px; margin-top:-40px;">
 											<a data-toggle="modal" href="#myModal" ><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
 											</div>
 										</td>
 										</core:if>
 										</core:forEach>
-									</core:if>
+									
 											
 								
 								</tr>
-							
-							
-							
-								<tr>
-								
-								<core:if test="${data.doc_identity_pagibig_no!=''}">
-								<core:forEach var="dataz" items="${images}">					
-									<core:if test="${dataz.getType()=='pagibig'}">
-									<td>
-										<p><b>Pag-Ibig</b></p>
-										${data.doc_identity_pagibig_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal2" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								
-								
-								
-								</tr>
-								
-								<tr>
-								
-								<core:if test="${data.doc_identity_companyid_no!=''}">
-								<core:forEach var="dataz" items="${images}">					
-									<core:if test="${dataz.getType()=='companyid'}">
-									<td>
-										<p><b>company ID</b></p>
-										${data.doc_identity_companyid_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal3" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								
-								
-								
-								</tr>
-								
-								<tr>
-								<core:if test="${data.doc_identity_tin_no!=''}">	
-								<core:forEach var="dataz" items="${images}">	
-									<core:if test="${dataz.getType()=='tin'}">
-									<td>
-										<p><b>Tin</b></p>
-										${data.doc_identity_tin_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal4" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								
-								</tr>
-							
-								<tr>
-								<core:if test="${data.doc_identity_driverslicense_no!=''}">	
-								<core:forEach var="dataz" items="${images}">				
-									<core:if test="${dataz.getType()=='driverslicense'}">
-									<td>
-										<p><b>Drivers License</b></p>
-										${data.doc_identity_driverslicense_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal5" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>	
-								</core:forEach>	
-								</core:if>
-
-								
-								</tr>
-								
-							
-								
-								<tr>	
-								<core:if test="${data.doc_identity_passport_no!=''}">			
-								<core:forEach var="dataz" items="${images}">			
-									<core:if test="${dataz.getType()=='passport'}">
-									<td>
-										<p><b>Passport</b></p>
-										${data.doc_identity_passport_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal6" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>	
-								</core:forEach>
-								</core:if>
-
-								
-									
-								</tr>
-												
-							
-								<tr>
-								
-								
-								<core:if test="${data.doc_identity_others_no!=''}">
-								<core:forEach var="dataz" items="${images}">
-									<core:if test="${dataz.getType()=='identity_others'}">
-									<td>
-										<p><b>Others</b></p>
-										${data.doc_identity_others_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal7" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								
-								
-								</tr>
-								
-		
-
 																
 				
 				</table>
@@ -997,133 +875,19 @@ Attachements</p>
 							
 								<tr>
 																	
-								<core:if test="${data.doc_address_electricity_no!=''}">
+								
 								<core:forEach var="dataz" items="${images}">	
-								<core:if test="${dataz.getType()=='electricity'}">
+								<core:if test="${dataz.getType()=='proofofbilling'}">
 									<td>
-										<p><b>Electricity</b></p>
-										${data.doc_address_electricity_no}<br/>
+										<p><b>${dataz.number }asd</b></p>
+										<br/>
 										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal8" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
+										<a data-toggle="modal" href="#myModal2" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
 										</div>
 									</td>
 									</core:if>
 								</core:forEach>
-								</core:if>
-
-											
-								
-								</tr>
 							
-							
-							
-								<tr>
-								
-								<core:if test="${data.doc_address_water_no!=''}">
-								<core:forEach var="dataz" items="${images}">	
-									<core:if test="${dataz.getType()=='water'}">
-									<td>
-										<p><b>Water</b></p>
-										${data.doc_address_water_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal9" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								
-								
-								
-								</tr>
-								
-								<tr>
-								<core:if test="${data.doc_address_isp_no!=''}">	
-								<core:forEach var="dataz" items="${images}">	
-									<core:if test="${dataz.getType()=='isp'}">
-									<td>
-										<p><b>ISP</b></p>
-										${data.doc_address_isp_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal10" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>	
-								
-								
-								</tr>
-							
-								<tr>
-								<core:if test="${data.doc_address_cable_no!=''}">	
-								<core:forEach var="dataz" items="${images}">	
-									<core:if test="${dataz.getType()=='cable'}">
-									<td>
-										<p><b>Telecom</b></p>
-										${data.doc_address_cable_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal11" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								
-								
-								</tr>
-								
-							
-								
-								<tr>	
-									<core:if test="${data.doc_address_telecom_no!=''}">		
-								<core:forEach var="dataz" items="${images}">	
-									<core:if test="${dataz.getType()=='telecom'}">
-									<td>
-										<p><b>Cable</b></p>
-										${data.doc_address_telecom_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal12" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>	
-								</core:if>
-									
-								</tr>
-												
-							
-								<tr>
-									<core:if test="${data.doc_address_bankloan_no!=''}">	
-									<core:forEach var="dataz" items="${images}">		
-										<core:if test="${dataz.getType()=='bankloan'}">
-										<td>
-											<p><b>Bank Loan</b></p>
-											${data.doc_address_bankloan_no}<br/>
-											<div style="float:right; margin-right:15px; margin-top:-40px;">
-											<a data-toggle="modal" href="#myModal13" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-											</div>
-										</td>
-										</core:if>	
-									</core:forEach>
-									</core:if>		
-								</tr>
-								
-								<tr>
-								<core:if test="${data.doc_address_others_no!=''}">
-								<core:forEach var="dataz" items="${images}">
-									<core:if test="${dataz.getType()=='address_others'}">
-									<td>
-										<p><b>Others</b></p>
-										${data.doc_address_others_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal14" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								</tr>
 				</table>	
 					</div>
 					
@@ -1138,135 +902,20 @@ Attachements</p>
 							
 								<tr>
 																	
-								<core:if test="${data.doc_income_companyownership_no!=''}">
+								
 								<core:forEach var="dataz" items="${images}">		
-									<core:if test="${dataz.getType()=='companyowner'}">
+									<core:if test="${dataz.getType()=='proofofincome'}">
 									<td>
-										<p><b>Company Ownership</b></p>
-										${data.doc_income_companyownership_no}<br/>
+										<p><b>${data.number }asd</b></p>
+										<br/>
 										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal15" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
+										<a data-toggle="modal" href="#myModal3" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
 										</div>
 									</td>
 									</core:if>	
 								</core:forEach>	
-								</core:if>
-											
 								
-								</tr>
-							
-								
-								<tr>
-								<core:if test="${data.doc_income_payslip_no!=''}">
-								<core:forEach var="dataz" items="${images}">	
-									<core:if test="${dataz.getType()=='payslip'}">
-									<td>
-										<p><b>Payslip</b></p>
-										${data.doc_income_payslip_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal16" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								
-								</tr>
-							
-								<tr>
-								<core:if test="${data.doc_income_security_no!=''}">	
-								<core:forEach var="dataz" items="${images}">	
-									<core:if test="${dataz.getType()=='security'}">
-									<td>
-										<p><b>Security</b></p>
-										${data.doc_income_security_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal17" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>	
-								</core:if>
-								
-								</tr>
-								
-							
-								
-								<tr>	
-								<core:if test="${data.doc_income_bonds_no!=''}">
-								<core:forEach var="dataz" items="${images}">				
-									<core:if test="${dataz.getType()=='bondno'}">
-									<td>
-										<b><p>Bonds</p></b>
-										${data.doc_income_bonds_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal18" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>	
-								</core:if>
-								
-								
-									
-								</tr>
-												
-							
-								<tr>
-								
-								
-								<core:if test="${data.doc_income_stockcert_no!=''}">		
-								<core:forEach var="dataz" items="${images}">	
-									<core:if test="${dataz.getType()=='stockcert'}">
-									<td>
-										<b><p>Stockcert</p></b>
-										${data.doc_income_stockcert_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal19" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>	
-								</core:if>	
-								
-								
-								</tr>
-								
-								<tr>
-								
-								<core:if test="${data.doc_income_autocharge_no!=''}">
-								<core:forEach var="dataz" items="${images}">
-									<core:if test="${dataz.getType()=='autocharge'}">
-									<td>
-										<b><p>Others</p></b>
-										${data.doc_income_autocharge_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal20" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								
-								</tr>				
-								
-								<tr>
-								
-								<core:if test="${data.doc_income_others_no!=''}">
-								<core:forEach var="dataz" items="${images}">
-									<core:if test="${dataz.getType()=='income_others'}">
-									<td>
-										<b><p>Others</p></b>
-										${data.doc_income_others_no}<br/>
-										<div style="float:right; margin-right:15px; margin-top:-40px;">
-										<a data-toggle="modal" href="#myModal21" data-lightbox="example-1"><img src="resources/uploaded/${dataz.getFilename()}" class="bilog" width="50px" height="50px" alt="" /></a>
-										</div>
-									</td>
-									</core:if>
-								</core:forEach>
-								</core:if>
-								
-								</tr>													
+																				
 				</table>	
 					</div>
 					

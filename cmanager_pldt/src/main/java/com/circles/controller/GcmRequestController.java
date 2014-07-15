@@ -102,7 +102,7 @@ public class GcmRequestController {
 				s = gcmDAOImpl.update(gcm);
 			}
 			else{
-				s = gcmDAOImpl.update2(gcm);
+				s = gcmDAOImpl.update(gcm);
 			}
 			
 			

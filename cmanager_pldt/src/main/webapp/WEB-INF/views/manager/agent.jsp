@@ -85,7 +85,7 @@
 					<li><a href="salesmtd.html"><i class="fa fa-usd"></i>&nbsp;SALES</a></li>
 					<li><a href="agent.html" class="selected"><i class="icon-agent" style="font-size:20px;"></i>&nbsp;AGENTS</a></li>		
 					<li><a href="recent.html"><i class="fa fa-clock-o"></i>&nbsp;RECENT</a></li>
-							<li><a href="addproduct"><i class="fa fa-cubes"></i>&nbsp;ADD PRODUCTS</a></li>		
+							<li><a href="viewproduct"><i class="fa fa-cubes"></i>&nbsp;PRODUCTS</a></li>		
 				<li><a href="logout.html"><i class="fa fa-laptop"></i>&nbsp;LOG OUT</a></li>
 					
 				</ul>
@@ -94,9 +94,9 @@
 		</div><!-- End of Header -->
 <c:if test="${role=='manager' }">
 		<div class="application">
-		<text class="preactive"><a href="agent.html" >Applications</text>
-
-		<!--<text  style="margin-left:15px;"><a href="">Sales</a></text>-->
+		<!--<text class="preactive"><a href="agent.html" >Applications</a></text>-->
+		<text class="preactive"><a href="addagent.html">Add Agent</a></text>
+		<!-- <text  style="margin-left:15px;"><a href="addagent.html">Add Agent</a></text> -->
 		</div>
 
 
